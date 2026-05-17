@@ -3401,6 +3401,24 @@ export default function Day1TraderSimulator() {
     };
   };
 
+  const startDay1 = () => {
+    setCurrentDay(1);
+    setCurrentStage("day1_welcome");
+    setHandbookOpen(false);
+    setHandbookHasNew(false);
+    setHandbookUnlockedEntries([]);
+    setSelectedProduct(null);
+    setSelectedDisclosures([]);
+    setMarketHasRun(false);
+    setVisibleMarketSteps(1);
+    setDay1Score(null);
+    setSelectedQuote(day2Config.quoteRules.defaultQuote);
+    setClientResponse(null);
+    setDay2Score(null);
+    setProductMessage("");
+    setSkipSignal((value) => value + 1);
+  };
+
   const restartDay1 = () => {
     setCurrentDay(1);
     setCurrentStage("title_screen");
@@ -3547,7 +3565,8 @@ export default function Day1TraderSimulator() {
   };
 
   const actions = {
-    startGame: startDay2,
+    startGame: startDay1,
+    startDay1,
     startDay2,
     startBriefing: () => setCurrentStage("day1_lesson_basics"),
     toCallPutLesson: () => setCurrentStage("day1_intro"),
