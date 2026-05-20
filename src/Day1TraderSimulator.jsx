@@ -593,26 +593,263 @@ const day2Config = {
   },
 };
 
+const day3Config = {
+  day: 3,
+  title: "障碍期权",
+  stages: {
+    day3_intro: {
+      label: "09:00 晨会",
+      system: "路径风险晨会",
+      mentor:
+        "前两天你已经学会了普通期权和模型报价。今天加一个真正会改变结局的规则：障碍。价格不是只看最后一刻，中途碰到某条线，产品可能直接结束。",
+    },
+    day3_lesson_barrier_concept: {
+      label: "09:04 第一课：障碍线",
+      system: "Barrier 直觉",
+      mentor:
+        "把障碍想成交易合约里的红线。普通期权只看到期价格；障碍期权还会看路径，中途有没有碰到这条红线。",
+    },
+    day3_lesson_knock_out: {
+      label: "09:08 第二课：敲出",
+      system: "Knock-Out 规则",
+      mentor:
+        "敲出（Knock-Out）的意思是：只要标的价格碰到障碍线，期权就提前失效。哪怕最后市场又涨回来，已经敲出的产品也不能复活。",
+    },
+    day3_lesson_compare_vanilla: {
+      label: "09:12 第三课：便宜不是免费",
+      system: "Vanilla vs Barrier",
+      mentor:
+        "障碍期权通常更便宜，因为买方接受了额外风险。便宜不是优惠券，而是用敲出风险换来的低期权费。",
+    },
+    day3_handbook_updated: {
+      label: "09:16 手册更新",
+      system: "障碍规则同步",
+      mentor:
+        "工作手册已经新增障碍期权页面。今天见客户前一定要看：障碍产品最容易出错的地方，就是把它当成普通期权来讲。",
+    },
+    day3_client_arrival: {
+      label: "09:20 客户到访",
+      system: "预算敏感客户",
+      mentor:
+        "她看涨，但又嫌普通 Call 太贵。现在先问清楚：她是否能接受“中途跌破某条线就提前失效”的规则。",
+    },
+    day3_product_selection: {
+      label: "09:26 产品选择",
+      system: "障碍结构匹配",
+      mentor:
+        "客户看涨、预算有限、愿意接受下方障碍风险。今天的目标产品是下跌敲出看涨期权，也就是 Down-and-Out Call。",
+    },
+    day3_risk_disclosure: {
+      label: "09:34 风险披露",
+      system: "路径风险披露",
+      mentor:
+        "障碍产品必须把路径风险讲清楚：不是只看最终价格。碰到障碍线后，就算最后价格很漂亮，客户也可能拿不到收益。",
+    },
+    day3_market_run: {
+      label: "09:42 市场路径",
+      system: "敲出路径模拟",
+      mentor:
+        "现在看一条固定市场路径。注意盯住障碍线，不要只盯最终价格。障碍期权的戏剧性就在这里。",
+    },
+    day3_report: {
+      label: "09:52 日终报告",
+      system: "障碍期权复盘",
+      mentor:
+        "障碍产品的评分重点是：产品是否适合、敲出风险是否充分披露、客户是否真的理解路径依赖。",
+    },
+    day3_complete: {
+      label: "10:00 完成第三天",
+      system: "关卡完成",
+      mentor:
+        "今天你见过了路径依赖的第一课。普通期权看终点，障碍期权还看旅途。",
+    },
+  },
+  handbookEntries: [
+    {
+      id: "barrier_options",
+      title: "障碍期权 / Barrier Options",
+      sections: [
+        {
+          title: "核心想法",
+          bullets: [
+            "障碍期权会额外设置一条障碍价格（Barrier）",
+            "产品结果不仅看最终到期价格，也看中途是否触碰障碍",
+            "触碰障碍可能让期权提前生效或提前失效",
+          ],
+        },
+        {
+          title: "敲出 Knock-Out",
+          bullets: [
+            "Knock-Out 表示触碰障碍后，期权提前失效",
+            "失效后即使最终价格重新回到有利位置，产品也不会自动复活",
+            "下跌敲出看涨期权（Down-and-Out Call）适合看涨但愿意承担下方障碍风险的客户",
+          ],
+        },
+        {
+          title: "为什么更便宜",
+          bullets: [
+            "障碍期权通常比同类普通期权便宜",
+            "便宜来自额外敲出风险，不是无条件折扣",
+            "客户必须理解：更低期权费换来的是更复杂的路径风险",
+          ],
+        },
+        {
+          title: "风险披露",
+          bullets: [
+            "必须说明障碍价格和观察方式",
+            "必须说明触碰障碍后产品可能提前失效",
+            "必须说明最终价格有利，也可能因为曾经敲出而没有收益",
+            "不要把障碍期权说成普通期权的便宜版本",
+          ],
+        },
+      ],
+    },
+  ],
+  clientProfile: {
+    name: "陈女士",
+    type: "活跃散户",
+    marketView: "看涨恒生指数",
+    riskTolerance: "中高",
+    goal: "想用较低期权费参与未来上涨",
+    productNeed: "愿意接受额外条件，但不想无限亏损",
+    budget: "普通 Call 觉得太贵，希望期权费更低",
+    experience: "买过普通期权，但第一次接触障碍结构",
+    dialogue: [
+      "我还是看涨恒生指数，但昨天那种普通 Call 对我来说有点贵。",
+      "如果能便宜一些，我可以接受一些额外条件。",
+      "但你要讲清楚，什么情况下这个产品会失效。",
+    ],
+  },
+  products: [
+    {
+      id: "down_out_call",
+      name: "下跌敲出看涨期权",
+      term: "Down-and-Out Call",
+      status: "可用",
+      description: [
+        "适合看涨观点",
+        "期权费低于同类普通 Call",
+        "如果中途触碰下方障碍线，产品提前失效",
+        "买方最大损失通常限于期权费",
+      ],
+      feedback:
+        "方向和预算都匹配。关键是你必须把下方障碍和敲出后不可复活讲清楚。",
+    },
+    {
+      id: "vanilla_call",
+      name: "普通看涨期权",
+      term: "Vanilla Call",
+      status: "可用",
+      description: [
+        "适合看涨观点",
+        "没有敲出风险",
+        "期权费更高",
+        "主要看最终到期价格",
+      ],
+      feedback:
+        "普通 Call 方向正确、风险更简单，但没有回应客户“希望更便宜并接受额外条件”的需求。",
+    },
+    {
+      id: "up_out_call",
+      name: "上涨敲出看涨期权",
+      term: "Up-and-Out Call",
+      status: "可用",
+      description: [
+        "价格上涨太多时可能敲出",
+        "和客户想参与上涨的目标有冲突",
+        "需要非常明确的收益上限和敲出解释",
+      ],
+      feedback:
+        "客户想参与上涨。上涨敲出 Call 会在市场上涨过强时失效，和这位客户的直觉不太匹配。",
+    },
+    {
+      id: "direct_index",
+      name: "直接买入指数",
+      term: "Direct Index Purchase",
+      status: "可用",
+      description: [
+        "完整参与上涨",
+        "没有期权费",
+        "下跌风险不限制在期权费内",
+      ],
+      feedback:
+        "这不是期权结构，也没有满足客户想用有限期权费表达观点的需求。",
+    },
+  ],
+  disclosureItems: [
+    {
+      id: "day3_path_dependent",
+      text: "障碍期权不只看最终价格，也看中途价格路径是否触碰障碍线。",
+      correct: true,
+    },
+    {
+      id: "day3_knock_out_loss",
+      text: "如果触碰敲出障碍，产品可能提前失效，客户支付的期权费可能全部损失。",
+      correct: true,
+    },
+    {
+      id: "day3_final_price_not_enough",
+      text: "即使最终价格高于行权价，如果之前已经敲出，客户也可能没有收益。",
+      correct: true,
+    },
+    {
+      id: "day3_cheaper_reason",
+      text: "障碍期权更便宜，是因为客户承担了额外的敲出风险。",
+      correct: true,
+    },
+    {
+      id: "day3_same_as_vanilla",
+      text: "障碍期权和普通期权一样，只需要看最终到期价格。",
+      correct: false,
+    },
+  ],
+  market: {
+    underlying: "恒生指数",
+    spot: 21500,
+    strike: 22000,
+    barrier: 21000,
+    premium: 90,
+    vanillaPremium: 150,
+    maturity: "1个月",
+    path: [21500, 21820, 21460, 20950, 21680, 22400],
+  },
+  scoringRules: {
+    correctProduct: "down_out_call",
+    correctDisclosureIds: [
+      "day3_path_dependent",
+      "day3_knock_out_loss",
+      "day3_final_price_not_enough",
+      "day3_cheaper_reason",
+    ],
+    misleadingDisclosureId: "day3_same_as_vanilla",
+  },
+};
+
 const dayConfigs = {
   1: day1Config,
   2: day2Config,
+  3: day3Config,
 };
 
 const stageConfig = {
   ...day1Config.stages,
   ...day2Config.stages,
+  ...day3Config.stages,
 };
 
 const allHandbookEntries = [
   ...day1Config.handbookEntries,
   ...day2Config.handbookEntries,
+  ...day3Config.handbookEntries,
 ];
 
 const day1HandbookEntryIds = day1Config.handbookEntries.map((entry) => entry.id);
+const day2HandbookEntryIds = day2Config.handbookEntries.map((entry) => entry.id);
 
 const fullWidthStages = new Set([
   "day2_lesson_backward_price",
   "day2_tree_explainer",
+  "day3_market_run",
 ]);
 
 function cn(...classes) {
@@ -708,6 +945,25 @@ function getQuoteAnalysis(quote) {
     martinComment:
       "模型能帮你保持纪律。报价离公允价值太远，就会失去客户信任。",
     margin,
+  };
+}
+
+function getDay3MarketResult() {
+  const market = day3Config.market;
+  const finalPrice = market.path[market.path.length - 1];
+  const knockedOutIndex = market.path.findIndex((price) => price <= market.barrier);
+  const knockedOut = knockedOutIndex >= 0;
+  const vanillaPayoff = Math.max(finalPrice - market.strike, 0);
+  const barrierPayoff = knockedOut ? 0 : vanillaPayoff;
+  const pnl = barrierPayoff - market.premium;
+
+  return {
+    finalPrice,
+    knockedOut,
+    knockedOutIndex,
+    vanillaPayoff,
+    barrierPayoff,
+    pnl,
   };
 }
 
@@ -1081,19 +1337,27 @@ function TerminalHeader({ label, accent }) {
 }
 
 function SideData({ currentDay }) {
-  const side = currentDay === 2
-    ? {
-        leftStatus: "理论价",
-        dayLabel: "第二天",
-        mode: "报价",
-        topic: "二叉树",
-      }
-    : {
-        leftStatus: "固定路径",
-        dayLabel: "第一天",
-        mode: "教学",
-        topic: "CALL / PUT",
-      };
+  const side =
+    currentDay === 3
+      ? {
+          leftStatus: "障碍线",
+          dayLabel: "第三天",
+          mode: "路径",
+          topic: "KNOCK-OUT",
+        }
+      : currentDay === 2
+        ? {
+            leftStatus: "理论价",
+            dayLabel: "第二天",
+            mode: "报价",
+            topic: "二叉树",
+          }
+        : {
+            leftStatus: "固定路径",
+            dayLabel: "第一天",
+            mode: "教学",
+            topic: "CALL / PUT",
+          };
 
   return (
     <>
@@ -1109,7 +1373,9 @@ function SideData({ currentDay }) {
 
       <div className="font-terminal fixed right-8 top-1/2 z-10 hidden -translate-y-1/2 text-right text-sm leading-8 text-slate-700 lg:block">
         <div className="text-slate-600">产品</div>
-        <div className="text-[#00f0ff]">普通期权</div>
+        <div className="text-[#00f0ff]">
+          {currentDay === 3 ? "障碍期权" : "普通期权"}
+        </div>
         <br />
         <div className="text-slate-600">主题</div>
         <div className="text-[#00f0ff]">{side.topic}</div>
@@ -1352,11 +1618,96 @@ function BottomActionBar({ stage, selectedProduct, marketComplete, actions }) {
     ),
     day2_complete: (
       <>
-        <PrimaryButton tone="ghost" disabled>
-          下一天：第三天障碍期权，即将开放
+        <PrimaryButton tone="gold" onClick={actions.startDay3}>
+          进入第三天：障碍期权
         </PrimaryButton>
-        <PrimaryButton tone="gold" onClick={actions.restartDay2}>
+        <PrimaryButton tone="ghost" onClick={actions.restartDay2}>
           重新开始第二天
+        </PrimaryButton>
+      </>
+    ),
+    day3_intro: (
+      <PrimaryButton onClick={actions.toDay3BarrierConcept} className="px-10">
+        开始障碍课
+      </PrimaryButton>
+    ),
+    day3_lesson_barrier_concept: (
+      <PrimaryButton onClick={actions.toDay3KnockOut} className="px-10">
+        继续：什么是敲出
+      </PrimaryButton>
+    ),
+    day3_lesson_knock_out: (
+      <PrimaryButton onClick={actions.toDay3CompareVanilla} className="px-10">
+        继续：和普通期权比较
+      </PrimaryButton>
+    ),
+    day3_lesson_compare_vanilla: (
+      <PrimaryButton onClick={actions.finishDay3Intro} className="px-10">
+        更新工作手册
+      </PrimaryButton>
+    ),
+    day3_handbook_updated: (
+      <>
+        <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
+          打开手册
+        </PrimaryButton>
+        <PrimaryButton onClick={actions.meetDay3Client}>接待客户</PrimaryButton>
+      </>
+    ),
+    day3_client_arrival: (
+      <>
+        <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
+          打开手册
+        </PrimaryButton>
+        <PrimaryButton onClick={actions.toDay3ProductSelection}>
+          进入产品选择
+        </PrimaryButton>
+      </>
+    ),
+    day3_product_selection: (
+      <>
+        <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
+          打开手册
+        </PrimaryButton>
+        <PrimaryButton onClick={actions.confirmProduct} disabled={!selectedProduct}>
+          确认产品
+        </PrimaryButton>
+      </>
+    ),
+    day3_risk_disclosure: (
+      <>
+        <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
+          打开手册
+        </PrimaryButton>
+        <PrimaryButton onClick={actions.confirmDisclosure}>
+          确认风险披露
+        </PrimaryButton>
+      </>
+    ),
+    day3_market_run: (
+      <PrimaryButton
+        onClick={marketComplete ? actions.viewReport : undefined}
+        tone={marketComplete ? "gold" : "ghost"}
+        disabled={!marketComplete}
+      >
+        {marketComplete ? "查看报告" : "市场自动运行中"}
+      </PrimaryButton>
+    ),
+    day3_report: (
+      <>
+        <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
+          打开手册
+        </PrimaryButton>
+        <PrimaryButton onClick={actions.finishDay3}>完成第三天</PrimaryButton>
+      </>
+    ),
+    day3_complete: (
+      <>
+        <PrimaryButton tone="ghost" disabled>
+          下一天：组合产品，即将开放
+        </PrimaryButton>
+        <PrimaryButton tone="gold" onClick={actions.restartDay3}>
+          重新开始第三天
         </PrimaryButton>
       </>
     ),
@@ -1913,13 +2264,21 @@ function ClientArrivalPanel() {
   );
 }
 
-function ProductSelectionPanel({ selectedProduct, productMessage, onSelectProduct }) {
+function ProductSelectionPanel({
+  selectedProduct,
+  productMessage,
+  onSelectProduct,
+  products = day1Config.products,
+  correctProductId = day1Config.scoringRules.correctProduct,
+  title = "产品选择台",
+  accent = "选择一个产品",
+}) {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="产品选择台" accent="选择一个产品" />
+      <TerminalHeader label={title} accent={accent} />
       <div className="p-5">
         <div className="grid gap-4 md:grid-cols-2">
-          {day1Config.products.map((product) => {
+          {products.map((product) => {
             const selected = selectedProduct === product.id;
             return (
               <button
@@ -1983,7 +2342,7 @@ function ProductSelectionPanel({ selectedProduct, productMessage, onSelectProduc
           <div
             className={cn(
               "mt-5 rounded-md border-l-4 p-4 text-sm leading-7",
-              selectedProduct === "vanilla_call"
+              selectedProduct === correctProductId
                 ? "border-green-400 bg-green-400/[0.06] text-green-300"
                 : "border-[#ffd700] bg-[#ffd700]/[0.06] text-[#ffd700]",
             )}
@@ -3102,6 +3461,547 @@ function Day2CompletePanel() {
   );
 }
 
+function Day3IntroPanel() {
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="第三天晨会" accent="路径依赖产品" />
+      <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-6">
+          <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[#ffd700]">
+            BARRIER OPTION / 障碍期权
+          </div>
+          <h1 className="text-4xl font-black leading-tight text-slate-100 md:text-5xl">
+            不只看终点，还要看路上有没有碰线
+          </h1>
+          <p className="mt-5 text-base leading-8 text-slate-300">
+            前两天的普通期权像“到终点再结算”。第三天的障碍期权更像一份带红线的合约：
+            中途碰到某个价格，产品命运就会改变。
+          </p>
+        </div>
+
+        <div className="grid gap-4">
+          {[
+            ["普通期权", "主要看最终到期价格。中途价格怎么波动，通常不会提前终止。"],
+            ["障碍期权", "额外观察一条障碍线。中途触碰障碍，产品可能敲入或敲出。"],
+            ["今天重点", "只做敲出（Knock-Out）入门：碰到障碍线，产品提前失效。"],
+          ].map(([title, text]) => (
+            <div key={title} className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+                {title}
+              </div>
+              <div className="mt-3 text-sm leading-7 text-slate-300">{text}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day3BarrierConceptPanel() {
+  const prices = [21500, 21800, 21400, 21100, 20950, 21600, 22400];
+  const barrier = day3Config.market.barrier;
+
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="第一课 / 障碍线" accent="Barrier 是合约红线" />
+      <div className="space-y-5 p-6">
+        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
+          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+            直觉
+          </div>
+          <p className="text-lg leading-9 text-slate-300">
+            障碍线不是预测线，而是
+            <span className="font-bold text-[#ffd700]">合约规则线</span>。
+            如果产品约定“跌到 21,000 点就敲出”，那市场只要中途碰到或跌破 21,000，
+            后面再涨回来也要按敲出规则处理。
+          </p>
+        </div>
+
+        <div className="rounded-lg border border-cyan-400/15 bg-[#070d19]/85 p-5">
+          <svg viewBox="0 0 760 260" className="h-auto w-full" role="img" aria-label="障碍线示意图">
+            <defs>
+              <linearGradient id="day3PathGlow" x1="0" x2="1">
+                <stop offset="0%" stopColor="#00f0ff" />
+                <stop offset="100%" stopColor="#ffd700" />
+              </linearGradient>
+            </defs>
+            {[0, 1, 2, 3].map((tick) => (
+              <line
+                key={tick}
+                x1="58"
+                x2="710"
+                y1={50 + tick * 46}
+                y2={50 + tick * 46}
+                stroke="rgba(148,163,184,0.13)"
+              />
+            ))}
+            <line x1="58" x2="710" y1="168" y2="168" stroke="#ef4444" strokeWidth="2" strokeDasharray="8 8" />
+            <text x="62" y="158" className="fill-red-300 text-[13px] font-bold">
+              下方障碍线 {formatPoints(barrier)}
+            </text>
+            <polyline
+              points={prices
+                .map((price, index) => {
+                  const x = 70 + index * 100;
+                  const y = 205 - ((price - 20500) / 2100) * 150;
+                  return `${x},${y}`;
+                })
+                .join(" ")}
+              fill="none"
+              stroke="url(#day3PathGlow)"
+              strokeWidth="4"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+            />
+            {prices.map((price, index) => {
+              const x = 70 + index * 100;
+              const y = 205 - ((price - 20500) / 2100) * 150;
+              const danger = price <= barrier;
+              return (
+                <g key={`${price}-${index}`}>
+                  <circle
+                    cx={x}
+                    cy={y}
+                    r={danger ? 9 : 6}
+                    fill={danger ? "#ef4444" : "#00f0ff"}
+                    stroke={danger ? "#fecaca" : "#cffafe"}
+                    strokeWidth="2"
+                  />
+                  <text x={x} y={y - 14} textAnchor="middle" className={danger ? "fill-red-300 text-[12px] font-bold" : "fill-slate-300 text-[12px]"}>
+                    {formatPoints(price)}
+                  </text>
+                </g>
+              );
+            })}
+            <text x="374" y="238" textAnchor="middle" className="fill-slate-500 text-[13px]">
+              价格路径从左到右运行。障碍产品会记住中途有没有碰线。
+            </text>
+          </svg>
+        </div>
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day3KnockOutPanel() {
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="第二课 / Knock-Out" accent="敲出后不可复活" />
+      <div className="space-y-5 p-6">
+        <div className="grid gap-4 md:grid-cols-3">
+          {[
+            ["1. 设定障碍线", "合约写明：例如恒指跌到 21,000 点或以下，产品敲出。"],
+            ["2. 观察全过程", "不是只看收盘或到期。只要路径中碰到障碍，就触发规则。"],
+            ["3. 敲出后归零", "产品提前失效。最后涨回去，也不能把已经敲出的期权叫回来。"],
+          ].map(([title, text]) => (
+            <div key={title} className="rounded-lg border border-cyan-400/15 bg-cyan-400/[0.04] p-5">
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+                {title}
+              </div>
+              <p className="mt-3 text-sm leading-7 text-slate-300">{text}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-lg border border-red-500/25 bg-red-500/[0.06] p-5">
+          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-red-300">
+            交易台最常见误解
+          </div>
+          <div className="text-2xl font-black text-slate-100">
+            “最后涨回来了，为什么还没收益？”
+          </div>
+          <p className="mt-4 text-base leading-8 text-slate-300">
+            因为障碍期权看路径。只要中途敲出，合约就提前结束。最后价格漂亮，
+            对已经结束的合约没有帮助。
+          </p>
+        </div>
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day3CompareVanillaPanel() {
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="第三课 / Vanilla vs Barrier" accent="便宜来自额外风险" />
+      <div className="grid gap-5 p-6 md:grid-cols-2">
+        <div className="rounded-lg border border-cyan-400/25 bg-cyan-400/[0.05] p-5">
+          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+            普通看涨期权
+          </div>
+          <div className="text-2xl font-black text-slate-100">只看最终价格</div>
+          <ul className="mt-5 space-y-3 text-sm leading-7 text-slate-300">
+            <li>- 没有敲出线</li>
+            <li>- 期权费通常更贵</li>
+            <li>- 如果最终价格高于行权价，产生到期收益</li>
+          </ul>
+          <div className="mt-5 rounded-md border border-white/10 bg-black/30 p-4">
+            期权费示例：<span className="font-black text-[#00f0ff]">{day3Config.market.vanillaPremium} 点</span>
+          </div>
+        </div>
+
+        <div className="rounded-lg border border-[#ffd700]/30 bg-[#ffd700]/[0.06] p-5">
+          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#ffd700]">
+            下跌敲出看涨期权
+          </div>
+          <div className="text-2xl font-black text-slate-100">更便宜，但会看路径</div>
+          <ul className="mt-5 space-y-3 text-sm leading-7 text-slate-300">
+            <li>- 有下方障碍线：{formatPoints(day3Config.market.barrier)}</li>
+            <li>- 期权费更低</li>
+            <li>- 中途触碰障碍，产品提前失效</li>
+          </ul>
+          <div className="mt-5 rounded-md border border-white/10 bg-black/30 p-4">
+            期权费示例：<span className="font-black text-[#ffd700]">{day3Config.market.premium} 点</span>
+          </div>
+        </div>
+
+        <div className="md:col-span-2 rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
+          Martin 小口诀：障碍期权不是“普通期权打折版”。它便宜，是因为客户把一部分路径风险接过去了。
+        </div>
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day3HandbookUpdatedPanel() {
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="系统提示" accent="工作手册新增页面" />
+      <div className="flex min-h-[430px] flex-col items-center justify-center p-6 text-center">
+        <div className="font-terminal mb-4 text-sm tracking-[0.32em] text-[#00f0ff]">
+          工作手册已更新
+        </div>
+        <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-4xl font-black tracking-[0.08em] text-transparent md:text-5xl">
+          障碍期权
+        </div>
+        <p className="mt-8 max-w-2xl text-base leading-8 text-slate-300">
+          新页面说明了障碍线、敲出规则、为什么更便宜，以及必须向客户披露的路径风险。
+        </p>
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day3ClientArrivalPanel() {
+  const client = day3Config.clientProfile;
+  const profileRows = [
+    ["姓名", client.name],
+    ["客户类型", client.type],
+    ["市场观点", client.marketView],
+    ["风险承受能力", client.riskTolerance],
+    ["目标", client.goal],
+    ["产品需求", client.productNeed],
+    ["预算", client.budget],
+    ["经验", client.experience],
+  ];
+
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="客户资料" accent="预算敏感订单" />
+      <div className="grid gap-6 p-6 lg:grid-cols-[0.85fr_1.15fr]">
+        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
+          <div className="mb-5 flex items-center gap-4">
+            <div className="flex h-20 w-20 items-center justify-center rounded-md border border-[#ffd700]/30 bg-[#ffd700]/[0.08] font-terminal text-4xl font-black text-[#ffd700]">
+              陈
+            </div>
+            <div>
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+                活跃散户
+              </div>
+              <div className="mt-2 text-2xl font-black text-slate-100">{client.name}</div>
+            </div>
+          </div>
+          <div className="grid gap-3">
+            {profileRows.map(([label, value]) => (
+              <div key={label} className="rounded-md border border-white/10 bg-white/[0.03] p-3">
+                <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
+                  {label}
+                </div>
+                <div className="mt-1 text-sm leading-6 text-slate-200">{value}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-5">
+          <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#ffd700]">
+            客户对白
+          </div>
+          <div className="space-y-4">
+            {client.dialogue.map((line) => (
+              <div key={line} className="rounded-md border border-white/10 bg-black/30 p-4 text-base leading-8 text-slate-200">
+                陈女士：“{line}”
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day3MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
+  const market = day3Config.market;
+  const result = getDay3MarketResult();
+  const activeCount = Math.min(Math.max(visibleMarketSteps, 1), market.path.length);
+  const activePrices = market.path.slice(0, activeCount);
+  const latestPrice = activePrices[activePrices.length - 1] ?? market.spot;
+  const knockedNow = activePrices.some((price) => price <= market.barrier);
+  const selectedProductName =
+    day3Config.products.find((product) => product.id === selectedProduct)?.name ?? "未选择产品";
+  const finalShown = marketHasRun && visibleMarketSteps >= market.path.length;
+
+  const chart = useMemo(() => {
+    const width = 820;
+    const height = 360;
+    const pad = { left: 58, right: 40, top: 34, bottom: 48 };
+    const minPrice = Math.min(...market.path, market.barrier) - 260;
+    const maxPrice = Math.max(...market.path, market.strike) + 220;
+    const plotWidth = width - pad.left - pad.right;
+    const plotHeight = height - pad.top - pad.bottom;
+    const xScale = (index) => pad.left + (index / (market.path.length - 1)) * plotWidth;
+    const yScale = (price) =>
+      pad.top + ((maxPrice - price) / (maxPrice - minPrice)) * plotHeight;
+
+    return { width, height, xScale, yScale, yTicks: [21000, 21500, 22000, 22400] };
+  }, [market.barrier, market.path, market.strike]);
+
+  const activeLine = activePrices
+    .map((price, index) => `${chart.xScale(index)},${chart.yScale(price)}`)
+    .join(" ");
+  const barrierY = chart.yScale(market.barrier);
+  const strikeY = chart.yScale(market.strike);
+
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="障碍市场路径" accent={finalShown ? "路径已结算" : "实时观察障碍线"} />
+      <div className="space-y-5 p-5">
+        <div className="grid gap-4 md:grid-cols-6">
+          {[
+            ["标的", market.underlying],
+            ["现价", formatPoints(market.spot)],
+            ["行权价", formatPoints(market.strike)],
+            ["障碍线", formatPoints(market.barrier)],
+            ["期权费", `${market.premium} 点`],
+            ["期限", market.maturity],
+          ].map(([label, value]) => (
+            <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+              <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
+                {label}
+              </div>
+              <div className="mt-2 text-lg font-bold text-slate-100">{value}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid gap-4 lg:grid-cols-[0.75fr_1.25fr]">
+          <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-4">
+            <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">
+              已选产品
+            </div>
+            <div className="mt-2 text-xl font-black text-slate-100">{selectedProductName}</div>
+            <div className="mt-4 rounded-md border border-white/10 bg-black/30 p-3 text-sm leading-7 text-slate-300">
+              当前价格：
+              <span className={cn("font-terminal ml-1 text-2xl font-black", knockedNow ? "text-red-300" : "text-[#00f0ff]")}>
+                {formatPoints(latestPrice)}
+              </span>
+            </div>
+            <div
+              className={cn(
+                "mt-3 rounded-md border px-3 py-2 font-terminal text-xs tracking-[0.14em]",
+                knockedNow
+                  ? "border-red-500/40 bg-red-500/[0.08] text-red-300"
+                  : "border-green-400/30 bg-green-400/[0.06] text-green-300",
+              )}
+            >
+              {knockedNow ? "障碍已触碰 / 产品敲出" : "障碍尚未触碰"}
+            </div>
+          </div>
+
+          <div className="market-chart-panel rounded-lg border border-cyan-400/15 bg-[#070d19]/85 p-4">
+            <svg viewBox={`0 0 ${chart.width} ${chart.height}`} className="h-auto w-full" role="img" aria-label="Day 3 障碍期权市场路径">
+              {chart.yTicks.map((tick) => (
+                <g key={tick}>
+                  <line x1="58" x2="780" y1={chart.yScale(tick)} y2={chart.yScale(tick)} stroke="rgba(148,163,184,0.15)" />
+                  <text x="18" y={chart.yScale(tick) + 4} className="fill-slate-500 text-[12px]">
+                    {formatPoints(tick)}
+                  </text>
+                </g>
+              ))}
+              <line x1="58" x2="780" y1={barrierY} y2={barrierY} stroke="#ef4444" strokeWidth="3" strokeDasharray="8 8" />
+              <text x="625" y={barrierY - 10} className="fill-red-300 text-[13px] font-bold">
+                敲出障碍 {formatPoints(market.barrier)}
+              </text>
+              <line x1="58" x2="780" y1={strikeY} y2={strikeY} stroke="#ffd700" strokeWidth="2" strokeDasharray="6 7" />
+              <text x="625" y={strikeY - 10} className="fill-[#ffd700] text-[13px] font-bold">
+                行权价 {formatPoints(market.strike)}
+              </text>
+              <polyline
+                points={activeLine}
+                fill="none"
+                stroke={knockedNow ? "#ef4444" : "#00f0ff"}
+                strokeWidth="4"
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                className="chart-tension"
+              />
+              {activePrices.map((price, index) => {
+                const danger = price <= market.barrier;
+                return (
+                  <g key={`${price}-${index}`}>
+                    <circle
+                      cx={chart.xScale(index)}
+                      cy={chart.yScale(price)}
+                      r={danger ? 9 : 6}
+                      fill={danger ? "#ef4444" : "#00f0ff"}
+                      stroke={danger ? "#fecaca" : "#cffafe"}
+                      strokeWidth="2"
+                    />
+                    <text
+                      x={chart.xScale(index)}
+                      y={chart.yScale(price) - 14}
+                      textAnchor="middle"
+                      className={danger ? "fill-red-300 text-[12px] font-bold" : "fill-slate-300 text-[12px]"}
+                    >
+                      {formatPoints(price)}
+                    </text>
+                  </g>
+                );
+              })}
+            </svg>
+          </div>
+        </div>
+
+        {finalShown && (
+          <div className="grid gap-4 md:grid-cols-3">
+            <div className="rounded-lg border border-red-500/25 bg-red-500/[0.06] p-4">
+              <div className="font-terminal text-xs tracking-[0.16em] text-red-300">
+                敲出结果
+              </div>
+              <div className="mt-2 text-2xl font-black text-red-300">
+                {result.knockedOut ? `第 ${result.knockedOutIndex + 1} 个价格点触碰障碍` : "未敲出"}
+              </div>
+            </div>
+            <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+              <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
+                最终价格
+              </div>
+              <div className="mt-2 text-2xl font-black text-[#00f0ff]">
+                {formatPoints(result.finalPrice)}
+              </div>
+            </div>
+            <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
+              <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">
+                Barrier Call 净盈亏
+              </div>
+              <div className={cn("mt-2 text-2xl font-black", result.pnl >= 0 ? "text-green-400" : "text-red-300")}>
+                {result.pnl >= 0 ? "+" : ""}
+                {result.pnl} 点
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day3ReportPanel({ score }) {
+  if (!score) {
+    return (
+      <TerminalCard className="scene-enter p-6">
+        <div className="text-slate-400">报告生成中。</div>
+      </TerminalCard>
+    );
+  }
+
+  const rows = [
+    ["产品", score.productName],
+    ["最终价格", `${formatPoints(score.finalPrice)} 点`],
+    ["障碍线", `${formatPoints(day3Config.market.barrier)} 点`],
+    ["敲出状态", score.knockedOut ? "已敲出" : "未敲出"],
+    ["普通 Call 到期收益", `${score.vanillaPayoff} 点`],
+    ["Barrier Call 净盈亏", `${score.pnl >= 0 ? "+" : ""}${score.pnl} 点`],
+  ];
+
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="第三天日终报告" accent="障碍期权复盘" />
+      <div className="space-y-5 p-6">
+        <div className="grid gap-4 md:grid-cols-3">
+          {rows.map(([label, value]) => (
+            <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+              <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
+                {label}
+              </div>
+              <div className="mt-2 text-xl font-black text-slate-100">{value}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-4">
+          {[
+            ["产品适当性", score.suitability],
+            ["风险披露", score.riskDisclosure],
+            ["路径判断", score.pathAwareness],
+            ["总评分", score.overall],
+          ].map(([label, value]) => (
+            <div
+              key={label}
+              className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.03] p-4"
+            >
+              <span className="font-terminal text-xs text-slate-500">{label}</span>
+              <ScoreBadge score={value} />
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-md border-l-4 border-red-400 bg-red-500/[0.06] p-4 text-base leading-8 text-red-200">
+          市场复盘：价格中途跌破 {formatPoints(day3Config.market.barrier)} 点，触发敲出。
+          最终价格虽然回到 {formatPoints(score.finalPrice)} 点，但敲出产品已经提前失效。
+        </div>
+
+        <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
+          Martin 复盘：{score.martinComment}
+        </div>
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day3CompletePanel() {
+  const summary = [
+    "普通期权主要看最终到期价格。",
+    "障碍期权还要看中途路径是否触碰障碍线。",
+    "Knock-Out 表示触碰障碍后产品提前失效。",
+    "障碍期权更便宜，是因为客户承担了额外路径风险。",
+    "适当性和风险披露在复杂产品里比市场方向更重要。",
+  ];
+
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="第三天完成" accent="障碍训练完成" />
+      <div className="flex min-h-[520px] flex-col items-center justify-center p-6 text-center">
+        <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-5xl font-black tracking-[0.12em] text-transparent md:text-6xl">
+          第三天完成
+        </div>
+        <div className="mt-8 grid w-full max-w-2xl gap-3 text-left">
+          {summary.map((item) => (
+            <div
+              key={item}
+              className="rounded-md border border-cyan-400/15 bg-black/30 px-4 py-3 text-sm leading-7 text-slate-300"
+            >
+              <span className="font-terminal mr-2 text-[#00f0ff]">规则</span>
+              {item}
+            </div>
+          ))}
+        </div>
+      </div>
+    </TerminalCard>
+  );
+}
+
 function MainPanel({
   stage,
   selectedProduct,
@@ -3115,6 +4015,7 @@ function MainPanel({
   quoteAnalysis,
   clientResponse,
   day2Score,
+  day3Score,
   actions,
 }) {
   const panels = {
@@ -3180,6 +4081,41 @@ function MainPanel({
     ),
     day2_report: <Day2ReportPanel score={day2Score} />,
     day2_complete: <Day2CompletePanel />,
+    day3_intro: <Day3IntroPanel />,
+    day3_lesson_barrier_concept: <Day3BarrierConceptPanel />,
+    day3_lesson_knock_out: <Day3KnockOutPanel />,
+    day3_lesson_compare_vanilla: <Day3CompareVanillaPanel />,
+    day3_handbook_updated: <Day3HandbookUpdatedPanel />,
+    day3_client_arrival: <Day3ClientArrivalPanel />,
+    day3_product_selection: (
+      <ProductSelectionPanel
+        selectedProduct={selectedProduct}
+        productMessage={productMessage}
+        onSelectProduct={actions.selectProduct}
+        products={day3Config.products}
+        correctProductId={day3Config.scoringRules.correctProduct}
+        title="障碍产品选择台"
+        accent="选择一个适合客户的结构"
+      />
+    ),
+    day3_risk_disclosure: (
+      <RiskDisclosurePanel
+        selectedDisclosures={selectedDisclosures}
+        onToggleDisclosure={actions.toggleDisclosure}
+        disclosureFeedback={disclosureFeedback}
+        items={day3Config.disclosureItems}
+        instruction="在确认障碍期权交易前，选择你必须向陈女士说明的内容。"
+      />
+    ),
+    day3_market_run: (
+      <Day3MarketRunPanel
+        selectedProduct={selectedProduct}
+        marketHasRun={marketHasRun}
+        visibleMarketSteps={visibleMarketSteps}
+      />
+    ),
+    day3_report: <Day3ReportPanel score={day3Score} />,
+    day3_complete: <Day3CompletePanel />,
   };
 
   return <div className="min-h-[580px]">{panels[stage] ?? null}</div>;
@@ -3199,14 +4135,18 @@ export default function Day1TraderSimulator() {
   const [selectedQuote, setSelectedQuote] = useState(day2Config.quoteRules.defaultQuote);
   const [clientResponse, setClientResponse] = useState(null);
   const [day2Score, setDay2Score] = useState(null);
+  const [day3Score, setDay3Score] = useState(null);
   const [productMessage, setProductMessage] = useState("");
   const [skipSignal, setSkipSignal] = useState(0);
 
   const isDay2Stage = currentStage.startsWith("day2");
-  const activeDisclosureConfig = isDay2Stage ? day2Config : day1Config;
+  const isDay3Stage = currentStage.startsWith("day3");
+  const activeDisclosureConfig = isDay3Stage ? day3Config : isDay2Stage ? day2Config : day1Config;
   const correctDisclosureIds = activeDisclosureConfig.scoringRules.correctDisclosureIds;
   const misleadingDisclosureId = activeDisclosureConfig.scoringRules.misleadingDisclosureId;
-  const marketPathLength = (day1Config.market.chartPath ?? day1Config.market.path).length;
+  const marketPathLength = isDay3Stage
+    ? day3Config.market.path.length
+    : (day1Config.market.chartPath ?? day1Config.market.path).length;
   const marketComplete = marketHasRun && visibleMarketSteps >= marketPathLength;
   const quoteAnalysis = useMemo(() => getQuoteAnalysis(selectedQuote), [selectedQuote]);
   const isFullWidthStage = fullWidthStages.has(currentStage);
@@ -3228,7 +4168,8 @@ export default function Day1TraderSimulator() {
   };
 
   const selectProduct = (productId) => {
-    const product = day1Config.products.find((item) => item.id === productId);
+    const products = currentStage === "day3_product_selection" ? day3Config.products : day1Config.products;
+    const product = products.find((item) => item.id === productId);
     if (!product) return;
 
     if (product.locked) {
@@ -3251,6 +4192,13 @@ export default function Day1TraderSimulator() {
       setProductMessage("请先选择一个可用产品，再确认推荐。");
       return;
     }
+
+    if (currentStage === "day3_product_selection") {
+      setSelectedDisclosures([]);
+      setCurrentStage("day3_risk_disclosure");
+      return;
+    }
+
     unlockHandbookEntry("risk_disclosure");
     setCurrentStage("day1_risk_disclosure");
   };
@@ -3279,6 +4227,13 @@ export default function Day1TraderSimulator() {
   };
 
   const confirmDisclosure = () => {
+    if (currentStage === "day3_risk_disclosure") {
+      setCurrentStage("day3_market_run");
+      setMarketHasRun(true);
+      setVisibleMarketSteps(1);
+      return;
+    }
+
     if (currentStage === "day2_risk_disclosure") {
       const response = getQuoteAnalysis(selectedQuote);
       setClientResponse(response);
@@ -3401,6 +4356,59 @@ export default function Day1TraderSimulator() {
     };
   };
 
+  const evaluateDay3 = () => {
+    const product = day3Config.products.find((item) => item.id === selectedProduct);
+    const productName = product?.name ?? "未选择产品";
+    const riskDisclosure = getRiskDisclosureScore(selectedDisclosures, day3Config);
+    const result = getDay3MarketResult();
+    const isCorrectProduct = selectedProduct === day3Config.scoringRules.correctProduct;
+    const suitability =
+      selectedProduct === "down_out_call"
+        ? "A"
+        : selectedProduct === "vanilla_call"
+          ? "B"
+          : selectedProduct === "up_out_call"
+            ? "C"
+            : "D";
+    const pathAwareness = riskDisclosure === "A" ? "A" : riskDisclosure === "C" ? "C" : "D";
+
+    let overall = "B";
+    if (suitability === "D" || riskDisclosure === "D") {
+      overall = "D";
+    } else if (suitability === "A" && riskDisclosure === "A") {
+      overall = "A";
+    } else if (suitability === "C" || riskDisclosure === "C") {
+      overall = "C";
+    }
+
+    const productComment = isCorrectProduct
+      ? "你选中了下跌敲出看涨期权，方向、预算和客户接受额外条件都匹配。"
+      : selectedProduct === "vanilla_call"
+        ? "普通 Call 风险更简单，但没有满足客户想降低期权费的预算需求。"
+        : selectedProduct === "up_out_call"
+          ? "上涨敲出会在市场上涨过强时失效，和客户想参与上涨的目标冲突。"
+          : "这个产品没有把客户的看涨观点和期权费预算结合起来。";
+
+    const disclosureComment =
+      riskDisclosure === "A"
+        ? "你也把路径依赖和敲出风险讲清楚了。"
+        : "但风险披露还不够完整。障碍产品必须强调：最终价格有利也不代表一定有收益。";
+
+    return {
+      productName,
+      finalPrice: result.finalPrice,
+      knockedOut: result.knockedOut,
+      vanillaPayoff: result.vanillaPayoff,
+      barrierPayoff: result.barrierPayoff,
+      pnl: result.pnl,
+      suitability,
+      riskDisclosure,
+      pathAwareness,
+      overall,
+      martinComment: `${productComment}${disclosureComment}`,
+    };
+  };
+
   const startDay1 = () => {
     setCurrentDay(1);
     setCurrentStage("day1_welcome");
@@ -3415,6 +4423,7 @@ export default function Day1TraderSimulator() {
     setSelectedQuote(day2Config.quoteRules.defaultQuote);
     setClientResponse(null);
     setDay2Score(null);
+    setDay3Score(null);
     setProductMessage("");
     setSkipSignal((value) => value + 1);
   };
@@ -3433,6 +4442,7 @@ export default function Day1TraderSimulator() {
     setSelectedQuote(day2Config.quoteRules.defaultQuote);
     setClientResponse(null);
     setDay2Score(null);
+    setDay3Score(null);
     setProductMessage("");
     setSkipSignal((value) => value + 1);
   };
@@ -3453,6 +4463,7 @@ export default function Day1TraderSimulator() {
     setSelectedQuote(day2Config.quoteRules.defaultQuote);
     setClientResponse(null);
     setDay2Score(null);
+    setDay3Score(null);
     setSkipSignal((value) => value + 1);
   };
 
@@ -3470,6 +4481,45 @@ export default function Day1TraderSimulator() {
     setSelectedQuote(day2Config.quoteRules.defaultQuote);
     setClientResponse(null);
     setDay2Score(null);
+    setDay3Score(null);
+    setSkipSignal((value) => value + 1);
+  };
+
+  const startDay3 = () => {
+    setCurrentDay(3);
+    setCurrentStage("day3_intro");
+    setHandbookOpen(false);
+    setHandbookHasNew(false);
+    setHandbookUnlockedEntries((entries) =>
+      Array.from(new Set([...entries, ...day1HandbookEntryIds, ...day2HandbookEntryIds])),
+    );
+    setSelectedProduct(null);
+    setSelectedDisclosures([]);
+    setMarketHasRun(false);
+    setVisibleMarketSteps(1);
+    setProductMessage("");
+    setSelectedQuote(day2Config.quoteRules.defaultQuote);
+    setClientResponse(null);
+    setDay2Score(null);
+    setDay3Score(null);
+    setSkipSignal((value) => value + 1);
+  };
+
+  const restartDay3 = () => {
+    setCurrentDay(3);
+    setCurrentStage("day3_intro");
+    setHandbookOpen(false);
+    setHandbookHasNew(false);
+    setHandbookUnlockedEntries([...day1HandbookEntryIds, ...day2HandbookEntryIds]);
+    setSelectedProduct(null);
+    setSelectedDisclosures([]);
+    setMarketHasRun(false);
+    setVisibleMarketSteps(1);
+    setProductMessage("");
+    setSelectedQuote(day2Config.quoteRules.defaultQuote);
+    setClientResponse(null);
+    setDay2Score(null);
+    setDay3Score(null);
     setSkipSignal((value) => value + 1);
   };
 
@@ -3477,9 +4527,11 @@ export default function Day1TraderSimulator() {
     if (selectedDisclosures.includes(misleadingDisclosureId)) {
       return {
         tone: "danger",
-        text: isDay2Stage
-          ? "这句话会误导客户。模型价格不是盈利保证。"
-          : "这句话会误导客户。市场上涨不代表扣除期权费后一定赚钱。",
+        text: isDay3Stage
+          ? "这句话会误导客户。障碍期权不能只看最终到期价格。"
+          : isDay2Stage
+            ? "这句话会误导客户。模型价格不是盈利保证。"
+            : "这句话会误导客户。市场上涨不代表扣除期权费后一定赚钱。",
       };
     }
 
@@ -3487,50 +4539,63 @@ export default function Day1TraderSimulator() {
     if (selectedDisclosures.length === 0) {
       return {
         tone: "warn",
-        text: isDay2Stage
-          ? "再检查一下工作手册。客户必须理解期权费风险和模型风险。"
-          : "查看工作手册。客户必须理解期权费可能损失，以及产品不保证盈利。",
+        text: isDay3Stage
+          ? "再检查一下工作手册。客户必须理解障碍线、敲出和路径风险。"
+          : isDay2Stage
+            ? "再检查一下工作手册。客户必须理解期权费风险和模型风险。"
+            : "查看工作手册。客户必须理解期权费可能损失，以及产品不保证盈利。",
       };
     }
 
     if (missing.length > 0) {
       return {
         tone: "warn",
-        text: isDay2Stage
-          ? "再检查一下工作手册。客户必须理解期权费风险和模型风险。"
-          : "查看工作手册。客户必须理解期权费可能损失，以及产品不保证盈利。",
+        text: isDay3Stage
+          ? "再检查一下工作手册。客户必须理解障碍线、敲出和路径风险。"
+          : isDay2Stage
+            ? "再检查一下工作手册。客户必须理解期权费风险和模型风险。"
+            : "查看工作手册。客户必须理解期权费可能损失，以及产品不保证盈利。",
       };
     }
 
     return {
       tone: "good",
-      text: isDay2Stage
-        ? "很好。这几项覆盖了期权费损失、无保证盈利、模型风险和到期收益规则。"
-        : "很好。这几项覆盖了期权费损失、最大亏损限制，以及不保证盈利。",
+      text: isDay3Stage
+        ? "很好。这几项覆盖了路径依赖、敲出、最终价格误区和便宜背后的风险。"
+        : isDay2Stage
+          ? "很好。这几项覆盖了期权费损失、无保证盈利、模型风险和到期收益规则。"
+          : "很好。这几项覆盖了期权费损失、最大亏损限制，以及不保证盈利。",
     };
-  }, [correctDisclosureIds, isDay2Stage, misleadingDisclosureId, selectedDisclosures]);
+  }, [correctDisclosureIds, isDay2Stage, isDay3Stage, misleadingDisclosureId, selectedDisclosures]);
 
   const mentorText = useMemo(() => {
     if (currentStage === "day1_product_selection" && productMessage) return productMessage;
+    if (currentStage === "day3_product_selection" && productMessage) return productMessage;
     if (currentStage === "day1_risk_disclosure") return disclosureFeedback.text;
     if (currentStage === "day2_quote_slider") {
       return `${stageConfig[currentStage].mentor} 当前报价状态：${quoteAnalysis.label}。`;
     }
     if (currentStage === "day2_risk_disclosure") return disclosureFeedback.text;
+    if (currentStage === "day3_risk_disclosure") return disclosureFeedback.text;
     if (currentStage === "day2_client_response" && clientResponse) {
       return `客户反馈：${clientResponse.status}。报价不是只看成交，还要看交易台是否得到合理补偿。`;
     }
     if (currentStage === "day1_market_run" && marketComplete) {
       return "最终价格高于行权价。普通 Call 的到期收益是最终价格减去行权价，再扣除期权费得到净盈亏。";
     }
+    if (currentStage === "day3_market_run" && marketComplete) {
+      return "这就是障碍期权的重点：最终价格高于行权价，但中途已经跌破障碍线，敲出后产品不能复活。";
+    }
     if (currentStage === "day1_report" && day1Score) return day1Score.martinComment;
     if (currentStage === "day2_report" && day2Score) return day2Score.martinComment;
+    if (currentStage === "day3_report" && day3Score) return day3Score.martinComment;
     return stageConfig[currentStage]?.mentor ?? "";
   }, [
     clientResponse,
     currentStage,
     day1Score,
     day2Score,
+    day3Score,
     disclosureFeedback.text,
     marketComplete,
     productMessage,
@@ -3538,7 +4603,9 @@ export default function Day1TraderSimulator() {
   ]);
 
   useEffect(() => {
-    if (currentStage !== "day1_market_run" || !marketHasRun) return undefined;
+    if (!["day1_market_run", "day3_market_run"].includes(currentStage) || !marketHasRun) {
+      return undefined;
+    }
 
     const intervalId = window.setInterval(() => {
       setVisibleMarketSteps((count) => {
@@ -3560,6 +4627,12 @@ export default function Day1TraderSimulator() {
       return;
     }
 
+    if (currentStage === "day3_market_run") {
+      setDay3Score(evaluateDay3());
+      setCurrentStage("day3_report");
+      return;
+    }
+
     setDay1Score(evaluateDay1());
     setCurrentStage("day1_report");
   };
@@ -3568,6 +4641,7 @@ export default function Day1TraderSimulator() {
     startGame: startDay1,
     startDay1,
     startDay2,
+    startDay3,
     startBriefing: () => setCurrentStage("day1_lesson_basics"),
     toCallPutLesson: () => setCurrentStage("day1_intro"),
     toPremiumLesson: () => setCurrentStage("day1_lesson_premium"),
@@ -3575,6 +4649,9 @@ export default function Day1TraderSimulator() {
     toDay2PricingAnchor: () => setCurrentStage("day2_lesson_pricing_anchor"),
     toDay2TreePaths: () => setCurrentStage("day2_lesson_tree_paths"),
     toDay2BackwardPrice: () => setCurrentStage("day2_lesson_backward_price"),
+    toDay3BarrierConcept: () => setCurrentStage("day3_lesson_barrier_concept"),
+    toDay3KnockOut: () => setCurrentStage("day3_lesson_knock_out"),
+    toDay3CompareVanilla: () => setCurrentStage("day3_lesson_compare_vanilla"),
     finishLesson: () => {
       unlockHandbookEntry("vanilla_core");
       setCurrentStage("day1_handbook_updated");
@@ -3583,6 +4660,10 @@ export default function Day1TraderSimulator() {
       unlockHandbookEntry("binomial_pricing");
       setCurrentStage("day2_handbook_updated");
     },
+    finishDay3Intro: () => {
+      unlockHandbookEntry("barrier_options");
+      setCurrentStage("day3_handbook_updated");
+    },
     openHandbook,
     closeHandbook,
     meetClient: () => {
@@ -3590,8 +4671,10 @@ export default function Day1TraderSimulator() {
       setCurrentStage("day1_client_arrival");
     },
     meetDay2Client: () => setCurrentStage("day2_client_arrival"),
+    meetDay3Client: () => setCurrentStage("day3_client_arrival"),
     toProductSelection: () => setCurrentStage("day1_product_selection"),
     toDay2ProductReview: () => setCurrentStage("day2_product_review"),
+    toDay3ProductSelection: () => setCurrentStage("day3_product_selection"),
     selectProduct,
     confirmProduct,
     showPricingTree,
@@ -3604,8 +4687,10 @@ export default function Day1TraderSimulator() {
     viewReport,
     finishDay: () => setCurrentStage("day1_complete"),
     finishDay2: () => setCurrentStage("day2_complete"),
+    finishDay3: () => setCurrentStage("day3_complete"),
     restartDay1,
     restartDay2,
+    restartDay3,
   };
 
   const skipCurrentTypewriter = (event) => {
@@ -3664,6 +4749,7 @@ export default function Day1TraderSimulator() {
             quoteAnalysis={quoteAnalysis}
             clientResponse={clientResponse}
             day2Score={day2Score}
+            day3Score={day3Score}
             actions={actions}
           />
           {!isFullWidthStage && <MentorPanel text={mentorText} skipSignal={skipSignal} />}
