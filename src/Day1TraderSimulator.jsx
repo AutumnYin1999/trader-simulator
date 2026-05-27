@@ -435,7 +435,7 @@ const day2Config = {
     dialogue: [
       "我想买一份 1 个月到期的恒生指数看涨期权。",
       "我看涨市场，但我很在意报价。",
-      "请给我一个合理价格。如果期权费太贵，我就不做这笔交易。",
+      "请给我一个你认为公允的报价，我会和其他交易台比较一下。",
     ],
   },
   productSummary: {
@@ -554,6 +554,11 @@ const day2Config = {
     sliderMin: 100,
     sliderMax: 300,
     defaultQuote: 200,
+  },
+  market: {
+    underlying: "恒生指数 HSI",
+    path: [21500, 21680, 21940, 22140],
+    strike: 22000,
   },
   disclosureItems: [
     {
@@ -717,7 +722,7 @@ const day3Config = {
     dialogue: [
       "我还是看涨恒生指数，但昨天那种普通 Call 对我来说有点贵。",
       "如果能便宜一些，我可以接受一些额外条件。",
-      "但你要讲清楚，什么情况下这个产品会失效。",
+      "你帮我看看，有没有比普通 Call 更适合我预算的方案？",
     ],
   },
   products: [
@@ -825,31 +830,293 @@ const day3Config = {
   },
 };
 
+const day4Config = {
+  day: 4,
+  title: "牛熊证与收回价",
+  stages: {
+    day4_intro: {
+      label: "09:00 晨会",
+      system: "CBBC 产品晨会",
+      mentor:
+        "今天把牛熊证讲完整一点。牛证看涨，熊证看跌。它们都带杠杆，也都带收回价。今天我们用熊证的上方收回价做案例。",
+    },
+    day4_handbook_updated: {
+      label: "09:05 手册更新",
+      system: "牛熊证规则同步",
+      mentor:
+        "工作手册新增了牛熊证页面。注意对称关系：牛证怕标的跌到收回价，熊证怕标的涨到收回价。",
+    },
+    day4_client_arrival: {
+      label: "09:10 客户到访",
+      system: "适当性读取",
+      mentor:
+        "先听客户方向。她看跌，想要杠杆，也知道强制收回风险。今天重点是判断熊证是否匹配，以及上方收回价如何触发 MCE。",
+    },
+    day4_suitability_check: {
+      label: "09:16 适当性判断",
+      system: "是否适合 CBBC",
+      mentor:
+        "这一步像合规闸门。客户方向、风险承受能力、产品经验和是否理解 MCE，都要一起看。",
+    },
+    day4_product_selection: {
+      label: "09:24 产品推荐",
+      system: "推荐最终产品",
+      mentor:
+        "客户看跌、想要杠杆、能接受强制收回。熊证方向匹配，但你必须把上方收回价讲清楚。",
+    },
+    day4_risk_disclosure: {
+      label: "09:32 风险披露",
+      system: "CBBC 风险说明",
+      mentor:
+        "熊证不是普通 Put 的便宜版本。必须讲清楚：标的上涨触及收回价会触发 MCE，之后即使市场再跌，也不会恢复。",
+    },
+    day4_market_run: {
+      label: "09:42 市场路径",
+      system: "CBBC 对比路径",
+      mentor:
+        "这条路径会让你看到上方 barrier：恒指先冲上去触发熊证 MCE，后来才跌下来。最终方向对，也救不回已收回的产品。",
+    },
+    day4_report: {
+      label: "09:52 日终报告",
+      system: "CBBC 适当性复盘",
+      mentor:
+        "第四天的重点是对称理解。牛证看涨但怕下跌触发收回；熊证看跌但怕上涨触发收回。",
+    },
+    day4_complete: {
+      label: "10:00 完成第四天",
+      system: "关卡完成",
+      mentor:
+        "你已经见过下方障碍，也见过上方收回价。路径依赖产品最重要的不是终点，而是中途有没有碰线。",
+    },
+  },
+  handbookEntries: [
+    {
+      id: "cbbc_basics",
+      title: "牛熊证 / CBBC",
+      sections: [
+        {
+          title: "核心想法",
+          bullets: [
+            "CBBC 是 Callable Bull/Bear Contract，中文常叫牛熊证",
+            "牛证（Bull CBBC）适合看涨观点：标的上涨通常对牛证有利",
+            "熊证（Bear CBBC）适合看跌观点：标的下跌通常对熊证有利",
+            "CBBC 通常带有杠杆，标的轻微波动也可能造成产品价格明显变化",
+            "牛熊证不是普通期权，它们有强制收回机制",
+          ],
+        },
+        {
+          title: "牛证 vs 熊证",
+          bullets: [
+            "牛证像带杠杆的看涨工具，但下跌触及收回价会触发 MCE",
+            "熊证像带杠杆的看跌工具，但上涨触及收回价会触发 MCE",
+            "牛证的危险线通常在现价下方",
+            "熊证的危险线通常在现价上方",
+          ],
+        },
+        {
+          title: "强制收回事件 MCE",
+          bullets: [
+            "CBBC 有收回价（Call Price）",
+            "牛证：标的价格触及或低于收回价，会触发强制收回事件",
+            "熊证：标的价格触及或高于收回价，会触发强制收回事件",
+            "触发 MCE 后，产品提前终止，交易停止",
+          ],
+        },
+        {
+          title: "残值与损失",
+          bullets: [
+            "MCE 后不保证有残值",
+            "有些 CBBC 可能有残值，有些可能没有残值",
+            "教学简化：今天把残值视为 0，用来强调强制收回风险",
+            "客户最大损失通常限于投入金额和交易成本，但亏损发生得很快",
+          ],
+        },
+        {
+          title: "适当性规则",
+          bullets: [
+            "方向正确不等于产品适合",
+            "客户不能接受强制收回，就不适合 CBBC",
+            "客户风险承受能力低，不应为了便宜或杠杆推荐 CBBC",
+            "客户必须理解：最后方向判断正确，也可能因为中途 MCE 而损失",
+            "不要把牛熊证说成普通期权的便宜替代品",
+          ],
+        },
+      ],
+    },
+  ],
+  clientProfile: {
+    name: "周女士",
+    type: "活跃零售客户",
+    marketView: "看跌恒生指数",
+    riskTolerance: "高",
+    goal: "想用较低资金参与短期下跌",
+    productNeed: "想了解熊证，接受杠杆和强制收回风险",
+    budget: "愿意投入有限资金，但希望下跌时反应更快",
+    experience: "交易过普通 Put，第一次正式交易牛熊证",
+    dialogue: [
+      "我觉得恒生指数短期可能会回落。普通 Put 有点慢，也有点贵。",
+      "朋友提到熊证，说下跌时反应更快，但我知道它可能会被强制收回。",
+      "你帮我判断一下，如果我要做看跌交易，熊证是不是合适？",
+    ],
+  },
+  suitabilityOptions: [
+    {
+      id: "not_suitable",
+      title: "不适合推荐 CBBC",
+      tag: "过度保守",
+      description:
+        "客户虽然看跌，但只要有强制收回风险，就一律不推荐 CBBC。",
+      feedback:
+        "这次有点过度保守。周女士风险承受能力高，也明确知道 MCE 风险，可以继续评估熊证。",
+    },
+    {
+      id: "suitable",
+      title: "可以评估 Bear CBBC",
+      tag: "正确",
+      description:
+        "客户看跌、风险承受能力高、了解强制收回风险。可以评估熊证，但必须充分披露上方收回价。",
+      feedback:
+        "判断正确。她不是低风险客户，也没有回避 MCE；下一步要选择方向匹配的熊证，并讲清楚上方收回价。",
+    },
+  ],
+  products: [
+    {
+      id: "bull_cbbc",
+      name: "恒指牛证",
+      term: "Bull CBBC",
+      status: "可用",
+      description: [
+        "适合看涨观点",
+        "带杠杆，价格波动更敏感",
+        "触及或低于收回价会触发 MCE",
+        "方向与本客户看跌观点相反",
+      ],
+      feedback:
+        "客户是看跌观点，牛证方向相反。牛证是看涨工具，不适合这个订单。",
+    },
+    {
+      id: "bear_cbbc",
+      name: "恒指熊证",
+      term: "Bear CBBC",
+      status: "可用",
+      description: [
+        "适合看跌观点",
+        "带杠杆，价格波动更敏感",
+        "标的上涨触及或高于收回价会触发 MCE",
+        "使用上方收回价作为风险边界",
+      ],
+      feedback:
+        "方向匹配。客户看跌、能承受高风险，可以考虑熊证，但必须说明上方收回价和 MCE。",
+    },
+    {
+      id: "vanilla_call",
+      name: "普通看涨期权",
+      term: "Vanilla Call",
+      status: "可用",
+      description: [
+        "适合看涨观点",
+        "没有强制收回事件",
+        "买方最大损失通常限于期权费",
+        "方向与客户观点不匹配",
+      ],
+      feedback:
+        "普通 Call 没有 MCE 风险，但方向是看涨，和客户看跌观点不匹配。",
+    },
+    {
+      id: "vanilla_put",
+      name: "普通看跌期权",
+      term: "Vanilla Put",
+      status: "可用",
+      description: [
+        "适合看跌观点",
+        "没有强制收回事件",
+        "买方最大损失通常限于期权费",
+        "风险更简单，但没有 CBBC 杠杆特征",
+      ],
+      feedback: "普通 Put 方向正确、风险更简单，但客户明确想评估杠杆型熊证。它可以作为更保守备选。",
+    },
+  ],
+  disclosureItems: [
+    {
+      id: "day4_mce",
+      text: "CBBC 有收回价（Call Price），触及收回价会触发强制收回事件（MCE）。",
+      correct: true,
+    },
+    {
+      id: "day4_bear_trigger",
+      text: "熊证中，标的价格触及或高于收回价，产品可能提前终止。",
+      correct: true,
+    },
+    {
+      id: "day4_residual_not_guaranteed",
+      text: "MCE 后残值不保证，教学简化下可视为可能损失全部投入金额。",
+      correct: true,
+    },
+    {
+      id: "day4_leverage",
+      text: "CBBC 带杠杆，价格波动和亏损速度都可能被放大。",
+      correct: true,
+    },
+    {
+      id: "day4_recover_after_mce",
+      text: "如果 MCE 后市场又跌回来，熊证会自动恢复交易并继续赚钱。",
+      correct: false,
+    },
+  ],
+  market: {
+    underlying: "恒生指数",
+    spot: 21500,
+    strike: 21200,
+    cbbcCallPrice: 22000,
+    cbbcEntryCost: 80,
+    vanillaPremium: 150,
+    maturity: "1个月",
+    path: [21500, 21780, 22050, 21600, 21100, 20750],
+  },
+  scoringRules: {
+    correctSuitability: "suitable",
+    correctProduct: "bear_cbbc",
+    correctDisclosureIds: [
+      "day4_mce",
+      "day4_bear_trigger",
+      "day4_residual_not_guaranteed",
+      "day4_leverage",
+    ],
+    misleadingDisclosureId: "day4_recover_after_mce",
+  },
+};
+
 const dayConfigs = {
   1: day1Config,
   2: day2Config,
   3: day3Config,
+  4: day4Config,
 };
 
 const stageConfig = {
   ...day1Config.stages,
   ...day2Config.stages,
   ...day3Config.stages,
+  ...day4Config.stages,
 };
 
 const allHandbookEntries = [
   ...day1Config.handbookEntries,
   ...day2Config.handbookEntries,
   ...day3Config.handbookEntries,
+  ...day4Config.handbookEntries,
 ];
 
 const day1HandbookEntryIds = day1Config.handbookEntries.map((entry) => entry.id);
 const day2HandbookEntryIds = day2Config.handbookEntries.map((entry) => entry.id);
+const day3HandbookEntryIds = day3Config.handbookEntries.map((entry) => entry.id);
 
 const fullWidthStages = new Set([
   "day2_lesson_backward_price",
   "day2_tree_explainer",
+  "day3_lesson_compare_vanilla",
   "day3_market_run",
+  "day4_market_run",
 ]);
 
 function cn(...classes) {
@@ -948,6 +1215,74 @@ function getQuoteAnalysis(quote) {
   };
 }
 
+function getDay2MarketResult(quote) {
+  const market = day2Config.market;
+  const finalPrice = market.path[market.path.length - 1];
+  const payoff = Math.max(finalPrice - market.strike, 0);
+  const analysis = getQuoteAnalysis(quote);
+  const tradeAccepted = analysis.accepted;
+
+  return {
+    path: market.path,
+    finalPrice,
+    payoff,
+    tradeAccepted,
+    deskPnl: tradeAccepted ? quote - payoff : 0,
+    clientPnl: tradeAccepted ? payoff - quote : 0,
+  };
+}
+
+function getDay2PricingScore(quote) {
+  const analysis = getQuoteAnalysis(quote);
+  const marketResult = getDay2MarketResult(quote);
+
+  if (!analysis.accepted) {
+    return {
+      score: "D",
+      comment: "报价过高，客户拒绝交易。市场后来上涨，但交易台没有成交，也没有收入。",
+    };
+  }
+
+  if (quote < day2Config.quoteRules.theoreticalPrice) {
+    return {
+      score: marketResult.deskPnl < 0 ? "D" : "C",
+      comment:
+        marketResult.deskPnl < 0
+          ? "报价低于理论价格，市场上涨后交易台实际亏损。低价成交不等于好报价。"
+          : "报价低于理论价格，这次市场结果还能覆盖收益，但定价纪律不够。",
+    };
+  }
+
+  if (quote >= day2Config.quoteRules.fairRange[0] && quote <= day2Config.quoteRules.fairRange[1]) {
+    return {
+      score: marketResult.deskPnl >= 0 ? "A" : "B",
+      comment:
+        marketResult.deskPnl >= 0
+          ? "报价接近模型价格，并留下合理利润空间；模拟市场结算后交易台仍有正收益。"
+          : "报价纪律不错，但这条市场路径让交易台承受了亏损。模型是报价锚点，不是收益保证。",
+    };
+  }
+
+  if (quote < day2Config.quoteRules.fairRange[0]) {
+    return {
+      score: "B-",
+      comment: "报价守住理论价格，但利润空间偏薄；市场结算后需要检查这笔风险是否值得。",
+    };
+  }
+
+  if (quote <= day2Config.quoteRules.rejectAbove) {
+    return {
+      score: "C",
+      comment: "报价高于合理区间，虽然客户勉强接受，但客户满意度下降。",
+    };
+  }
+
+  return {
+    score: "D",
+    comment: "报价远离模型价格，客户拒绝交易。",
+  };
+}
+
 function getDay3MarketResult() {
   const market = day3Config.market;
   const finalPrice = market.path[market.path.length - 1];
@@ -964,6 +1299,27 @@ function getDay3MarketResult() {
     vanillaPayoff,
     barrierPayoff,
     pnl,
+  };
+}
+
+function getDay4MarketResult() {
+  const market = day4Config.market;
+  const finalPrice = market.path[market.path.length - 1];
+  const mceIndex = market.path.findIndex((price) => price >= market.cbbcCallPrice);
+  const mceTriggered = mceIndex >= 0;
+  const vanillaPayoff = Math.max(market.strike - finalPrice, 0);
+  const vanillaPnl = vanillaPayoff - market.vanillaPremium;
+  const bearCbbcPnl = mceTriggered
+    ? -market.cbbcEntryCost
+    : Math.max(market.strike - finalPrice, 0) - market.cbbcEntryCost;
+
+  return {
+    finalPrice,
+    mceIndex,
+    mceTriggered,
+    vanillaPayoff,
+    vanillaPnl,
+    bearCbbcPnl,
   };
 }
 
@@ -1338,7 +1694,14 @@ function TerminalHeader({ label, accent }) {
 
 function SideData({ currentDay }) {
   const side =
-    currentDay === 3
+    currentDay === 4
+      ? {
+          leftStatus: "收回价",
+          dayLabel: "第四天",
+          mode: "适当性",
+          topic: "CBBC / MCE",
+        }
+      : currentDay === 3
       ? {
           leftStatus: "障碍线",
           dayLabel: "第三天",
@@ -1374,7 +1737,7 @@ function SideData({ currentDay }) {
       <div className="font-terminal fixed right-8 top-1/2 z-10 hidden -translate-y-1/2 text-right text-sm leading-8 text-slate-700 lg:block">
         <div className="text-slate-600">产品</div>
         <div className="text-[#00f0ff]">
-          {currentDay === 3 ? "障碍期权" : "普通期权"}
+          {currentDay === 4 ? "牛熊证" : currentDay === 3 ? "障碍期权" : "普通期权"}
         </div>
         <br />
         <div className="text-slate-600">主题</div>
@@ -1387,7 +1750,14 @@ function SideData({ currentDay }) {
   );
 }
 
-function TopBar({ currentDay, stage, handbookHasNew, onOpenHandbook }) {
+function TopBar({
+  currentDay,
+  stage,
+  handbookHasNew,
+  canGoBack,
+  onGoBack,
+  onOpenHandbook,
+}) {
   const dayConfig = dayConfigs[currentDay] ?? day1Config;
   const stageMeta = stageConfig[stage] ?? { label: "待命" };
 
@@ -1399,18 +1769,28 @@ function TopBar({ currentDay, stage, handbookHasNew, onOpenHandbook }) {
       <div className="font-terminal text-slate-500">
         时间：<span className="text-slate-300">{stageMeta.label}</span>
       </div>
-      <button
-        type="button"
-        onClick={onOpenHandbook}
-        className={cn(
-          "font-terminal rounded-md border px-4 py-2 text-xs font-bold tracking-[0.16em] transition duration-300",
-          handbookHasNew
-            ? "handbook-new border-[#ffd700]/70 bg-[#ffd700]/15 text-[#ffd700]"
-            : "border-cyan-400/25 bg-cyan-400/[0.04] text-[#00f0ff] hover:bg-cyan-400/[0.09]",
-        )}
-      >
-        打开手册 {handbookHasNew ? "/ 新内容" : ""}
-      </button>
+      <div className="flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          onClick={onGoBack}
+          disabled={!canGoBack}
+          className="font-terminal rounded-md border border-cyan-400/25 bg-cyan-400/[0.04] px-4 py-2 text-xs font-bold tracking-[0.16em] text-[#00f0ff] transition duration-300 hover:bg-cyan-400/[0.09] disabled:pointer-events-none disabled:opacity-35"
+        >
+          上一页
+        </button>
+        <button
+          type="button"
+          onClick={onOpenHandbook}
+          className={cn(
+            "font-terminal rounded-md border px-4 py-2 text-xs font-bold tracking-[0.16em] transition duration-300",
+            handbookHasNew
+              ? "handbook-new border-[#ffd700]/70 bg-[#ffd700]/15 text-[#ffd700]"
+              : "border-cyan-400/25 bg-cyan-400/[0.04] text-[#00f0ff] hover:bg-cyan-400/[0.09]",
+          )}
+        >
+          打开手册 {handbookHasNew ? "/ 新内容" : ""}
+        </button>
+      </div>
     </div>
   );
 }
@@ -1440,7 +1820,13 @@ function MentorPanel({ text, skipSignal }) {
   );
 }
 
-function BottomActionBar({ stage, selectedProduct, marketComplete, actions }) {
+function BottomActionBar({
+  stage,
+  selectedProduct,
+  selectedSuitability,
+  marketComplete,
+  actions,
+}) {
   const actionSets = {
     day1_welcome: (
       <PrimaryButton onClick={actions.startBriefing} className="px-10">
@@ -1504,13 +1890,11 @@ function BottomActionBar({ stage, selectedProduct, marketComplete, actions }) {
       </>
     ),
     day1_market_run: (
-      <PrimaryButton
-        onClick={marketComplete ? actions.viewReport : undefined}
-        tone={marketComplete ? "gold" : "ghost"}
-        disabled={!marketComplete}
-      >
-        {marketComplete ? "查看报告" : "市场自动运行中"}
-      </PrimaryButton>
+      marketComplete ? (
+        <PrimaryButton onClick={actions.viewReport} tone="gold">
+          查看报告
+        </PrimaryButton>
+      ) : null
     ),
     day1_report: (
       <>
@@ -1573,10 +1957,7 @@ function BottomActionBar({ stage, selectedProduct, marketComplete, actions }) {
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
           打开手册
         </PrimaryButton>
-        <PrimaryButton tone="ghost" onClick={actions.confirmProduct}>
-          确认产品
-        </PrimaryButton>
-        <PrimaryButton onClick={actions.showPricingTree}>查看定价树</PrimaryButton>
+        <PrimaryButton onClick={actions.confirmProduct}>确认产品</PrimaryButton>
       </>
     ),
     day2_tree_explainer: (
@@ -1584,7 +1965,7 @@ function BottomActionBar({ stage, selectedProduct, marketComplete, actions }) {
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
           打开手册
         </PrimaryButton>
-        <PrimaryButton onClick={actions.toDay2Quote}>继续报价</PrimaryButton>
+        <PrimaryButton onClick={actions.confirmQuote}>继续风险披露</PrimaryButton>
       </>
     ),
     day2_quote_slider: (
@@ -1685,13 +2066,11 @@ function BottomActionBar({ stage, selectedProduct, marketComplete, actions }) {
       </>
     ),
     day3_market_run: (
-      <PrimaryButton
-        onClick={marketComplete ? actions.viewReport : undefined}
-        tone={marketComplete ? "gold" : "ghost"}
-        disabled={!marketComplete}
-      >
-        {marketComplete ? "查看报告" : "市场自动运行中"}
-      </PrimaryButton>
+      marketComplete ? (
+        <PrimaryButton onClick={actions.viewReport} tone="gold">
+          查看报告
+        </PrimaryButton>
+      ) : null
     ),
     day3_report: (
       <>
@@ -1703,11 +2082,92 @@ function BottomActionBar({ stage, selectedProduct, marketComplete, actions }) {
     ),
     day3_complete: (
       <>
-        <PrimaryButton tone="ghost" disabled>
-          下一天：组合产品，即将开放
+        <PrimaryButton tone="gold" onClick={actions.startDay4}>
+          进入第四天：牛熊证
         </PrimaryButton>
-        <PrimaryButton tone="gold" onClick={actions.restartDay3}>
+        <PrimaryButton tone="ghost" onClick={actions.restartDay3}>
           重新开始第三天
+        </PrimaryButton>
+      </>
+    ),
+    day4_intro: (
+      <PrimaryButton onClick={actions.finishDay4Intro} className="px-10">
+        更新工作手册
+      </PrimaryButton>
+    ),
+    day4_handbook_updated: (
+      <>
+        <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
+          打开手册
+        </PrimaryButton>
+        <PrimaryButton onClick={actions.meetDay4Client}>接待客户</PrimaryButton>
+      </>
+    ),
+    day4_client_arrival: (
+      <>
+        <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
+          打开手册
+        </PrimaryButton>
+        <PrimaryButton onClick={actions.toDay4Suitability}>
+          进入适当性判断
+        </PrimaryButton>
+      </>
+    ),
+    day4_suitability_check: (
+      <>
+        <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
+          打开手册
+        </PrimaryButton>
+        <PrimaryButton
+          onClick={actions.confirmSuitability}
+          disabled={!selectedSuitability}
+        >
+          确认适当性
+        </PrimaryButton>
+      </>
+    ),
+    day4_product_selection: (
+      <>
+        <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
+          打开手册
+        </PrimaryButton>
+        <PrimaryButton onClick={actions.confirmProduct} disabled={!selectedProduct}>
+          确认推荐
+        </PrimaryButton>
+      </>
+    ),
+    day4_risk_disclosure: (
+      <>
+        <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
+          打开手册
+        </PrimaryButton>
+        <PrimaryButton onClick={actions.confirmDisclosure}>
+          确认风险说明
+        </PrimaryButton>
+      </>
+    ),
+    day4_market_run: (
+      marketComplete ? (
+        <PrimaryButton onClick={actions.viewReport} tone="gold">
+          查看报告
+        </PrimaryButton>
+      ) : null
+    ),
+    day4_report: (
+      <>
+        <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
+          打开手册
+        </PrimaryButton>
+        <PrimaryButton onClick={actions.finishDay4}>完成第四天</PrimaryButton>
+      </>
+    ),
+    day4_complete: (
+      <>
+        <PrimaryButton tone="ghost" disabled>
+          下一天：待定
+        </PrimaryButton>
+        <PrimaryButton tone="gold" onClick={actions.restartDay4}>
+          重新开始第四天
         </PrimaryButton>
       </>
     ),
@@ -3011,7 +3471,7 @@ function Day2BackwardPriceLessonPanel() {
         </div>
 
         <div className="rounded-md border-l-4 border-[#00f0ff] bg-cyan-400/[0.06] p-4 text-base leading-8 text-slate-200">
-          第二天不考严格概率、贴现和无套利推导。你只要抓住直觉：二叉树把未来拆开，在到期点算收益，再倒推成今天的理论价格。
+          今天先别急着啃完整定价公式。你只要顺着树看：价格可能往上或往下走，到期后每条路各自结算，再一步步推回现在，就能得到一个报价参考。
         </div>
       </div>
     </TerminalCard>
@@ -3202,7 +3662,654 @@ function BinomialTreeVisual() {
   );
 }
 
-function Day2TreeExplainerPanel() {
+function buildVanillaBinomialToolTree(params) {
+  const spot = Number(params.spot);
+  const strike = Number(params.strike);
+  const rate = Number(params.rate) / 100;
+  const sigma = Number(params.sigma) / 100;
+  const maturity = Number(params.maturity);
+  const steps = Math.max(1, Math.min(6, Number(params.steps)));
+  const dt = maturity / steps;
+  const up = Math.exp(sigma * Math.sqrt(dt));
+  const down = 1 / up;
+  const growth = Math.exp(rate * dt);
+  const rawProbability = (growth - down) / (up - down);
+  const probability = Math.min(0.98, Math.max(0.02, rawProbability));
+  const discount = Math.exp(-rate * dt);
+
+  const stockTree = Array.from({ length: steps + 1 }, (_, step) =>
+    Array.from({ length: step + 1 }, (_, upMoves) => {
+      const price = spot * up ** upMoves * down ** (step - upMoves);
+      return {
+        id: `${step}-${upMoves}`,
+        step,
+        upMoves,
+        price,
+      };
+    }),
+  );
+
+  const optionValues = Array.from({ length: steps + 1 }, () => []);
+  const payoffs = Array.from({ length: steps + 1 }, () => []);
+
+  for (let upMoves = 0; upMoves <= steps; upMoves += 1) {
+    const terminal = stockTree[steps][upMoves];
+    const payoff = Math.max(terminal.price - strike, 0);
+    payoffs[steps][upMoves] = payoff;
+    optionValues[steps][upMoves] = payoff;
+  }
+
+  for (let step = steps - 1; step >= 0; step -= 1) {
+    for (let upMoves = 0; upMoves <= step; upMoves += 1) {
+      optionValues[step][upMoves] =
+        discount *
+        (probability * optionValues[step + 1][upMoves + 1] +
+          (1 - probability) * optionValues[step + 1][upMoves]);
+    }
+  }
+
+  const nodes = stockTree.flat().map((node) => ({
+    ...node,
+    optionValue: optionValues[node.step][node.upMoves],
+    payoff: payoffs[node.step]?.[node.upMoves] ?? null,
+    inTheMoney: node.price > strike,
+    x: 10 + (node.step / steps) * 80,
+    y:
+      node.step === 0
+        ? 50
+        : 50 + ((node.step / 2 - node.upMoves) * 62) / Math.max(steps, 2),
+  }));
+
+  const nodeMap = Object.fromEntries(nodes.map((node) => [node.id, node]));
+  const links = [];
+  for (let step = 0; step < steps; step += 1) {
+    for (let upMoves = 0; upMoves <= step; upMoves += 1) {
+      const from = nodeMap[`${step}-${upMoves}`];
+      const downNode = nodeMap[`${step + 1}-${upMoves}`];
+      const upNode = nodeMap[`${step + 1}-${upMoves + 1}`];
+      links.push({ id: `${from.id}-${downNode.id}`, from, to: downNode });
+      links.push({ id: `${from.id}-${upNode.id}`, from, to: upNode });
+    }
+  }
+
+  return {
+    nodes,
+    links,
+    up,
+    down,
+    probability,
+    vanillaPrice: optionValues[0][0],
+  };
+}
+
+function buildBarrierBinomialToolTree(params) {
+  const spot = Number(params.spot);
+  const strike = Number(params.strike);
+  const barrier = Number(params.barrier);
+  const rate = Number(params.rate) / 100;
+  const sigma = Number(params.sigma) / 100;
+  const maturity = Number(params.maturity);
+  const steps = Math.max(1, Math.min(6, Number(params.steps)));
+  const dt = maturity / steps;
+  const up = Math.exp(sigma * Math.sqrt(dt));
+  const down = 1 / up;
+  const growth = Math.exp(rate * dt);
+  const rawProbability = (growth - down) / (up - down);
+  const probability = Math.min(0.98, Math.max(0.02, rawProbability));
+  const discount = Math.exp(-rate * dt);
+
+  const stockTree = Array.from({ length: steps + 1 }, (_, step) =>
+    Array.from({ length: step + 1 }, (_, upMoves) => {
+      const price = spot * up ** upMoves * down ** (step - upMoves);
+      return {
+        id: `${step}-${upMoves}`,
+        step,
+        upMoves,
+        price,
+        knocked: price <= barrier,
+      };
+    }),
+  );
+
+  const vanillaValues = Array.from({ length: steps + 1 }, () => []);
+  const barrierValues = Array.from({ length: steps + 1 }, () => []);
+
+  for (let upMoves = 0; upMoves <= steps; upMoves += 1) {
+    const terminal = stockTree[steps][upMoves];
+    const payoff = Math.max(terminal.price - strike, 0);
+    vanillaValues[steps][upMoves] = payoff;
+    barrierValues[steps][upMoves] = terminal.knocked ? 0 : payoff;
+  }
+
+  for (let step = steps - 1; step >= 0; step -= 1) {
+    for (let upMoves = 0; upMoves <= step; upMoves += 1) {
+      vanillaValues[step][upMoves] =
+        discount *
+        (probability * vanillaValues[step + 1][upMoves + 1] +
+          (1 - probability) * vanillaValues[step + 1][upMoves]);
+      barrierValues[step][upMoves] = stockTree[step][upMoves].knocked
+        ? 0
+        : discount *
+          (probability * barrierValues[step + 1][upMoves + 1] +
+            (1 - probability) * barrierValues[step + 1][upMoves]);
+    }
+  }
+
+  const nodes = stockTree.flat().map((node) => ({
+    ...node,
+    vanillaValue: vanillaValues[node.step][node.upMoves],
+    barrierValue: barrierValues[node.step][node.upMoves],
+    x: 10 + (node.step / steps) * 80,
+    y:
+      node.step === 0
+        ? 50
+        : 50 + ((node.step / 2 - node.upMoves) * 62) / Math.max(steps, 2),
+  }));
+
+  const nodeMap = Object.fromEntries(nodes.map((node) => [node.id, node]));
+  const links = [];
+  for (let step = 0; step < steps; step += 1) {
+    for (let upMoves = 0; upMoves <= step; upMoves += 1) {
+      const from = nodeMap[`${step}-${upMoves}`];
+      const downNode = nodeMap[`${step + 1}-${upMoves}`];
+      const upNode = nodeMap[`${step + 1}-${upMoves + 1}`];
+      links.push({
+        id: `${from.id}-${downNode.id}`,
+        from,
+        to: downNode,
+        alive: !from.knocked && !downNode.knocked,
+      });
+      links.push({
+        id: `${from.id}-${upNode.id}`,
+        from,
+        to: upNode,
+        alive: !from.knocked && !upNode.knocked,
+      });
+    }
+  }
+
+  return {
+    nodes,
+    links,
+    up,
+    down,
+    probability,
+    vanillaPrice: vanillaValues[0][0],
+    barrierPrice: barrierValues[0][0],
+  };
+}
+
+function VanillaBinomialPricingTool({ selectedQuote, quoteAnalysis, onUpdateQuote }) {
+  const [params, setParams] = useState({
+    spot: 21500,
+    strike: 22000,
+    rate: 2,
+    sigma: 16,
+    maturity: 0.08,
+    steps: 3,
+  });
+
+  const tree = useMemo(() => buildVanillaBinomialToolTree(params), [params]);
+
+  const updateParam = (key, value) => {
+    setParams((current) => ({
+      ...current,
+      [key]: key === "steps" ? Math.max(1, Math.min(3, Number(value))) : value,
+    }));
+  };
+
+  const inputMeta = [
+    ["spot", "S0 现价", 1000, 50000, 100],
+    ["strike", "K 行权价", 1000, 50000, 100],
+    ["rate", "r 无风险利率 %", -5, 20, 0.25],
+    ["sigma", "σ 波动率 %", 1, 80, 1],
+    ["maturity", "T 年化期限", 0.02, 3, 0.01],
+    ["steps", "N 步数", 1, 3, 1],
+  ];
+  const quote = Number.isFinite(selectedQuote) ? selectedQuote : 0;
+  const marketPreview = getDay2MarketResult(quote);
+  const pricingPreview = getDay2PricingScore(quote);
+  const quoteToneClass =
+    quoteAnalysis.tone === "good"
+      ? "border-green-400/30 bg-green-400/[0.08] text-green-300"
+      : quoteAnalysis.tone === "danger"
+        ? "border-red-500/35 bg-red-500/[0.08] text-red-300"
+        : "border-[#ffd700]/35 bg-[#ffd700]/[0.08] text-[#ffd700]";
+
+  return (
+    <div className="rounded-lg border border-cyan-400/15 bg-[#070d19]/85 p-5">
+      <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <div className="font-terminal text-xs tracking-[0.2em] text-[#00f0ff]">
+            普通期权二叉树计算器
+          </div>
+          <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-400">
+            这里先只看普通 Call。改变现价、行权价、波动率或步数，观察价格树、到期收益和今天理论价格如何同步变化。
+          </p>
+        </div>
+        <div className="rounded-md border border-[#00f0ff]/30 bg-cyan-400/[0.07] px-4 py-2 font-terminal text-xs text-[#00f0ff]">
+          VANILLA MODE
+        </div>
+      </div>
+
+      <div className="grid gap-5 xl:grid-cols-[300px_minmax(0,1fr)]">
+        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+          <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#00f0ff]">
+            参数输入
+          </div>
+          <div className="grid gap-3">
+            {inputMeta.map(([key, label, min, max, step]) => (
+              <label key={key} className="grid gap-2">
+                <span className="font-terminal text-[11px] tracking-[0.12em] text-slate-500">
+                  {label}
+                </span>
+                <input
+                  type="number"
+                  min={min}
+                  max={max}
+                  step={step}
+                  value={params[key]}
+                  onChange={(event) => updateParam(key, Number(event.target.value))}
+                  className="rounded-md border border-cyan-400/20 bg-[#07101d] px-3 py-2 font-terminal text-sm text-slate-100 outline-none transition focus:border-[#00f0ff]"
+                />
+              </label>
+            ))}
+          </div>
+
+          <div className="mt-4 grid gap-3 rounded-md border border-white/10 bg-white/[0.03] p-3 text-xs leading-6 text-slate-400">
+            <div>
+              上涨因子 u：
+              <span className="font-terminal text-[#00f0ff]"> {tree.up.toFixed(4)}</span>
+            </div>
+            <div>
+              下跌因子 d：
+              <span className="font-terminal text-[#00f0ff]"> {tree.down.toFixed(4)}</span>
+            </div>
+            <div>
+              风险中性概率 p：
+              <span className="font-terminal text-[#ffd700]"> {tree.probability.toFixed(4)}</span>
+            </div>
+            <div>
+              普通 Call 理论价：
+              <span className="font-terminal text-green-300"> {tree.vanillaPrice.toFixed(2)}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-lg border border-cyan-400/15 bg-black/25 p-4">
+          <div className="relative h-[560px] min-w-0 overflow-hidden rounded-md border border-white/10 bg-[#050b14]">
+            <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+              {tree.links.map((link) => (
+                <line
+                  key={link.id}
+                  x1={link.from.x}
+                  y1={link.from.y}
+                  x2={link.to.x}
+                  y2={link.to.y}
+                  stroke="rgba(0,240,255,0.34)"
+                  strokeWidth={0.25}
+                  strokeDasharray="1.2 1.1"
+                />
+              ))}
+            </svg>
+
+            {tree.nodes.map((node) => {
+              const isTerminal = node.step === Number(params.steps);
+              return (
+                <div
+                  key={node.id}
+                  className={cn(
+                    "absolute w-32 -translate-x-1/2 -translate-y-1/2 rounded-lg border p-2 shadow-[0_0_18px_rgba(0,240,255,0.08)]",
+                    isTerminal && node.inTheMoney
+                      ? "border-[#ffd700]/65 bg-[#ffd700]/[0.1]"
+                      : "border-cyan-400/35 bg-cyan-400/[0.06]",
+                  )}
+                  style={{ left: `${node.x}%`, top: `${node.y}%` }}
+                >
+                  <div className="font-terminal text-[10px] tracking-[0.12em] text-slate-500">
+                    t{node.step} / u{node.upMoves}
+                  </div>
+                  <div className="mt-1 text-lg font-black text-slate-100">
+                    {formatPoints(Math.round(node.price))}
+                  </div>
+                  <div className="mt-1 text-[11px] leading-4 text-slate-400">
+                    V: {node.optionValue.toFixed(1)}
+                  </div>
+                  {isTerminal && (
+                    <div className={cn("mt-1 rounded border px-2 py-1 text-[10px] font-black", node.inTheMoney ? "border-[#ffd700]/35 text-[#ffd700]" : "border-white/10 text-slate-500")}>
+                      Payoff: {node.payoff.toFixed(0)}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-4 grid gap-3 md:grid-cols-3">
+            <div className="rounded-lg border border-cyan-400/20 bg-cyan-400/[0.05] p-4">
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+                价格树
+              </div>
+              <p className="mt-2 text-xs leading-6 text-slate-400">
+                现价和波动率会改变未来节点价格。
+              </p>
+            </div>
+            <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#ffd700]">
+                到期收益
+              </div>
+              <p className="mt-2 text-xs leading-6 text-slate-400">
+                行权价 K 不改变价格树，但会改变终点 Payoff。
+              </p>
+            </div>
+            <div className="rounded-lg border border-green-400/20 bg-green-400/[0.06] p-4">
+              <div className="font-terminal text-xs tracking-[0.18em] text-green-300">
+                倒推价格
+              </div>
+              <p className="mt-2 text-xs leading-6 text-slate-400">
+                从终点收益一路倒推，得到今天理论价格。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-5 rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.05] p-5">
+        <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <div className="font-terminal text-xs tracking-[0.2em] text-[#ffd700]">
+              报价输入 / Premium Quote
+            </div>
+            <p className="mt-2 text-sm leading-7 text-slate-400">
+              看完上面的二叉树后，给王先生输入一个期权费报价。系统会把你的报价和模拟市场结算放进日终报告。
+            </p>
+          </div>
+          <div className={cn("rounded-md border px-4 py-2 font-terminal text-xs tracking-[0.14em]", quoteToneClass)}>
+            {quoteAnalysis.label}
+          </div>
+        </div>
+
+        <div className="grid gap-4 lg:grid-cols-[260px_minmax(0,1fr)]">
+          <label className="grid gap-2">
+            <span className="font-terminal text-[11px] tracking-[0.14em] text-slate-500">
+              你的报价（点）
+            </span>
+            <input
+              type="number"
+              min={day2Config.quoteRules.sliderMin}
+              max={day2Config.quoteRules.sliderMax}
+              step="5"
+              value={selectedQuote}
+              onChange={(event) => onUpdateQuote(Number(event.target.value))}
+              className="rounded-md border border-[#ffd700]/35 bg-[#07101d] px-4 py-3 font-terminal text-2xl font-black text-[#00f0ff] outline-none transition focus:border-[#ffd700]"
+            />
+          </label>
+
+          <div className="grid gap-3 md:grid-cols-4">
+            {[
+              ["教学锚点", `${day2Config.quoteRules.theoreticalPrice} 点`],
+              ["模型参考", `${tree.vanillaPrice.toFixed(1)} 点`],
+              ["模拟 Payoff", `${marketPreview.payoff} 点`],
+              ["交易台结算", `${marketPreview.deskPnl >= 0 ? "+" : ""}${marketPreview.deskPnl} 点`],
+            ].map(([label, value]) => (
+              <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-3">
+                <div className="font-terminal text-[11px] tracking-[0.14em] text-slate-500">
+                  {label}
+                </div>
+                <div className="mt-2 text-lg font-black text-slate-100">{value}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-4 grid gap-3 md:grid-cols-[1fr_auto]">
+          <div className="rounded-md border-l-4 border-[#00f0ff] bg-cyan-400/[0.06] p-4 text-sm leading-7 text-slate-200">
+            模拟路径：{marketPreview.path.map((price) => formatPoints(price)).join(" → ")}。到期后 Call Payoff 为 {marketPreview.payoff} 点。
+          </div>
+          <div className="flex items-center justify-between gap-4 rounded-md border border-white/10 bg-black/30 px-4 py-3">
+            <span className="font-terminal text-xs text-slate-500">预估定价评分</span>
+            <ScoreBadge score={pricingPreview.score} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BarrierBinomialPricingTool() {
+  const [params, setParams] = useState({
+    spot: 21500,
+    strike: 22000,
+    barrier: 21000,
+    rate: 2,
+    sigma: 24,
+    maturity: 1,
+    steps: 4,
+  });
+
+  const tree = useMemo(() => buildBarrierBinomialToolTree(params), [params]);
+
+  const updateParam = (key, value) => {
+    setParams((current) => ({
+      ...current,
+      [key]: key === "steps" ? Math.max(1, Math.min(6, Number(value))) : value,
+    }));
+  };
+
+  const inputMeta = [
+    ["spot", "S0 现价", 1000, 50000, 100],
+    ["strike", "K 行权价", 1000, 50000, 100],
+    ["barrier", "障碍价格", 1000, 50000, 100],
+    ["rate", "r 无风险利率 %", -5, 20, 0.25],
+    ["sigma", "σ 波动率 %", 1, 80, 1],
+    ["maturity", "T 年化期限", 0.05, 3, 0.05],
+    ["steps", "N 步数", 1, 6, 1],
+  ];
+
+  return (
+    <div className="rounded-lg border border-cyan-400/15 bg-[#070d19]/85 p-5">
+      <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <div className="font-terminal text-xs tracking-[0.2em] text-[#00f0ff]">
+            二叉树可视化工具 / 技术展示
+          </div>
+          <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-400">
+            输入参数后实时渲染二叉树。红色节点表示触及障碍被敲出，绿色路径表示仍然存活。
+            下方会并排比较普通 Call 与下跌敲出 Call 的模型价格。
+          </p>
+        </div>
+        <div className="rounded-md border border-[#ffd700]/30 bg-[#ffd700]/[0.07] px-4 py-2 font-terminal text-xs text-[#ffd700]">
+          对比模式已开启
+        </div>
+      </div>
+
+      <div className="grid gap-5 xl:grid-cols-[330px_minmax(0,1fr)]">
+        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+          <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#00f0ff]">
+            参数输入
+          </div>
+          <div className="grid gap-3">
+            {inputMeta.map(([key, label, min, max, step]) => (
+              <label key={key} className="grid gap-2">
+                <span className="font-terminal text-[11px] tracking-[0.12em] text-slate-500">
+                  {label}
+                </span>
+                <input
+                  type="number"
+                  min={min}
+                  max={max}
+                  step={step}
+                  value={params[key]}
+                  onChange={(event) => updateParam(key, Number(event.target.value))}
+                  className="rounded-md border border-cyan-400/20 bg-[#07101d] px-3 py-2 font-terminal text-sm text-slate-100 outline-none transition focus:border-[#00f0ff]"
+                />
+              </label>
+            ))}
+          </div>
+
+          <div className="mt-4 grid gap-3 rounded-md border border-white/10 bg-white/[0.03] p-3 text-xs leading-6 text-slate-400">
+            <div>
+              上涨因子 u：
+              <span className="font-terminal text-[#00f0ff]"> {tree.up.toFixed(4)}</span>
+            </div>
+            <div>
+              下跌因子 d：
+              <span className="font-terminal text-[#00f0ff]"> {tree.down.toFixed(4)}</span>
+            </div>
+            <div>
+              风险中性概率 p：
+              <span className="font-terminal text-[#ffd700]"> {tree.probability.toFixed(4)}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-lg border border-cyan-400/15 bg-black/25 p-4">
+          <div className="relative h-[640px] min-w-0 overflow-hidden rounded-md border border-white/10 bg-[#050b14]">
+            <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+              {tree.links.map((link) => (
+                <line
+                  key={link.id}
+                  x1={link.from.x}
+                  y1={link.from.y}
+                  x2={link.to.x}
+                  y2={link.to.y}
+                  stroke={link.alive ? "rgba(74,222,128,0.45)" : "rgba(239,68,68,0.42)"}
+                  strokeWidth={0.28}
+                  strokeDasharray={link.alive ? "1.2 1.1" : "1.8 1.3"}
+                />
+              ))}
+            </svg>
+
+            {tree.nodes.map((node) => (
+              <div
+                key={node.id}
+                className={cn(
+                  "absolute -translate-x-1/2 -translate-y-1/2 rounded-lg border p-2 shadow-[0_0_18px_rgba(0,240,255,0.08)]",
+                  node.knocked
+                    ? "w-32 border-red-500/60 bg-red-500/[0.12]"
+                    : "w-32 border-green-400/45 bg-green-400/[0.08]",
+                )}
+                style={{ left: `${node.x}%`, top: `${node.y}%` }}
+              >
+                <div className="font-terminal text-[10px] tracking-[0.12em] text-slate-500">
+                  t{node.step} / u{node.upMoves}
+                </div>
+                <div
+                  className={cn(
+                    "mt-1 text-lg font-black",
+                    node.knocked ? "text-red-300" : "text-green-300",
+                  )}
+                >
+                  {formatPoints(Math.round(node.price))}
+                </div>
+                <div className="mt-1 text-[11px] leading-4 text-slate-400">
+                  KO: {node.knocked ? "YES" : "NO"}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-4 grid gap-3 md:grid-cols-2">
+            <div className="rounded-lg border border-cyan-400/20 bg-cyan-400/[0.05] p-4">
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+                普通 Call 理论价
+              </div>
+              <div className="mt-2 text-3xl font-black text-slate-100">
+                {tree.vanillaPrice.toFixed(2)}
+              </div>
+              <p className="mt-2 text-xs leading-6 text-slate-400">
+                不观察障碍，只根据到期收益 max(S - K, 0) 倒推。
+              </p>
+            </div>
+            <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#ffd700]">
+                下跌敲出 Call 理论价
+              </div>
+              <div className="mt-2 text-3xl font-black text-[#ffd700]">
+                {tree.barrierPrice.toFixed(2)}
+              </div>
+              <p className="mt-2 text-xs leading-6 text-slate-400">
+                一旦节点价格低于或等于障碍价，该节点之后价值归零。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BinomialFormulaPanel() {
+  const steps = [
+    {
+      title: "1. 先生成价格树",
+      formula: "S_up = S × u,   S_down = S × d",
+      text: "从今天的价格 S0 出发，每一步价格可能向上走，也可能向下走，于是形成一棵价格树。",
+    },
+    {
+      title: "2. 到期节点算 Payoff",
+      formula: "Call Payoff = max(S_T - K, 0)",
+      text: "走到最右侧到期节点后，先计算每个终点的期权收益。普通 Call 只看最终价格是否高于行权价。",
+    },
+    {
+      title: "3. 从未来倒推回今天",
+      formula: "V = e^{-rΔt} × [pV_up + (1-p)V_down]",
+      text: "把下一步上涨和下跌的可能价值加权，再折现回来。一路倒推到最左侧，就是今天的理论价格。",
+    },
+  ];
+  const symbols = [
+    ["S0", "今天的标的价格，也就是计算起点"],
+    ["S / S_T", "某个节点价格 / 到期最终价格。T 是到期时间 Terminal time"],
+    ["K", "行权价。Call 到期时会拿最终价格和 K 比较"],
+    ["u / d", "每一步向上或向下的价格倍数"],
+    ["r", "无风险利率，用来把未来价值折现回今天"],
+    ["Δt", "每一步代表的时间长度"],
+    ["p", "风险中性概率，用来给上涨、下跌两种未来加权"],
+    ["V", "期权在某个节点上的理论价值"],
+  ];
+
+  return (
+    <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.05] p-5">
+      <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[#ffd700]">
+        定价机制 / 先懂公式，再看计算器
+      </div>
+      <div className="mb-5 text-2xl font-black text-slate-100">
+        二叉树不是猜市场，而是把未来路径拆开，再从终点倒推今天价格
+      </div>
+      <div className="grid gap-4 lg:grid-cols-2">
+        {steps.map((step) => (
+          <div key={step.title} className="rounded-lg border border-white/10 bg-black/25 p-4">
+            <div className="font-terminal text-xs tracking-[0.16em] text-[#00f0ff]">
+              {step.title}
+            </div>
+            <div className="mt-3 rounded-md border border-cyan-400/15 bg-cyan-400/[0.04] px-3 py-2 font-terminal text-sm text-[#ffd700]">
+              {step.formula}
+            </div>
+            <p className="mt-3 text-sm leading-7 text-slate-300">{step.text}</p>
+          </div>
+        ))}
+      </div>
+      <div className="mt-5 rounded-lg border border-cyan-400/15 bg-black/25 p-4">
+        <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+          符号说明 / 不用背，先知道它们在说什么
+        </div>
+        <div className="grid gap-3 md:grid-cols-3">
+          {symbols.map(([symbol, meaning]) => (
+            <div key={symbol} className="rounded-md border border-white/10 bg-white/[0.03] p-3">
+              <div className="font-terminal text-sm font-black text-[#ffd700]">{symbol}</div>
+              <div className="mt-2 text-xs leading-6 text-slate-300">{meaning}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="mt-4 rounded-md border-l-4 border-[#00f0ff] bg-cyan-400/[0.06] p-4 text-sm leading-7 text-slate-200">
+        看计算器时重点观察三件事：价格树如何展开、行权价如何影响到期收益、终点收益如何倒推成今天的理论价格。
+      </div>
+    </div>
+  );
+}
+
+function Day2TreeExplainerPanel({ selectedQuote, quoteAnalysis, onUpdateQuote }) {
   const tree = day2Config.tree;
   const params = [
     ["标的", tree.underlying],
@@ -3230,13 +4337,13 @@ function Day2TreeExplainerPanel() {
           ))}
         </div>
 
-        <BinomialTreeVisual />
+        <BinomialFormulaPanel />
 
         <div className="grid gap-4 md:grid-cols-3">
           {[
-            "最右侧终端节点直接显示到期收益计算，价格高于行权价才会产生 Payoff。",
-            "三步树比两步树多看一层未来，让玩家更直观地看到路径如何继续分叉并重新合并。",
-            `简化理论价格：${tree.theoreticalPrice} 点。`,
+            "现价 S0 和波动率 σ 会改变未来价格节点，让价格树变宽或变窄。",
+            "行权价 K 不会改变标的价格路径，但会改变每个到期节点的 Payoff。",
+            "步数 N 越多，树越细；今天先看直觉，不要求你手算每个节点。",
           ].map((text, index) => (
             <div key={text} className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-4 text-sm leading-7 text-[#ffd700]">
               <span className="font-terminal mr-2 text-[#00f0ff]">提示 {index + 1}</span>
@@ -3244,12 +4351,23 @@ function Day2TreeExplainerPanel() {
             </div>
           ))}
         </div>
+
+        <VanillaBinomialPricingTool
+          selectedQuote={selectedQuote}
+          quoteAnalysis={quoteAnalysis}
+          onUpdateQuote={onUpdateQuote}
+        />
       </div>
     </TerminalCard>
   );
 }
 
-function Day2QuoteSliderPanel({ selectedQuote, quoteAnalysis, onUpdateQuote }) {
+function Day2QuoteSliderPanel({
+  selectedQuote,
+  quoteAnalysis,
+  onUpdateQuote,
+  embedded = false,
+}) {
   const rules = day2Config.quoteRules;
   const profit = selectedQuote - rules.theoreticalPrice;
   const toneClass =
@@ -3259,8 +4377,8 @@ function Day2QuoteSliderPanel({ selectedQuote, quoteAnalysis, onUpdateQuote }) {
         ? "border-red-500/35 bg-red-500/[0.08] text-red-300"
         : "border-[#ffd700]/35 bg-[#ffd700]/[0.08] text-[#ffd700]";
 
-  return (
-    <TerminalCard className="scene-enter overflow-hidden">
+  const content = (
+    <>
       <TerminalHeader label="报价终端（Pricing Terminal）" accent="调整期权费（Premium）" />
       <div className="space-y-6 p-6">
         <div className="grid gap-4 md:grid-cols-4">
@@ -3316,6 +4434,20 @@ function Day2QuoteSliderPanel({ selectedQuote, quoteAnalysis, onUpdateQuote }) {
           客户反应预览：{quoteAnalysis.customerPreview}
         </div>
       </div>
+    </>
+  );
+
+  if (embedded) {
+    return (
+      <div className="overflow-hidden rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.04] shadow-[0_0_28px_rgba(255,215,0,0.08)]">
+        {content}
+      </div>
+    );
+  }
+
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      {content}
     </TerminalCard>
   );
 }
@@ -3382,8 +4514,11 @@ function Day2ReportPanel({ score }) {
     ["产品", "普通看涨期权 Vanilla Call"],
     ["理论价格", `${score.theoreticalPrice} 点`],
     ["你的报价", `${score.selectedQuote} 点`],
-    ["交易台利润", `${score.margin >= 0 ? "+" : ""}${score.margin} 点`],
+    ["模型利润空间", `${score.margin >= 0 ? "+" : ""}${score.margin} 点`],
     ["客户状态", score.clientStatus],
+    ["模拟终值", `${formatPoints(score.marketFinalPrice)} 点`],
+    ["模拟 Payoff", `${score.marketPayoff} 点`],
+    ["交易台结算", `${score.deskPnl >= 0 ? "+" : ""}${score.deskPnl} 点`],
   ];
 
   return (
@@ -3419,6 +4554,11 @@ function Day2ReportPanel({ score }) {
 
         <div className="rounded-md border-l-4 border-[#00f0ff] bg-cyan-400/[0.06] p-4 text-base leading-8 text-slate-200">
           定价评价：{score.pricingComment}
+        </div>
+
+        <div className="rounded-md border border-cyan-400/15 bg-black/30 p-4 text-sm leading-7 text-slate-300">
+          模拟市场路径：{score.marketPath.map((price) => formatPoints(price)).join(" → ")}。
+          客户到期收益为 {score.marketPayoff} 点，客户净盈亏为 {score.clientPnl >= 0 ? "+" : ""}{score.clientPnl} 点。
         </div>
 
         <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
@@ -3616,6 +4756,38 @@ function Day3KnockOutPanel() {
             对已经结束的合约没有帮助。
           </p>
         </div>
+
+        <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-5">
+          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#ffd700]">
+            为什么要设置障碍？
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {[
+              [
+                "换取更低期权费",
+                "买方接受“碰线就失效”的额外条件，产品通常会比同类普通期权便宜。",
+              ],
+              [
+                "表达更精细观点",
+                "客户不只是说“会涨”，还可能认为“会涨，但不会先大跌到某条线”。障碍就是把这个观点写进合约。",
+              ],
+              [
+                "控制交易台风险",
+                "卖方收取较低期权费时，需要一条规则限制极端路径风险。障碍线就是风险边界。",
+              ],
+            ].map(([title, text]) => (
+              <div key={title} className="rounded-md border border-white/10 bg-black/25 p-4">
+                <div className="font-terminal text-xs tracking-[0.16em] text-[#00f0ff]">
+                  {title}
+                </div>
+                <p className="mt-3 text-sm leading-7 text-slate-300">{text}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 rounded-md border-l-4 border-[#ffd700] bg-black/25 p-4 text-sm leading-7 text-[#ffd700]">
+            Martin 小结：障碍不是白送的限制。它让产品更便宜、更贴合某种市场观点，但代价是客户必须承担路径风险。
+          </div>
+        </div>
       </div>
     </TerminalCard>
   );
@@ -3658,6 +4830,10 @@ function Day3CompareVanillaPanel() {
 
         <div className="md:col-span-2 rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
           Martin 小口诀：障碍期权不是“普通期权打折版”。它便宜，是因为客户把一部分路径风险接过去了。
+        </div>
+
+        <div className="md:col-span-2">
+          <BarrierBinomialPricingTool />
         </div>
       </div>
     </TerminalCard>
@@ -4002,10 +5178,459 @@ function Day3CompletePanel() {
   );
 }
 
+function Day4IntroPanel() {
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="第四天晨会" accent="牛证、熊证与上方收回价" />
+      <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-6">
+          <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[#ffd700]">
+            CBBC / 牛熊证
+          </div>
+          <h1 className="text-4xl font-black leading-tight text-slate-100 md:text-5xl">
+            牛证看涨，熊证看跌，但两边都有危险线
+          </h1>
+          <p className="mt-5 text-base leading-8 text-slate-300">
+            牛熊证可以先当成一种带强制收回机制的杠杆型障碍产品。
+            牛证押上涨，但怕标的向下碰到收回价；熊证押下跌，但怕标的向上碰到收回价。
+            今天我们专门看熊证的上方收回价。
+          </p>
+        </div>
+
+        <div className="grid gap-4">
+          {[
+            ["牛证 Bull CBBC", "适合看涨。标的上涨通常有利；但如果先跌到或低于下方收回价，会触发 MCE。"],
+            ["熊证 Bear CBBC", "适合看跌。标的下跌通常有利；但如果先涨到或高于上方收回价，会触发 MCE。"],
+            ["今日重点", "熊证的危险线在上方。市场最后跌下来也不够，中途先冲上收回价就已经出局。"],
+          ].map(([title, text]) => (
+            <div key={title} className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+                {title}
+              </div>
+              <div className="mt-3 text-sm leading-7 text-slate-300">{text}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day4HandbookUpdatedPanel() {
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="系统提示" accent="工作手册新增页面" />
+      <div className="flex min-h-[430px] flex-col items-center justify-center p-6 text-center">
+        <div className="font-terminal mb-4 text-sm tracking-[0.32em] text-[#00f0ff]">
+          工作手册已更新
+        </div>
+        <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-4xl font-black tracking-[0.08em] text-transparent md:text-5xl">
+          牛熊证 / CBBC
+        </div>
+        <p className="mt-8 max-w-2xl text-base leading-8 text-slate-300">
+          今天把 Day 3 的障碍规则应用到港股市场常见的牛熊证产品，并重点观察熊证的上方收回价。
+        </p>
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day4ClientArrivalPanel() {
+  const client = day4Config.clientProfile;
+  const profileRows = [
+    ["姓名", client.name],
+    ["客户类型", client.type],
+    ["市场观点", client.marketView],
+    ["风险承受能力", client.riskTolerance],
+    ["目标", client.goal],
+    ["产品需求", client.productNeed],
+    ["预算", client.budget],
+    ["经验", client.experience],
+  ];
+
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="客户资料" accent="CBBC 咨询订单" />
+      <div className="grid gap-6 p-6 lg:grid-cols-[0.85fr_1.15fr]">
+        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
+          <div className="mb-5 flex items-center gap-4">
+            <div className="flex h-20 w-20 items-center justify-center rounded-md border border-[#ffd700]/30 bg-[#ffd700]/[0.08] font-terminal text-4xl font-black text-[#ffd700]">
+              周
+            </div>
+            <div>
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+                活跃零售客户
+              </div>
+              <div className="mt-2 text-2xl font-black text-slate-100">{client.name}</div>
+            </div>
+          </div>
+          <div className="grid gap-3">
+            {profileRows.map(([label, value]) => (
+              <div key={label} className="rounded-md border border-white/10 bg-white/[0.03] p-3">
+                <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
+                  {label}
+                </div>
+                <div className="mt-1 text-sm leading-6 text-slate-200">{value}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-5">
+          <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#ffd700]">
+            客户对白
+          </div>
+          <div className="space-y-4">
+            {client.dialogue.map((line) => (
+              <div key={line} className="rounded-md border border-white/10 bg-black/30 p-4 text-base leading-8 text-slate-200">
+                周女士：“{line}”
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day4SuitabilityPanel({ selectedSuitability, suitabilityMessage, onSelectSuitability }) {
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="适当性判断" accent="先判断客户，再判断产品" />
+      <div className="space-y-5 p-6">
+        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
+          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+            问题
+          </div>
+          <div className="text-2xl font-black text-slate-100">
+            周女士适合评估熊证吗？
+          </div>
+          <p className="mt-4 text-base leading-8 text-slate-300">
+            她看跌、风险承受能力高，也知道 MCE 风险。现在要判断：能不能进入熊证推荐，而不是机械地回避所有 CBBC。
+          </p>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          {day4Config.suitabilityOptions.map((option) => {
+            const selected = selectedSuitability === option.id;
+            return (
+              <button
+                key={option.id}
+                type="button"
+                onClick={() => onSelectSuitability(option.id)}
+                className={cn(
+                  "rounded-lg border p-5 text-left transition duration-300",
+                  selected
+                    ? "border-[#ffd700]/70 bg-[#ffd700]/[0.08] shadow-[0_0_26px_rgba(255,215,0,0.18)]"
+                    : "border-cyan-400/15 bg-black/25 hover:border-cyan-400/45 hover:bg-cyan-400/[0.06]",
+                )}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
+                      {option.tag}
+                    </div>
+                    <div className={cn("mt-2 text-xl font-black", selected ? "text-[#ffd700]" : "text-[#00f0ff]")}>
+                      {option.title}
+                    </div>
+                  </div>
+                  {selected && (
+                    <div className="font-terminal rounded border border-[#ffd700]/40 px-2 py-1 text-xs text-[#ffd700]">
+                      已选择
+                    </div>
+                  )}
+                </div>
+                <p className="mt-4 text-sm leading-7 text-slate-300">{option.description}</p>
+              </button>
+            );
+          })}
+        </div>
+
+        {suitabilityMessage && (
+          <div
+            className={cn(
+              "rounded-md border-l-4 p-4 text-sm leading-7",
+              selectedSuitability === day4Config.scoringRules.correctSuitability
+                ? "border-green-400 bg-green-400/[0.06] text-green-300"
+                : "border-[#ffd700] bg-[#ffd700]/[0.06] text-[#ffd700]",
+            )}
+          >
+            {suitabilityMessage}
+          </div>
+        )}
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day4MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
+  const market = day4Config.market;
+  const result = getDay4MarketResult();
+  const activeCount = Math.min(Math.max(visibleMarketSteps, 1), market.path.length);
+  const activePrices = market.path.slice(0, activeCount);
+  const latestPrice = activePrices[activePrices.length - 1] ?? market.spot;
+  const mceNow = activePrices.some((price) => price >= market.cbbcCallPrice);
+  const selectedProductName =
+    day4Config.products.find((product) => product.id === selectedProduct)?.name ?? "未选择产品";
+  const finalShown = marketHasRun && visibleMarketSteps >= market.path.length;
+
+  const chart = useMemo(() => {
+    const width = 820;
+    const height = 360;
+    const pad = { left: 58, right: 40, top: 34, bottom: 48 };
+    const minPrice = Math.min(...market.path, market.strike) - 260;
+    const maxPrice = Math.max(...market.path, market.cbbcCallPrice) + 220;
+    const plotWidth = width - pad.left - pad.right;
+    const plotHeight = height - pad.top - pad.bottom;
+    const xScale = (index) => pad.left + (index / (market.path.length - 1)) * plotWidth;
+    const yScale = (price) =>
+      pad.top + ((maxPrice - price) / (maxPrice - minPrice)) * plotHeight;
+
+    return { width, height, xScale, yScale, yTicks: [20800, 21200, 21600, 22000] };
+  }, [market.cbbcCallPrice, market.path, market.strike]);
+
+  const activeLine = activePrices
+    .map((price, index) => `${chart.xScale(index)},${chart.yScale(price)}`)
+    .join(" ");
+  const callPriceY = chart.yScale(market.cbbcCallPrice);
+  const strikeY = chart.yScale(market.strike);
+
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="CBBC 市场路径" accent={finalShown ? "路径已结算" : "观察 MCE"} />
+      <div className="space-y-5 p-5">
+        <div className="grid gap-4 md:grid-cols-6">
+          {[
+            ["标的", market.underlying],
+            ["现价", formatPoints(market.spot)],
+            ["行权价", formatPoints(market.strike)],
+            ["熊证收回价", formatPoints(market.cbbcCallPrice)],
+            ["熊证成本", `${market.cbbcEntryCost} 点`],
+            ["普通 Put 期权费", `${market.vanillaPremium} 点`],
+          ].map(([label, value]) => (
+            <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+              <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
+                {label}
+              </div>
+              <div className="mt-2 text-lg font-bold text-slate-100">{value}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid gap-4 lg:grid-cols-[0.75fr_1.25fr]">
+          <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-4">
+            <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">
+              玩家推荐
+            </div>
+            <div className="mt-2 text-xl font-black text-slate-100">{selectedProductName}</div>
+            <div className="mt-4 rounded-md border border-white/10 bg-black/30 p-3 text-sm leading-7 text-slate-300">
+              实时恒指：
+              <span className={cn("font-terminal ml-1 text-2xl font-black", mceNow ? "text-red-300" : "text-[#00f0ff]")}>
+                {formatPoints(latestPrice)}
+              </span>
+            </div>
+            <div
+              className={cn(
+                "mt-3 rounded-md border px-3 py-2 font-terminal text-xs tracking-[0.14em]",
+                mceNow
+                  ? "border-red-500/40 bg-red-500/[0.08] text-red-300"
+                  : "border-green-400/30 bg-green-400/[0.06] text-green-300",
+              )}
+            >
+              {mceNow ? "Bear CBBC 已触发 MCE" : "Bear CBBC 尚未触发 MCE"}
+            </div>
+          </div>
+
+          <div className="market-chart-panel rounded-lg border border-cyan-400/15 bg-[#070d19]/85 p-4">
+            <svg viewBox={`0 0 ${chart.width} ${chart.height}`} className="h-auto w-full" role="img" aria-label="Day 4 CBBC 市场路径">
+              {chart.yTicks.map((tick) => (
+                <g key={tick}>
+                  <line x1="58" x2="780" y1={chart.yScale(tick)} y2={chart.yScale(tick)} stroke="rgba(148,163,184,0.15)" />
+                  <text x="18" y={chart.yScale(tick) + 4} className="fill-slate-500 text-[12px]">
+                    {formatPoints(tick)}
+                  </text>
+                </g>
+              ))}
+              <line x1="58" x2="780" y1={callPriceY} y2={callPriceY} stroke="#ef4444" strokeWidth="3" strokeDasharray="8 8" />
+              <text x="612" y={callPriceY - 10} className="fill-red-300 text-[13px] font-bold">
+                熊证上方收回价 {formatPoints(market.cbbcCallPrice)}
+              </text>
+              <line x1="58" x2="780" y1={strikeY} y2={strikeY} stroke="#ffd700" strokeWidth="2" strokeDasharray="6 7" />
+              <text x="612" y={strikeY - 10} className="fill-[#ffd700] text-[13px] font-bold">
+                普通 Put 行权价 {formatPoints(market.strike)}
+              </text>
+              <polyline
+                points={activeLine}
+                fill="none"
+                stroke={mceNow ? "#ef4444" : "#00f0ff"}
+                strokeWidth="4"
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                className="chart-tension"
+              />
+              {activePrices.map((price, index) => {
+                const danger = price >= market.cbbcCallPrice;
+                return (
+                  <g key={`${price}-${index}`}>
+                    <circle
+                      cx={chart.xScale(index)}
+                      cy={chart.yScale(price)}
+                      r={danger ? 9 : 6}
+                      fill={danger ? "#ef4444" : "#00f0ff"}
+                      stroke={danger ? "#fecaca" : "#cffafe"}
+                      strokeWidth="2"
+                    />
+                    <text
+                      x={chart.xScale(index)}
+                      y={chart.yScale(price) - 14}
+                      textAnchor="middle"
+                      className={danger ? "fill-red-300 text-[12px] font-bold" : "fill-slate-300 text-[12px]"}
+                    >
+                      {formatPoints(price)}
+                    </text>
+                  </g>
+                );
+              })}
+            </svg>
+          </div>
+        </div>
+
+        {finalShown && (
+          <div className="grid gap-4 md:grid-cols-3">
+            <div className="rounded-lg border border-red-500/25 bg-red-500/[0.06] p-4">
+              <div className="font-terminal text-xs tracking-[0.16em] text-red-300">
+                Bear CBBC 结果
+              </div>
+              <div className="mt-2 text-2xl font-black text-red-300">
+                {result.mceTriggered ? `第 ${result.mceIndex + 1} 个价格点触发 MCE` : "未触发 MCE"}
+              </div>
+            </div>
+            <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+              <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
+                普通 Put 净盈亏
+              </div>
+              <div className={cn("mt-2 text-2xl font-black", result.vanillaPnl >= 0 ? "text-green-400" : "text-red-300")}>
+                {result.vanillaPnl >= 0 ? "+" : ""}
+                {result.vanillaPnl} 点
+              </div>
+            </div>
+            <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
+              <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">
+                教学结论
+              </div>
+              <div className="mt-2 text-base font-black leading-7 text-[#ffd700]">
+                最后跌回来，不代表 MCE 后的熊证能复活。
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day4ReportPanel({ score }) {
+  if (!score) {
+    return (
+      <TerminalCard className="scene-enter p-6">
+        <div className="text-slate-400">报告生成中。</div>
+      </TerminalCard>
+    );
+  }
+
+  const rows = [
+    ["客户适当性判断", score.suitabilityChoice],
+    ["推荐产品", score.productName],
+    ["最终价格", `${formatPoints(score.finalPrice)} 点`],
+    ["Bear CBBC 状态", score.mceTriggered ? "已触发 MCE" : "未触发 MCE"],
+    ["Bear CBBC P&L", `${score.bearCbbcPnl >= 0 ? "+" : ""}${score.bearCbbcPnl} 点`],
+    ["普通 Put P&L", `${score.vanillaPnl >= 0 ? "+" : ""}${score.vanillaPnl} 点`],
+  ];
+
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="第四天日终报告" accent="CBBC 适当性复盘" />
+      <div className="space-y-5 p-6">
+        <div className="grid gap-4 md:grid-cols-3">
+          {rows.map(([label, value]) => (
+            <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+              <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
+                {label}
+              </div>
+              <div className="mt-2 text-xl font-black text-slate-100">{value}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-4">
+          {[
+            ["适当性", score.suitabilityScore],
+            ["产品推荐", score.productScore],
+            ["风险说明", score.riskDisclosure],
+            ["总评分", score.overall],
+          ].map(([label, value]) => (
+            <div
+              key={label}
+              className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.03] p-4"
+            >
+              <span className="font-terminal text-xs text-slate-500">{label}</span>
+              <ScoreBadge score={value} />
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-md border-l-4 border-red-400 bg-red-500/[0.06] p-4 text-base leading-8 text-red-200">
+          路径复盘：恒指中途冲高触及熊证上方收回价 {formatPoints(day4Config.market.cbbcCallPrice)} 点，
+          触发 MCE。后面虽然跌到 {formatPoints(score.finalPrice)} 点，熊证也不会自动恢复。
+        </div>
+
+        <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
+          Martin 复盘：{score.martinComment}
+        </div>
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day4CompletePanel() {
+  const summary = [
+    "Bull CBBC 是看涨杠杆产品，Bear CBBC 是看跌杠杆产品。",
+    "CBBC 有收回价，触及收回价会触发强制收回事件（MCE）。",
+    "牛证通常看下方收回价，熊证通常看上方收回价。",
+    "MCE 后产品提前终止，残值不保证。",
+    "最后方向判断正确，也可能因为中途 MCE 而损失。",
+    "推荐 CBBC 前必须确认客户理解杠杆、收回价和残值风险。",
+  ];
+
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="第四天完成" accent="CBBC 适当性训练完成" />
+      <div className="flex min-h-[520px] flex-col items-center justify-center p-6 text-center">
+        <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-5xl font-black tracking-[0.12em] text-transparent md:text-6xl">
+          第四天完成
+        </div>
+        <div className="mt-8 grid w-full max-w-2xl gap-3 text-left">
+          {summary.map((item) => (
+            <div
+              key={item}
+              className="rounded-md border border-cyan-400/15 bg-black/30 px-4 py-3 text-sm leading-7 text-slate-300"
+            >
+              <span className="font-terminal mr-2 text-[#00f0ff]">规则</span>
+              {item}
+            </div>
+          ))}
+        </div>
+      </div>
+    </TerminalCard>
+  );
+}
+
 function MainPanel({
   stage,
   selectedProduct,
   productMessage,
+  selectedSuitability,
+  suitabilityMessage,
   selectedDisclosures,
   disclosureFeedback,
   marketHasRun,
@@ -4016,6 +5641,7 @@ function MainPanel({
   clientResponse,
   day2Score,
   day3Score,
+  day4Score,
   actions,
 }) {
   const panels = {
@@ -4056,7 +5682,13 @@ function MainPanel({
     day2_handbook_updated: <Day2HandbookUpdatedPanel />,
     day2_client_arrival: <Day2ClientArrivalPanel />,
     day2_product_review: <Day2ProductReviewPanel />,
-    day2_tree_explainer: <Day2TreeExplainerPanel />,
+    day2_tree_explainer: (
+      <Day2TreeExplainerPanel
+        selectedQuote={selectedQuote}
+        quoteAnalysis={quoteAnalysis}
+        onUpdateQuote={actions.updateQuote}
+      />
+    ),
     day2_quote_slider: (
       <Day2QuoteSliderPanel
         selectedQuote={selectedQuote}
@@ -4116,6 +5748,45 @@ function MainPanel({
     ),
     day3_report: <Day3ReportPanel score={day3Score} />,
     day3_complete: <Day3CompletePanel />,
+    day4_intro: <Day4IntroPanel />,
+    day4_handbook_updated: <Day4HandbookUpdatedPanel />,
+    day4_client_arrival: <Day4ClientArrivalPanel />,
+    day4_suitability_check: (
+      <Day4SuitabilityPanel
+        selectedSuitability={selectedSuitability}
+        suitabilityMessage={suitabilityMessage}
+        onSelectSuitability={actions.selectSuitability}
+      />
+    ),
+    day4_product_selection: (
+      <ProductSelectionPanel
+        selectedProduct={selectedProduct}
+        productMessage={productMessage}
+        onSelectProduct={actions.selectProduct}
+        products={day4Config.products}
+        correctProductId={day4Config.scoringRules.correctProduct}
+        title="CBBC 产品推荐台"
+        accent="不要被新产品诱惑"
+      />
+    ),
+    day4_risk_disclosure: (
+      <RiskDisclosurePanel
+        selectedDisclosures={selectedDisclosures}
+        onToggleDisclosure={actions.toggleDisclosure}
+        disclosureFeedback={disclosureFeedback}
+        items={day4Config.disclosureItems}
+        instruction="周女士问到牛熊证。请选择你必须解释清楚的 CBBC 风险。"
+      />
+    ),
+    day4_market_run: (
+      <Day4MarketRunPanel
+        selectedProduct={selectedProduct}
+        marketHasRun={marketHasRun}
+        visibleMarketSteps={visibleMarketSteps}
+      />
+    ),
+    day4_report: <Day4ReportPanel score={day4Score} />,
+    day4_complete: <Day4CompletePanel />,
   };
 
   return <div className="min-h-[580px]">{panels[stage] ?? null}</div>;
@@ -4136,17 +5807,31 @@ export default function Day1TraderSimulator() {
   const [clientResponse, setClientResponse] = useState(null);
   const [day2Score, setDay2Score] = useState(null);
   const [day3Score, setDay3Score] = useState(null);
+  const [day4Score, setDay4Score] = useState(null);
+  const [selectedSuitability, setSelectedSuitability] = useState(null);
+  const [suitabilityMessage, setSuitabilityMessage] = useState("");
   const [productMessage, setProductMessage] = useState("");
   const [skipSignal, setSkipSignal] = useState(0);
+  const [stageHistory, setStageHistory] = useState([]);
+  const stageTrackerRef = useRef({ current: "title_screen", skipNext: false });
 
   const isDay2Stage = currentStage.startsWith("day2");
   const isDay3Stage = currentStage.startsWith("day3");
-  const activeDisclosureConfig = isDay3Stage ? day3Config : isDay2Stage ? day2Config : day1Config;
+  const isDay4Stage = currentStage.startsWith("day4");
+  const activeDisclosureConfig = isDay4Stage
+    ? day4Config
+    : isDay3Stage
+      ? day3Config
+      : isDay2Stage
+        ? day2Config
+        : day1Config;
   const correctDisclosureIds = activeDisclosureConfig.scoringRules.correctDisclosureIds;
   const misleadingDisclosureId = activeDisclosureConfig.scoringRules.misleadingDisclosureId;
-  const marketPathLength = isDay3Stage
-    ? day3Config.market.path.length
-    : (day1Config.market.chartPath ?? day1Config.market.path).length;
+  const marketPathLength = isDay4Stage
+    ? day4Config.market.path.length
+    : isDay3Stage
+      ? day3Config.market.path.length
+      : (day1Config.market.chartPath ?? day1Config.market.path).length;
   const marketComplete = marketHasRun && visibleMarketSteps >= marketPathLength;
   const quoteAnalysis = useMemo(() => getQuoteAnalysis(selectedQuote), [selectedQuote]);
   const isFullWidthStage = fullWidthStages.has(currentStage);
@@ -4167,8 +5852,41 @@ export default function Day1TraderSimulator() {
     setHandbookOpen(false);
   };
 
+  useEffect(() => {
+    const previousStage = stageTrackerRef.current.current;
+    if (previousStage === currentStage) return;
+
+    if (stageTrackerRef.current.skipNext) {
+      stageTrackerRef.current.skipNext = false;
+      stageTrackerRef.current.current = currentStage;
+      return;
+    }
+
+    setStageHistory((history) => {
+      if (history[history.length - 1] === previousStage) return history;
+      return [...history, previousStage].slice(-40);
+    });
+    stageTrackerRef.current.current = currentStage;
+  }, [currentStage]);
+
+  const goBack = () => {
+    const previousStage = stageHistory[stageHistory.length - 1];
+    if (!previousStage) return;
+
+    stageTrackerRef.current.skipNext = true;
+    setStageHistory((history) => history.slice(0, -1));
+    setCurrentStage(previousStage);
+    setHandbookOpen(false);
+    setSkipSignal((value) => value + 1);
+  };
+
   const selectProduct = (productId) => {
-    const products = currentStage === "day3_product_selection" ? day3Config.products : day1Config.products;
+    const products =
+      currentStage === "day4_product_selection"
+        ? day4Config.products
+        : currentStage === "day3_product_selection"
+          ? day3Config.products
+          : day1Config.products;
     const product = products.find((item) => item.id === productId);
     if (!product) return;
 
@@ -4199,8 +5917,33 @@ export default function Day1TraderSimulator() {
       return;
     }
 
+    if (currentStage === "day4_product_selection") {
+      setSelectedDisclosures([]);
+      setCurrentStage("day4_risk_disclosure");
+      return;
+    }
+
     unlockHandbookEntry("risk_disclosure");
     setCurrentStage("day1_risk_disclosure");
+  };
+
+  const selectSuitability = (suitabilityId) => {
+    const option = day4Config.suitabilityOptions.find((item) => item.id === suitabilityId);
+    if (!option) return;
+
+    setSelectedSuitability(suitabilityId);
+    setSuitabilityMessage(option.feedback);
+  };
+
+  const confirmSuitability = () => {
+    if (!selectedSuitability) {
+      setSuitabilityMessage("请先判断客户是否适合 CBBC。");
+      return;
+    }
+
+    setSelectedProduct(null);
+    setProductMessage("");
+    setCurrentStage("day4_product_selection");
   };
 
   const toggleDisclosure = (disclosureId) => {
@@ -4227,6 +5970,13 @@ export default function Day1TraderSimulator() {
   };
 
   const confirmDisclosure = () => {
+    if (currentStage === "day4_risk_disclosure") {
+      setCurrentStage("day4_market_run");
+      setMarketHasRun(true);
+      setVisibleMarketSteps(1);
+      return;
+    }
+
     if (currentStage === "day3_risk_disclosure") {
       setCurrentStage("day3_market_run");
       setMarketHasRun(true);
@@ -4325,16 +6075,18 @@ export default function Day1TraderSimulator() {
 
   const evaluateDay2 = () => {
     const analysis = getQuoteAnalysis(selectedQuote);
+    const pricingResult = getDay2PricingScore(selectedQuote);
+    const marketResult = getDay2MarketResult(selectedQuote);
     const riskDisclosure = getRiskDisclosureScore(selectedDisclosures, day2Config);
     let overall = "B";
 
-    if (analysis.score === "D" || riskDisclosure === "D") {
+    if (pricingResult.score === "D" || riskDisclosure === "D") {
       overall = "D";
-    } else if (analysis.score === "A" && riskDisclosure === "A") {
+    } else if (pricingResult.score === "A" && riskDisclosure === "A") {
       overall = "A";
-    } else if (riskDisclosure === "A" && (analysis.score === "B-" || analysis.score === "C")) {
+    } else if (riskDisclosure === "A" && (pricingResult.score === "B-" || pricingResult.score === "C")) {
       overall = "B";
-    } else if (analysis.score === "C" || riskDisclosure === "C") {
+    } else if (pricingResult.score === "C" || riskDisclosure === "C") {
       overall = "C";
     }
 
@@ -4347,9 +6099,14 @@ export default function Day1TraderSimulator() {
       theoreticalPrice: day2Config.quoteRules.theoreticalPrice,
       selectedQuote,
       margin: selectedQuote - day2Config.quoteRules.theoreticalPrice,
+      marketPath: marketResult.path,
+      marketFinalPrice: marketResult.finalPrice,
+      marketPayoff: marketResult.payoff,
+      deskPnl: marketResult.deskPnl,
+      clientPnl: marketResult.clientPnl,
       clientStatus: analysis.status,
-      pricingScore: analysis.score,
-      pricingComment: analysis.reportText,
+      pricingScore: pricingResult.score,
+      pricingComment: pricingResult.comment,
       riskDisclosure,
       overall,
       martinComment: `${analysis.martinComment}${disclosureWarning}`,
@@ -4409,6 +6166,63 @@ export default function Day1TraderSimulator() {
     };
   };
 
+  const evaluateDay4 = () => {
+    const product = day4Config.products.find((item) => item.id === selectedProduct);
+    const productName = product?.name ?? "未选择产品";
+    const suitabilityOption = day4Config.suitabilityOptions.find(
+      (item) => item.id === selectedSuitability,
+    );
+    const result = getDay4MarketResult();
+    const riskDisclosure = getRiskDisclosureScore(selectedDisclosures, day4Config);
+    const suitabilityScore =
+      selectedSuitability === day4Config.scoringRules.correctSuitability ? "A" : "C";
+    const productScore =
+      selectedProduct === "bear_cbbc"
+        ? "A"
+        : selectedProduct === "vanilla_put"
+          ? "B"
+          : selectedProduct === "vanilla_call"
+            ? "D"
+            : "D";
+
+    let overall = "B";
+    if (productScore === "D" || riskDisclosure === "D") {
+      overall = "D";
+    } else if (suitabilityScore === "A" && productScore === "A" && riskDisclosure === "A") {
+      overall = "A";
+    } else if (suitabilityScore === "C" || productScore === "C" || riskDisclosure === "C") {
+      overall = "C";
+    }
+
+    const productComment =
+      selectedProduct === "bear_cbbc"
+        ? "你选中了熊证：方向匹配客户看跌观点，也符合她愿意承担高风险、希望获得杠杆的需求。"
+        : selectedProduct === "bull_cbbc"
+          ? "Bull CBBC 是看涨工具，方向和客户看跌观点相反。"
+          : selectedProduct === "vanilla_put"
+            ? "普通 Put 方向正确、风险更简单，但没有提供客户想要的 CBBC 杠杆特征。"
+            : "普通 Call 是看涨工具，方向和客户看跌观点相反。";
+
+    const disclosureComment =
+      riskDisclosure === "A"
+        ? "CBBC 风险说明也完整覆盖了收回价、MCE、残值和杠杆。"
+        : "但 CBBC 风险说明还不完整。客户必须理解 MCE 后不会因为市场反弹而恢复。";
+
+    return {
+      suitabilityChoice: suitabilityOption?.title ?? "未判断",
+      productName,
+      finalPrice: result.finalPrice,
+      mceTriggered: result.mceTriggered,
+      bearCbbcPnl: result.bearCbbcPnl,
+      vanillaPnl: result.vanillaPnl,
+      suitabilityScore,
+      productScore,
+      riskDisclosure,
+      overall,
+      martinComment: `${productComment}${disclosureComment}`,
+    };
+  };
+
   const startDay1 = () => {
     setCurrentDay(1);
     setCurrentStage("day1_welcome");
@@ -4424,6 +6238,9 @@ export default function Day1TraderSimulator() {
     setClientResponse(null);
     setDay2Score(null);
     setDay3Score(null);
+    setDay4Score(null);
+    setSelectedSuitability(null);
+    setSuitabilityMessage("");
     setProductMessage("");
     setSkipSignal((value) => value + 1);
   };
@@ -4443,6 +6260,9 @@ export default function Day1TraderSimulator() {
     setClientResponse(null);
     setDay2Score(null);
     setDay3Score(null);
+    setDay4Score(null);
+    setSelectedSuitability(null);
+    setSuitabilityMessage("");
     setProductMessage("");
     setSkipSignal((value) => value + 1);
   };
@@ -4464,6 +6284,9 @@ export default function Day1TraderSimulator() {
     setClientResponse(null);
     setDay2Score(null);
     setDay3Score(null);
+    setDay4Score(null);
+    setSelectedSuitability(null);
+    setSuitabilityMessage("");
     setSkipSignal((value) => value + 1);
   };
 
@@ -4482,6 +6305,9 @@ export default function Day1TraderSimulator() {
     setClientResponse(null);
     setDay2Score(null);
     setDay3Score(null);
+    setDay4Score(null);
+    setSelectedSuitability(null);
+    setSuitabilityMessage("");
     setSkipSignal((value) => value + 1);
   };
 
@@ -4502,6 +6328,9 @@ export default function Day1TraderSimulator() {
     setClientResponse(null);
     setDay2Score(null);
     setDay3Score(null);
+    setDay4Score(null);
+    setSelectedSuitability(null);
+    setSuitabilityMessage("");
     setSkipSignal((value) => value + 1);
   };
 
@@ -4520,6 +6349,62 @@ export default function Day1TraderSimulator() {
     setClientResponse(null);
     setDay2Score(null);
     setDay3Score(null);
+    setDay4Score(null);
+    setSelectedSuitability(null);
+    setSuitabilityMessage("");
+    setSkipSignal((value) => value + 1);
+  };
+
+  const startDay4 = () => {
+    setCurrentDay(4);
+    setCurrentStage("day4_intro");
+    setHandbookOpen(false);
+    setHandbookHasNew(false);
+    setHandbookUnlockedEntries((entries) =>
+      Array.from(new Set([
+        ...entries,
+        ...day1HandbookEntryIds,
+        ...day2HandbookEntryIds,
+        ...day3HandbookEntryIds,
+      ])),
+    );
+    setSelectedProduct(null);
+    setSelectedSuitability(null);
+    setSuitabilityMessage("");
+    setSelectedDisclosures([]);
+    setMarketHasRun(false);
+    setVisibleMarketSteps(1);
+    setProductMessage("");
+    setSelectedQuote(day2Config.quoteRules.defaultQuote);
+    setClientResponse(null);
+    setDay2Score(null);
+    setDay3Score(null);
+    setDay4Score(null);
+    setSkipSignal((value) => value + 1);
+  };
+
+  const restartDay4 = () => {
+    setCurrentDay(4);
+    setCurrentStage("day4_intro");
+    setHandbookOpen(false);
+    setHandbookHasNew(false);
+    setHandbookUnlockedEntries([
+      ...day1HandbookEntryIds,
+      ...day2HandbookEntryIds,
+      ...day3HandbookEntryIds,
+    ]);
+    setSelectedProduct(null);
+    setSelectedSuitability(null);
+    setSuitabilityMessage("");
+    setSelectedDisclosures([]);
+    setMarketHasRun(false);
+    setVisibleMarketSteps(1);
+    setProductMessage("");
+    setSelectedQuote(day2Config.quoteRules.defaultQuote);
+    setClientResponse(null);
+    setDay2Score(null);
+    setDay3Score(null);
+    setDay4Score(null);
     setSkipSignal((value) => value + 1);
   };
 
@@ -4527,11 +6412,13 @@ export default function Day1TraderSimulator() {
     if (selectedDisclosures.includes(misleadingDisclosureId)) {
       return {
         tone: "danger",
-        text: isDay3Stage
-          ? "这句话会误导客户。障碍期权不能只看最终到期价格。"
-          : isDay2Stage
-            ? "这句话会误导客户。模型价格不是盈利保证。"
-            : "这句话会误导客户。市场上涨不代表扣除期权费后一定赚钱。",
+        text: isDay4Stage
+          ? "这句话会误导客户。MCE 后熊证不会因为市场回落而自动恢复。"
+          : isDay3Stage
+            ? "这句话会误导客户。障碍期权不能只看最终到期价格。"
+            : isDay2Stage
+              ? "这句话会误导客户。模型价格不是盈利保证。"
+              : "这句话会误导客户。市场上涨不代表扣除期权费后一定赚钱。",
       };
     }
 
@@ -4539,44 +6426,62 @@ export default function Day1TraderSimulator() {
     if (selectedDisclosures.length === 0) {
       return {
         tone: "warn",
-        text: isDay3Stage
-          ? "再检查一下工作手册。客户必须理解障碍线、敲出和路径风险。"
-          : isDay2Stage
-            ? "再检查一下工作手册。客户必须理解期权费风险和模型风险。"
-            : "查看工作手册。客户必须理解期权费可能损失，以及产品不保证盈利。",
+        text: isDay4Stage
+          ? "再检查一下工作手册。客户必须理解收回价、MCE、残值不保证和杠杆风险。"
+          : isDay3Stage
+            ? "再检查一下工作手册。客户必须理解障碍线、敲出和路径风险。"
+            : isDay2Stage
+              ? "再检查一下工作手册。客户必须理解期权费风险和模型风险。"
+              : "查看工作手册。客户必须理解期权费可能损失，以及产品不保证盈利。",
       };
     }
 
     if (missing.length > 0) {
       return {
         tone: "warn",
-        text: isDay3Stage
-          ? "再检查一下工作手册。客户必须理解障碍线、敲出和路径风险。"
-          : isDay2Stage
-            ? "再检查一下工作手册。客户必须理解期权费风险和模型风险。"
-            : "查看工作手册。客户必须理解期权费可能损失，以及产品不保证盈利。",
+        text: isDay4Stage
+          ? "再检查一下工作手册。客户必须理解收回价、MCE、残值不保证和杠杆风险。"
+          : isDay3Stage
+            ? "再检查一下工作手册。客户必须理解障碍线、敲出和路径风险。"
+            : isDay2Stage
+              ? "再检查一下工作手册。客户必须理解期权费风险和模型风险。"
+              : "查看工作手册。客户必须理解期权费可能损失，以及产品不保证盈利。",
       };
     }
 
     return {
       tone: "good",
-      text: isDay3Stage
-        ? "很好。这几项覆盖了路径依赖、敲出、最终价格误区和便宜背后的风险。"
-        : isDay2Stage
-          ? "很好。这几项覆盖了期权费损失、无保证盈利、模型风险和到期收益规则。"
-          : "很好。这几项覆盖了期权费损失、最大亏损限制，以及不保证盈利。",
+      text: isDay4Stage
+        ? "很好。这几项覆盖了收回价、MCE、残值不保证和杠杆风险。"
+        : isDay3Stage
+          ? "很好。这几项覆盖了路径依赖、敲出、最终价格误区和便宜背后的风险。"
+          : isDay2Stage
+            ? "很好。这几项覆盖了期权费损失、无保证盈利、模型风险和到期收益规则。"
+            : "很好。这几项覆盖了期权费损失、最大亏损限制，以及不保证盈利。",
     };
-  }, [correctDisclosureIds, isDay2Stage, isDay3Stage, misleadingDisclosureId, selectedDisclosures]);
+  }, [
+    correctDisclosureIds,
+    isDay2Stage,
+    isDay3Stage,
+    isDay4Stage,
+    misleadingDisclosureId,
+    selectedDisclosures,
+  ]);
 
   const mentorText = useMemo(() => {
     if (currentStage === "day1_product_selection" && productMessage) return productMessage;
     if (currentStage === "day3_product_selection" && productMessage) return productMessage;
+    if (currentStage === "day4_suitability_check" && suitabilityMessage) {
+      return suitabilityMessage;
+    }
+    if (currentStage === "day4_product_selection" && productMessage) return productMessage;
     if (currentStage === "day1_risk_disclosure") return disclosureFeedback.text;
     if (currentStage === "day2_quote_slider") {
       return `${stageConfig[currentStage].mentor} 当前报价状态：${quoteAnalysis.label}。`;
     }
     if (currentStage === "day2_risk_disclosure") return disclosureFeedback.text;
     if (currentStage === "day3_risk_disclosure") return disclosureFeedback.text;
+    if (currentStage === "day4_risk_disclosure") return disclosureFeedback.text;
     if (currentStage === "day2_client_response" && clientResponse) {
       return `客户反馈：${clientResponse.status}。报价不是只看成交，还要看交易台是否得到合理补偿。`;
     }
@@ -4586,9 +6491,13 @@ export default function Day1TraderSimulator() {
     if (currentStage === "day3_market_run" && marketComplete) {
       return "这就是障碍期权的重点：最终价格高于行权价，但中途已经跌破障碍线，敲出后产品不能复活。";
     }
+    if (currentStage === "day4_market_run" && marketComplete) {
+      return "Bear CBBC 中途触发 MCE 后已经终止。普通 Put 虽然没有杠杆，但它活到了到期，这就是路径风险的代价。";
+    }
     if (currentStage === "day1_report" && day1Score) return day1Score.martinComment;
     if (currentStage === "day2_report" && day2Score) return day2Score.martinComment;
     if (currentStage === "day3_report" && day3Score) return day3Score.martinComment;
+    if (currentStage === "day4_report" && day4Score) return day4Score.martinComment;
     return stageConfig[currentStage]?.mentor ?? "";
   }, [
     clientResponse,
@@ -4596,14 +6505,16 @@ export default function Day1TraderSimulator() {
     day1Score,
     day2Score,
     day3Score,
+    day4Score,
     disclosureFeedback.text,
     marketComplete,
     productMessage,
     quoteAnalysis.label,
+    suitabilityMessage,
   ]);
 
   useEffect(() => {
-    if (!["day1_market_run", "day3_market_run"].includes(currentStage) || !marketHasRun) {
+    if (!["day1_market_run", "day3_market_run", "day4_market_run"].includes(currentStage) || !marketHasRun) {
       return undefined;
     }
 
@@ -4633,15 +6544,22 @@ export default function Day1TraderSimulator() {
       return;
     }
 
+    if (currentStage === "day4_market_run") {
+      setDay4Score(evaluateDay4());
+      setCurrentStage("day4_report");
+      return;
+    }
+
     setDay1Score(evaluateDay1());
     setCurrentStage("day1_report");
   };
 
   const actions = {
-    startGame: startDay1,
+    startGame: startDay2,
     startDay1,
     startDay2,
     startDay3,
+    startDay4,
     startBriefing: () => setCurrentStage("day1_lesson_basics"),
     toCallPutLesson: () => setCurrentStage("day1_intro"),
     toPremiumLesson: () => setCurrentStage("day1_lesson_premium"),
@@ -4664,6 +6582,10 @@ export default function Day1TraderSimulator() {
       unlockHandbookEntry("barrier_options");
       setCurrentStage("day3_handbook_updated");
     },
+    finishDay4Intro: () => {
+      unlockHandbookEntry("cbbc_basics");
+      setCurrentStage("day4_handbook_updated");
+    },
     openHandbook,
     closeHandbook,
     meetClient: () => {
@@ -4672,9 +6594,13 @@ export default function Day1TraderSimulator() {
     },
     meetDay2Client: () => setCurrentStage("day2_client_arrival"),
     meetDay3Client: () => setCurrentStage("day3_client_arrival"),
+    meetDay4Client: () => setCurrentStage("day4_client_arrival"),
     toProductSelection: () => setCurrentStage("day1_product_selection"),
     toDay2ProductReview: () => setCurrentStage("day2_product_review"),
     toDay3ProductSelection: () => setCurrentStage("day3_product_selection"),
+    toDay4Suitability: () => setCurrentStage("day4_suitability_check"),
+    selectSuitability,
+    confirmSuitability,
     selectProduct,
     confirmProduct,
     showPricingTree,
@@ -4688,9 +6614,11 @@ export default function Day1TraderSimulator() {
     finishDay: () => setCurrentStage("day1_complete"),
     finishDay2: () => setCurrentStage("day2_complete"),
     finishDay3: () => setCurrentStage("day3_complete"),
+    finishDay4: () => setCurrentStage("day4_complete"),
     restartDay1,
     restartDay2,
     restartDay3,
+    restartDay4,
   };
 
   const skipCurrentTypewriter = (event) => {
@@ -4725,6 +6653,8 @@ export default function Day1TraderSimulator() {
           currentDay={currentDay}
           stage={currentStage}
           handbookHasNew={handbookHasNew}
+          canGoBack={stageHistory.length > 0}
+          onGoBack={goBack}
           onOpenHandbook={openHandbook}
         />
 
@@ -4740,6 +6670,8 @@ export default function Day1TraderSimulator() {
             stage={currentStage}
             selectedProduct={selectedProduct}
             productMessage={productMessage}
+            selectedSuitability={selectedSuitability}
+            suitabilityMessage={suitabilityMessage}
             selectedDisclosures={selectedDisclosures}
             disclosureFeedback={disclosureFeedback}
             marketHasRun={marketHasRun}
@@ -4750,6 +6682,7 @@ export default function Day1TraderSimulator() {
             clientResponse={clientResponse}
             day2Score={day2Score}
             day3Score={day3Score}
+            day4Score={day4Score}
             actions={actions}
           />
           {!isFullWidthStage && <MentorPanel text={mentorText} skipSignal={skipSignal} />}
@@ -4758,6 +6691,7 @@ export default function Day1TraderSimulator() {
         <BottomActionBar
           stage={currentStage}
           selectedProduct={selectedProduct}
+          selectedSuitability={selectedSuitability}
           marketComplete={marketComplete}
           actions={actions}
         />
