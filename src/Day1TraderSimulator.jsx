@@ -191,7 +191,7 @@ const day1Config = {
     type: "散户投资者",
     marketView: "看涨恒生指数",
     riskTolerance: "中等",
-    goal: "想获得上涨收益，但不想承担无限下跌风险",
+    goal: "想获得上涨收益，但不想承担大额下跌风险",
     budget: "可以支付有限期权费",
     experience: "新手",
     dialogue: [
@@ -280,7 +280,7 @@ const day1Config = {
     underlying: "恒生指数",
     spot: 21500,
     strike: 22000,
-    premium: 150,
+    premium: 186,
     maturity: "1个月",
     path: [21500, 21800, 22100, 22400],
     chartPath: [21500, 21380, 21720, 21640, 21800, 22030, 21920, 22100, 22310, 22220, 22400],
@@ -330,8 +330,14 @@ const day2Config = {
       mentor:
         "见客户之前，先打开工作手册看一下。今天的关键规则很简单：报价要接近理论价格，不能太低，也不能太高。",
     },
+    day2_research_terminal: {
+      label: "09:18 中环数据台",
+      system: "定价参数查询",
+      mentor:
+        "产品结构确认好了。报价之前，先去数据台把今天的关键参数查齐。现价、波动率、利率、期限——这些数字不是凭空来的，每一个都有出处。把它们记下来，等会儿填进计算器。",
+    },
     day2_client_arrival: {
-      label: "09:12 客户到访",
+      label: "09:14 客户到访",
       system: "机构客户需求",
       mentor:
         "他已经明确说了自己要普通看涨期权。今天的重点不是选产品，而是报出合理的期权费。",
@@ -365,6 +371,12 @@ const day2Config = {
       system: "报价结果",
       mentor:
         "专业客户会盯着报价。价格离理论价值太远，不管太低还是太高，都会留下问题。",
+    },
+    day2_market_run: {
+      label: "09:46 市场结算",
+      system: "到期路径模拟",
+      mentor:
+        "现在看市场怎么走。价格会一步步跳动，注意盯住到期价格——普通 Call 的结算只看最后那一格落在行权价的哪一边。",
     },
     day2_report: {
       label: "09:50 日终报告",
@@ -451,20 +463,20 @@ const day2Config = {
     underlying: "恒生指数 HSI",
     spot: 21500,
     strike: 22000,
-    upMove: "+5%",
-    downMove: "-5%",
+    upMove: "+2.65%",
+    downMove: "-2.58%",
     steps: 3,
-    riskFreeRate: "0%（教学简化）",
-    theoreticalPrice: 180,
+    riskFreeRate: "2%（教学默认）",
+    theoreticalPrice: 186,
     nodes: [
       { id: "s0", step: "第 0 步", label: "今天", price: 21500, x: 8, y: 50 },
-      { id: "u", step: "第 1 步", label: "上涨", price: 22575, x: 29, y: 35 },
-      { id: "d", step: "第 1 步", label: "下跌", price: 20425, x: 29, y: 65 },
+      { id: "u", step: "第 1 步", label: "上涨", price: 22069, x: 29, y: 35 },
+      { id: "d", step: "第 1 步", label: "下跌", price: 20946, x: 29, y: 65 },
       {
         id: "uu",
         step: "第 2 步",
         label: "上涨-上涨",
-        price: 23704,
+        price: 22653,
         x: 51,
         y: 22,
       },
@@ -472,7 +484,7 @@ const day2Config = {
         id: "mid",
         step: "第 2 步",
         label: "一涨一跌",
-        price: 21446,
+        price: 21500,
         x: 51,
         y: 50,
       },
@@ -480,7 +492,7 @@ const day2Config = {
         id: "dd",
         step: "第 2 步",
         label: "下跌-下跌",
-        price: 19404,
+        price: 20405,
         x: 51,
         y: 78,
       },
@@ -488,9 +500,9 @@ const day2Config = {
         id: "uuu",
         step: "第 3 步",
         label: "三次上涨",
-        price: 24889,
-        payoff: 2889,
-        formula: "max(24,889 - 22,000, 0) = 2,889",
+        price: 23253,
+        payoff: 1253,
+        formula: "max(23,253 - 22,000, 0) = 1,253",
         hot: true,
         terminal: true,
         x: 84,
@@ -500,9 +512,9 @@ const day2Config = {
         id: "uum",
         step: "第 3 步",
         label: "两涨一跌",
-        price: 22519,
-        payoff: 519,
-        formula: "max(22,519 - 22,000, 0) = 519",
+        price: 22069,
+        payoff: 69,
+        formula: "max(22,069 - 22,000, 0) = 69",
         hot: true,
         terminal: true,
         x: 84,
@@ -512,9 +524,9 @@ const day2Config = {
         id: "udd",
         step: "第 3 步",
         label: "一涨两跌",
-        price: 20374,
+        price: 20946,
         payoff: 0,
-        formula: "max(20,374 - 22,000, 0) = 0",
+        formula: "max(20,946 - 22,000, 0) = 0",
         terminal: true,
         x: 84,
         y: 64,
@@ -523,9 +535,9 @@ const day2Config = {
         id: "ddd",
         step: "第 3 步",
         label: "三次下跌",
-        price: 18434,
+        price: 19879,
         payoff: 0,
-        formula: "max(18,434 - 22,000, 0) = 0",
+        formula: "max(19,879 - 22,000, 0) = 0",
         terminal: true,
         x: 84,
         y: 91,
@@ -547,13 +559,13 @@ const day2Config = {
     ],
   },
   quoteRules: {
-    theoreticalPrice: 180,
+    theoreticalPrice: 186,
     fairRange: [190, 220],
-    deskMinimum: 180,
+    deskMinimum: 186,
     rejectAbove: 260,
     sliderMin: 100,
     sliderMax: 300,
-    defaultQuote: 200,
+    defaultQuote: "",
   },
   market: {
     underlying: "恒生指数 HSI",
@@ -620,6 +632,12 @@ const day3Config = {
       mentor:
         "敲出（Knock-Out）的意思是：只要标的价格碰到障碍线，期权就提前失效。哪怕最后市场又涨回来，已经敲出的产品也不能复活。",
     },
+    day3_research_terminal: {
+      label: "09:10 障碍数据台",
+      system: "障碍参数查询",
+      mentor:
+        "障碍产品定价前，先去数据台把参数查齐。今天比昨天多一个关键数字——障碍价。现价、波动率、利率、期限你已经熟了，重点看那张障碍合约卡，把障碍价记下来。",
+    },
     day3_lesson_compare_vanilla: {
       label: "09:12 第三课：便宜不是免费",
       system: "Vanilla vs Barrier",
@@ -654,7 +672,7 @@ const day3Config = {
       label: "09:42 市场路径",
       system: "敲出路径模拟",
       mentor:
-        "现在看一条固定市场路径。注意盯住障碍线，不要只盯最终价格。障碍期权的戏剧性就在这里。",
+        "现在看一条固定市场路径。注意盯住障碍线，不要只盯最终价格。下面这条是教学演示路径，旁边我放了一段真实参照——2020 年新冠股灾时，恒指真的跌到过 21,000 一带，障碍随时会被击穿。",
     },
     day3_report: {
       label: "09:52 日终报告",
@@ -705,6 +723,7 @@ const day3Config = {
             "必须说明触碰障碍后产品可能提前失效",
             "必须说明最终价格有利，也可能因为曾经敲出而没有收益",
             "不要把障碍期权说成普通期权的便宜版本",
+            "本模拟用离散观察点演示路径，真实障碍产品多为连续监控，敲出更容易发生",
           ],
         },
       ],
@@ -716,7 +735,7 @@ const day3Config = {
     marketView: "看涨恒生指数",
     riskTolerance: "中高",
     goal: "想用较低期权费参与未来上涨",
-    productNeed: "愿意接受额外条件，但不想无限亏损",
+    productNeed: "愿意接受额外条件，但不想让亏损失控",
     budget: "普通 Call 觉得太贵，希望期权费更低",
     experience: "买过普通期权，但第一次接触障碍结构",
     dialogue: [
@@ -813,10 +832,22 @@ const day3Config = {
     spot: 21500,
     strike: 22000,
     barrier: 21000,
-    premium: 90,
-    vanillaPremium: 150,
+    premium: 115,
+    vanillaPremium: 186,
     maturity: "1个月",
     path: [21500, 21820, 21460, 20950, 21680, 22400],
+  },
+  // 真实市场背景：教学路径是简化演示，这里引用真实历史数据作为「现实参照」。
+  // 数据来源：同组数学引擎队抓取的真实行情（central-trader/data）。
+  marketContext: {
+    title: "现实参照 · 2020 新冠股灾",
+    source: "数据来源：恒指日线 hsi_2020_covid.csv ＋ VHSI vhsi_history.csv（同组数学引擎队抓取）",
+    bullets: [
+      "2020-03-19 恒指盘中跌至 21,139 点，正好贴近本关现价 21,500 与障碍 21,000 的量级",
+      "2020-03-23 恒指收报 21,696 点，触及本轮新冠最低区域后才反弹",
+      "同期 VHSI（恒指波动率指数）冲到 60.19（2020-03-19），市场恐慌使下方障碍极易被击穿",
+      "真实教训：高波动期，下跌敲出障碍比平静期更容易触发——便宜的代价是路径风险",
+    ],
   },
   scoringRules: {
     correctProduct: "down_out_call",
@@ -874,7 +905,7 @@ const day4Config = {
       label: "09:42 市场路径",
       system: "CBBC 对比路径",
       mentor:
-        "这条路径会让你看到上方 barrier：恒指先冲上去触发熊证 MCE，后来才跌下来。最终方向对，也救不回已收回的产品。",
+        "这条路径会让你看到上方 barrier：恒指先冲上去触发熊证 MCE，后来才跌下来。最终方向对，也救不回已收回的产品。旁边那段真实参照就是活教材——2020 年 2 月恒指先冲到 28,000，3 月才崩到 21,700，先冲高后大跌正是熊证最怕的剧本。",
     },
     day4_report: {
       label: "09:52 日终报告",
@@ -920,6 +951,7 @@ const day4Config = {
             "牛证：标的价格触及或低于收回价，会触发强制收回事件",
             "熊证：标的价格触及或高于收回价，会触发强制收回事件",
             "触发 MCE 后，产品提前终止，交易停止",
+            "本模拟为离散观察点，真实牛熊证连续监控，收回更容易发生",
           ],
         },
         {
@@ -929,6 +961,15 @@ const day4Config = {
             "有些 CBBC 可能有残值，有些可能没有残值",
             "教学简化：今天把残值视为 0，用来强调强制收回风险",
             "客户最大损失通常限于投入金额和交易成本，但亏损发生得很快",
+          ],
+        },
+        {
+          title: "价格与杠杆（教学简化）",
+          bullets: [
+            "真实牛熊证价格 ≈ |现价 − 行权价| × 换股比率 + 财务费用，不是用期权费定价",
+            "本模拟把熊证当成带杠杆的线性看跌工具：投入资金固定，盈亏 = 投入 × 杠杆 × 标的下跌比例",
+            "因此模拟里的「熊证成本/盈亏」是示意性杠杆数值，不代表真实换股比率定价",
+            "杠杆放大收益，也放大亏损；未敲出时最大亏损仍以投入资金为限",
           ],
         },
         {
@@ -954,7 +995,7 @@ const day4Config = {
     budget: "愿意投入有限资金，但希望下跌时反应更快",
     experience: "交易过普通 Put，第一次正式交易牛熊证",
     dialogue: [
-      "我觉得恒生指数短期可能会回落。普通 Put 有点慢，也有点贵。",
+      "我觉得恒生指数短期可能会回落。普通 Put 风险更简单，但期权费和杠杆效果都不是我最想要的。",
       "朋友提到熊证，说下跌时反应更快，但我知道它可能会被强制收回。",
       "你帮我判断一下，如果我要做看跌交易，熊证是不是合适？",
     ],
@@ -1066,12 +1107,29 @@ const day4Config = {
   market: {
     underlying: "恒生指数",
     spot: 21500,
+    // 普通 Put 比较产品的行权价（价外 Put，现价 21500 之下）
     strike: 21200,
+    // 熊证结构：现价 ≤ 收回价 ≤ 行权价。N 类熊证 行权价 = 收回价 = 22000，无残值。
+    cbbcStrike: 22000,
     cbbcCallPrice: 22000,
     cbbcEntryCost: 80,
+    // 熊证是带杠杆的线性跟踪工具，不是用期权费定价。这里用示意性杠杆倍数表达「下跌反应更快」。
+    cbbcLeverage: 7,
     vanillaPremium: 150,
     maturity: "1个月",
     path: [21500, 21780, 22050, 21600, 21100, 20750],
+  },
+  // 真实市场背景：教学路径是简化演示，这里引用真实历史数据作为「现实参照」。
+  // 数据来源：同组数学引擎队抓取的真实行情（central-trader/data）。
+  marketContext: {
+    title: "现实参照 · 2020 新冠：先冲高、再崩盘",
+    source: "数据来源：恒指日线 hsi_2020_covid.csv（同组数学引擎队抓取）",
+    bullets: [
+      "2020-02-17 恒指曾上探 28,055 点——先冲高的走势，正是熊证最怕的「上方收回」剧本",
+      "若当时持有上方收回价偏低的熊证，这波上冲就可能触发强制收回（MCE）",
+      "随后疫情扩散，恒指在 2020-03-23 一路跌到 21,696 点——方向其实对了",
+      "但已被收回的熊证无法复活：本关「先冲高触发 MCE、后大跌」的剧情，正是真实市场的缩影",
+    ],
   },
   scoringRules: {
     correctSuitability: "suitable",
@@ -1127,75 +1185,84 @@ function formatPoints(value) {
   return value.toLocaleString("en-US");
 }
 
-function getQuoteAnalysis(quote) {
-  const theoretical = day2Config.quoteRules.theoreticalPrice;
+function getQuoteAnalysis(quote, theoretical = day2Config.quoteRules.theoreticalPrice) {
   const margin = quote - theoretical;
+  // 合理区间：理论价 + 4 到 理论价 + 34（相对偏移，不再写死绝对值）
+  const fairLow = theoretical + 4;
+  const fairHigh = theoretical + 34;
+  const rejectAbove = theoretical + 74;
 
   if (quote < theoretical) {
+    const bargain = theoretical - quote;
     return {
       id: "too_low",
       label: "报价过低",
       score: "D",
       tone: "danger",
-      status: "交易接受，但交易台利润警告",
+      status: "成交了，但你贱卖了期权",
       accepted: true,
-      customerPreview: "客户喜欢这个价格，但交易台几乎没有合理利润。",
-      customerLine: "这个价格很便宜。你确定这个报价没问题吗？",
+      customerPreview: "客户会立刻抓住这个便宜价。",
+      customerLine: "这个价格很划算，成交。",
       reportText:
-        "你报出了低于理论价值的价格。客户接受了，但交易台没有得到足够补偿。",
+        "你的报价低于这张期权的合理价值，客户几乎是立刻就接受了——他知道自己占了便宜。",
       martinComment:
-        "客户当然喜欢低价，但交易员也要保护交易台。公允价值很重要。",
+        `王先生眼睛一亮，几乎没还价就签了字。你把一张大约值 ${theoretical} 点的期权报了 ${quote} 点，等于白送客户 ${bargain} 点。专业客户最会捡这种便宜。下次先看模型算出的理论价，再加利润，别让交易台吃哑巴亏。`,
       margin,
+      theoretical,
     };
   }
 
-  if (quote < day2Config.quoteRules.fairRange[0]) {
+  if (quote < fairLow) {
     return {
       id: "thin_margin",
       label: "利润很薄",
       score: "B-",
       tone: "warn",
-      status: "交易接受，但利润偏薄",
+      status: "成交，但利润薄如纸",
       accepted: true,
-      customerPreview: "客户可以接受，但交易台利润偏薄。",
+      customerPreview: "客户会爽快接受，但交易台几乎没赚头。",
       customerLine: "可以，我接受这个报价。",
-      reportText: "报价对客户很友好，但交易台利润偏薄。",
+      reportText: "报价对客户很友好，但交易台利润薄得几乎看不见。",
       martinComment:
-        "你守住了理论价格，但利润空间很薄。真实交易台会继续问：这笔风险值得吗？",
+        "你守住了理论价，但利润薄得几乎看不见。成交是成交了，交易台这单基本白忙。真实交易台会再问一句：这点利润，值得承担这笔风险吗？",
       margin,
+      theoretical,
     };
   }
 
-  if (quote <= day2Config.quoteRules.fairRange[1]) {
+  if (quote <= fairHigh) {
     return {
       id: "fair",
       label: "合理报价",
       score: "A",
       tone: "good",
-      status: "交易接受",
+      status: "成交，定价漂亮",
       accepted: true,
       customerPreview: "报价公平，也有合理利润空间。",
-      customerLine: "这个报价比较合理，我接受。",
-      reportText: "你参考了理论价格，并加入了合理利润空间。",
-      martinComment: "做得好。你把模型价格作为锚点，并加入了合理利润。",
+      customerLine: "价格公道，成交。",
+      reportText: "你参考了理论价格，并加入了合理利润空间，客户和交易台都满意。",
+      martinComment:
+        `漂亮。你拿模型理论价 ${theoretical} 点当锚，又留了 ${margin} 点利润——客户爽快接受，交易台也有钱赚。这就是定价纪律。`,
       margin,
+      theoretical,
     };
   }
 
-  if (quote <= day2Config.quoteRules.rejectAbove) {
+  if (quote <= rejectAbove) {
     return {
       id: "expensive",
       label: "偏贵",
       score: "C",
       tone: "warn",
-      status: "交易接受，但客户满意度下降",
+      status: "勉强成交，客户不满意",
       accepted: true,
-      customerPreview: "客户可能犹豫。",
-      customerLine: "这个价格有点贵。我可以勉强接受，但不是很满意。",
-      reportText: "报价高于合理区间，客户产生犹豫。",
+      customerPreview: "客户会皱眉，勉强成交。",
+      customerLine: "有点贵……行吧，这次先这样。",
+      reportText: "报价高于合理区间，客户勉强接受，但明显不满意。",
       martinComment:
-        "模型能帮你保持纪律。报价离公允价值太远，就会失去客户信任。",
+        "王先生皱着眉签了字。成交是成交了，但你报得偏高，客户明显不爽。这种客户体验留不住回头客——专业客户会记得谁宰过他。",
       margin,
+      theoretical,
     };
   }
 
@@ -1204,22 +1271,23 @@ function getQuoteAnalysis(quote) {
     label: "报价过高",
     score: "D",
     tone: "danger",
-    status: "客户拒绝交易",
+    status: "客户拒绝，转身离开",
     accepted: false,
-    customerPreview: "客户很可能拒绝交易。",
-    customerLine: "这个期权费太高了。我不做这笔交易。",
-    reportText: "报价过高，客户拒绝交易。",
+    customerPreview: "客户很可能掉头就走。",
+    customerLine: "这个价太离谱了，我去别家比比。",
+    reportText: "报价过高，客户当场拒绝，转身离开，这单没成。",
     martinComment:
-      "模型能帮你保持纪律。报价离公允价值太远，就会失去客户信任。",
+      "王先生合上笔记本起身就走了。报这么高把客户吓跑，这单黄了，交易台一分钱没赚到。模型是用来守纪律的，不是用来宰客的——报价离公允价值太远，再好的客户也会走。",
     margin,
+    theoretical,
   };
 }
 
-function getDay2MarketResult(quote) {
+function getDay2MarketResult(quote, theoretical = day2Config.quoteRules.theoreticalPrice) {
   const market = day2Config.market;
   const finalPrice = market.path[market.path.length - 1];
   const payoff = Math.max(finalPrice - market.strike, 0);
-  const analysis = getQuoteAnalysis(quote);
+  const analysis = getQuoteAnalysis(quote, theoretical);
   const tradeAccepted = analysis.accepted;
 
   return {
@@ -1232,9 +1300,11 @@ function getDay2MarketResult(quote) {
   };
 }
 
-function getDay2PricingScore(quote) {
-  const analysis = getQuoteAnalysis(quote);
-  const marketResult = getDay2MarketResult(quote);
+function getDay2PricingScore(quote, theoretical = day2Config.quoteRules.theoreticalPrice) {
+  const analysis = getQuoteAnalysis(quote, theoretical);
+  const marketResult = getDay2MarketResult(quote, theoretical);
+  const fairLow = theoretical + 4;
+  const fairHigh = theoretical + 34;
 
   if (!analysis.accepted) {
     return {
@@ -1243,7 +1313,7 @@ function getDay2PricingScore(quote) {
     };
   }
 
-  if (quote < day2Config.quoteRules.theoreticalPrice) {
+  if (quote < theoretical) {
     return {
       score: marketResult.deskPnl < 0 ? "D" : "C",
       comment:
@@ -1253,7 +1323,7 @@ function getDay2PricingScore(quote) {
     };
   }
 
-  if (quote >= day2Config.quoteRules.fairRange[0] && quote <= day2Config.quoteRules.fairRange[1]) {
+  if (quote >= fairLow && quote <= fairHigh) {
     return {
       score: marketResult.deskPnl >= 0 ? "A" : "B",
       comment:
@@ -1263,14 +1333,14 @@ function getDay2PricingScore(quote) {
     };
   }
 
-  if (quote < day2Config.quoteRules.fairRange[0]) {
+  if (quote < fairLow) {
     return {
       score: "B-",
       comment: "报价守住理论价格，但利润空间偏薄；市场结算后需要检查这笔风险是否值得。",
     };
   }
 
-  if (quote <= day2Config.quoteRules.rejectAbove) {
+  if (quote <= theoretical + 74) {
     return {
       score: "C",
       comment: "报价高于合理区间，虽然客户勉强接受，但客户满意度下降。",
@@ -1307,11 +1377,19 @@ function getDay4MarketResult() {
   const finalPrice = market.path[market.path.length - 1];
   const mceIndex = market.path.findIndex((price) => price >= market.cbbcCallPrice);
   const mceTriggered = mceIndex >= 0;
+  // 普通 Put 比较产品：使用 Put 自己的行权价 strike(21200)
   const vanillaPayoff = Math.max(market.strike - finalPrice, 0);
   const vanillaPnl = vanillaPayoff - market.vanillaPremium;
+  // 熊证按「带杠杆的线性看跌敞口」建模（而非期权 payoff），避免出现「小成本博大内在价值」的伪套利。
+  // 未触发 MCE：盈亏 = 投入资金 × 杠杆 × 标的相对入场的下跌比例（下跌为正，上涨为负）。
+  // 触发 MCE：损失全部投入（教学简化：残值 = 0）。亏损下限为投入资金。
+  const bearMovePct = (market.spot - finalPrice) / market.spot;
   const bearCbbcPnl = mceTriggered
     ? -market.cbbcEntryCost
-    : Math.max(market.strike - finalPrice, 0) - market.cbbcEntryCost;
+    : Math.max(
+        -market.cbbcEntryCost,
+        Math.round(market.cbbcEntryCost * market.cbbcLeverage * bearMovePct),
+      );
 
   return {
     finalPrice,
@@ -1825,8 +1903,11 @@ function BottomActionBar({
   selectedProduct,
   selectedSuitability,
   marketComplete,
+  selectedQuote,
   actions,
 }) {
+  const quoteEntered =
+    selectedQuote !== "" && selectedQuote !== null && Number.isFinite(Number(selectedQuote));
   const actionSets = {
     day1_welcome: (
       <PrimaryButton onClick={actions.startBriefing} className="px-10">
@@ -1942,6 +2023,14 @@ function BottomActionBar({
         <PrimaryButton onClick={actions.meetDay2Client}>接待客户</PrimaryButton>
       </>
     ),
+    day2_research_terminal: (
+      <>
+        <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
+          打开手册
+        </PrimaryButton>
+        <PrimaryButton onClick={actions.toDay2TreeExplainer}>参数已记录，进入定价台</PrimaryButton>
+      </>
+    ),
     day2_client_arrival: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
@@ -1965,7 +2054,9 @@ function BottomActionBar({
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
           打开手册
         </PrimaryButton>
-        <PrimaryButton onClick={actions.confirmQuote}>继续风险披露</PrimaryButton>
+        <PrimaryButton onClick={actions.confirmQuote} disabled={!quoteEntered}>
+          {quoteEntered ? "继续风险披露" : "请先填写报价"}
+        </PrimaryButton>
       </>
     ),
     day2_quote_slider: (
@@ -1987,7 +2078,16 @@ function BottomActionBar({
       </>
     ),
     day2_client_response: (
-      <PrimaryButton onClick={actions.viewReport}>查看报告</PrimaryButton>
+      <PrimaryButton onClick={actions.toDay2MarketRun}>查看市场结算</PrimaryButton>
+    ),
+    day2_market_run: (
+      marketComplete ? (
+        <PrimaryButton onClick={actions.viewReport} tone="gold">
+          查看报告
+        </PrimaryButton>
+      ) : (
+        <PrimaryButton disabled>行情运行中…</PrimaryButton>
+      )
     ),
     day2_report: (
       <>
@@ -2018,9 +2118,19 @@ function BottomActionBar({
       </PrimaryButton>
     ),
     day3_lesson_knock_out: (
-      <PrimaryButton onClick={actions.toDay3CompareVanilla} className="px-10">
-        继续：和普通期权比较
+      <PrimaryButton onClick={actions.toDay3ResearchTerminal} className="px-10">
+        前往数据台查障碍参数
       </PrimaryButton>
+    ),
+    day3_research_terminal: (
+      <>
+        <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
+          打开手册
+        </PrimaryButton>
+        <PrimaryButton onClick={actions.toDay3CompareVanilla}>
+          参数已记录，继续对比
+        </PrimaryButton>
+      </>
     ),
     day3_lesson_compare_vanilla: (
       <PrimaryButton onClick={actions.finishDay3Intro} className="px-10">
@@ -2591,7 +2701,7 @@ function PremiumLessonPanel() {
           <div className="grid gap-4 md:grid-cols-3">
             <div className="rounded-md border border-white/10 bg-white/[0.03] p-4">
               <div className="text-sm text-slate-500">客户支付</div>
-              <div className="mt-2 text-2xl font-black text-[#ffd700]">150 点期权费</div>
+              <div className="mt-2 text-2xl font-black text-[#ffd700]">186 点期权费</div>
             </div>
             <div className="rounded-md border border-white/10 bg-white/[0.03] p-4">
               <div className="text-sm text-slate-500">换来</div>
@@ -2599,7 +2709,7 @@ function PremiumLessonPanel() {
             </div>
             <div className="rounded-md border border-red-500/20 bg-red-500/[0.05] p-4">
               <div className="text-sm text-slate-500">最坏情况</div>
-              <div className="mt-2 text-2xl font-black text-red-300">亏掉 150 点</div>
+              <div className="mt-2 text-2xl font-black text-red-300">亏掉 186 点</div>
             </div>
           </div>
         </div>
@@ -3293,17 +3403,18 @@ function Day2IntroPanel() {
 }
 
 function Day2PricingAnchorPanel() {
+  const theoreticalPrice = day2Config.quoteRules.theoreticalPrice;
   const examples = [
     {
       label: "报价太低",
       quote: "120 点",
-      note: "客户当然开心，但如果模型认为产品值 180 点，交易台等于用便宜价格卖出风险。",
+      note: `客户当然开心，但如果模型认为产品值 ${theoreticalPrice} 点，交易台等于用便宜价格卖出风险。`,
       tone: "danger",
     },
     {
       label: "接近理论价",
       quote: "200 点",
-      note: "以 180 点理论价格为锚，再加一点利润空间，客户和交易台都比较容易接受。",
+      note: `以 ${theoreticalPrice} 点理论价格为锚，再加一点利润空间，客户和交易台都比较容易接受。`,
       tone: "good",
     },
     {
@@ -3352,7 +3463,7 @@ function Day2PricingAnchorPanel() {
         </div>
 
         <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
-          今天先把 180 点当成模型算出来的理论价格。你的任务不是背这个数字，而是理解：报价要围绕它上下调整。
+          今天先把 {theoreticalPrice} 点当成模型算出来的理论价格。你的任务不是背这个数字，而是理解：报价要围绕它上下调整。
         </div>
       </div>
     </TerminalCard>
@@ -3362,8 +3473,8 @@ function Day2PricingAnchorPanel() {
 function Day2TreePathsLessonPanel() {
   const steps = [
     ["今天", "21,500", "这是现在的恒生指数价格。"],
-    ["第一步上涨", "22,575", "如果市场上涨 5%，价格走到上方节点。"],
-    ["第一步下跌", "20,425", "如果市场下跌 5%，价格走到下方节点。"],
+    ["第一步上涨", "22,069", "如果市场上涨 2.65%，价格走到上方节点。"],
+    ["第一步下跌", "20,946", "如果市场下跌 2.58%，价格走到下方节点。"],
     ["第二步合并", "三个中间节点", "上涨后下跌和下跌后上涨会回到同一个价格，所以可以合并显示。"],
     ["第三步到期", "四个终端节点", "最后一层就是到期价格，我们会在这些节点上直接计算期权收益。"],
   ];
@@ -3383,16 +3494,16 @@ function Day2TreePathsLessonPanel() {
             </div>
             <div className="grid grid-cols-2 gap-5">
               <div className="rounded-lg border border-green-400/35 bg-green-400/[0.08] p-4 text-center">
-                <div className="font-terminal text-xs text-green-300">上涨 5%</div>
-                <div className="mt-2 text-2xl font-black text-slate-100">22,575</div>
+                <div className="font-terminal text-xs text-green-300">上涨 2.65%</div>
+                <div className="mt-2 text-2xl font-black text-slate-100">22,069</div>
               </div>
               <div className="rounded-lg border border-red-500/35 bg-red-500/[0.08] p-4 text-center">
-                <div className="font-terminal text-xs text-red-300">下跌 5%</div>
-                <div className="mt-2 text-2xl font-black text-slate-100">20,425</div>
+                <div className="font-terminal text-xs text-red-300">下跌 2.58%</div>
+                <div className="mt-2 text-2xl font-black text-slate-100">20,946</div>
               </div>
             </div>
             <div className="grid grid-cols-3 gap-3 text-center">
-              {["23,704", "21,446", "19,404"].map((price, index) => (
+              {["22,653", "21,500", "20,405"].map((price, index) => (
                 <div key={`${price}-${index}`} className="rounded-md border border-white/10 bg-black/35 p-3">
                   <div className="font-terminal text-[10px] text-slate-500">第二步</div>
                   <div className="mt-1 text-lg font-black text-slate-100">{price}</div>
@@ -3400,7 +3511,7 @@ function Day2TreePathsLessonPanel() {
               ))}
             </div>
             <div className="grid grid-cols-4 gap-3 text-center">
-              {["24,889", "22,519", "20,374", "18,434"].map((price, index) => (
+              {["23,253", "22,069", "20,946", "19,879"].map((price, index) => (
                 <div
                   key={`${price}-${index}`}
                   className={cn(
@@ -3461,7 +3572,7 @@ function Day2BackwardPriceLessonPanel() {
           {[
             ["最后一层", "先看所有到期节点，算每条路径的到期收益。"],
             ["往前倒推", "把未来可能收益折算回前一层，再继续往今天推。"],
-            ["今天价格", "教学简化后，模型给今天的理论价格：180 点。"],
+            ["今天价格", `教学简化后，模型给今天的理论价格：${day2Config.quoteRules.theoreticalPrice} 点。`],
           ].map(([title, text]) => (
             <div key={title} className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">{title}</div>
@@ -3494,6 +3605,282 @@ function Day2HandbookUpdatedPanel() {
         </p>
       </div>
     </TerminalCard>
+  );
+}
+
+// ─── 中环数据台 ────────────────────────────────────────────────────────────────
+// 真实数据来源：同组数学引擎队抓取的 CSV（vhsi_history.csv / option_chain_current.csv）
+// 玩家在这里查找定价所需的 4 个关键参数，然后自己填进计算器。
+const researchCards = [
+  {
+    id: "market_quote",
+    icon: "📈",
+    title: "行情终端 · Market Data",
+    accent: "#00f0ff",
+    rows: [
+      { label: "标的", value: "恒生指数 HSI", note: "" },
+      { label: "现价 S₀", value: "21,500 点", note: "今日开盘参考价" },
+      { label: "VHSI 波动率指数 σ", value: "≈ 16%", note: "恒指 30 日隐含波动率（平静市场参考值）" },
+      { label: "数据来源", value: "vhsi_history.csv", note: "同组数学引擎队抓取，2003–2026" },
+    ],
+    hint: "把 VHSI 当作 σ（波动率）填进计算器。注意：危机期间 VHSI 可飙到 60%+，今天用平静市场值。",
+  },
+  {
+    id: "contract_spec",
+    icon: "📋",
+    title: "合约规格 · Contract Spec",
+    accent: "#ffd700",
+    rows: [
+      { label: "产品", value: "恒指欧式看涨期权", note: "European Call，现金结算" },
+      { label: "行权价 K", value: "22,000 点", note: "客户指定（OTM Call）" },
+      { label: "到期日", value: "约 1 个月后", note: "参考真实期权链：2026-04-17 到期" },
+      { label: "年化期限 T", value: "≈ 0.08 年", note: "1 个月 ÷ 12 ≈ 0.083" },
+      { label: "合约乘数", value: "HK$ 50 / 点", note: "HKEX 标准" },
+    ],
+    hint: "把行权价 22,000 和年化期限 0.08 填进计算器。",
+    realData: [
+      "HK.HSI260417C21800000 — 行权价 21,800",
+      "HK.HSI260417C22000000 — 行权价 22,000 ← 客户需求",
+      "HK.HSI260417C22200000 — 行权价 22,200",
+    ],
+  },
+  {
+    id: "rate_board",
+    icon: "🏦",
+    title: "利率公告板 · Rate Board",
+    accent: "#a78bfa",
+    rows: [
+      { label: "港元无风险利率 r", value: "2%", note: "参考 HIBOR 1 个月利率（教学简化值）" },
+      { label: "参考基准", value: "HIBOR 1M", note: "香港银行同业拆息，由香港银行公会公布" },
+      { label: "实际 HIBOR 区间", value: "1.5% – 3%", note: "视市场环境而定，今天用 2% 作教学锚点" },
+    ],
+    hint: "把 r = 2 填进计算器的「无风险利率 %」栏。",
+  },
+  {
+    id: "index_profile",
+    icon: "📊",
+    title: "指数概况 · Index Profile",
+    accent: "#4ade80",
+    rows: [
+      { label: "指数", value: "恒生指数 HSI", note: "香港交易所旗舰指数，50 只成分股" },
+      { label: "年化股息率 q", value: "≈ 3.5%", note: "恒指历史平均股息率（Merton 模型需要）" },
+      { label: "步数 N", value: "3 步", note: "教学简化：3 步二叉树，足够展示定价直觉" },
+      { label: "注意", value: "今天先不计 q", note: "教学简化：计算器暂不含股息率，真实定价需扣除" },
+    ],
+    hint: "今天的计算器暂不含 q，但记住：真实恒指定价需要扣除约 3.5% 股息率，否则会系统性高估 Call 价格。",
+  },
+];
+
+const day3ResearchCards = [
+  {
+    id: "market_quote_d3",
+    icon: "📈",
+    title: "行情终端 · Market Data",
+    accent: "#00f0ff",
+    rows: [
+      { label: "标的", value: "恒生指数 HSI", note: "" },
+      { label: "现价 S₀", value: "21,500 点", note: "今日开盘参考价（与昨天同一水平）" },
+      { label: "VHSI 波动率指数 σ", value: "≈ 16%", note: "恒指 30 日隐含波动率（平静市场参考值）" },
+      { label: "数据来源", value: "vhsi_history.csv", note: "同组数学引擎队抓取，2003–2026" },
+    ],
+    hint: "把 VHSI 当作 σ 填进计算器。记住：波动率越高，标的越容易触及障碍线被敲出——这正是障碍产品对 σ 特别敏感的原因。",
+  },
+  {
+    id: "barrier_contract",
+    icon: "🚧",
+    title: "障碍合约卡 · Barrier Spec",
+    accent: "#ffd700",
+    isNew: true,
+    rows: [
+      { label: "产品", value: "下跌敲出看涨期权", note: "Down-and-Out Call，现金结算" },
+      { label: "行权价 K", value: "22,000 点", note: "客户指定（OTM Call，与普通 Call 相同）" },
+      { label: "障碍价 Barrier", value: "21,000 点", note: "🔓 今日新增参数：标的向下触及即失效" },
+      { label: "敲出类型", value: "向下触障即失效", note: "一旦碰到 21,000 提前结束，不复活" },
+      { label: "到期日", value: "约 3 个月后", note: "参考真实期权链：2026-09 到期" },
+      { label: "年化期限 T", value: "≈ 0.25 年", note: "3 个月 ÷ 12 = 0.25（比昨天的 1 个月长）" },
+      { label: "合约乘数", value: "HK$ 50 / 点", note: "HKEX 标准" },
+    ],
+    hint: "今天比昨天多一个参数：障碍价 21,000。把 K=22,000、T=0.25、障碍价=21,000 都填进障碍版计算器。",
+    realData: [
+      "HK.HSI260918C22000000 — 行权价 22,000，到期 2026-09-18",
+      "  └ 加挂下跌敲出条款：障碍 21,000（KO Barrier）",
+      "对比普通 Call HK.HSI260918C22000000：同行权价、无障碍，期权费更高",
+    ],
+  },
+  {
+    id: "rate_board_d3",
+    icon: "🏦",
+    title: "利率公告板 · Rate Board",
+    accent: "#a78bfa",
+    rows: [
+      { label: "港元无风险利率 r", value: "2%", note: "参考 HIBOR 1 个月利率（教学简化值）" },
+      { label: "参考基准", value: "HIBOR 1M", note: "香港银行同业拆息，由香港银行公会公布" },
+      { label: "实际 HIBOR 区间", value: "1.5% – 3%", note: "视市场环境而定，今天用 2% 作教学锚点" },
+    ],
+    hint: "把 r = 2 填进计算器的「无风险利率 %」栏（和昨天一样）。",
+  },
+  {
+    id: "barrier_risk",
+    icon: "⚠️",
+    title: "障碍风险卡 · Barrier Risk",
+    accent: "#f87171",
+    isNew: true,
+    rows: [
+      { label: "障碍距现价", value: "约 2.33%", note: "(21,500 − 21,000) ÷ 21,500，离得很近" },
+      { label: "敲出难度", value: "容易", note: "障碍离现价越近，越容易被打穿" },
+      { label: "现实参照", value: "2020-03 恒指 ≈ 21,700", note: "盘中低见 21,139，这种障碍会被击穿" },
+      { label: "代价与回报", value: "便宜 ↔ 易敲出", note: "障碍越近，期权费越便宜，但敲出风险越大" },
+    ],
+    hint: "要点：障碍设得离现价越近，期权费越便宜，但越容易敲出。今天障碍只在现价下方约 2.3%，是一张「便宜但脆弱」的合约。",
+    realData: [
+      "2020-02-17 恒指高点 28,055（疫情前）",
+      "2020-03-19 盘中低点 21,139 ← 已跌破 21,000 障碍",
+      "2020-03-23 收盘 21,696，VHSI 一度冲到 60+",
+      "来源：hsi_2020_covid.csv（同组数学引擎队抓取）",
+    ],
+  },
+];
+
+function ResearchTerminalPanel({
+  title = "中环数据台",
+  accent = "定价参数查询 · Research Terminal",
+  taskText,
+  cards,
+  footerHint,
+}) {
+  const [revealed, setRevealed] = React.useState({});
+
+  const toggle = (id) =>
+    setRevealed((prev) => ({ ...prev, [id]: !prev[id] }));
+
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label={title} accent={accent} />
+      <div className="space-y-5 p-5">
+        <div className="rounded-md border border-[#00f0ff]/20 bg-[#00f0ff]/[0.04] p-4 text-sm leading-7 text-slate-300">
+          <span className="font-terminal text-[#00f0ff]">任务：</span>
+          {taskText}
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          {cards.map((card) => (
+            <div
+              key={card.id}
+              className="rounded-lg border bg-black/30 p-4"
+              style={{ borderColor: `${card.accent}30` }}
+            >
+              <div className="mb-3 flex items-center gap-2">
+                <span className="text-xl">{card.icon}</span>
+                <span
+                  className="font-terminal text-xs tracking-[0.16em]"
+                  style={{ color: card.accent }}
+                >
+                  {card.title}
+                </span>
+                {card.isNew && (
+                  <span
+                    className="ml-auto rounded-full border px-2 py-0.5 font-terminal text-[9px] font-black tracking-[0.18em]"
+                    style={{
+                      color: card.accent,
+                      borderColor: `${card.accent}66`,
+                      backgroundColor: `${card.accent}1a`,
+                    }}
+                  >
+                    🔓 NEW
+                  </span>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                {card.rows.map((row) => (
+                  <div
+                    key={row.label}
+                    className="flex items-start justify-between gap-3 rounded border border-white/5 bg-white/[0.02] px-3 py-2"
+                  >
+                    <span className="font-terminal text-[11px] tracking-[0.1em] text-slate-500 shrink-0">
+                      {row.label}
+                    </span>
+                    <div className="text-right">
+                      <span className="font-black text-slate-100 text-sm">{row.value}</span>
+                      {row.note && (
+                        <div className="mt-0.5 text-[11px] text-slate-500">{row.note}</div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {card.realData && (
+                <div className="mt-3">
+                  <button
+                    onClick={() => toggle(card.id)}
+                    className="font-terminal text-[11px] tracking-[0.12em] text-slate-500 hover:text-slate-300 transition-colors"
+                  >
+                    {revealed[card.id] ? "▲ 收起真实期权链" : "▼ 查看真实期权链（同组数据）"}
+                  </button>
+                  {revealed[card.id] && (
+                    <div className="mt-2 rounded border border-white/10 bg-black/40 p-3 space-y-1">
+                      {card.realData.map((line) => (
+                        <div key={line} className="font-terminal text-[11px] text-slate-400">
+                          {line}
+                        </div>
+                      ))}
+                      <div className="mt-2 font-terminal text-[10px] text-slate-600">
+                        来源：option_chain_current.csv（同组数学引擎队抓取，HKEX 真实数据）
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-md border border-white/10 bg-white/[0.03] p-4 text-xs leading-6 text-slate-500">
+          {footerHint}
+        </div>
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day2ResearchTerminalPanel() {
+  return (
+    <ResearchTerminalPanel
+      title="中环数据台"
+      accent="定价参数查询 · Research Terminal"
+      cards={researchCards}
+      taskText={
+        <>
+          查阅下方 4 张资料卡，自己判断今天定价需要哪些关键参数——
+          <span className="font-black text-slate-100"> S₀（标的现价）、K（行权价）、T（年化期限）、r（无风险利率）、σ（年化波动率）</span>。
+          资料卡只给你原始行情，不给现成答案。把对应的数字找出来、记下来，等会儿手动填进二叉树计算器，算出理论价格，再去报价。
+        </>
+      }
+      footerHint="提示：上面四张卡里藏着定价要用的全部数字，但没有现成的「速查表」。哪个数据对应计算器的哪个输入框，需要你自己判断——这正是交易员每天在做的事：sourcing the inputs。"
+    />
+  );
+}
+
+function Day3ResearchTerminalPanel() {
+  return (
+    <ResearchTerminalPanel
+      title="中环数据台 · 障碍专场"
+      accent="障碍参数查询 · Barrier Research"
+      cards={day3ResearchCards}
+      taskText={
+        <>
+          今天的产品多了一层「障碍」。除了昨天那几个参数，你还要查一个全新的关键数字——
+          <span className="font-black text-[#ffd700]"> 障碍价 Barrier</span>。
+          下面 4 张卡里，自己找出
+          <span className="font-black text-slate-100"> S₀、K、T、r、σ </span>
+          以及
+          <span className="font-black text-[#ffd700]">障碍价 Barrier</span>
+          ，记下来，等会儿填进障碍版计算器。注意：今天期限是 3 个月，比昨天长。
+        </>
+      }
+      footerHint="提示：障碍合约卡里的「障碍价 Barrier」是今天新增的参数，也是计算器今天多出来的那一行。和昨天一样，没有速查表——哪个数据对应哪个输入框，自己判断。"
+    />
   );
 }
 
@@ -3674,7 +4061,7 @@ function buildVanillaBinomialToolTree(params) {
   const down = 1 / up;
   const growth = Math.exp(rate * dt);
   const rawProbability = (growth - down) / (up - down);
-  const probability = Math.min(0.98, Math.max(0.02, rawProbability));
+  const probability = rawProbability;
   const discount = Math.exp(-rate * dt);
 
   const stockTree = Array.from({ length: steps + 1 }, (_, step) =>
@@ -3738,6 +4125,7 @@ function buildVanillaBinomialToolTree(params) {
     up,
     down,
     probability,
+    noArbitrage: probability >= 0 && probability <= 1,
     vanillaPrice: optionValues[0][0],
   };
 }
@@ -3755,7 +4143,7 @@ function buildBarrierBinomialToolTree(params) {
   const down = 1 / up;
   const growth = Math.exp(rate * dt);
   const rawProbability = (growth - down) / (up - down);
-  const probability = Math.min(0.98, Math.max(0.02, rawProbability));
+  const probability = rawProbability;
   const discount = Math.exp(-rate * dt);
 
   const stockTree = Array.from({ length: steps + 1 }, (_, step) =>
@@ -3834,86 +4222,154 @@ function buildBarrierBinomialToolTree(params) {
     up,
     down,
     probability,
+    noArbitrage: probability >= 0 && probability <= 1,
     vanillaPrice: vanillaValues[0][0],
     barrierPrice: barrierValues[0][0],
   };
 }
 
-function VanillaBinomialPricingTool({ selectedQuote, quoteAnalysis, onUpdateQuote }) {
-  const [params, setParams] = useState({
-    spot: 21500,
-    strike: 22000,
-    rate: 2,
-    sigma: 16,
-    maturity: 0.08,
-    steps: 3,
-  });
+function BinomialPricingTool({
+  mode = "vanilla",
+  selectedQuote,
+  quoteAnalysis,
+  onUpdateQuote,
+  onUpdateTheoretical,
+}) {
+  const isBarrier = mode === "barrier";
 
-  const tree = useMemo(() => buildVanillaBinomialToolTree(params), [params]);
+  // 默认值故意设成各参数的最小值（占位），逼玩家自己从数据台抄真实参数填进来
+  // 步数 N 是建模选择（不是要从数据台查的市场参数），固定锁死：Day2=3、Day3=6
+  const fixedSteps = isBarrier ? 6 : 3;
+  const [params, setParams] = useState(
+    isBarrier
+      ? { spot: 1000, strike: 1000, barrier: 1000, rate: -5, sigma: 1, maturity: 0.05, steps: fixedSteps }
+      : { spot: 1000, strike: 1000, rate: -5, sigma: 1, maturity: 0.02, steps: fixedSteps },
+  );
 
+  const tree = useMemo(
+    () =>
+      isBarrier
+        ? buildBarrierBinomialToolTree(params)
+        : buildVanillaBinomialToolTree(params),
+    [params, isBarrier],
+  );
+
+  // 每次 tree 重算，把最新理论价传给父组件（仅 vanilla 模式的 Day2 报价联动会传 onUpdateTheoretical）
+  useEffect(() => {
+    if (onUpdateTheoretical && Number.isFinite(tree.vanillaPrice)) {
+      onUpdateTheoretical(Math.round(tree.vanillaPrice));
+    }
+  }, [tree.vanillaPrice, onUpdateTheoretical]);
+
+  const maxSteps = isBarrier ? 6 : 3;
   const updateParam = (key, value) => {
     setParams((current) => ({
       ...current,
-      [key]: key === "steps" ? Math.max(1, Math.min(3, Number(value))) : value,
+      [key]: key === "steps" ? Math.max(1, Math.min(maxSteps, Number(value))) : value,
     }));
   };
 
-  const inputMeta = [
-    ["spot", "S0 现价", 1000, 50000, 100],
-    ["strike", "K 行权价", 1000, 50000, 100],
-    ["rate", "r 无风险利率 %", -5, 20, 0.25],
-    ["sigma", "σ 波动率 %", 1, 80, 1],
-    ["maturity", "T 年化期限", 0.02, 3, 0.01],
-    ["steps", "N 步数", 1, 3, 1],
-  ];
-  const quote = Number.isFinite(selectedQuote) ? selectedQuote : 0;
-  const marketPreview = getDay2MarketResult(quote);
-  const pricingPreview = getDay2PricingScore(quote);
-  const quoteToneClass =
-    quoteAnalysis.tone === "good"
-      ? "border-green-400/30 bg-green-400/[0.08] text-green-300"
-      : quoteAnalysis.tone === "danger"
-        ? "border-red-500/35 bg-red-500/[0.08] text-red-300"
-        : "border-[#ffd700]/35 bg-[#ffd700]/[0.08] text-[#ffd700]";
+  const inputMeta = isBarrier
+    ? [
+        ["spot", "S0 现价", 1000, 50000, 100],
+        ["strike", "K 行权价", 1000, 50000, 100],
+        ["barrier", "障碍价格", 1000, 50000, 100],
+        ["rate", "r 无风险利率 %", -5, 20, 0.25],
+        ["sigma", "σ 波动率 %", 1, 80, 1],
+        ["maturity", "T 年化期限", 0.05, 3, 0.05],
+      ]
+    : [
+        ["spot", "S0 现价", 1000, 50000, 100],
+        ["strike", "K 行权价", 1000, 50000, 100],
+        ["rate", "r 无风险利率 %", -5, 20, 0.25],
+        ["sigma", "σ 波动率 %", 1, 80, 1],
+        ["maturity", "T 年化期限", 0.02, 3, 0.01],
+      ];
 
   return (
     <div className="rounded-lg border border-cyan-400/15 bg-[#070d19]/85 p-5">
       <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
         <div>
           <div className="font-terminal text-xs tracking-[0.2em] text-[#00f0ff]">
-            普通期权二叉树计算器
+            {isBarrier ? "障碍期权二叉树计算器" : "普通期权二叉树计算器"}
           </div>
           <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-400">
-            这里先只看普通 Call。改变现价、行权价、波动率或步数，观察价格树、到期收益和今天理论价格如何同步变化。
+            {isBarrier
+              ? "和昨天同一个计算器，今天多了一行金色的「障碍价格」。红色节点表示触及障碍被敲出，绿色路径表示仍然存活；下方并排比较普通 Call 与下跌敲出 Call 的模型价格。"
+              : "这里先只看普通 Call。改变现价、行权价、波动率或步数，观察价格树、到期收益和今天理论价格如何同步变化。"}
           </p>
         </div>
-        <div className="rounded-md border border-[#00f0ff]/30 bg-cyan-400/[0.07] px-4 py-2 font-terminal text-xs text-[#00f0ff]">
-          VANILLA MODE
+        <div
+          className={cn(
+            "rounded-md border px-4 py-2 font-terminal text-xs",
+            isBarrier
+              ? "border-[#ffd700]/30 bg-[#ffd700]/[0.07] text-[#ffd700]"
+              : "border-[#00f0ff]/30 bg-cyan-400/[0.07] text-[#00f0ff]",
+          )}
+        >
+          {isBarrier ? "BARRIER MODE" : "VANILLA MODE"}
         </div>
       </div>
 
-      <div className="grid gap-5 xl:grid-cols-[300px_minmax(0,1fr)]">
+      <div
+        className={cn(
+          "grid gap-5",
+          isBarrier
+            ? "xl:grid-cols-[330px_minmax(0,1fr)]"
+            : "xl:grid-cols-[300px_minmax(0,1fr)]",
+        )}
+      >
         <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
           <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#00f0ff]">
             参数输入
           </div>
           <div className="grid gap-3">
-            {inputMeta.map(([key, label, min, max, step]) => (
-              <label key={key} className="grid gap-2">
-                <span className="font-terminal text-[11px] tracking-[0.12em] text-slate-500">
-                  {label}
+            {inputMeta.map(([key, label, min, max, step]) => {
+              const isBarrierRow = key === "barrier";
+              return (
+                <label key={key} className="grid gap-2">
+                  <span
+                    className={cn(
+                      "font-terminal flex items-center gap-2 text-[11px] tracking-[0.12em]",
+                      isBarrierRow ? "text-[#ffd700]" : "text-slate-500",
+                    )}
+                  >
+                    {label}
+                    {isBarrierRow && (
+                      <span className="rounded-full border border-[#ffd700]/50 bg-[#ffd700]/[0.12] px-2 py-0.5 text-[9px] font-black tracking-[0.18em] text-[#ffd700]">
+                        🔓 NEW
+                      </span>
+                    )}
+                  </span>
+                  <input
+                    type="number"
+                    min={min}
+                    max={max}
+                    step={step}
+                    value={params[key]}
+                    onChange={(event) => updateParam(key, Number(event.target.value))}
+                    className={cn(
+                      "rounded-md border bg-[#07101d] px-3 py-2 font-terminal text-sm text-slate-100 outline-none transition",
+                      isBarrierRow
+                        ? "border-[#ffd700]/45 focus:border-[#ffd700]"
+                        : "border-cyan-400/20 focus:border-[#00f0ff]",
+                    )}
+                  />
+                </label>
+              );
+            })}
+
+            <label className="grid gap-2">
+              <span className="font-terminal flex items-center gap-2 text-[11px] tracking-[0.12em] text-slate-500">
+                N 步数
+                <span className="rounded-full border border-white/15 bg-white/[0.04] px-2 py-0.5 text-[9px] font-black tracking-[0.18em] text-slate-500">
+                  🔒 固定
                 </span>
-                <input
-                  type="number"
-                  min={min}
-                  max={max}
-                  step={step}
-                  value={params[key]}
-                  onChange={(event) => updateParam(key, Number(event.target.value))}
-                  className="rounded-md border border-cyan-400/20 bg-[#07101d] px-3 py-2 font-terminal text-sm text-slate-100 outline-none transition focus:border-[#00f0ff]"
-                />
-              </label>
-            ))}
+              </span>
+              <div className="rounded-md border border-white/10 bg-black/40 px-3 py-2 font-terminal text-sm text-slate-400">
+                {params.steps} 步（建模选择，不用查）
+              </div>
+            </label>
           </div>
 
           <div className="mt-4 grid gap-3 rounded-md border border-white/10 bg-white/[0.03] p-3 text-xs leading-6 text-slate-400">
@@ -3929,31 +4385,85 @@ function VanillaBinomialPricingTool({ selectedQuote, quoteAnalysis, onUpdateQuot
               风险中性概率 p：
               <span className="font-terminal text-[#ffd700]"> {tree.probability.toFixed(4)}</span>
             </div>
-            <div>
-              普通 Call 理论价：
-              <span className="font-terminal text-green-300"> {tree.vanillaPrice.toFixed(2)}</span>
-            </div>
+            {!tree.noArbitrage && (
+              <div className="rounded border border-red-500/30 bg-red-500/[0.08] px-2 py-1 text-red-300">
+                参数不满足 d &lt; e^(rΔt) &lt; u，风险中性概率超出 0-1。
+              </div>
+            )}
+            {!isBarrier && (
+              <div>
+                普通 Call 理论价：
+                <span className="font-terminal text-green-300"> {tree.vanillaPrice.toFixed(2)}</span>
+              </div>
+            )}
           </div>
         </div>
 
         <div className="rounded-lg border border-cyan-400/15 bg-black/25 p-4">
-          <div className="relative h-[560px] min-w-0 overflow-hidden rounded-md border border-white/10 bg-[#050b14]">
+          <div
+            className={cn(
+              "relative min-w-0 overflow-hidden rounded-md border border-white/10 bg-[#050b14]",
+              isBarrier ? "h-[640px]" : "h-[560px]",
+            )}
+          >
             <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-              {tree.links.map((link) => (
-                <line
-                  key={link.id}
-                  x1={link.from.x}
-                  y1={link.from.y}
-                  x2={link.to.x}
-                  y2={link.to.y}
-                  stroke="rgba(0,240,255,0.34)"
-                  strokeWidth={0.25}
-                  strokeDasharray="1.2 1.1"
-                />
-              ))}
+              {tree.links.map((link) =>
+                isBarrier ? (
+                  <line
+                    key={link.id}
+                    x1={link.from.x}
+                    y1={link.from.y}
+                    x2={link.to.x}
+                    y2={link.to.y}
+                    stroke={link.alive ? "rgba(74,222,128,0.45)" : "rgba(239,68,68,0.42)"}
+                    strokeWidth={0.28}
+                    strokeDasharray={link.alive ? "1.2 1.1" : "1.8 1.3"}
+                  />
+                ) : (
+                  <line
+                    key={link.id}
+                    x1={link.from.x}
+                    y1={link.from.y}
+                    x2={link.to.x}
+                    y2={link.to.y}
+                    stroke="rgba(0,240,255,0.34)"
+                    strokeWidth={0.25}
+                    strokeDasharray="1.2 1.1"
+                  />
+                ),
+              )}
             </svg>
 
             {tree.nodes.map((node) => {
+              if (isBarrier) {
+                return (
+                  <div
+                    key={node.id}
+                    className={cn(
+                      "absolute w-32 -translate-x-1/2 -translate-y-1/2 rounded-lg border p-2 shadow-[0_0_18px_rgba(0,240,255,0.08)]",
+                      node.knocked
+                        ? "border-red-500/60 bg-red-500/[0.12]"
+                        : "border-green-400/45 bg-green-400/[0.08]",
+                    )}
+                    style={{ left: `${node.x}%`, top: `${node.y}%` }}
+                  >
+                    <div className="font-terminal text-[10px] tracking-[0.12em] text-slate-500">
+                      t{node.step} / u{node.upMoves}
+                    </div>
+                    <div
+                      className={cn(
+                        "mt-1 text-lg font-black",
+                        node.knocked ? "text-red-300" : "text-green-300",
+                      )}
+                    >
+                      {formatPoints(Math.round(node.price))}
+                    </div>
+                    <div className="mt-1 text-[11px] leading-4 text-slate-400">
+                      KO: {node.knocked ? "YES" : "NO"}
+                    </div>
+                  </div>
+                );
+              }
               const isTerminal = node.step === Number(params.steps);
               return (
                 <div
@@ -3985,52 +4495,75 @@ function VanillaBinomialPricingTool({ selectedQuote, quoteAnalysis, onUpdateQuot
             })}
           </div>
 
-          <div className="mt-4 grid gap-3 md:grid-cols-3">
-            <div className="rounded-lg border border-cyan-400/20 bg-cyan-400/[0.05] p-4">
-              <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
-                价格树
+          {isBarrier ? (
+            <div className="mt-4 grid gap-3 md:grid-cols-2">
+              <div className="rounded-lg border border-cyan-400/20 bg-cyan-400/[0.05] p-4">
+                <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+                  普通 Call 理论价
+                </div>
+                <div className="mt-2 text-3xl font-black text-slate-100">
+                  {tree.vanillaPrice.toFixed(2)}
+                </div>
+                <p className="mt-2 text-xs leading-6 text-slate-400">
+                  不观察障碍，只根据到期收益 max(S - K, 0) 倒推。
+                </p>
               </div>
-              <p className="mt-2 text-xs leading-6 text-slate-400">
-                现价和波动率会改变未来节点价格。
-              </p>
-            </div>
-            <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
-              <div className="font-terminal text-xs tracking-[0.18em] text-[#ffd700]">
-                到期收益
+              <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
+                <div className="font-terminal text-xs tracking-[0.18em] text-[#ffd700]">
+                  下跌敲出 Call 理论价
+                </div>
+                <div className="mt-2 text-3xl font-black text-[#ffd700]">
+                  {tree.barrierPrice.toFixed(2)}
+                </div>
+                <p className="mt-2 text-xs leading-6 text-slate-400">
+                  一旦节点价格低于或等于障碍价，该节点之后价值归零。
+                </p>
               </div>
-              <p className="mt-2 text-xs leading-6 text-slate-400">
-                行权价 K 不改变价格树，但会改变终点 Payoff。
-              </p>
             </div>
-            <div className="rounded-lg border border-green-400/20 bg-green-400/[0.06] p-4">
-              <div className="font-terminal text-xs tracking-[0.18em] text-green-300">
-                倒推价格
+          ) : (
+            <div className="mt-4 grid gap-3 md:grid-cols-3">
+              <div className="rounded-lg border border-cyan-400/20 bg-cyan-400/[0.05] p-4">
+                <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+                  价格树
+                </div>
+                <p className="mt-2 text-xs leading-6 text-slate-400">
+                  现价和波动率会改变未来节点价格。
+                </p>
               </div>
-              <p className="mt-2 text-xs leading-6 text-slate-400">
-                从终点收益一路倒推，得到今天理论价格。
-              </p>
+              <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
+                <div className="font-terminal text-xs tracking-[0.18em] text-[#ffd700]">
+                  到期收益
+                </div>
+                <p className="mt-2 text-xs leading-6 text-slate-400">
+                  行权价 K 不改变价格树，但会改变终点 Payoff。
+                </p>
+              </div>
+              <div className="rounded-lg border border-green-400/20 bg-green-400/[0.06] p-4">
+                <div className="font-terminal text-xs tracking-[0.18em] text-green-300">
+                  倒推价格
+                </div>
+                <p className="mt-2 text-xs leading-6 text-slate-400">
+                  从终点收益一路倒推，得到今天理论价格。
+                </p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
-      <div className="mt-5 rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.05] p-5">
-        <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
-          <div>
+      {!isBarrier && (
+        <div className="mt-5 rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.05] p-5">
+          <div className="mb-4">
             <div className="font-terminal text-xs tracking-[0.2em] text-[#ffd700]">
               报价输入 / Premium Quote
             </div>
-            <p className="mt-2 text-sm leading-7 text-slate-400">
-              看完上面的二叉树后，给王先生输入一个期权费报价。系统会把你的报价和模拟市场结算放进日终报告。
+            <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-400">
+              参考上面计算器算出的「普通 Call 理论价」，加上你认为合理的利润空间，给王先生报一个期权费。
+              <span className="text-slate-300">报多少由你决定——系统不会提前告诉你对不对，提交后才见分晓。</span>
             </p>
           </div>
-          <div className={cn("rounded-md border px-4 py-2 font-terminal text-xs tracking-[0.14em]", quoteToneClass)}>
-            {quoteAnalysis.label}
-          </div>
-        </div>
 
-        <div className="grid gap-4 lg:grid-cols-[260px_minmax(0,1fr)]">
-          <label className="grid gap-2">
+          <label className="grid max-w-xs gap-2">
             <span className="font-terminal text-[11px] tracking-[0.14em] text-slate-500">
               你的报价（点）
             </span>
@@ -4039,202 +4572,16 @@ function VanillaBinomialPricingTool({ selectedQuote, quoteAnalysis, onUpdateQuot
               min={day2Config.quoteRules.sliderMin}
               max={day2Config.quoteRules.sliderMax}
               step="5"
+              placeholder="自己填一个报价"
               value={selectedQuote}
-              onChange={(event) => onUpdateQuote(Number(event.target.value))}
+              onChange={(event) =>
+                onUpdateQuote(event.target.value === "" ? "" : Number(event.target.value))
+              }
               className="rounded-md border border-[#ffd700]/35 bg-[#07101d] px-4 py-3 font-terminal text-2xl font-black text-[#00f0ff] outline-none transition focus:border-[#ffd700]"
             />
           </label>
-
-          <div className="grid gap-3 md:grid-cols-4">
-            {[
-              ["教学锚点", `${day2Config.quoteRules.theoreticalPrice} 点`],
-              ["模型参考", `${tree.vanillaPrice.toFixed(1)} 点`],
-              ["模拟 Payoff", `${marketPreview.payoff} 点`],
-              ["交易台结算", `${marketPreview.deskPnl >= 0 ? "+" : ""}${marketPreview.deskPnl} 点`],
-            ].map(([label, value]) => (
-              <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-3">
-                <div className="font-terminal text-[11px] tracking-[0.14em] text-slate-500">
-                  {label}
-                </div>
-                <div className="mt-2 text-lg font-black text-slate-100">{value}</div>
-              </div>
-            ))}
-          </div>
         </div>
-
-        <div className="mt-4 grid gap-3 md:grid-cols-[1fr_auto]">
-          <div className="rounded-md border-l-4 border-[#00f0ff] bg-cyan-400/[0.06] p-4 text-sm leading-7 text-slate-200">
-            模拟路径：{marketPreview.path.map((price) => formatPoints(price)).join(" → ")}。到期后 Call Payoff 为 {marketPreview.payoff} 点。
-          </div>
-          <div className="flex items-center justify-between gap-4 rounded-md border border-white/10 bg-black/30 px-4 py-3">
-            <span className="font-terminal text-xs text-slate-500">预估定价评分</span>
-            <ScoreBadge score={pricingPreview.score} />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function BarrierBinomialPricingTool() {
-  const [params, setParams] = useState({
-    spot: 21500,
-    strike: 22000,
-    barrier: 21000,
-    rate: 2,
-    sigma: 24,
-    maturity: 1,
-    steps: 4,
-  });
-
-  const tree = useMemo(() => buildBarrierBinomialToolTree(params), [params]);
-
-  const updateParam = (key, value) => {
-    setParams((current) => ({
-      ...current,
-      [key]: key === "steps" ? Math.max(1, Math.min(6, Number(value))) : value,
-    }));
-  };
-
-  const inputMeta = [
-    ["spot", "S0 现价", 1000, 50000, 100],
-    ["strike", "K 行权价", 1000, 50000, 100],
-    ["barrier", "障碍价格", 1000, 50000, 100],
-    ["rate", "r 无风险利率 %", -5, 20, 0.25],
-    ["sigma", "σ 波动率 %", 1, 80, 1],
-    ["maturity", "T 年化期限", 0.05, 3, 0.05],
-    ["steps", "N 步数", 1, 6, 1],
-  ];
-
-  return (
-    <div className="rounded-lg border border-cyan-400/15 bg-[#070d19]/85 p-5">
-      <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <div className="font-terminal text-xs tracking-[0.2em] text-[#00f0ff]">
-            二叉树可视化工具 / 技术展示
-          </div>
-          <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-400">
-            输入参数后实时渲染二叉树。红色节点表示触及障碍被敲出，绿色路径表示仍然存活。
-            下方会并排比较普通 Call 与下跌敲出 Call 的模型价格。
-          </p>
-        </div>
-        <div className="rounded-md border border-[#ffd700]/30 bg-[#ffd700]/[0.07] px-4 py-2 font-terminal text-xs text-[#ffd700]">
-          对比模式已开启
-        </div>
-      </div>
-
-      <div className="grid gap-5 xl:grid-cols-[330px_minmax(0,1fr)]">
-        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
-          <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#00f0ff]">
-            参数输入
-          </div>
-          <div className="grid gap-3">
-            {inputMeta.map(([key, label, min, max, step]) => (
-              <label key={key} className="grid gap-2">
-                <span className="font-terminal text-[11px] tracking-[0.12em] text-slate-500">
-                  {label}
-                </span>
-                <input
-                  type="number"
-                  min={min}
-                  max={max}
-                  step={step}
-                  value={params[key]}
-                  onChange={(event) => updateParam(key, Number(event.target.value))}
-                  className="rounded-md border border-cyan-400/20 bg-[#07101d] px-3 py-2 font-terminal text-sm text-slate-100 outline-none transition focus:border-[#00f0ff]"
-                />
-              </label>
-            ))}
-          </div>
-
-          <div className="mt-4 grid gap-3 rounded-md border border-white/10 bg-white/[0.03] p-3 text-xs leading-6 text-slate-400">
-            <div>
-              上涨因子 u：
-              <span className="font-terminal text-[#00f0ff]"> {tree.up.toFixed(4)}</span>
-            </div>
-            <div>
-              下跌因子 d：
-              <span className="font-terminal text-[#00f0ff]"> {tree.down.toFixed(4)}</span>
-            </div>
-            <div>
-              风险中性概率 p：
-              <span className="font-terminal text-[#ffd700]"> {tree.probability.toFixed(4)}</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="rounded-lg border border-cyan-400/15 bg-black/25 p-4">
-          <div className="relative h-[640px] min-w-0 overflow-hidden rounded-md border border-white/10 bg-[#050b14]">
-            <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-              {tree.links.map((link) => (
-                <line
-                  key={link.id}
-                  x1={link.from.x}
-                  y1={link.from.y}
-                  x2={link.to.x}
-                  y2={link.to.y}
-                  stroke={link.alive ? "rgba(74,222,128,0.45)" : "rgba(239,68,68,0.42)"}
-                  strokeWidth={0.28}
-                  strokeDasharray={link.alive ? "1.2 1.1" : "1.8 1.3"}
-                />
-              ))}
-            </svg>
-
-            {tree.nodes.map((node) => (
-              <div
-                key={node.id}
-                className={cn(
-                  "absolute -translate-x-1/2 -translate-y-1/2 rounded-lg border p-2 shadow-[0_0_18px_rgba(0,240,255,0.08)]",
-                  node.knocked
-                    ? "w-32 border-red-500/60 bg-red-500/[0.12]"
-                    : "w-32 border-green-400/45 bg-green-400/[0.08]",
-                )}
-                style={{ left: `${node.x}%`, top: `${node.y}%` }}
-              >
-                <div className="font-terminal text-[10px] tracking-[0.12em] text-slate-500">
-                  t{node.step} / u{node.upMoves}
-                </div>
-                <div
-                  className={cn(
-                    "mt-1 text-lg font-black",
-                    node.knocked ? "text-red-300" : "text-green-300",
-                  )}
-                >
-                  {formatPoints(Math.round(node.price))}
-                </div>
-                <div className="mt-1 text-[11px] leading-4 text-slate-400">
-                  KO: {node.knocked ? "YES" : "NO"}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-4 grid gap-3 md:grid-cols-2">
-            <div className="rounded-lg border border-cyan-400/20 bg-cyan-400/[0.05] p-4">
-              <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
-                普通 Call 理论价
-              </div>
-              <div className="mt-2 text-3xl font-black text-slate-100">
-                {tree.vanillaPrice.toFixed(2)}
-              </div>
-              <p className="mt-2 text-xs leading-6 text-slate-400">
-                不观察障碍，只根据到期收益 max(S - K, 0) 倒推。
-              </p>
-            </div>
-            <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
-              <div className="font-terminal text-xs tracking-[0.18em] text-[#ffd700]">
-                下跌敲出 Call 理论价
-              </div>
-              <div className="mt-2 text-3xl font-black text-[#ffd700]">
-                {tree.barrierPrice.toFixed(2)}
-              </div>
-              <p className="mt-2 text-xs leading-6 text-slate-400">
-                一旦节点价格低于或等于障碍价，该节点之后价值归零。
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
@@ -4243,8 +4590,8 @@ function BinomialFormulaPanel() {
   const steps = [
     {
       title: "1. 先生成价格树",
-      formula: "S_up = S × u,   S_down = S × d",
-      text: "从今天的价格 S0 出发，每一步价格可能向上走，也可能向下走，于是形成一棵价格树。",
+      formula: "u = e^(σ√Δt),   d = 1/u",
+      text: "从今天的价格 S0 出发，每一步价格可能乘以上涨因子 u 或下跌因子 d，于是形成一棵价格树。",
     },
     {
       title: "2. 到期节点算 Payoff",
@@ -4252,7 +4599,12 @@ function BinomialFormulaPanel() {
       text: "走到最右侧到期节点后，先计算每个终点的期权收益。普通 Call 只看最终价格是否高于行权价。",
     },
     {
-      title: "3. 从未来倒推回今天",
+      title: "3. 计算风险中性概率",
+      formula: "p = (e^(rΔt) - d) / (u - d)",
+      text: "p 不是主观上涨概率，而是让二叉树在无套利条件下可以折现倒推的风险中性概率。",
+    },
+    {
+      title: "4. 从未来倒推回今天",
       formula: "V = e^{-rΔt} × [pV_up + (1-p)V_down]",
       text: "把下一步上涨和下跌的可能价值加权，再折现回来。一路倒推到最左侧，就是今天的理论价格。",
     },
@@ -4309,7 +4661,7 @@ function BinomialFormulaPanel() {
   );
 }
 
-function Day2TreeExplainerPanel({ selectedQuote, quoteAnalysis, onUpdateQuote }) {
+function Day2TreeExplainerPanel({ selectedQuote, quoteAnalysis, onUpdateQuote, onUpdateTheoretical }) {
   const tree = day2Config.tree;
   const params = [
     ["标的", tree.underlying],
@@ -4352,10 +4704,12 @@ function Day2TreeExplainerPanel({ selectedQuote, quoteAnalysis, onUpdateQuote })
           ))}
         </div>
 
-        <VanillaBinomialPricingTool
+        <BinomialPricingTool
+          mode="vanilla"
           selectedQuote={selectedQuote}
           quoteAnalysis={quoteAnalysis}
           onUpdateQuote={onUpdateQuote}
+          onUpdateTheoretical={onUpdateTheoretical}
         />
       </div>
     </TerminalCard>
@@ -4366,10 +4720,13 @@ function Day2QuoteSliderPanel({
   selectedQuote,
   quoteAnalysis,
   onUpdateQuote,
+  liveTheoretical = day2Config.quoteRules.theoreticalPrice,
   embedded = false,
 }) {
   const rules = day2Config.quoteRules;
-  const profit = selectedQuote - rules.theoreticalPrice;
+  const profit = selectedQuote - liveTheoretical;
+  const fairLow = liveTheoretical + 4;
+  const fairHigh = liveTheoretical + 34;
   const toneClass =
     quoteAnalysis.tone === "good"
       ? "border-green-400/30 bg-green-400/[0.08] text-green-300"
@@ -4384,9 +4741,9 @@ function Day2QuoteSliderPanel({
         <div className="grid gap-4 md:grid-cols-4">
           {[
             ["你的报价", `${selectedQuote} 点`, "#00f0ff"],
-            ["理论价格", `${rules.theoreticalPrice} 点`, "#ffd700"],
+            ["模型理论价", `${liveTheoretical} 点`, "#ffd700"],
             ["交易台利润", `${profit >= 0 ? "+" : ""}${profit} 点`, profit >= 0 ? "#4ade80" : "#f87171"],
-            ["建议区间", `${rules.fairRange[0]} - ${rules.fairRange[1]} 点`, "#e2e8f0"],
+            ["建议区间", `${fairLow} - ${fairHigh} 点`, "#e2e8f0"],
           ].map(([label, value, color]) => (
             <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
@@ -4405,7 +4762,7 @@ function Day2QuoteSliderPanel({
               <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
                 报价滑块
               </div>
-              <div className="mt-1 text-sm text-slate-500">范围：100 - 300 点</div>
+              <div className="mt-1 text-sm text-slate-500">范围：{rules.sliderMin} - {rules.sliderMax} 点</div>
             </div>
             <div className={cn("rounded-md border px-4 py-2 font-terminal text-xs tracking-[0.14em]", toneClass)}>
               {quoteAnalysis.label}
@@ -4422,11 +4779,11 @@ function Day2QuoteSliderPanel({
             className="w-full accent-cyan-400"
           />
           <div className="mt-3 flex justify-between text-xs text-slate-500">
-            <span>100</span>
-            <span>180 理论价</span>
-            <span>190-220 合理区间</span>
-            <span>260 拒绝线</span>
-            <span>300</span>
+            <span>{rules.sliderMin}</span>
+            <span>{liveTheoretical} 理论价</span>
+            <span>{fairLow}–{fairHigh} 合理区间</span>
+            <span>{liveTheoretical + 74} 拒绝线</span>
+            <span>{rules.sliderMax}</span>
           </div>
         </div>
 
@@ -4452,14 +4809,9 @@ function Day2QuoteSliderPanel({
   );
 }
 
-function Day2ClientResponsePanel({ selectedQuote, clientResponse }) {
-  const response = clientResponse ?? getQuoteAnalysis(selectedQuote);
+function Day2ClientResponsePanel({ selectedQuote, clientResponse, liveTheoretical = day2Config.quoteRules.theoreticalPrice }) {
+  const response = clientResponse ?? getQuoteAnalysis(selectedQuote, liveTheoretical);
   const acceptedText = response.accepted ? "交易接受" : "客户拒绝";
-  const toneClass = response.accepted
-    ? response.tone === "good"
-      ? "border-green-400/30 bg-green-400/[0.08] text-green-300"
-      : "border-[#ffd700]/35 bg-[#ffd700]/[0.08] text-[#ffd700]"
-    : "border-red-500/35 bg-red-500/[0.08] text-red-300";
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
@@ -4471,12 +4823,7 @@ function Day2ClientResponsePanel({ selectedQuote, clientResponse }) {
           </div>
           <div className="text-5xl font-black text-[#00f0ff]">{selectedQuote} 点</div>
           <div className="mt-4 text-sm leading-7 text-slate-400">
-            理论价格为 {day2Config.quoteRules.theoreticalPrice} 点，交易台利润为{" "}
-            {response.margin >= 0 ? "+" : ""}
-            {response.margin} 点。
-          </div>
-          <div className={cn("mt-5 rounded-md border px-4 py-3 font-terminal text-sm tracking-[0.16em]", toneClass)}>
-            {response.status}
+            报价已发出，等待市场结算。
           </div>
         </div>
 
@@ -4496,6 +4843,271 @@ function Day2ClientResponsePanel({ selectedQuote, clientResponse }) {
             “{response.customerLine}”
           </div>
         </div>
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day2MarketRunPanel({
+  selectedQuote,
+  liveTheoretical = day2Config.quoteRules.theoreticalPrice,
+  marketHasRun,
+  visibleMarketSteps,
+}) {
+  const market = day2Config.market;
+  const path = market.path;
+  const spot = path[0];
+  const quote = Number.isFinite(Number(selectedQuote)) ? Number(selectedQuote) : 0;
+  const accepted = getQuoteAnalysis(selectedQuote, liveTheoretical).accepted;
+
+  const finalPrice = path[path.length - 1];
+  const payoff = Math.max(finalPrice - market.strike, 0);
+  const deskPnl = accepted ? quote - payoff : 0;
+
+  const activeCount = Math.min(Math.max(visibleMarketSteps, 1), path.length);
+  const activePrices = path.slice(0, activeCount);
+  const latestPrice = activePrices[activePrices.length - 1] ?? spot;
+  const previousPrice = activePrices[activePrices.length - 2] ?? latestPrice;
+  const tickChange = latestPrice - previousPrice;
+  const liveIntrinsic = Math.max(latestPrice - market.strike, 0);
+  const liveDeskNet = accepted ? quote - liveIntrinsic : 0;
+  const finalShown = marketHasRun && visibleMarketSteps >= path.length;
+
+  const chart = useMemo(() => {
+    const width = 760;
+    const height = 320;
+    const pad = { left: 54, right: 34, top: 34, bottom: 46 };
+    const minPrice = Math.min(...path, market.strike) - 220;
+    const maxPrice = Math.max(...path, market.strike) + 180;
+    const plotWidth = width - pad.left - pad.right;
+    const plotHeight = height - pad.top - pad.bottom;
+    const xScale = (index) => pad.left + (index / (path.length - 1)) * plotWidth;
+    const yScale = (price) =>
+      pad.top + ((maxPrice - price) / (maxPrice - minPrice)) * plotHeight;
+    return { width, height, minPrice, xScale, yScale, yTicks: [21500, 21800, 22000, 22200] };
+  }, [path, market.strike]);
+
+  const activeLine = activePrices
+    .map((price, index) => `${chart.xScale(index)},${chart.yScale(price)}`)
+    .join(" ");
+  const areaPoints =
+    activePrices.length > 1
+      ? [
+          `${chart.xScale(0)},${chart.yScale(chart.minPrice)}`,
+          activeLine,
+          `${chart.xScale(activePrices.length - 1)},${chart.yScale(chart.minPrice)}`,
+        ].join(" ")
+      : "";
+  const latestX = chart.xScale(activePrices.length - 1);
+  const latestY = chart.yScale(latestPrice);
+  const progress = ((activeCount - 1) / (path.length - 1)) * 100;
+
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="市场路径" accent={finalShown ? "收盘价已锁定" : "行情自动运行中"} />
+      <div className="p-5">
+        <div className="grid gap-4 md:grid-cols-5">
+          {[
+            ["标的", "恒生指数 HSI"],
+            ["开盘", formatPoints(spot)],
+            ["行权价", formatPoints(market.strike)],
+            ["你的报价", `${quote} 点`],
+            ["期限", "1 个月"],
+          ].map(([label, value]) => (
+            <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+              <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
+                {label}
+              </div>
+              <div className="mt-2 text-lg font-bold text-slate-100">{value}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-5 grid gap-3 sm:grid-cols-3">
+          <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div className="font-terminal text-xs text-slate-500">实时价格</div>
+            <div className="live-price-pulse mt-2 text-3xl font-black text-[#00f0ff]">
+              {formatPoints(latestPrice)}
+            </div>
+          </div>
+          <div className="rounded-lg border border-white/10 bg-black/30 p-4">
+            <div className="font-terminal text-xs text-slate-500">本跳变动</div>
+            <div
+              className={cn(
+                "mt-2 text-2xl font-black",
+                tickChange >= 0 ? "text-green-400" : "text-red-400",
+              )}
+            >
+              {tickChange >= 0 ? "+" : ""}
+              {tickChange}
+            </div>
+          </div>
+          <div className="rounded-lg border border-white/10 bg-black/30 p-4">
+            <div className="font-terminal text-xs text-slate-500">
+              {accepted ? "交易台实时净值" : "交易状态"}
+            </div>
+            {accepted ? (
+              <div
+                className={cn(
+                  "mt-2 text-2xl font-black",
+                  liveDeskNet >= 0 ? "text-green-400" : "text-red-400",
+                )}
+              >
+                {liveDeskNet >= 0 ? "+" : ""}
+                {liveDeskNet}
+              </div>
+            ) : (
+              <div className="mt-2 text-lg font-black text-red-300">未成交</div>
+            )}
+          </div>
+        </div>
+
+        <div className="market-chart-panel mt-6 rounded-lg border border-cyan-400/15 bg-[#070d19]/85 p-4">
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <div className="font-terminal text-sm tracking-[0.18em] text-[#00f0ff]">
+                LIVE HSI PATH
+              </div>
+              <div className="mt-1 text-xs text-slate-500">
+                价格自动跳动，终点用于普通 Call 到期结算
+              </div>
+            </div>
+            <div
+              className={cn(
+                "font-terminal rounded border px-3 py-1 text-xs tracking-[0.16em]",
+                finalShown
+                  ? "border-green-400/35 bg-green-400/[0.08] text-green-300"
+                  : "border-[#ffd700]/35 bg-[#ffd700]/[0.08] text-[#ffd700]",
+              )}
+            >
+              {finalShown ? "MARKET CLOSED" : "VOLATILITY LIVE"}
+            </div>
+          </div>
+
+          <svg viewBox={`0 0 ${chart.width} ${chart.height}`} className="relative z-10 w-full">
+            <defs>
+              <linearGradient id="day2MarketArea" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stopColor="rgba(0,240,255,0.28)" />
+                <stop offset="100%" stopColor="rgba(0,240,255,0)" />
+              </linearGradient>
+              <filter id="day2MarketGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#00f0ff" />
+              </filter>
+            </defs>
+            <rect width={chart.width} height={chart.height} rx="10" fill="rgba(5,10,24,0.65)" />
+
+            {chart.yTicks.map((tick) => (
+              <g key={tick}>
+                <line
+                  x1={chart.xScale(0)}
+                  x2={chart.xScale(path.length - 1)}
+                  y1={chart.yScale(tick)}
+                  y2={chart.yScale(tick)}
+                  stroke={tick === market.strike ? "#ffd700" : "rgba(148,163,184,0.14)"}
+                  strokeDasharray={tick === market.strike ? "6 6" : "2 8"}
+                />
+                <text
+                  x="44"
+                  y={chart.yScale(tick) + 4}
+                  textAnchor="end"
+                  className={tick === market.strike ? "fill-[#ffd700] text-[12px]" : "fill-slate-500 text-[12px]"}
+                >
+                  {formatPoints(tick)}
+                </text>
+              </g>
+            ))}
+
+            {areaPoints && <polygon points={areaPoints} fill="url(#day2MarketArea)" />}
+            {activeLine && activePrices.length > 1 && (
+              <polyline
+                points={activeLine}
+                fill="none"
+                stroke="#00f0ff"
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                filter="url(#day2MarketGlow)"
+                className="chart-tension"
+              />
+            )}
+
+            {activePrices.map((price, index) => (
+              <circle
+                key={`${price}-${index}`}
+                cx={chart.xScale(index)}
+                cy={chart.yScale(price)}
+                r={index === activePrices.length - 1 ? 5 : 3}
+                fill={price >= market.strike ? "#ffd700" : "#00f0ff"}
+                opacity={index === activePrices.length - 1 ? 1 : 0.65}
+              />
+            ))}
+
+            <circle cx={latestX} cy={latestY} r="13" fill="none" stroke="#00f0ff" strokeWidth="2" opacity="0.35">
+              <animate attributeName="r" values="9;18;9" dur="0.9s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="0.75;0.1;0.75" dur="0.9s" repeatCount="indefinite" />
+            </circle>
+            <text x={latestX + 12} y={latestY - 12} className="fill-[#00f0ff] text-[13px] font-bold">
+              {formatPoints(latestPrice)}
+            </text>
+            <text x={chart.xScale(path.length - 1)} y={chart.height - 12} textAnchor="end" className="fill-slate-500 text-[12px]">
+              进度 {Math.round(progress)}%
+            </text>
+          </svg>
+        </div>
+
+        {finalShown ? (
+          <div className="scene-enter mt-6 grid gap-4 md:grid-cols-3">
+            <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+              <div className="font-terminal text-xs text-slate-500">最终价格</div>
+              <div className="mt-2 text-3xl font-black text-[#00f0ff]">
+                {formatPoints(finalPrice)}
+              </div>
+            </div>
+            <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+              <div className="font-terminal text-xs text-slate-500">Call 到期收益</div>
+              <div className="mt-2 text-lg font-bold text-slate-100">
+                max({formatPoints(finalPrice)} - {formatPoints(market.strike)}, 0) ={" "}
+                <span className="text-[#00f0ff]">{payoff}</span>
+              </div>
+            </div>
+            {accepted ? (
+              <div
+                className={cn(
+                  "rounded-lg border p-4",
+                  deskPnl >= 0
+                    ? "border-green-400/20 bg-green-400/[0.05]"
+                    : "border-red-500/25 bg-red-500/[0.06]",
+                )}
+              >
+                <div className="font-terminal text-xs text-slate-500">交易台结算</div>
+                <div
+                  className={cn(
+                    "mt-2 text-2xl font-black",
+                    deskPnl >= 0 ? "text-green-400" : "text-red-400",
+                  )}
+                >
+                  {quote} - {payoff} = {deskPnl >= 0 ? "+" : ""}
+                  {deskPnl}
+                </div>
+                <p className="mt-2 text-xs leading-5 text-slate-500">
+                  你收的期权费减去要赔付的到期收益。
+                </p>
+              </div>
+            ) : (
+              <div className="rounded-lg border border-red-500/25 bg-red-500/[0.06] p-4">
+                <div className="font-terminal text-xs text-slate-500">交易台结算</div>
+                <div className="mt-2 text-2xl font-black text-red-300">未成交 · 0</div>
+                <p className="mt-2 text-xs leading-5 text-slate-500">
+                  客户报价过高离开，这单没做成，交易台没有收入。
+                </p>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="mt-5 rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
+            行情正在自动播放：价格可能先跌、再反抽、再突破。别被中途波动吓到，普通 Call 最后只看到期价格落在行权价哪一边。
+          </div>
+        )}
       </div>
     </TerminalCard>
   );
@@ -4559,6 +5171,10 @@ function Day2ReportPanel({ score }) {
         <div className="rounded-md border border-cyan-400/15 bg-black/30 p-4 text-sm leading-7 text-slate-300">
           模拟市场路径：{score.marketPath.map((price) => formatPoints(price)).join(" → ")}。
           客户到期收益为 {score.marketPayoff} 点，客户净盈亏为 {score.clientPnl >= 0 ? "+" : ""}{score.clientPnl} 点。
+        </div>
+
+        <div className="rounded-md border border-white/10 bg-white/[0.03] p-4 text-sm leading-7 text-slate-400">
+          教学说明：真实交易台会对冲方向风险（如用期货或反向期权轧平 Delta），此处展示的是未对冲的单笔结果，仅用于理解定价盈亏，不代表交易台真实风险敞口。
         </div>
 
         <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
@@ -4833,7 +5449,7 @@ function Day3CompareVanillaPanel() {
         </div>
 
         <div className="md:col-span-2">
-          <BarrierBinomialPricingTool />
+          <BinomialPricingTool mode="barrier" />
         </div>
       </div>
     </TerminalCard>
@@ -4917,6 +5533,30 @@ function Day3ClientArrivalPanel() {
   );
 }
 
+function RealDataContextCard({ context }) {
+  if (!context) return null;
+  return (
+    <div className="rounded-lg border border-emerald-400/25 bg-emerald-400/[0.05] p-4">
+      <div className="flex items-center gap-2">
+        <span className="font-terminal text-xs tracking-[0.16em] text-emerald-300">
+          📡 {context.title}
+        </span>
+      </div>
+      <ul className="mt-3 space-y-2">
+        {context.bullets.map((line) => (
+          <li key={line} className="flex gap-2 text-sm leading-7 text-slate-300">
+            <span className="text-emerald-300">·</span>
+            <span>{line}</span>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-3 border-t border-white/10 pt-2 font-terminal text-[11px] leading-5 text-slate-500">
+        {context.source}
+      </div>
+    </div>
+  );
+}
+
 function Day3MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
   const market = day3Config.market;
   const result = getDay3MarketResult();
@@ -4970,6 +5610,8 @@ function Day3MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps 
             </div>
           ))}
         </div>
+
+        <RealDataContextCard context={market.marketContext} />
 
         <div className="grid gap-4 lg:grid-cols-[0.75fr_1.25fr]">
           <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-4">
@@ -5405,7 +6047,7 @@ function Day4MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps 
             ["现价", formatPoints(market.spot)],
             ["行权价", formatPoints(market.strike)],
             ["熊证收回价", formatPoints(market.cbbcCallPrice)],
-            ["熊证成本", `${market.cbbcEntryCost} 点`],
+            ["熊证成本", `${market.cbbcEntryCost} 点（约 ${market.cbbcLeverage}× 杠杆，示意）`],
             ["普通 Put 期权费", `${market.vanillaPremium} 点`],
           ].map(([label, value]) => (
             <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
@@ -5416,6 +6058,8 @@ function Day4MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps 
             </div>
           ))}
         </div>
+
+        <RealDataContextCard context={market.marketContext} />
 
         <div className="grid gap-4 lg:grid-cols-[0.75fr_1.25fr]">
           <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-4">
@@ -5638,6 +6282,7 @@ function MainPanel({
   day1Score,
   selectedQuote,
   quoteAnalysis,
+  liveTheoretical,
   clientResponse,
   day2Score,
   day3Score,
@@ -5680,6 +6325,7 @@ function MainPanel({
     day2_lesson_tree_paths: <Day2TreePathsLessonPanel />,
     day2_lesson_backward_price: <Day2BackwardPriceLessonPanel />,
     day2_handbook_updated: <Day2HandbookUpdatedPanel />,
+    day2_research_terminal: <Day2ResearchTerminalPanel />,
     day2_client_arrival: <Day2ClientArrivalPanel />,
     day2_product_review: <Day2ProductReviewPanel />,
     day2_tree_explainer: (
@@ -5687,6 +6333,7 @@ function MainPanel({
         selectedQuote={selectedQuote}
         quoteAnalysis={quoteAnalysis}
         onUpdateQuote={actions.updateQuote}
+        onUpdateTheoretical={actions.updateTheoretical}
       />
     ),
     day2_quote_slider: (
@@ -5694,6 +6341,7 @@ function MainPanel({
         selectedQuote={selectedQuote}
         quoteAnalysis={quoteAnalysis}
         onUpdateQuote={actions.updateQuote}
+        liveTheoretical={liveTheoretical}
       />
     ),
     day2_risk_disclosure: (
@@ -5709,6 +6357,15 @@ function MainPanel({
       <Day2ClientResponsePanel
         selectedQuote={selectedQuote}
         clientResponse={clientResponse}
+        liveTheoretical={liveTheoretical}
+      />
+    ),
+    day2_market_run: (
+      <Day2MarketRunPanel
+        selectedQuote={selectedQuote}
+        liveTheoretical={liveTheoretical}
+        marketHasRun={marketHasRun}
+        visibleMarketSteps={visibleMarketSteps}
       />
     ),
     day2_report: <Day2ReportPanel score={day2Score} />,
@@ -5716,6 +6373,7 @@ function MainPanel({
     day3_intro: <Day3IntroPanel />,
     day3_lesson_barrier_concept: <Day3BarrierConceptPanel />,
     day3_lesson_knock_out: <Day3KnockOutPanel />,
+    day3_research_terminal: <Day3ResearchTerminalPanel />,
     day3_lesson_compare_vanilla: <Day3CompareVanillaPanel />,
     day3_handbook_updated: <Day3HandbookUpdatedPanel />,
     day3_client_arrival: <Day3ClientArrivalPanel />,
@@ -5804,6 +6462,7 @@ export default function Day1TraderSimulator() {
   const [visibleMarketSteps, setVisibleMarketSteps] = useState(1);
   const [day1Score, setDay1Score] = useState(null);
   const [selectedQuote, setSelectedQuote] = useState(day2Config.quoteRules.defaultQuote);
+  const [liveTheoretical, setLiveTheoretical] = useState(day2Config.quoteRules.theoreticalPrice);
   const [clientResponse, setClientResponse] = useState(null);
   const [day2Score, setDay2Score] = useState(null);
   const [day3Score, setDay3Score] = useState(null);
@@ -5831,9 +6490,11 @@ export default function Day1TraderSimulator() {
     ? day4Config.market.path.length
     : isDay3Stage
       ? day3Config.market.path.length
-      : (day1Config.market.chartPath ?? day1Config.market.path).length;
+      : isDay2Stage
+        ? day2Config.market.path.length
+        : (day1Config.market.chartPath ?? day1Config.market.path).length;
   const marketComplete = marketHasRun && visibleMarketSteps >= marketPathLength;
-  const quoteAnalysis = useMemo(() => getQuoteAnalysis(selectedQuote), [selectedQuote]);
+  const quoteAnalysis = useMemo(() => getQuoteAnalysis(selectedQuote, liveTheoretical), [selectedQuote, liveTheoretical]);
   const isFullWidthStage = fullWidthStages.has(currentStage);
 
   const unlockHandbookEntry = (entryId) => {
@@ -5902,7 +6563,7 @@ export default function Day1TraderSimulator() {
   const confirmProduct = () => {
     if (currentStage === "day2_product_review") {
       setSelectedProduct("vanilla_call");
-      setCurrentStage("day2_tree_explainer");
+      setCurrentStage("day2_research_terminal");
       return;
     }
 
@@ -5985,7 +6646,7 @@ export default function Day1TraderSimulator() {
     }
 
     if (currentStage === "day2_risk_disclosure") {
-      const response = getQuoteAnalysis(selectedQuote);
+      const response = getQuoteAnalysis(selectedQuote, liveTheoretical);
       setClientResponse(response);
       setCurrentStage("day2_client_response");
       return;
@@ -6063,6 +6724,11 @@ export default function Day1TraderSimulator() {
     setClientResponse(null);
   };
 
+  const updateTheoretical = (value) => {
+    setLiveTheoretical(value);
+    setClientResponse(null);
+  };
+
   const showPricingTree = () => {
     setSelectedProduct("vanilla_call");
     setCurrentStage("day2_tree_explainer");
@@ -6074,9 +6740,9 @@ export default function Day1TraderSimulator() {
   };
 
   const evaluateDay2 = () => {
-    const analysis = getQuoteAnalysis(selectedQuote);
-    const pricingResult = getDay2PricingScore(selectedQuote);
-    const marketResult = getDay2MarketResult(selectedQuote);
+    const analysis = getQuoteAnalysis(selectedQuote, liveTheoretical);
+    const pricingResult = getDay2PricingScore(selectedQuote, liveTheoretical);
+    const marketResult = getDay2MarketResult(selectedQuote, liveTheoretical);
     const riskDisclosure = getRiskDisclosureScore(selectedDisclosures, day2Config);
     let overall = "B";
 
@@ -6096,9 +6762,9 @@ export default function Day1TraderSimulator() {
         : " 定价只是第一步。客户还必须明白：模型价格不是盈利保证。";
 
     return {
-      theoreticalPrice: day2Config.quoteRules.theoreticalPrice,
+      theoreticalPrice: liveTheoretical,
       selectedQuote,
-      margin: selectedQuote - day2Config.quoteRules.theoreticalPrice,
+      margin: selectedQuote - liveTheoretical,
       marketPath: marketResult.path,
       marketFinalPrice: marketResult.finalPrice,
       marketPayoff: marketResult.payoff,
@@ -6485,6 +7151,9 @@ export default function Day1TraderSimulator() {
     if (currentStage === "day2_client_response" && clientResponse) {
       return `客户反馈：${clientResponse.status}。报价不是只看成交，还要看交易台是否得到合理补偿。`;
     }
+    if (currentStage === "day2_market_run" && marketComplete) {
+      return "市场收在行权价上方一点点。普通 Call 的到期收益 = 到期价 − 行权价；交易台这单赚不赚，看你收的报价能不能盖住这笔赔付。";
+    }
     if (currentStage === "day1_market_run" && marketComplete) {
       return "最终价格高于行权价。普通 Call 的到期收益是最终价格减去行权价，再扣除期权费得到净盈亏。";
     }
@@ -6514,7 +7183,7 @@ export default function Day1TraderSimulator() {
   ]);
 
   useEffect(() => {
-    if (!["day1_market_run", "day3_market_run", "day4_market_run"].includes(currentStage) || !marketHasRun) {
+    if (!["day1_market_run", "day2_market_run", "day3_market_run", "day4_market_run"].includes(currentStage) || !marketHasRun) {
       return undefined;
     }
 
@@ -6532,7 +7201,7 @@ export default function Day1TraderSimulator() {
   }, [currentStage, marketHasRun, marketPathLength]);
 
   const viewReport = () => {
-    if (currentStage === "day2_client_response") {
+    if (currentStage === "day2_market_run") {
       setDay2Score(evaluateDay2());
       setCurrentStage("day2_report");
       return;
@@ -6555,7 +7224,7 @@ export default function Day1TraderSimulator() {
   };
 
   const actions = {
-    startGame: startDay2,
+    startGame: startDay1,
     startDay1,
     startDay2,
     startDay3,
@@ -6569,6 +7238,7 @@ export default function Day1TraderSimulator() {
     toDay2BackwardPrice: () => setCurrentStage("day2_lesson_backward_price"),
     toDay3BarrierConcept: () => setCurrentStage("day3_lesson_barrier_concept"),
     toDay3KnockOut: () => setCurrentStage("day3_lesson_knock_out"),
+    toDay3ResearchTerminal: () => setCurrentStage("day3_research_terminal"),
     toDay3CompareVanilla: () => setCurrentStage("day3_lesson_compare_vanilla"),
     finishLesson: () => {
       unlockHandbookEntry("vanilla_core");
@@ -6593,6 +7263,8 @@ export default function Day1TraderSimulator() {
       setCurrentStage("day1_client_arrival");
     },
     meetDay2Client: () => setCurrentStage("day2_client_arrival"),
+    toResearchTerminal: () => setCurrentStage("day2_research_terminal"),
+    toDay2TreeExplainer: () => setCurrentStage("day2_tree_explainer"),
     meetDay3Client: () => setCurrentStage("day3_client_arrival"),
     meetDay4Client: () => setCurrentStage("day4_client_arrival"),
     toProductSelection: () => setCurrentStage("day1_product_selection"),
@@ -6606,10 +7278,16 @@ export default function Day1TraderSimulator() {
     showPricingTree,
     toDay2Quote: () => setCurrentStage("day2_quote_slider"),
     updateQuote,
+    updateTheoretical,
     confirmQuote,
     toggleDisclosure,
     confirmDisclosure,
     runMarket,
+    toDay2MarketRun: () => {
+      setCurrentStage("day2_market_run");
+      setMarketHasRun(true);
+      setVisibleMarketSteps(1);
+    },
     viewReport,
     finishDay: () => setCurrentStage("day1_complete"),
     finishDay2: () => setCurrentStage("day2_complete"),
@@ -6679,6 +7357,7 @@ export default function Day1TraderSimulator() {
             day1Score={day1Score}
             selectedQuote={selectedQuote}
             quoteAnalysis={quoteAnalysis}
+            liveTheoretical={liveTheoretical}
             clientResponse={clientResponse}
             day2Score={day2Score}
             day3Score={day3Score}
@@ -6693,6 +7372,7 @@ export default function Day1TraderSimulator() {
           selectedProduct={selectedProduct}
           selectedSuitability={selectedSuitability}
           marketComplete={marketComplete}
+          selectedQuote={selectedQuote}
           actions={actions}
         />
       </div>
