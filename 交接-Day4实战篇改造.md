@@ -1,10 +1,66 @@
 # 交接文档 · Day4 改造：砍掉 CBBC，做成「三客户定价实战」
 
 > 写给下一个接手的 Claude
-> 日期：2026-06-01
-> 项目：`trader-simulator` — 游戏化期权教学模拟器（React 单页，主文件 `src/Day1TraderSimulator.jsx` 约 7400 行，所有逻辑在这一个文件）
+> 日期：2026-06-01（**改造已于当天完成，见下「✅ 完成记录」**）
+> 项目：`trader-simulator` — 游戏化期权教学模拟器（React 单页，主文件 `src/Day1TraderSimulator.jsx` 约 7800 行，所有逻辑在这一个文件）
 > 用户：HKBU 学生，**中文沟通**，对话感、清晰、别太学术。这天聊到很累，明确说「CBBC 太难、没精力再打磨」。
 > 行号会漂移，**一律用 Grep 按函数名/字符串定位，别信旧行号**。
+
+---
+
+## ✅ 完成记录（2026-06-01 当天做完）
+
+**Day4 已从 CBBC 改成「三客户定价实战 / 结业篇」，build 通过 + Playwright(Edge headless) 实测成功路径与失败路径各一遍、零白屏零报错。**
+
+### 三客户最终设定（理论价均用项目二叉树实算，r=2%）
+| | 客户 | 产品 | 参数 | 理论价锚点 | 任务 |
+|---|---|---|---|---|---|
+| ① | 张先生（机构，半提示） | 普通 Call | S0 24000 / K 24500 / σ18% / T0.08 / N3 | **297**（实算 297.06） | 直接报价 |
+| ② | 李小姐（预算敏感，提示减） | 障碍 Call (down-out) | S0 24000 / K 24500 / 障碍 23000 / σ28% / T0.25 / N4 | **981**（实算 980.77，普通 Call 1167） | 直接报价 |
+| ③ | 何先生（结业判断，最少提示） | 障碍 Call（玩家自己判断） | S0 25000 / K 25500 / 障碍 23500 / σ32% / T0.25 / N4 | **1184**（实算 1184.20，普通 Call 1411） | **先选品再报价** |
+- 叙事：Day3(covid 股灾) 数月后恒指回升到 24000–25000，所以参数和前面不重复、玩家必须重算。
+- 锚点校验脚本逻辑：`u=e^(σ√Δt), d=1/u, p=(e^(rΔt)−d)/(u−d)`，折现 `e^(−rΔt)`，barrier 节点 `price<=barrier` 归零。和 `BinomialPricingTool` 一致。
+
+### 代码改了哪些（全部 Grep 可定位）
+- **CBBC 归档不删**：`day4Config` → 改名 `day4CbbcConfig_ARCHIVED`（带归档注释）；旧面板改名 `Day4Cbbc*Panel_ARCHIVED`、`getDay4CbbcMarketResult_ARCHIVED`、`evaluateDay4Cbbc_ARCHIVED`，全部重指向归档 config，**不再挂到 panels/actionBars**（Grep `_ARCHIVED`）。
+- **新 `day4Clients`** 三客户数组 + **新 `day4Config`**（新 stages：`day4_intro / day4_client_arrival / day4_judge / day4_pricing / day4_client_response / day4_scorecard / day4_complete`）。新 config 带安全占位 `market.path:[]`、`scoringRules.correctDisclosureIds:[]`，防止既有 `isDay4Stage` 派生逻辑读到 undefined。
+- **合并报价评价**：新 `getDay4QuoteAnalysis(quote, client)`，按 `client.mode` 出 vanilla(+4/+34/+74) 或 barrier(×1.183/×1.398) 文案。Day2/Day3 原函数没动。
+- **通用 index 驱动面板**（Grep）：`Day4BriefingPanel / Day4ClientProfilePanel / Day4PricingPanel / Day4ClientResponsePanel / Day4ScorecardPanel / Day4GraduationPanel`，全部吃 `day4Clients[day4ClientIndex]`。
+- **队列调度**：新 state `day4ClientIndex / day4Results`；新 actions `beginDay4Clients / toDay4Task / submitDay4Quote / nextDay4Client`（Grep）。选错产品（仅客户③可能）→ 判 D 且不成交。
+- **计算器复用**：`BinomialPricingTool` 加了两个可选 prop —— `enableParamCheck`（Day4 关掉 Day2 的「应该是21500」提醒）和 `quoteHint`（按客户定制报价框文案）。
+- **chrome 文案**：`SideData` 第四天主题改「三客户定价/实战报价」、产品改「普通/障碍」；day3_complete 跳转按钮改「进入结业实战」。
+
+### ⚠️ 发布前必做
+- `actions.startGame` 当前 = **`startDay4`**（我为了测 Day4 改的，一点「进入游戏」直接进 Day4）。**正式发布前要改回 `startDay1`**（Grep `startGame:`）。
+
+### 还能打磨的（非必须）
+- 成绩单里客户③产品名显示全称「下跌敲出看涨期权」，①②显示短名「普通 Call/障碍 Call」——想统一可改 `submitDay4Quote` 里的 `productName`。
+- 客户③若选错产品仍会进 barrier 计算器（因为 `client.mode` 固定）；选错已直接判 D，影响不大。
+
+---
+
+## 🔧 下一步待议：参数卡是不是「太顺」了？（用户下班前提出，回来继续）
+
+**用户的疑问**：报价页 `Day4PricingPanel` 顶部有张 `Day4ParamCard`，把 S₀/K/障碍/σ/T/r/N 全列出来还写「照着填进计算器」，会不会变成照搬、没难度？
+
+**澄清（先分清）**：卡片上是**输入参数**，不是答案。
+- 「计算器的答案」= 理论价（297/981/1184），**没写在卡上**，要玩家把参数填进计算器才算得出（提交后反馈页才显示锚点，属事后复盘）。
+- 真正考的「报价」= 理论价 + 玩家自定的利润；客户③还要先**判断产品**。这些都没给。
+- 计算器替玩家做算术，这点 Day2/Day3 也一样——不是 Day4 才泄题。
+
+**但合理的那半**：我确实把 **Day2/Day3 的「去数据台自己找参数」那步摩擦省掉了**，直接列成卡 + 「照着填」，所以**填参数这步变机械**了，尤其客户③号称最难却也把参数摆好。
+
+**要加难度，杠杆不在「藏理论价」**（填了参数计算器必显示，藏不住），而在下面三选一（**只是方案，还没动手**）：
+
+- **方案 A · 把参数藏回对白/行情台**：客户③不给参数卡，让玩家从客户的话（“我要 25500 行权、做三个月”）+ 一个行情终端（现价 25000、σ32%）里**自己抽**该填什么。考“读单 + 知道模型要哪些输入”。改动较大（要做行情台/解析对白）。
+- **方案 B · 加干扰参数**：卡上多给用不到的数（成交量、昨收价等），玩家得自己挑哪些进模型。改动小，但有点“找茬”味。
+- **方案 C · 只在客户③收紧（推荐）**：①②保留参数卡当教学脚手架、③撤掉卡，呼应「提示递减、结业自己上」。改动最小、设计意图最连贯。
+
+> 接手提示：实现入口都在 `Day4PricingPanel` / `Day4ParamCard`（Grep）。方案 C 最省事——给 `Day4PricingPanel` 加个 `showParamCard` 判断，`client.taskType === "judge"` 时不渲染 `Day4ParamCard` 即可。
+
+---
+
+## 以下是原始改造说明（已执行，留作背景）
 
 ---
 

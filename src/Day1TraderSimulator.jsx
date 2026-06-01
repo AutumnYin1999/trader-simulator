@@ -867,7 +867,10 @@ const day3Config = {
   },
 };
 
-const day4Config = {
+// 已归档：CBBC（牛熊证）内容。2026-06 用户决定 Day4 改成「三客户定价实战 / 结业篇」，
+// 这份数据保留备查（牛证/熊证/MCE/收回价/适当性），不再驱动 Day4 流程。
+// 若以后想捡回 CBBC，把它接回 dayConfigs/stageConfig 即可。配套的旧面板见 Day4Cbbc*_ARCHIVED。
+const day4CbbcConfig_ARCHIVED = {
   day: 4,
   title: "牛熊证与收回价",
   stages: {
@@ -1150,6 +1153,326 @@ const day4Config = {
   },
 };
 
+// ===================================================================
+// Day4 实战篇 · 三客户定价实战（结业）
+// 叙事：Day3（2020 covid 股灾）数月后，恒指从 21,000 低位回升到 24,000–25,000。
+// 玩家用 Day2(普通期权定价) + Day3(障碍期权定价) 学到的技能，给 3 位需求各异的客户实战报价。
+// 三客户难度递增、提示递减；客户③不点产品，要玩家自己判断该上普通还是障碍。
+// 理论价锚点均由项目二叉树「实算」（r=2%，vanilla N=3 / barrier N=4），与计算器一字不差。
+//   ① 张先生 vanilla：S0 24000/K 24500/σ18%/T0.08 → 297.06 ≈ 297
+//   ② 李小姐 barrier：S0 24000/K 24500/障碍23000/σ28%/T0.25 → 980.77 ≈ 981（普通 Call 1167）
+//   ③ 何先生 barrier：S0 25000/K 25500/障碍23500/σ32%/T0.25 → 1184.20 ≈ 1184（普通 Call 1411）
+// ===================================================================
+const day4Clients = [
+  {
+    id: "zhang",
+    avatar: "张",
+    typeLabel: "机构客户",
+    taskType: "price", // 已点名产品，直接报价
+    mode: "vanilla",
+    correctProduct: "vanilla_call",
+    productLabel: "普通 Call",
+    hintLevel: "示范",
+    params: { spot: 24000, strike: 24500, barrier: null, rate: 2, sigma: 18, maturity: 0.08, steps: 3 },
+    theoretical: 297, // 实算 297.06，vanilla N=3
+    vanillaRef: 297,
+    profile: {
+      name: "张先生",
+      type: "机构客户（偏保守）",
+      marketView: "看涨恒生指数",
+      riskTolerance: "中等",
+      goal: "用 1 个月期权抓一波上涨",
+      productNeed: "最简单的看涨工具，亏损只限于权利金",
+      budget: "可以接受合理报价，但不想被宰",
+      experience: "常年交易普通期权",
+    },
+    dialogue: [
+      "我看涨恒指，想买一个月的看涨期权。",
+      "我要最干净的那种——亏损就限于我付的权利金，别给我加什么附加条件。",
+      "你算个公允价给我，我会拿去和别家比。",
+    ],
+  },
+  {
+    id: "li",
+    avatar: "李",
+    typeLabel: "预算敏感客户",
+    taskType: "price", // 需求里点了「换便宜/接受敲出」，等于半点名
+    mode: "barrier",
+    correctProduct: "down_out_call",
+    productLabel: "障碍 Call",
+    hintLevel: "减少",
+    params: { spot: 24000, strike: 24500, barrier: 23000, rate: 2, sigma: 28, maturity: 0.25, steps: 4 },
+    theoretical: 981, // 实算 980.77，barrier N=4
+    vanillaRef: 1167, // 实算 1167.35
+    profile: {
+      name: "李小姐",
+      type: "预算敏感客户",
+      marketView: "看涨恒生指数",
+      riskTolerance: "中高",
+      goal: "看涨，但想压低权利金",
+      productNeed: "愿意接受「中途跌破某条线就提前作废」换更便宜",
+      budget: "普通 Call 太贵，希望便宜一些",
+      experience: "买过普通期权，也碰过障碍结构",
+    },
+    dialogue: [
+      "我也看涨恒指，但上次那种普通 Call 对我来说太贵了。",
+      "如果能便宜些，我可以接受「中途跌破某条线就提前作废」。",
+      "帮我配个比普通 Call 便宜的看涨方案，算个公允价给我。",
+    ],
+  },
+  {
+    id: "he",
+    avatar: "何",
+    typeLabel: "结业判断客户",
+    taskType: "judge", // 不点产品，玩家先选品再报价
+    mode: "barrier",
+    correctProduct: "down_out_call",
+    productLabel: "障碍 Call",
+    hintLevel: "最少",
+    params: { spot: 25000, strike: 25500, barrier: 23500, rate: 2, sigma: 32, maturity: 0.25, steps: 4 },
+    theoretical: 1184, // 实算 1184.20，barrier N=4
+    vanillaRef: 1411, // 实算 1411.24
+    profile: {
+      name: "何先生",
+      type: "小企业主",
+      marketView: "看涨恒生指数",
+      riskTolerance: "中高",
+      goal: "看涨，想做这一波，但预算很紧",
+      productNeed: "没明说要哪种——你得自己判断",
+      budget: "预算只有一千出头，再贵就买不起",
+      experience: "买过普通期权，也买过障碍期权",
+    },
+    dialogue: [
+      "我看涨恒指，想做这一波。",
+      "但我预算很紧，手里也就一千点出头，普通 Call 那种价我下不了手。",
+      "我不怕它中途跌——真跌破某个位置当它作废、我也认。你看着给我配个合适的。",
+    ],
+    judgeProducts: [
+      {
+        id: "vanilla_call",
+        name: "普通看涨期权",
+        term: "Vanilla Call",
+        status: "可用",
+        description: ["适合看涨观点", "没有敲出风险，结构最简单", "权利金最高", "只看最终到期价格"],
+        feedback:
+          "方向对，但普通 Call 是这里最贵的，正撞上何先生「预算只有一千出头」的红线。他买不起。",
+      },
+      {
+        id: "down_out_call",
+        name: "下跌敲出看涨期权",
+        term: "Down-and-Out Call",
+        status: "可用",
+        description: ["适合看涨观点", "权利金低于普通 Call", "中途跌破下方障碍线则提前失效", "买方最大损失通常限于权利金"],
+        feedback:
+          "判断正确。预算紧 + 能接受下方敲出——障碍 Call 用更低权利金换路径风险，正好卡进他的预算。算它的理论价再报。",
+      },
+      {
+        id: "up_out_call",
+        name: "上涨敲出看涨期权",
+        term: "Up-and-Out Call",
+        status: "可用",
+        description: ["看涨，但涨太多会敲出", "和「参与上涨」的目标冲突", "需要明确的收益上限解释"],
+        feedback:
+          "他想参与上涨，上涨敲出会在市场涨太强时失效，跟他的目标冲突。不匹配。",
+      },
+    ],
+  },
+];
+
+const day4Config = {
+  day: 4,
+  title: "结业实战 · 三客户定价",
+  clients: day4Clients,
+  handbookEntries: [],
+  martinPrinciple: "先读方向，再读风险承受度和预算，最后才想产品；报价永远以模型理论价为锚，再加合理利润。",
+  // 安全占位：让既有 isDay4Stage 派生逻辑（披露评分 / 市场结算路径）读不到 undefined。
+  // 新 Day4 流程没有风险披露步骤，也没有自动市场结算，这些字段仅为防御。
+  disclosureItems: [],
+  market: { path: [] },
+  scoringRules: { correctDisclosureIds: [], misleadingDisclosureId: "__day4_none__" },
+  stages: {
+    day4_intro: {
+      label: "09:00 结业晨会",
+      system: "三客户定价实战",
+      mentor:
+        "今天没有新产品要学。前三天你学了普通期权、定价、障碍——今天是结业实战：三位客户排队等你报价。原则我只说一次：先读方向，再读风险承受度和预算，最后才想产品；报价永远以模型理论价为锚，再加合理利润。我不会告诉你该选什么、报多少。",
+    },
+    day4_client_arrival: {
+      label: "09:10 客户到访",
+      system: "读懂客户需求",
+      mentor:
+        "先把客户资料和对白读透。方向、预算、能不能接受附加条件——线索都在里面。读完再决定怎么做。",
+    },
+    day4_judge: {
+      label: "09:16 判断产品",
+      system: "自己选结构",
+      mentor:
+        "这位客户没说要哪种产品。从他的预算和风险话术里判断：该上普通 Call，还是用更便宜的障碍 Call？选错了客户会走。",
+    },
+    day4_pricing: {
+      label: "09:22 计算器报价",
+      system: "算理论价并报价",
+      mentor:
+        "把客户卡上的参数填进计算器，算出理论价，再加合理利润报出去。系统不会提前告诉你对不对，提交后才见分晓。",
+    },
+    day4_client_response: {
+      label: "09:30 客户反馈",
+      system: "报价回执",
+      mentor:
+        "看客户怎么回应。报太低交易台白送利润，报太高客户掉头就走，公允加利润才是定价纪律。",
+    },
+    day4_scorecard: {
+      label: "09:45 结业成绩单",
+      system: "三单复盘",
+      mentor:
+        "三位客户都接待完了。逐单看：产品选对没、报价偏差多少、成交了几单。这就是你这四天学到的全部。",
+    },
+    day4_complete: {
+      label: "10:00 结业",
+      system: "训练完成",
+      mentor:
+        "从期权基础到定价、障碍，再到今天的实战报价——你已经把一个新人交易员该有的定价纪律走了一遍。",
+    },
+  },
+};
+
+// Day4 报价评价：合并 vanilla(Day2 带) 与 barrier(Day3 带) 两套区间，按 client.mode 出文案。
+// vanilla 带：理论价 +4 / +34 / +74；barrier 带：理论价 ×1.183(合理上限) / ×1.398(拒绝上限)。
+function getDay4QuoteAnalysis(quote, client) {
+  const theoretical = client.theoretical;
+  const name = client.profile.name;
+  const productLabel = client.productLabel;
+  const q = Number(quote);
+  const margin = Math.round(q - theoretical);
+  const anchor = Math.round(theoretical);
+
+  if (!Number.isFinite(q) || q <= 0) {
+    return {
+      id: "empty",
+      label: "未报价",
+      status: "尚未报价",
+      accepted: false,
+      score: "D",
+      customerLine: "你还没给我报价呢。",
+      martinComment: `还没报价。先在计算器里算出${productLabel}的理论价，再加点利润报给${name}。`,
+      margin: 0,
+      theoretical,
+    };
+  }
+
+  if (q < theoretical) {
+    const bargain = Math.round(theoretical - q);
+    return {
+      id: "too_low",
+      label: "报价过低",
+      status: "成交了，但报价偏低，交易台损失了利润",
+      accepted: true,
+      score: "C",
+      customerLine: "这个价很划算，成交！",
+      martinComment: `${name}几乎没还价就签了——他清楚自己占了便宜。${productLabel}模型公允价约 ${anchor} 点，你只报了 ${Math.round(q)} 点，等于白送客户 ${bargain} 点。先看模型理论价，再加利润。`,
+      margin,
+      theoretical,
+    };
+  }
+
+  if (client.mode === "barrier") {
+    const fairHigh = theoretical * 1.183;
+    const rejectAbove = theoretical * 1.398;
+    if (q <= fairHigh) {
+      return {
+        id: "fair",
+        label: "合理报价",
+        status: "成交，定价漂亮",
+        accepted: true,
+        score: "A",
+        customerLine: "比普通 Call 便宜，又没便宜得离谱，可以，成交。",
+        martinComment: `漂亮。你拿障碍模型价 ${anchor} 点当锚，又加了 ${margin} 点利润——客户觉得比普通 Call 划算，交易台也拿到补偿。这就是障碍定价的纪律。`,
+        margin,
+        theoretical,
+      };
+    }
+    if (q <= rejectAbove) {
+      return {
+        id: "expensive",
+        label: "偏贵",
+        status: "勉强成交，客户不满意",
+        accepted: true,
+        score: "C",
+        customerLine: "障碍产品不就图个便宜吗？这价有点贵……行吧，先这样。",
+        martinComment: `${name}皱着眉签了。障碍产品的卖点就是便宜，你报这么贵，等于把它最大的优势抹掉了。这种体验留不住回头客。`,
+        margin,
+        theoretical,
+      };
+    }
+    return {
+      id: "too_high",
+      label: "报价过高",
+      status: "客户拒绝，转身离开",
+      accepted: false,
+      score: "D",
+      customerLine: "这么贵我还买障碍干嘛？我不如直接买普通 Call。",
+      martinComment: `${name}起身就走了。障碍报到这个价，客户宁愿去买普通 Call。报价离公允价值太远，再好的客户也会走。`,
+      margin,
+      theoretical,
+    };
+  }
+
+  // vanilla 带
+  const fairLow = theoretical + 4;
+  const fairHigh = theoretical + 34;
+  const rejectAbove = theoretical + 74;
+  if (q < fairLow) {
+    return {
+      id: "thin_margin",
+      label: "利润很薄",
+      status: "成交，但利润薄如纸",
+      accepted: true,
+      score: "B",
+      customerLine: "可以，我接受这个报价。",
+      martinComment: `${name}爽快接受。你守住了理论价 ${anchor} 点，但利润薄得几乎看不见。成交是成交了，交易台这单基本白忙。`,
+      margin,
+      theoretical,
+    };
+  }
+  if (q <= fairHigh) {
+    return {
+      id: "fair",
+      label: "合理报价",
+      status: "成交，定价漂亮",
+      accepted: true,
+      score: "A",
+      customerLine: "价格公道，成交。",
+      martinComment: `漂亮。你拿模型理论价 ${anchor} 点当锚，又留了 ${margin} 点利润——客户爽快接受，交易台也有钱赚。这就是定价纪律。`,
+      margin,
+      theoretical,
+    };
+  }
+  if (q <= rejectAbove) {
+    return {
+      id: "expensive",
+      label: "偏贵",
+      status: "勉强成交，客户不满意",
+      accepted: true,
+      score: "C",
+      customerLine: "有点贵……行吧，这次先这样。",
+      martinComment: `${name}皱着眉签了字。报得偏高，客户明显不爽。这种客户体验留不住回头客。`,
+      margin,
+      theoretical,
+    };
+  }
+  return {
+    id: "too_high",
+    label: "报价过高",
+    status: "客户拒绝，转身离开",
+    accepted: false,
+    score: "D",
+    customerLine: "这个价太离谱了，我去别家比比。",
+    martinComment: `${name}合上笔记本起身就走了。报这么高把客户吓跑，这单黄了。模型是用来守纪律的，不是用来宰客的。`,
+    margin,
+    theoretical,
+  };
+}
+
 const dayConfigs = {
   1: day1Config,
   2: day2Config,
@@ -1180,7 +1503,7 @@ const fullWidthStages = new Set([
   "day2_tree_explainer",
   "day3_lesson_compare_vanilla",
   "day3_market_run",
-  "day4_market_run",
+  "day4_pricing",
 ]);
 
 function cn(...classes) {
@@ -1457,8 +1780,9 @@ function getDay3QuoteAnalysis(quote, theoretical = day3Config.market.premium) {
   };
 }
 
-function getDay4MarketResult() {
-  const market = day4Config.market;
+// 已归档（CBBC）：原 Day4 熊证市场结算，新流程不再使用。
+function getDay4CbbcMarketResult_ARCHIVED() {
+  const market = day4CbbcConfig_ARCHIVED.market;
   const finalPrice = market.path[market.path.length - 1];
   const mceIndex = market.path.findIndex((price) => price >= market.cbbcCallPrice);
   const mceTriggered = mceIndex >= 0;
@@ -1859,10 +2183,10 @@ function SideData({ currentDay }) {
   const side =
     currentDay === 4
       ? {
-          leftStatus: "收回价",
-          dayLabel: "第四天",
-          mode: "适当性",
-          topic: "CBBC / MCE",
+          leftStatus: "理论价",
+          dayLabel: "结业实战",
+          mode: "实战报价",
+          topic: "三客户定价",
         }
       : currentDay === 3
       ? {
@@ -1900,7 +2224,11 @@ function SideData({ currentDay }) {
       <div className="font-terminal fixed right-8 top-1/2 z-10 hidden -translate-y-1/2 text-right text-sm leading-8 text-slate-700 lg:block">
         <div className="text-slate-600">产品</div>
         <div className="text-[#00f0ff]">
-          {currentDay === 4 ? "牛熊证" : currentDay === 3 ? "障碍期权" : "普通期权"}
+          {currentDay === 4
+            ? "普通 / 障碍"
+            : currentDay === 3
+              ? "障碍期权"
+              : "普通期权"}
         </div>
         <br />
         <div className="text-slate-600">主题</div>
@@ -1989,10 +2317,13 @@ function BottomActionBar({
   selectedSuitability,
   marketComplete,
   selectedQuote,
+  day4ClientIndex = 0,
   actions,
 }) {
   const quoteEntered =
     selectedQuote !== "" && selectedQuote !== null && Number.isFinite(Number(selectedQuote));
+  const day4IsJudge = day4Clients[day4ClientIndex]?.taskType === "judge";
+  const day4IsLastClient = day4ClientIndex >= day4Clients.length - 1;
   const actionSets = {
     day1_welcome: (
       <PrimaryButton onClick={actions.startBriefing} className="px-10">
@@ -2286,7 +2617,7 @@ function BottomActionBar({
     day3_complete: (
       <>
         <PrimaryButton tone="gold" onClick={actions.startDay4}>
-          进入第四天：牛熊证
+          进入结业实战：三客户定价
         </PrimaryButton>
         <PrimaryButton tone="ghost" onClick={actions.restartDay3}>
           重新开始第三天
@@ -2294,83 +2625,57 @@ function BottomActionBar({
       </>
     ),
     day4_intro: (
-      <PrimaryButton onClick={actions.finishDay4Intro} className="px-10">
-        更新工作手册
+      <PrimaryButton onClick={actions.beginDay4Clients} className="px-10">
+        开始接待客户
       </PrimaryButton>
-    ),
-    day4_handbook_updated: (
-      <>
-        <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
-        </PrimaryButton>
-        <PrimaryButton onClick={actions.meetDay4Client}>接待客户</PrimaryButton>
-      </>
     ),
     day4_client_arrival: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
           打开手册
         </PrimaryButton>
-        <PrimaryButton onClick={actions.toDay4Suitability}>
-          进入适当性判断
+        <PrimaryButton onClick={actions.toDay4Task}>
+          {day4IsJudge ? "我已读懂需求，去判断产品" : "我已读懂需求，去报价"}
         </PrimaryButton>
       </>
     ),
-    day4_suitability_check: (
-      <>
-        <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
-        </PrimaryButton>
-        <PrimaryButton
-          onClick={actions.confirmSuitability}
-          disabled={!selectedSuitability}
-        >
-          确认适当性
-        </PrimaryButton>
-      </>
-    ),
-    day4_product_selection: (
+    day4_judge: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
           打开手册
         </PrimaryButton>
         <PrimaryButton onClick={actions.confirmProduct} disabled={!selectedProduct}>
-          确认推荐
+          确认产品，进入报价
         </PrimaryButton>
       </>
     ),
-    day4_risk_disclosure: (
+    day4_pricing: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
           打开手册
         </PrimaryButton>
-        <PrimaryButton onClick={actions.confirmDisclosure}>
-          确认风险说明
+        <PrimaryButton onClick={actions.submitDay4Quote} disabled={!quoteEntered}>
+          {quoteEntered ? "提交报价" : "请先填写报价"}
         </PrimaryButton>
       </>
     ),
-    day4_market_run: (
-      marketComplete ? (
-        <PrimaryButton onClick={actions.viewReport} tone="gold">
-          查看报告
-        </PrimaryButton>
-      ) : null
+    day4_client_response: (
+      <PrimaryButton onClick={actions.nextDay4Client} tone="gold">
+        {day4IsLastClient ? "查看结业成绩单" : "下一位客户"}
+      </PrimaryButton>
     ),
-    day4_report: (
-      <>
-        <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
-        </PrimaryButton>
-        <PrimaryButton onClick={actions.finishDay4}>完成第四天</PrimaryButton>
-      </>
+    day4_scorecard: (
+      <PrimaryButton onClick={actions.finishDay4} tone="gold" className="px-10">
+        完成结业
+      </PrimaryButton>
     ),
     day4_complete: (
       <>
         <PrimaryButton tone="ghost" disabled>
-          下一天：待定
+          全部课程已完成
         </PrimaryButton>
         <PrimaryButton tone="gold" onClick={actions.restartDay4}>
-          重新开始第四天
+          重新开始结业实战
         </PrimaryButton>
       </>
     ),
@@ -4344,6 +4649,8 @@ function BinomialPricingTool({
   quoteAnalysis,
   onUpdateQuote,
   onUpdateTheoretical,
+  enableParamCheck = true, // Day2 用标准参数对照提醒；Day4 各客户参数不同，关掉
+  quoteHint, // 报价输入框的提示文案（Day4 按客户定制）；不传则用默认
 }) {
   const isBarrier = mode === "barrier";
 
@@ -4381,8 +4688,8 @@ function BinomialPricingTool({
 
   // Day2 参数检查（仅 vanilla 模式）
   const day2ParamIssues = useMemo(
-    () => (!isBarrier ? checkDay2Params(params) : []),
-    [params, isBarrier],
+    () => (!isBarrier && enableParamCheck ? checkDay2Params(params) : []),
+    [params, isBarrier, enableParamCheck],
   );
 
   const inputMeta = isBarrier
@@ -4689,9 +4996,11 @@ function BinomialPricingTool({
               报价输入 / Premium Quote
             </div>
             <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-400">
-              {isBarrier
-                ? "参考上面计算器算出的「下跌敲出 Call 理论价」，加上你认为合理的利润空间，给陈女士报一个期权费。"
-                : "参考上面计算器算出的「普通 Call 理论价」，加上你认为合理的利润空间，给王先生报一个期权费。"}
+              {quoteHint
+                ? quoteHint
+                : isBarrier
+                  ? "参考上面计算器算出的「下跌敲出 Call 理论价」，加上你认为合理的利润空间，给陈女士报一个期权费。"
+                  : "参考上面计算器算出的「普通 Call 理论价」，加上你认为合理的利润空间，给王先生报一个期权费。"}
               <span className="text-slate-300">报多少由你决定——系统不会提前告诉你对不对，提交后才见分晓。</span>
             </p>
           </div>
@@ -5999,7 +6308,9 @@ function Day3CompletePanel() {
   );
 }
 
-function Day4IntroPanel() {
+// ===== 以下 Day4 CBBC 面板已归档（2026-06 改定价实战）=====
+// 这些函数不再挂载到 MainPanel.panels / BottomActionBar，仅保留备查。
+function Day4CbbcIntroPanel_ARCHIVED() {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="第四天晨会" accent="牛证、熊证与上方收回价" />
@@ -6037,7 +6348,7 @@ function Day4IntroPanel() {
   );
 }
 
-function Day4HandbookUpdatedPanel() {
+function Day4CbbcHandbookUpdatedPanel_ARCHIVED() {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="系统提示" accent="工作手册新增页面" />
@@ -6056,8 +6367,8 @@ function Day4HandbookUpdatedPanel() {
   );
 }
 
-function Day4ClientArrivalPanel() {
-  const client = day4Config.clientProfile;
+function Day4CbbcClientArrivalPanel_ARCHIVED() {
+  const client = day4CbbcConfig_ARCHIVED.clientProfile;
   const profileRows = [
     ["姓名", client.name],
     ["客户类型", client.type],
@@ -6114,7 +6425,7 @@ function Day4ClientArrivalPanel() {
   );
 }
 
-function Day4SuitabilityPanel({ selectedSuitability, suitabilityMessage, onSelectSuitability }) {
+function Day4CbbcSuitabilityPanel_ARCHIVED({ selectedSuitability, suitabilityMessage, onSelectSuitability }) {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="适当性判断" accent="先判断客户，再判断产品" />
@@ -6132,7 +6443,7 @@ function Day4SuitabilityPanel({ selectedSuitability, suitabilityMessage, onSelec
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
-          {day4Config.suitabilityOptions.map((option) => {
+          {day4CbbcConfig_ARCHIVED.suitabilityOptions.map((option) => {
             const selected = selectedSuitability === option.id;
             return (
               <button
@@ -6171,7 +6482,7 @@ function Day4SuitabilityPanel({ selectedSuitability, suitabilityMessage, onSelec
           <div
             className={cn(
               "rounded-md border-l-4 p-4 text-sm leading-7",
-              selectedSuitability === day4Config.scoringRules.correctSuitability
+              selectedSuitability === day4CbbcConfig_ARCHIVED.scoringRules.correctSuitability
                 ? "border-green-400 bg-green-400/[0.06] text-green-300"
                 : "border-[#ffd700] bg-[#ffd700]/[0.06] text-[#ffd700]",
             )}
@@ -6184,15 +6495,15 @@ function Day4SuitabilityPanel({ selectedSuitability, suitabilityMessage, onSelec
   );
 }
 
-function Day4MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
-  const market = day4Config.market;
-  const result = getDay4MarketResult();
+function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibleMarketSteps }) {
+  const market = day4CbbcConfig_ARCHIVED.market;
+  const result = getDay4CbbcMarketResult_ARCHIVED();
   const activeCount = Math.min(Math.max(visibleMarketSteps, 1), market.path.length);
   const activePrices = market.path.slice(0, activeCount);
   const latestPrice = activePrices[activePrices.length - 1] ?? market.spot;
   const mceNow = activePrices.some((price) => price >= market.cbbcCallPrice);
   const selectedProductName =
-    day4Config.products.find((product) => product.id === selectedProduct)?.name ?? "未选择产品";
+    day4CbbcConfig_ARCHIVED.products.find((product) => product.id === selectedProduct)?.name ?? "未选择产品";
   const finalShown = marketHasRun && visibleMarketSteps >= market.path.length;
 
   const chart = useMemo(() => {
@@ -6352,7 +6663,7 @@ function Day4MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps 
   );
 }
 
-function Day4ReportPanel({ score }) {
+function Day4CbbcReportPanel_ARCHIVED({ score }) {
   if (!score) {
     return (
       <TerminalCard className="scene-enter p-6">
@@ -6403,7 +6714,7 @@ function Day4ReportPanel({ score }) {
         </div>
 
         <div className="rounded-md border-l-4 border-red-400 bg-red-500/[0.06] p-4 text-base leading-8 text-red-200">
-          路径复盘：恒指中途冲高触及熊证上方收回价 {formatPoints(day4Config.market.cbbcCallPrice)} 点，
+          路径复盘：恒指中途冲高触及熊证上方收回价 {formatPoints(day4CbbcConfig_ARCHIVED.market.cbbcCallPrice)} 点，
           触发 MCE。后面虽然跌到 {formatPoints(score.finalPrice)} 点，熊证也不会自动恢复。
         </div>
 
@@ -6415,7 +6726,7 @@ function Day4ReportPanel({ score }) {
   );
 }
 
-function Day4CompletePanel() {
+function Day4CbbcCompletePanel_ARCHIVED() {
   const summary = [
     "Bull CBBC 是看涨杠杆产品，Bear CBBC 是看跌杠杆产品。",
     "CBBC 有收回价，触及收回价会触发强制收回事件（MCE）。",
@@ -6447,6 +6758,386 @@ function Day4CompletePanel() {
     </TerminalCard>
   );
 }
+// ===== Day4 CBBC 归档面板结束 =====
+
+// ===== Day4 实战篇 · 新面板（通用、index 驱动）=====
+
+function Day4BriefingPanel() {
+  const steps = [
+    ["① 读方向", "客户看涨还是看跌？这决定产品大类。"],
+    ["② 读风险与预算", "能不能接受附加条件（如跌破某线作废）？预算紧不紧？这决定普通还是障碍。"],
+    ["③ 算理论价再报价", "把参数填进计算器算出理论价，加合理利润——不能太低（白送），也不能太高（吓跑）。"],
+  ];
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="结业晨会" accent="三客户定价实战" />
+      <div className="grid gap-6 p-6 lg:grid-cols-[0.95fr_1.05fr]">
+        <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-6">
+          <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[#ffd700]">
+            结业实战 / GRADUATION
+          </div>
+          <h1 className="text-4xl font-black leading-tight text-slate-100 md:text-5xl">
+            没有新产品，今天考的是你的定价判断
+          </h1>
+          <p className="mt-5 text-base leading-8 text-slate-300">
+            前三天你学了普通期权、二叉树定价、障碍期权。今天三位客户排队等你报价——
+            用的全是你已经会的工具：普通 Call、障碍 Call，和那台二叉树计算器。
+          </p>
+          <p className="mt-4 text-base leading-8 text-slate-300">
+            Martin 只给你通用原则，<span className="font-black text-[#ffd700]">不会告诉你该选什么、报多少</span>。
+            选错或报错客户会有反应，但答案要你自己判断。
+          </p>
+        </div>
+
+        <div className="grid gap-4">
+          <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+            Martin 的通用原则
+          </div>
+          {steps.map(([title, text]) => (
+            <div key={title} className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
+              <div className="text-lg font-black text-[#00f0ff]">{title}</div>
+              <div className="mt-2 text-sm leading-7 text-slate-300">{text}</div>
+            </div>
+          ))}
+          <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
+            今日客户：3 位，难度递增、提示递减。最后一位不会告诉你要哪种产品。
+          </div>
+        </div>
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day4ClientQueueBadge({ index, total }) {
+  return (
+    <div className="font-terminal flex items-center gap-2 text-xs tracking-[0.14em] text-slate-500">
+      {Array.from({ length: total }).map((_, i) => (
+        <span
+          key={i}
+          className={cn(
+            "flex h-6 w-6 items-center justify-center rounded-full border",
+            i === index
+              ? "border-[#ffd700]/70 bg-[#ffd700]/[0.12] text-[#ffd700]"
+              : i < index
+                ? "border-green-400/40 bg-green-400/[0.06] text-green-300"
+                : "border-white/10 bg-black/30 text-slate-600",
+          )}
+        >
+          {i + 1}
+        </span>
+      ))}
+      <span className="ml-1">第 {index + 1} / {total} 位客户</span>
+    </div>
+  );
+}
+
+function Day4ClientProfilePanel({ client, index, total }) {
+  const { profile } = client;
+  const profileRows = [
+    ["姓名", profile.name],
+    ["客户类型", profile.type],
+    ["市场观点", profile.marketView],
+    ["风险承受能力", profile.riskTolerance],
+    ["目标", profile.goal],
+    ["产品需求", profile.productNeed],
+    ["预算", profile.budget],
+    ["经验", profile.experience],
+  ];
+  const isJudge = client.taskType === "judge";
+
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="客户资料" accent={isJudge ? "结业判断订单" : "实战报价订单"} />
+      <div className="px-6 pt-5">
+        <Day4ClientQueueBadge index={index} total={total} />
+      </div>
+      <div className="grid gap-6 p-6 lg:grid-cols-[0.85fr_1.15fr]">
+        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
+          <div className="mb-5 flex items-center gap-4">
+            <div className="flex h-20 w-20 items-center justify-center rounded-md border border-[#ffd700]/30 bg-[#ffd700]/[0.08] font-terminal text-4xl font-black text-[#ffd700]">
+              {client.avatar}
+            </div>
+            <div>
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+                {client.typeLabel}
+              </div>
+              <div className="mt-2 text-2xl font-black text-slate-100">{profile.name}</div>
+            </div>
+          </div>
+          <div className="grid gap-3">
+            {profileRows.map(([label, value]) => (
+              <div key={label} className="rounded-md border border-white/10 bg-white/[0.03] p-3">
+                <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
+                  {label}
+                </div>
+                <div className="mt-1 text-sm leading-6 text-slate-200">{value}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-5">
+            <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#ffd700]">
+              客户对白
+            </div>
+            <div className="space-y-4">
+              {client.dialogue.map((line) => (
+                <div
+                  key={line}
+                  className="rounded-md border border-white/10 bg-black/30 p-4 text-base leading-8 text-slate-200"
+                >
+                  {profile.name}：“{line}”
+                </div>
+              ))}
+            </div>
+          </div>
+          {isJudge && (
+            <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
+              注意：他没说要哪种产品。下一步你要自己判断——从他的预算和「能接受跌破某位置作废」里嗅出该上普通 Call 还是障碍 Call。
+            </div>
+          )}
+        </div>
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day4ParamCard({ client }) {
+  const { params } = client;
+  const rows = [
+    ["S₀ 现价", formatPoints(params.spot)],
+    ["K 行权价", formatPoints(params.strike)],
+    ...(client.mode === "barrier" ? [["障碍价格", formatPoints(params.barrier)]] : []),
+    ["σ 波动率", `${params.sigma}%`],
+    ["T 年化期限", `${params.maturity}（${client.mode === "barrier" ? "3 个月" : "1 个月"}）`],
+    ["r 无风险利率", `${params.rate}%`],
+    ["N 步数", `${params.steps} 步（固定）`],
+  ];
+  return (
+    <div className="rounded-lg border border-cyan-400/20 bg-cyan-400/[0.04] p-5">
+      <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+        {client.profile.name} 的成交参数（照着填进计算器）
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {rows.map(([label, value]) => (
+          <div key={label} className="rounded-md border border-white/10 bg-black/30 p-3">
+            <div className="font-terminal text-[11px] tracking-[0.12em] text-slate-500">{label}</div>
+            <div className="mt-1 text-lg font-black text-slate-100">{value}</div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-3 text-xs leading-6 text-slate-500">
+        计算器默认值是占位最小值，需要你把上面这些参数手动填进去，才能算出{client.profile.name}这单的理论价。
+      </div>
+    </div>
+  );
+}
+
+function Day4PricingPanel({ client, selectedQuote, onUpdateQuote }) {
+  const isBarrier = client.mode === "barrier";
+  const quoteHint = isBarrier
+    ? `参考计算器算出的「下跌敲出 Call 理论价」，加上合理利润，给${client.profile.name}报一个权利金。障碍产品的卖点是比普通 Call 便宜。`
+    : `参考计算器算出的「普通 Call 理论价」，加上合理利润，给${client.profile.name}报一个权利金。`;
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader
+        label="计算器报价"
+        accent={isBarrier ? "障碍 Call · 盲报" : "普通 Call · 盲报"}
+      />
+      <div className="space-y-5 p-6">
+        <Day4ParamCard client={client} />
+        <BinomialPricingTool
+          mode={client.mode}
+          selectedQuote={selectedQuote}
+          onUpdateQuote={onUpdateQuote}
+          enableParamCheck={false}
+          quoteHint={quoteHint}
+        />
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day4ClientResponsePanel({ client, selectedQuote, clientResponse }) {
+  const response = clientResponse ?? getDay4QuoteAnalysis(selectedQuote, client);
+  const acceptedText = response.accepted ? "交易接受" : "客户拒绝";
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="客户反馈" accent="报价回执" />
+      <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
+          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+            报价记录
+          </div>
+          <div className="text-5xl font-black text-[#00f0ff]">{selectedQuote} 点</div>
+          <div className="mt-4 rounded-md border border-white/10 bg-white/[0.03] p-3 text-sm leading-7 text-slate-400">
+            理论价锚点 ≈ <span className="font-black text-slate-200">{response.theoretical} 点</span>
+            ，你的利润 {response.margin >= 0 ? "+" : ""}
+            {response.margin} 点。
+          </div>
+        </div>
+
+        <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-5">
+          <div className="mb-4 flex items-center gap-4">
+            <div className="flex h-16 w-16 items-center justify-center rounded-md border border-[#ffd700]/30 bg-black/40 font-terminal text-3xl font-black text-[#ffd700]">
+              {client.avatar}
+            </div>
+            <div>
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#ffd700]">
+                {client.profile.name}
+              </div>
+              <div className="mt-1 text-sm text-slate-500">{acceptedText}</div>
+            </div>
+          </div>
+          <div className="rounded-md border border-white/10 bg-black/30 p-5 text-xl font-black leading-9 text-slate-100">
+            “{response.customerLine}”
+          </div>
+        </div>
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day4ScorecardPanel({ results, clients }) {
+  const completed = results.filter(Boolean);
+  const dealCount = completed.filter((r) => r.accepted).length;
+  const correctProductCount = completed.filter((r) => r.productCorrect).length;
+  const gradeOrder = { A: 4, B: 3, C: 2, D: 1 };
+  const avg =
+    completed.length > 0
+      ? completed.reduce((sum, r) => sum + (gradeOrder[r.grade] ?? 1), 0) / completed.length
+      : 0;
+  const overall = avg >= 3.5 ? "A" : avg >= 2.5 ? "B" : avg >= 1.6 ? "C" : "D";
+
+  const martinSummary = (() => {
+    const parts = [];
+    if (correctProductCount === clients.length) {
+      parts.push("三位客户的产品判断全对——方向、预算、能不能接受敲出，你都读准了。");
+    } else {
+      parts.push(`产品判断对了 ${correctProductCount}/${clients.length} 单。选错产品，再漂亮的报价也救不回来。`);
+    }
+    if (dealCount === clients.length) {
+      parts.push(`三单全部成交，定价区间拿捏得不错。`);
+    } else if (dealCount === 0) {
+      parts.push(`一单都没成交——报价离公允价值太远，客户全走了。模型是用来守纪律的。`);
+    } else {
+      parts.push(`成交 ${dealCount}/${clients.length} 单。`);
+    }
+    parts.push("记住：先读客户、再选产品、最后以理论价为锚加合理利润。这就是这四天的全部。");
+    return parts.join("");
+  })();
+
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="结业成绩单" accent="三客户定价复盘" />
+      <div className="space-y-5 p-6">
+        <div className="grid gap-4 md:grid-cols-3">
+          <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
+            <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">成交</div>
+            <div className="mt-2 text-3xl font-black text-slate-100">
+              {dealCount} / {clients.length} 单
+            </div>
+          </div>
+          <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">产品判断</div>
+            <div className="mt-2 text-3xl font-black text-slate-100">
+              {correctProductCount} / {clients.length} 对
+            </div>
+          </div>
+          <div className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.03] p-4">
+            <span className="font-terminal text-xs text-slate-500">总评分</span>
+            <ScoreBadge score={overall} />
+          </div>
+        </div>
+
+        <div className="overflow-hidden rounded-lg border border-cyan-400/15">
+          <div className="grid grid-cols-[1.1fr_1fr_0.9fr_0.7fr_0.5fr] gap-2 border-b border-white/10 bg-black/40 px-4 py-3 font-terminal text-[11px] tracking-[0.12em] text-slate-500">
+            <span>客户</span>
+            <span>产品</span>
+            <span>报价 / 理论价</span>
+            <span>结果</span>
+            <span>评分</span>
+          </div>
+          {results.map((r, i) => {
+            const client = clients[i];
+            if (!r) {
+              return (
+                <div
+                  key={client.id}
+                  className="grid grid-cols-[1.1fr_1fr_0.9fr_0.7fr_0.5fr] gap-2 border-b border-white/5 px-4 py-3 text-sm text-slate-600"
+                >
+                  <span>{client.profile.name}</span>
+                  <span className="col-span-4">未接待</span>
+                </div>
+              );
+            }
+            return (
+              <div
+                key={client.id}
+                className="grid grid-cols-[1.1fr_1fr_0.9fr_0.7fr_0.5fr] items-center gap-2 border-b border-white/5 px-4 py-3 text-sm"
+              >
+                <span className="font-bold text-slate-200">{client.profile.name}</span>
+                <span className={cn(r.productCorrect ? "text-green-300" : "text-red-300")}>
+                  {r.productCorrect ? "✓ " : "✗ "}
+                  {r.productName}
+                </span>
+                <span className="text-slate-300">
+                  {r.quote} / {r.theoretical}
+                  <span className={cn("ml-1", r.margin >= 0 ? "text-slate-500" : "text-red-300")}>
+                    ({r.margin >= 0 ? "+" : ""}
+                    {r.margin})
+                  </span>
+                </span>
+                <span className={cn(r.accepted ? "text-green-300" : "text-red-300")}>
+                  {r.accepted ? "成交" : "未成交·0"}
+                </span>
+                <ScoreBadge score={r.grade} />
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
+          Martin 总评：{martinSummary}
+        </div>
+      </div>
+    </TerminalCard>
+  );
+}
+
+function Day4GraduationPanel() {
+  const summary = [
+    "Day1：看懂期权——Call 看涨、Put 看跌，买方最大损失限于权利金。",
+    "Day2：二叉树定价——理论价是报价的锚，不能太低（白送）也不能太高（吓跑）。",
+    "Day3：障碍期权——便宜来自路径风险（敲出），不是无条件折扣。",
+    "Day4：实战报价——先读客户方向与预算，再选普通 / 障碍，最后以理论价为锚加合理利润。",
+  ];
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="结业" accent="新人定价训练完成" />
+      <div className="flex min-h-[520px] flex-col items-center justify-center p-6 text-center">
+        <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-5xl font-black tracking-[0.12em] text-transparent md:text-6xl">
+          结业完成
+        </div>
+        <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300">
+          你走完了从期权基础到实战定价的全过程。一个新人交易员该有的定价纪律，你已经练过一遍。
+        </p>
+        <div className="mt-8 grid w-full max-w-2xl gap-3 text-left">
+          {summary.map((item) => (
+            <div
+              key={item}
+              className="rounded-md border border-cyan-400/15 bg-black/30 px-4 py-3 text-sm leading-7 text-slate-300"
+            >
+              <span className="font-terminal mr-2 text-[#00f0ff]">回顾</span>
+              {item}
+            </div>
+          ))}
+        </div>
+      </div>
+    </TerminalCard>
+  );
+}
 
 function MainPanel({
   stage,
@@ -6465,9 +7156,11 @@ function MainPanel({
   clientResponse,
   day2Score,
   day3Score,
-  day4Score,
+  day4ClientIndex,
+  day4Results,
   actions,
 }) {
+  const day4Client = day4Clients[day4ClientIndex] ?? day4Clients[0];
   const panels = {
     day1_welcome: <WelcomePanel />,
     day1_lesson_basics: <BasicsLessonPanel />,
@@ -6598,45 +7291,41 @@ function MainPanel({
     ),
     day3_report: <Day3ReportPanel score={day3Score} />,
     day3_complete: <Day3CompletePanel />,
-    day4_intro: <Day4IntroPanel />,
-    day4_handbook_updated: <Day4HandbookUpdatedPanel />,
-    day4_client_arrival: <Day4ClientArrivalPanel />,
-    day4_suitability_check: (
-      <Day4SuitabilityPanel
-        selectedSuitability={selectedSuitability}
-        suitabilityMessage={suitabilityMessage}
-        onSelectSuitability={actions.selectSuitability}
+    day4_intro: <Day4BriefingPanel />,
+    day4_client_arrival: (
+      <Day4ClientProfilePanel
+        client={day4Client}
+        index={day4ClientIndex}
+        total={day4Clients.length}
       />
     ),
-    day4_product_selection: (
+    day4_judge: (
       <ProductSelectionPanel
         selectedProduct={selectedProduct}
         productMessage={productMessage}
         onSelectProduct={actions.selectProduct}
-        products={day4Config.products}
-        correctProductId={day4Config.scoringRules.correctProduct}
-        title="CBBC 产品推荐台"
-        accent="不要被新产品诱惑"
+        products={day4Client.judgeProducts ?? []}
+        correctProductId={day4Client.correctProduct}
+        title="产品判断台"
+        accent="客户没说要哪种——你来判断"
       />
     ),
-    day4_risk_disclosure: (
-      <RiskDisclosurePanel
-        selectedDisclosures={selectedDisclosures}
-        onToggleDisclosure={actions.toggleDisclosure}
-        disclosureFeedback={disclosureFeedback}
-        items={day4Config.disclosureItems}
-        instruction="周女士问到牛熊证。请选择你必须解释清楚的 CBBC 风险。"
+    day4_pricing: (
+      <Day4PricingPanel
+        client={day4Client}
+        selectedQuote={selectedQuote}
+        onUpdateQuote={actions.updateQuote}
       />
     ),
-    day4_market_run: (
-      <Day4MarketRunPanel
-        selectedProduct={selectedProduct}
-        marketHasRun={marketHasRun}
-        visibleMarketSteps={visibleMarketSteps}
+    day4_client_response: (
+      <Day4ClientResponsePanel
+        client={day4Client}
+        selectedQuote={selectedQuote}
+        clientResponse={clientResponse}
       />
     ),
-    day4_report: <Day4ReportPanel score={day4Score} />,
-    day4_complete: <Day4CompletePanel />,
+    day4_scorecard: <Day4ScorecardPanel results={day4Results} clients={day4Clients} />,
+    day4_complete: <Day4GraduationPanel />,
   };
 
   return <div className="min-h-[580px]">{panels[stage] ?? null}</div>;
@@ -6659,6 +7348,9 @@ export default function Day1TraderSimulator() {
   const [day2Score, setDay2Score] = useState(null);
   const [day3Score, setDay3Score] = useState(null);
   const [day4Score, setDay4Score] = useState(null);
+  // Day4 实战篇：通用 stage + index 驱动的客户队列
+  const [day4ClientIndex, setDay4ClientIndex] = useState(0);
+  const [day4Results, setDay4Results] = useState([]);
   const [selectedSuitability, setSelectedSuitability] = useState(null);
   const [suitabilityMessage, setSuitabilityMessage] = useState("");
   const [productMessage, setProductMessage] = useState("");
@@ -6746,8 +7438,8 @@ export default function Day1TraderSimulator() {
 
   const selectProduct = (productId) => {
     const products =
-      currentStage === "day4_product_selection"
-        ? day4Config.products
+      currentStage === "day4_judge"
+        ? (day4Clients[day4ClientIndex]?.judgeProducts ?? [])
         : currentStage === "day3_product_selection"
           ? day3Config.products
           : day1Config.products;
@@ -6781,9 +7473,9 @@ export default function Day1TraderSimulator() {
       return;
     }
 
-    if (currentStage === "day4_product_selection") {
-      setSelectedDisclosures([]);
-      setCurrentStage("day4_risk_disclosure");
+    if (currentStage === "day4_judge") {
+      // 客户③：选好产品后进入计算器报价（产品对错记在提交报价时一并评分）
+      setCurrentStage("day4_pricing");
       return;
     }
 
@@ -6791,14 +7483,16 @@ export default function Day1TraderSimulator() {
     setCurrentStage("day1_risk_disclosure");
   };
 
+  // 已归档（CBBC）：原 Day4 适当性判断，新流程不再使用。
   const selectSuitability = (suitabilityId) => {
-    const option = day4Config.suitabilityOptions.find((item) => item.id === suitabilityId);
+    const option = day4CbbcConfig_ARCHIVED.suitabilityOptions.find((item) => item.id === suitabilityId);
     if (!option) return;
 
     setSelectedSuitability(suitabilityId);
     setSuitabilityMessage(option.feedback);
   };
 
+  // 已归档（CBBC）：原 Day4 适当性确认，新流程不再使用。
   const confirmSuitability = () => {
     if (!selectedSuitability) {
       setSuitabilityMessage("请先判断客户是否适合 CBBC。");
@@ -6808,6 +7502,85 @@ export default function Day1TraderSimulator() {
     setSelectedProduct(null);
     setProductMessage("");
     setCurrentStage("day4_product_selection");
+  };
+
+  // ===== Day4 实战篇 · 客户队列调度（通用 stage + index 驱动）=====
+  const beginDay4Clients = () => {
+    setDay4ClientIndex(0);
+    setDay4Results([]);
+    setSelectedProduct(null);
+    setProductMessage("");
+    setSelectedQuote(day2Config.quoteRules.defaultQuote);
+    setClientResponse(null);
+    setCurrentStage("day4_client_arrival");
+  };
+
+  const toDay4Task = () => {
+    const client = day4Clients[day4ClientIndex];
+    if (client?.taskType === "judge") {
+      setSelectedProduct(null);
+      setProductMessage("");
+      setCurrentStage("day4_judge");
+    } else {
+      setCurrentStage("day4_pricing");
+    }
+  };
+
+  const submitDay4Quote = () => {
+    const client = day4Clients[day4ClientIndex];
+    if (!client) return;
+    const analysis = getDay4QuoteAnalysis(selectedQuote, client);
+    // 客户③要先选对产品；①②产品已点名（默认正确）。
+    const chosenProductId =
+      client.taskType === "judge" ? selectedProduct : client.correctProduct;
+    const productName =
+      client.taskType === "judge"
+        ? (client.judgeProducts?.find((p) => p.id === chosenProductId)?.name ?? "未选择产品")
+        : client.productLabel;
+    const productCorrect = chosenProductId === client.correctProduct;
+    // 选错产品：再漂亮的报价也救不回来——判 D 且不成交。
+    const grade = productCorrect ? analysis.score : "D";
+    const accepted = productCorrect ? analysis.accepted : false;
+    const result = {
+      clientId: client.id,
+      name: client.profile.name,
+      productName,
+      productCorrect,
+      quote: Number(selectedQuote),
+      theoretical: analysis.theoretical,
+      margin: analysis.margin,
+      accepted,
+      grade,
+    };
+    setDay4Results((prev) => {
+      const next = [...prev];
+      next[day4ClientIndex] = result;
+      return next;
+    });
+    const response = productCorrect
+      ? analysis
+      : {
+          ...analysis,
+          accepted: false,
+          customerLine: "这个产品不是我要的，我先不买了。",
+          status: "产品不匹配，客户离开",
+        };
+    setClientResponse(response);
+    setCurrentStage("day4_client_response");
+  };
+
+  const nextDay4Client = () => {
+    const nextIndex = day4ClientIndex + 1;
+    if (nextIndex >= day4Clients.length) {
+      setCurrentStage("day4_scorecard");
+      return;
+    }
+    setDay4ClientIndex(nextIndex);
+    setSelectedProduct(null);
+    setProductMessage("");
+    setSelectedQuote(day2Config.quoteRules.defaultQuote);
+    setClientResponse(null);
+    setCurrentStage("day4_client_arrival");
   };
 
   const toggleDisclosure = (disclosureId) => {
@@ -7044,16 +7817,17 @@ export default function Day1TraderSimulator() {
     };
   };
 
-  const evaluateDay4 = () => {
-    const product = day4Config.products.find((item) => item.id === selectedProduct);
+  // 已归档（CBBC）：原 Day4 熊证适当性评分，新流程改用 submitDay4Quote + Day4ScorecardPanel。
+  const evaluateDay4Cbbc_ARCHIVED = () => {
+    const product = day4CbbcConfig_ARCHIVED.products.find((item) => item.id === selectedProduct);
     const productName = product?.name ?? "未选择产品";
-    const suitabilityOption = day4Config.suitabilityOptions.find(
+    const suitabilityOption = day4CbbcConfig_ARCHIVED.suitabilityOptions.find(
       (item) => item.id === selectedSuitability,
     );
-    const result = getDay4MarketResult();
-    const riskDisclosure = getRiskDisclosureScore(selectedDisclosures, day4Config);
+    const result = getDay4CbbcMarketResult_ARCHIVED();
+    const riskDisclosure = getRiskDisclosureScore(selectedDisclosures, day4CbbcConfig_ARCHIVED);
     const suitabilityScore =
-      selectedSuitability === day4Config.scoringRules.correctSuitability ? "A" : "C";
+      selectedSuitability === day4CbbcConfig_ARCHIVED.scoringRules.correctSuitability ? "A" : "C";
     const productScore =
       selectedProduct === "bear_cbbc"
         ? "A"
@@ -7258,6 +8032,8 @@ export default function Day1TraderSimulator() {
     setDay2Score(null);
     setDay3Score(null);
     setDay4Score(null);
+    setDay4ClientIndex(0);
+    setDay4Results([]);
     setSkipSignal((value) => value + 1);
   };
 
@@ -7283,6 +8059,8 @@ export default function Day1TraderSimulator() {
     setDay2Score(null);
     setDay3Score(null);
     setDay4Score(null);
+    setDay4ClientIndex(0);
+    setDay4Results([]);
     setSkipSignal((value) => value + 1);
   };
 
@@ -7349,17 +8127,16 @@ export default function Day1TraderSimulator() {
   const mentorText = useMemo(() => {
     if (currentStage === "day1_product_selection" && productMessage) return productMessage;
     if (currentStage === "day3_product_selection" && productMessage) return productMessage;
-    if (currentStage === "day4_suitability_check" && suitabilityMessage) {
-      return suitabilityMessage;
-    }
-    if (currentStage === "day4_product_selection" && productMessage) return productMessage;
+    if (currentStage === "day4_judge" && productMessage) return productMessage;
     if (currentStage === "day1_risk_disclosure") return disclosureFeedback.text;
     if (currentStage === "day2_quote_slider") {
       return `${stageConfig[currentStage].mentor} 当前报价状态：${quoteAnalysis.label}。`;
     }
     if (currentStage === "day2_risk_disclosure") return disclosureFeedback.text;
     if (currentStage === "day3_risk_disclosure") return disclosureFeedback.text;
-    if (currentStage === "day4_risk_disclosure") return disclosureFeedback.text;
+    if (currentStage === "day4_client_response" && clientResponse) {
+      return `客户反馈：${clientResponse.status}。先读对客户、选对产品，再以理论价为锚加合理利润。`;
+    }
     if (currentStage === "day2_client_response" && clientResponse) {
       return `客户反馈：${clientResponse.status}。报价不是只看成交，还要看交易台是否得到合理补偿。`;
     }
@@ -7375,13 +8152,9 @@ export default function Day1TraderSimulator() {
     if (currentStage === "day3_market_run" && marketComplete) {
       return "这就是障碍期权的重点：最终价格高于行权价，但中途已经跌破障碍线，敲出后产品不能复活。";
     }
-    if (currentStage === "day4_market_run" && marketComplete) {
-      return "Bear CBBC 中途触发 MCE 后已经终止。普通 Put 虽然没有杠杆，但它活到了到期，这就是路径风险的代价。";
-    }
     if (currentStage === "day1_report" && day1Score) return day1Score.martinComment;
     if (currentStage === "day2_report" && day2Score) return day2Score.martinComment;
     if (currentStage === "day3_report" && day3Score) return day3Score.martinComment;
-    if (currentStage === "day4_report" && day4Score) return day4Score.martinComment;
     return stageConfig[currentStage]?.mentor ?? "";
   }, [
     clientResponse,
@@ -7428,18 +8201,12 @@ export default function Day1TraderSimulator() {
       return;
     }
 
-    if (currentStage === "day4_market_run") {
-      setDay4Score(evaluateDay4());
-      setCurrentStage("day4_report");
-      return;
-    }
-
     setDay1Score(evaluateDay1());
     setCurrentStage("day1_report");
   };
 
   const actions = {
-    startGame: startDay3,
+    startGame: startDay4,
     startDay1,
     startDay2,
     startDay3,
@@ -7467,10 +8234,6 @@ export default function Day1TraderSimulator() {
       unlockHandbookEntry("barrier_options");
       setCurrentStage("day3_handbook_updated");
     },
-    finishDay4Intro: () => {
-      unlockHandbookEntry("cbbc_basics");
-      setCurrentStage("day4_handbook_updated");
-    },
     openHandbook,
     closeHandbook,
     meetClient: () => {
@@ -7481,13 +8244,15 @@ export default function Day1TraderSimulator() {
     toResearchTerminal: () => setCurrentStage("day2_research_terminal"),
     toDay2TreeExplainer: () => setCurrentStage("day2_tree_explainer"),
     meetDay3Client: () => setCurrentStage("day3_client_arrival"),
-    meetDay4Client: () => setCurrentStage("day4_client_arrival"),
     toProductSelection: () => setCurrentStage("day1_product_selection"),
     toDay2ProductReview: () => setCurrentStage("day2_product_review"),
     toDay3ProductSelection: () => setCurrentStage("day3_product_selection"),
-    toDay4Suitability: () => setCurrentStage("day4_suitability_check"),
-    selectSuitability,
-    confirmSuitability,
+    // Day4 实战篇队列调度
+    beginDay4Clients,
+    toDay4Task,
+    submitDay4Quote,
+    nextDay4Client,
+    toDay4Scorecard: () => setCurrentStage("day4_scorecard"),
     selectProduct,
     confirmProduct,
     showPricingTree,
@@ -7581,7 +8346,8 @@ export default function Day1TraderSimulator() {
             clientResponse={clientResponse}
             day2Score={day2Score}
             day3Score={day3Score}
-            day4Score={day4Score}
+            day4ClientIndex={day4ClientIndex}
+            day4Results={day4Results}
             actions={actions}
           />
           {!isFullWidthStage && <MentorPanel text={mentorText} skipSignal={skipSignal} />}
@@ -7593,6 +8359,7 @@ export default function Day1TraderSimulator() {
           selectedSuitability={selectedSuitability}
           marketComplete={marketComplete}
           selectedQuote={selectedQuote}
+          day4ClientIndex={day4ClientIndex}
           actions={actions}
         />
       </div>
