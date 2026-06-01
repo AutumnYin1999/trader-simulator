@@ -8304,7 +8304,7 @@ export default function Day1TraderSimulator() {
   };
 
   const actions = {
-    startGame: startDay4,
+    startGame: startDay1,
     startDay1,
     startDay2,
     startDay3,
