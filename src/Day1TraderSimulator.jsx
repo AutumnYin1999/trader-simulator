@@ -4139,6 +4139,45 @@ const day3ResearchCards = [
   },
 ];
 
+// 客户③（何先生·结业判断）专用资料卡：呼应「提示递减」，不再像 Day4ParamCard 那样
+// 把参数摆好+「照着填」，改成 Day2/Day3 的数据台风格让玩家自己 sourcing。
+// 障碍价只在玩家已判断出障碍产品、进到报价页后才出现，不在判断前泄题。
+const day4HeResearchCards = [
+  {
+    id: "market_quote_d4he",
+    icon: "📈",
+    title: "行情终端 · Market Data",
+    accent: "#00f0ff",
+    rows: [
+      { label: "标的", value: "恒生指数 HSI", note: "" },
+      { label: "现价 S₀", value: "25,000 点", note: "covid 股灾数月后，恒指已从低位回升" },
+      { label: "VHSI 波动率指数 σ", value: "≈ 32%", note: "市场尚未完全平静，隐含波动率仍偏高" },
+      { label: "数据来源", value: "vhsi_history.csv", note: "同组数学引擎队抓取" },
+    ],
+  },
+  {
+    id: "he_order",
+    icon: "🚧",
+    title: "何先生订单 · Client Order",
+    accent: "#ffd700",
+    rows: [
+      { label: "行权价 K", value: "25,500 点", note: "何先生想在这个位置行权" },
+      { label: "可接受的失效线", value: "23,500 点", note: "他说「真跌破某个位置当它作废、我也认」" },
+      { label: "期限", value: "约 3 个月", note: "他要做这一波恒指反弹" },
+      { label: "年化期限 T", value: "≈ 0.25 年", note: "3 个月 ÷ 12" },
+    ],
+  },
+  {
+    id: "rate_board_d4he",
+    icon: "🏦",
+    title: "利率公告板 · Rate Board",
+    accent: "#a78bfa",
+    rows: [
+      { label: "港元无风险利率 r", value: "2%", note: "与前几天一致的教学锚点" },
+    ],
+  },
+];
+
 function ResearchTerminalPanel({
   title = "中环数据台",
   accent = "定价参数查询 · Research Terminal",
@@ -6934,8 +6973,63 @@ function Day4ParamCard({ client }) {
   );
 }
 
+// 结业资料卡（无外层卡壳，嵌在报价页计算器上方）：复用 Day2/Day3 数据台「自己 sourcing」风格。
+function Day4SourcingCards({ cards }) {
+  return (
+    <div className="rounded-lg border border-cyan-400/20 bg-cyan-400/[0.04] p-5">
+      <div className="mb-3 rounded-md border border-[#00f0ff]/20 bg-[#00f0ff]/[0.05] p-4 text-sm leading-7 text-slate-300">
+        <span className="font-terminal text-[#00f0ff]">任务：</span>
+        何先生没给你参数清单。你已经替他判断了产品——现在自己从下面的资料里把定价要用的数字找齐：
+        <span className="font-black text-slate-100"> S₀、K、σ、T、r</span>
+        ，还有这单的<span className="font-black text-[#ffd700]">障碍价</span>。没有速查表，也没人告诉你哪个数填哪一栏。结业了，靠自己。
+      </div>
+      <div className="grid gap-4 md:grid-cols-2">
+        {cards.map((card) => (
+          <div
+            key={card.id}
+            className="rounded-lg border bg-black/30 p-4"
+            style={{ borderColor: `${card.accent}30` }}
+          >
+            <div className="mb-3 flex items-center gap-2">
+              <span className="text-xl">{card.icon}</span>
+              <span
+                className="font-terminal text-xs tracking-[0.16em]"
+                style={{ color: card.accent }}
+              >
+                {card.title}
+              </span>
+            </div>
+            <div className="space-y-2">
+              {card.rows.map((row) => (
+                <div
+                  key={row.label}
+                  className="flex items-start justify-between gap-3 rounded border border-white/5 bg-white/[0.02] px-3 py-2"
+                >
+                  <span className="font-terminal text-[11px] tracking-[0.1em] text-slate-500 shrink-0">
+                    {row.label}
+                  </span>
+                  <div className="text-right">
+                    <span className="font-black text-slate-100 text-sm">{row.value}</span>
+                    {row.note && (
+                      <div className="mt-0.5 text-[11px] text-slate-500">{row.note}</div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-3 text-xs leading-6 text-slate-500">
+        哪个数据对应计算器的哪个输入框，自己判断——前三天你已经做过很多遍。计算器默认是占位最小值，要你手动填。
+      </div>
+    </div>
+  );
+}
+
 function Day4PricingPanel({ client, selectedQuote, onUpdateQuote }) {
   const isBarrier = client.mode === "barrier";
+  const isJudge = client.taskType === "judge";
   const quoteHint = isBarrier
     ? `参考计算器算出的「下跌敲出 Call 理论价」，加上合理利润，给${client.profile.name}报一个权利金。障碍产品的卖点是比普通 Call 便宜。`
     : `参考计算器算出的「普通 Call 理论价」，加上合理利润，给${client.profile.name}报一个权利金。`;
@@ -6946,7 +7040,11 @@ function Day4PricingPanel({ client, selectedQuote, onUpdateQuote }) {
         accent={isBarrier ? "障碍 Call · 盲报" : "普通 Call · 盲报"}
       />
       <div className="space-y-5 p-6">
-        <Day4ParamCard client={client} />
+        {isJudge ? (
+          <Day4SourcingCards cards={day4HeResearchCards} />
+        ) : (
+          <Day4ParamCard client={client} />
+        )}
         <BinomialPricingTool
           mode={client.mode}
           selectedQuote={selectedQuote}
