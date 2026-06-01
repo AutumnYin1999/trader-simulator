@@ -632,44 +632,50 @@ const day3Config = {
       mentor:
         "敲出（Knock-Out）的意思是：只要标的价格碰到障碍线，期权就提前失效。哪怕最后市场又涨回来，已经敲出的产品也不能复活。",
     },
-    day3_research_terminal: {
-      label: "09:10 障碍数据台",
-      system: "障碍参数查询",
-      mentor:
-        "障碍产品定价前，先去数据台把参数查齐。今天比昨天多一个关键数字——障碍价。现价、波动率、利率、期限你已经熟了，重点看那张障碍合约卡，把障碍价记下来。",
-    },
-    day3_lesson_compare_vanilla: {
-      label: "09:12 第三课：便宜不是免费",
-      system: "Vanilla vs Barrier",
-      mentor:
-        "障碍期权通常更便宜，因为买方接受了额外风险。便宜不是优惠券，而是用敲出风险换来的低期权费。",
-    },
     day3_handbook_updated: {
-      label: "09:16 手册更新",
+      label: "09:12 手册更新",
       system: "障碍规则同步",
       mentor:
         "工作手册已经新增障碍期权页面。今天见客户前一定要看：障碍产品最容易出错的地方，就是把它当成普通期权来讲。",
     },
     day3_client_arrival: {
-      label: "09:20 客户到访",
+      label: "09:14 客户到访",
       system: "预算敏感客户",
       mentor:
-        "她看涨，但又嫌普通 Call 太贵。现在先问清楚：她是否能接受“中途跌破某条线就提前失效”的规则。",
+        "她看涨，但又嫌普通 Call 太贵。现在先问清楚：她是否能接受”中途跌破某条线就提前失效”的规则。",
     },
     day3_product_selection: {
-      label: "09:26 产品选择",
+      label: "09:18 产品选择",
       system: "障碍结构匹配",
       mentor:
         "客户看涨、预算有限、愿意接受下方障碍风险。今天的目标产品是下跌敲出看涨期权，也就是 Down-and-Out Call。",
     },
+    day3_research_terminal: {
+      label: "09:22 障碍数据台",
+      system: "障碍参数查询",
+      mentor:
+        "障碍产品定价前，先去数据台把参数查齐。今天比昨天多一个关键数字——障碍价。现价、波动率、利率、期限你已经熟了，重点看那张障碍合约卡，把障碍价记下来。",
+    },
+    day3_lesson_compare_vanilla: {
+      label: "09:26 定价树",
+      system: "Barrier 定价",
+      mentor:
+        "现在用计算器对比 Vanilla 和 Barrier 的理论价。障碍期权通常更便宜，因为买方接受了额外风险。便宜不是优惠券，而是用敲出风险换来的低期权费。",
+    },
     day3_risk_disclosure: {
-      label: "09:34 风险披露",
+      label: "09:38 风险披露",
       system: "路径风险披露",
       mentor:
         "障碍产品必须把路径风险讲清楚：不是只看最终价格。碰到障碍线后，就算最后价格很漂亮，客户也可能拿不到收益。",
     },
+    day3_client_response: {
+      label: "09:42 客户反馈",
+      system: "障碍报价结果",
+      mentor:
+        "障碍产品的卖点就是比普通 Call 便宜。报太低交易台少赚，报太高客户宁愿直接买普通 Call。看陈女士怎么回应。",
+    },
     day3_market_run: {
-      label: "09:42 市场路径",
+      label: "09:46 市场路径",
       system: "敲出路径模拟",
       mentor:
         "现在看一条固定市场路径。注意盯住障碍线，不要只盯最终价格。下面这条是教学演示路径，旁边我放了一段真实参照——2020 年新冠股灾时，恒指真的跌到过 21,000 一带，障碍随时会被击穿。",
@@ -731,7 +737,7 @@ const day3Config = {
   ],
   clientProfile: {
     name: "陈女士",
-    type: "活跃散户",
+    type: "预算敏感散户",
     marketView: "看涨恒生指数",
     riskTolerance: "中高",
     goal: "想用较低期权费参与未来上涨",
@@ -832,9 +838,9 @@ const day3Config = {
     spot: 21500,
     strike: 22000,
     barrier: 21000,
-    premium: 115,
-    vanillaPremium: 186,
-    maturity: "1个月",
+    premium: 934,
+    vanillaPremium: 1112,
+    maturity: "3个月",
     path: [21500, 21820, 21460, 20950, 21680, 22400],
   },
   // 真实市场背景：教学路径是简化演示，这里引用真实历史数据作为「现实参照」。
@@ -1185,7 +1191,12 @@ function formatPoints(value) {
   return value.toLocaleString("en-US");
 }
 
-function getQuoteAnalysis(quote, theoretical = day2Config.quoteRules.theoreticalPrice) {
+function getQuoteAnalysis(
+  quote,
+  theoretical = day2Config.quoteRules.theoreticalPrice,
+  clientName = "王先生",
+  clientDesc = "专业客户",
+) {
   const margin = quote - theoretical;
   // 合理区间：理论价 + 4 到 理论价 + 34（相对偏移，不再写死绝对值）
   const fairLow = theoretical + 4;
@@ -1199,14 +1210,14 @@ function getQuoteAnalysis(quote, theoretical = day2Config.quoteRules.theoretical
       label: "报价过低",
       score: "D",
       tone: "danger",
-      status: "成交了，但你贱卖了期权",
+      status: "成交了，但报价偏低，交易台损失了利润",
       accepted: true,
       customerPreview: "客户会立刻抓住这个便宜价。",
       customerLine: "这个价格很划算，成交。",
       reportText:
-        "你的报价低于这张期权的合理价值，客户几乎是立刻就接受了——他知道自己占了便宜。",
+        "你的报价低于这张期权的合理价值，客户几乎是立刻就接受了——心里清楚自己占了便宜。",
       martinComment:
-        `王先生眼睛一亮，几乎没还价就签了字。你把一张大约值 ${theoretical} 点的期权报了 ${quote} 点，等于白送客户 ${bargain} 点。专业客户最会捡这种便宜。下次先看模型算出的理论价，再加利润，别让交易台吃哑巴亏。`,
+        `${clientName}眼睛一亮，几乎没还价就签了字。你把一张大约值 ${theoretical} 点的期权报了 ${quote} 点，等于白送客户 ${bargain} 点。${clientDesc}最会捡这种便宜。下次先看模型算出的理论价，再加利润，别让交易台吃哑巴亏。`,
       margin,
       theoretical,
     };
@@ -1260,7 +1271,7 @@ function getQuoteAnalysis(quote, theoretical = day2Config.quoteRules.theoretical
       customerLine: "有点贵……行吧，这次先这样。",
       reportText: "报价高于合理区间，客户勉强接受，但明显不满意。",
       martinComment:
-        "王先生皱着眉签了字。成交是成交了，但你报得偏高，客户明显不爽。这种客户体验留不住回头客——专业客户会记得谁宰过他。",
+        `${clientName}皱着眉签了字。成交是成交了，但你报得偏高，客户明显不爽。这种客户体验留不住回头客——${clientDesc}会记得谁宰过自己。`,
       margin,
       theoretical,
     };
@@ -1277,7 +1288,7 @@ function getQuoteAnalysis(quote, theoretical = day2Config.quoteRules.theoretical
     customerLine: "这个价太离谱了，我去别家比比。",
     reportText: "报价过高，客户当场拒绝，转身离开，这单没成。",
     martinComment:
-      "王先生合上笔记本起身就走了。报这么高把客户吓跑，这单黄了，交易台一分钱没赚到。模型是用来守纪律的，不是用来宰客的——报价离公允价值太远，再好的客户也会走。",
+      `${clientName}合上笔记本起身就走了。报这么高把客户吓跑，这单黄了，交易台一分钱没赚到。模型是用来守纪律的，不是用来宰客的——报价离公允价值太远，再好的客户也会走。`,
     margin,
     theoretical,
   };
@@ -1369,6 +1380,80 @@ function getDay3MarketResult() {
     vanillaPayoff,
     barrierPayoff,
     pnl,
+  };
+}
+
+// Day3 障碍报价评价：以障碍产品的模型公允价（day3Config.market.premium ≈ 934）为锚，
+// 区间按 Day2 的相对比例缩放（合理加价 ~+2%..+18%，超过 ~+40% 客户宁愿买普通 Call 而拒绝）。
+function getDay3QuoteAnalysis(quote, theoretical = day3Config.market.premium) {
+  const q = Number(quote);
+  const margin = Math.round(q - theoretical);
+  const anchor = Math.round(theoretical);
+  const fairHigh = theoretical * 1.183;
+  const rejectAbove = theoretical * 1.398;
+
+  if (!Number.isFinite(q) || q <= 0) {
+    return {
+      id: "empty",
+      label: "未报价",
+      status: "尚未报价",
+      accepted: false,
+      customerLine: "你还没给我报价呢。",
+      martinComment: "还没报价。先在计算器里算出障碍理论价，再加一点利润报给陈女士。",
+      margin: 0,
+      theoretical,
+    };
+  }
+
+  if (q < theoretical) {
+    const bargain = Math.round(theoretical - q);
+    return {
+      id: "too_low",
+      label: "报价过低",
+      status: "成交了，但报价偏低，交易台损失了利润",
+      accepted: true,
+      customerLine: "这价比普通 Call 便宜太多了，成交！",
+      martinComment: `陈女士爽快签了——她占了便宜。障碍模型公允价 ${anchor} 点，你只报了 ${Math.round(q)} 点，交易台等于少收了 ${bargain} 点。给客户优惠可以，但别让到这个地步。`,
+      margin,
+      theoretical,
+    };
+  }
+
+  if (q <= fairHigh) {
+    return {
+      id: "fair",
+      label: "合理报价",
+      status: "成交，定价漂亮",
+      accepted: true,
+      customerLine: "比普通 Call 便宜，又没便宜得离谱，可以，成交。",
+      martinComment: `漂亮。你拿障碍模型价 ${anchor} 点当锚，又加了 ${margin} 点利润——客户觉得比普通 Call 划算，交易台也拿到补偿。这就是障碍定价的纪律。`,
+      margin,
+      theoretical,
+    };
+  }
+
+  if (q <= rejectAbove) {
+    return {
+      id: "expensive",
+      label: "偏贵",
+      status: "勉强成交，客户不满意",
+      accepted: true,
+      customerLine: "障碍产品不就图个便宜吗？这价有点贵……行吧，先这样。",
+      martinComment: "陈女士皱着眉签了。障碍产品的卖点就是便宜，你报这么贵，等于把它最大的优势抹掉了。这种体验留不住回头客。",
+      margin,
+      theoretical,
+    };
+  }
+
+  return {
+    id: "too_high",
+    label: "报价过高",
+    status: "客户拒绝，转身离开",
+    accepted: false,
+    customerLine: "这么贵我还买障碍干嘛？我不如直接买普通 Call。",
+    martinComment: `陈女士掉头就走了。障碍比普通 Call 还贵，等于自己否定自己——客户当然不签。报价离障碍公允价 ${anchor} 点太远，这单黄了。`,
+    margin,
+    theoretical,
   };
 }
 
@@ -2118,8 +2203,8 @@ function BottomActionBar({
       </PrimaryButton>
     ),
     day3_lesson_knock_out: (
-      <PrimaryButton onClick={actions.toDay3ResearchTerminal} className="px-10">
-        前往数据台查障碍参数
+      <PrimaryButton onClick={actions.finishDay3Intro} className="px-10">
+        更新工作手册
       </PrimaryButton>
     ),
     day3_research_terminal: (
@@ -2128,14 +2213,19 @@ function BottomActionBar({
           打开手册
         </PrimaryButton>
         <PrimaryButton onClick={actions.toDay3CompareVanilla}>
-          参数已记录，继续对比
+          参数已记录，继续定价
         </PrimaryButton>
       </>
     ),
     day3_lesson_compare_vanilla: (
-      <PrimaryButton onClick={actions.finishDay3Intro} className="px-10">
-        更新工作手册
-      </PrimaryButton>
+      <>
+        <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
+          打开手册
+        </PrimaryButton>
+        <PrimaryButton onClick={actions.confirmQuote} disabled={!quoteEntered}>
+          {quoteEntered ? "继续风险披露" : "请先填写报价"}
+        </PrimaryButton>
+      </>
     ),
     day3_handbook_updated: (
       <>
@@ -2160,8 +2250,8 @@ function BottomActionBar({
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
           打开手册
         </PrimaryButton>
-        <PrimaryButton onClick={actions.confirmProduct} disabled={!selectedProduct}>
-          确认产品
+        <PrimaryButton onClick={actions.toDay3ResearchTerminal}>
+          前往数据台查参数
         </PrimaryButton>
       </>
     ),
@@ -2174,6 +2264,9 @@ function BottomActionBar({
           确认风险披露
         </PrimaryButton>
       </>
+    ),
+    day3_client_response: (
+      <PrimaryButton onClick={actions.toDay3MarketRun}>查看市场结算</PrimaryButton>
     ),
     day3_market_run: (
       marketComplete ? (
@@ -3680,7 +3773,7 @@ const day3ResearchCards = [
     rows: [
       { label: "标的", value: "恒生指数 HSI", note: "" },
       { label: "现价 S₀", value: "21,500 点", note: "今日开盘参考价（与昨天同一水平）" },
-      { label: "VHSI 波动率指数 σ", value: "≈ 16%", note: "恒指 30 日隐含波动率（平静市场参考值）" },
+      { label: "VHSI 波动率指数 σ", value: "≈ 30%", note: "市场转紧张的隐含波动率（真实参照：2020-02-28 covid 避险升温，VHSI 跳到 32.7）" },
       { label: "数据来源", value: "vhsi_history.csv", note: "同组数学引擎队抓取，2003–2026" },
     ],
     hint: "把 VHSI 当作 σ 填进计算器。记住：波动率越高，标的越容易触及障碍线被敲出——这正是障碍产品对 σ 特别敏感的原因。",
@@ -4228,6 +4321,23 @@ function buildBarrierBinomialToolTree(params) {
   };
 }
 
+// Day2 参数检查：与标准值的比较及 Martin 反馈
+function checkDay2Params(params) {
+  const standard = { spot: 21500, strike: 22000, rate: 2, sigma: 16, maturity: 0.08 };
+  const tolerance = { spot: 200, strike: 200, rate: 0.5, sigma: 2, maturity: 0.01 };
+
+  const issues = [];
+  Object.keys(standard).forEach((key) => {
+    const value = Number(params[key]);
+    const stdValue = standard[key];
+    const tol = tolerance[key];
+    if (Math.abs(value - stdValue) > tol) {
+      issues.push({ key, value, stdValue });
+    }
+  });
+  return issues;
+}
+
 function BinomialPricingTool({
   mode = "vanilla",
   selectedQuote,
@@ -4238,8 +4348,8 @@ function BinomialPricingTool({
   const isBarrier = mode === "barrier";
 
   // 默认值故意设成各参数的最小值（占位），逼玩家自己从数据台抄真实参数填进来
-  // 步数 N 是建模选择（不是要从数据台查的市场参数），固定锁死：Day2=3、Day3=6
-  const fixedSteps = isBarrier ? 6 : 3;
+  // 步数 N 是建模选择（不是要从数据台查的市场参数），固定锁死：Day2=3、Day3=4
+  const fixedSteps = isBarrier ? 4 : 3;
   const [params, setParams] = useState(
     isBarrier
       ? { spot: 1000, strike: 1000, barrier: 1000, rate: -5, sigma: 1, maturity: 0.05, steps: fixedSteps }
@@ -4261,13 +4371,19 @@ function BinomialPricingTool({
     }
   }, [tree.vanillaPrice, onUpdateTheoretical]);
 
-  const maxSteps = isBarrier ? 6 : 3;
+  const maxSteps = isBarrier ? 4 : 3;
   const updateParam = (key, value) => {
     setParams((current) => ({
       ...current,
       [key]: key === "steps" ? Math.max(1, Math.min(maxSteps, Number(value))) : value,
     }));
   };
+
+  // Day2 参数检查（仅 vanilla 模式）
+  const day2ParamIssues = useMemo(
+    () => (!isBarrier ? checkDay2Params(params) : []),
+    [params, isBarrier],
+  );
 
   const inputMeta = isBarrier
     ? [
@@ -4397,6 +4513,21 @@ function BinomialPricingTool({
               </div>
             )}
           </div>
+
+          {!isBarrier && day2ParamIssues.length > 0 && (
+            <div className="mt-4 rounded-md border border-orange-500/40 bg-orange-500/[0.08] p-3 text-xs leading-5 text-orange-300">
+              <div className="font-terminal mb-2 tracking-[0.12em]">⚠️ Martin 提醒</div>
+              {day2ParamIssues.map(({ key, value, stdValue }) => (
+                <div key={key} className="mb-1">
+                  {key === "spot" && `现价 S0：你填 ${Number(value).toLocaleString()} 点，数据台行情终端应该是 21,500`}
+                  {key === "strike" && `行权价 K：你填 ${Number(value).toLocaleString()} 点，应该是 22,000`}
+                  {key === "rate" && `利率 r：你填 ${value}%，应该是 2%`}
+                  {key === "sigma" && `波动率 σ：你填 ${value}%，应该是 16%（来自 VHSI）`}
+                  {key === "maturity" && `期限 T：你填 ${value} 年，1 个月应该是约 0.08 年`}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="rounded-lg border border-cyan-400/15 bg-black/25 p-4">
@@ -4551,14 +4682,16 @@ function BinomialPricingTool({
         </div>
       </div>
 
-      {!isBarrier && (
+      {selectedQuote !== undefined && (
         <div className="mt-5 rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.05] p-5">
           <div className="mb-4">
             <div className="font-terminal text-xs tracking-[0.2em] text-[#ffd700]">
               报价输入 / Premium Quote
             </div>
             <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-400">
-              参考上面计算器算出的「普通 Call 理论价」，加上你认为合理的利润空间，给王先生报一个期权费。
+              {isBarrier
+                ? "参考上面计算器算出的「下跌敲出 Call 理论价」，加上你认为合理的利润空间，给陈女士报一个期权费。"
+                : "参考上面计算器算出的「普通 Call 理论价」，加上你认为合理的利润空间，给王先生报一个期权费。"}
               <span className="text-slate-300">报多少由你决定——系统不会提前告诉你对不对，提交后才见分晓。</span>
             </p>
           </div>
@@ -4810,7 +4943,7 @@ function Day2QuoteSliderPanel({
 }
 
 function Day2ClientResponsePanel({ selectedQuote, clientResponse, liveTheoretical = day2Config.quoteRules.theoreticalPrice }) {
-  const response = clientResponse ?? getQuoteAnalysis(selectedQuote, liveTheoretical);
+  const response = clientResponse ?? getQuoteAnalysis(selectedQuote, day2Config.quoteRules.theoreticalPrice);
   const acceptedText = response.accepted ? "交易接受" : "客户拒绝";
 
   return (
@@ -4858,7 +4991,7 @@ function Day2MarketRunPanel({
   const path = market.path;
   const spot = path[0];
   const quote = Number.isFinite(Number(selectedQuote)) ? Number(selectedQuote) : 0;
-  const accepted = getQuoteAnalysis(selectedQuote, liveTheoretical).accepted;
+  const accepted = getQuoteAnalysis(selectedQuote, day2Config.quoteRules.theoreticalPrice).accepted;
 
   const finalPrice = path[path.length - 1];
   const payoff = Math.max(finalPrice - market.strike, 0);
@@ -5176,10 +5309,6 @@ function Day2ReportPanel({ score }) {
         <div className="rounded-md border border-white/10 bg-white/[0.03] p-4 text-sm leading-7 text-slate-400">
           教学说明：真实交易台会对冲方向风险（如用期货或反向期权轧平 Delta），此处展示的是未对冲的单笔结果，仅用于理解定价盈亏，不代表交易台真实风险敞口。
         </div>
-
-        <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
-          Martin 复盘：{score.martinComment}
-        </div>
       </div>
     </TerminalCard>
   );
@@ -5409,48 +5538,54 @@ function Day3KnockOutPanel() {
   );
 }
 
-function Day3CompareVanillaPanel() {
+function Day3CompareVanillaPanel({ selectedQuote, quoteAnalysis, onUpdateQuote, onUpdateTheoretical }) {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第三课 / Vanilla vs Barrier" accent="便宜来自额外风险" />
-      <div className="grid gap-5 p-6 md:grid-cols-2">
-        <div className="rounded-lg border border-cyan-400/25 bg-cyan-400/[0.05] p-5">
-          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
-            普通看涨期权
+      <TerminalHeader label="定价树" accent="Barrier 定价" />
+      <div className="space-y-5 p-6">
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="rounded-lg border border-cyan-400/25 bg-cyan-400/[0.05] p-5">
+            <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+              普通看涨期权
+            </div>
+            <div className="text-2xl font-black text-slate-100">只看最终价格</div>
+            <ul className="mt-5 space-y-3 text-sm leading-7 text-slate-300">
+              <li>- 没有敲出线</li>
+              <li>- 期权费通常更贵</li>
+              <li>- 如果最终价格高于行权价，产生到期收益</li>
+            </ul>
+            <div className="mt-5 rounded-md border border-white/10 bg-black/30 p-4">
+              期权费示例：<span className="font-black text-[#00f0ff]">{day3Config.market.vanillaPremium} 点</span>
+            </div>
           </div>
-          <div className="text-2xl font-black text-slate-100">只看最终价格</div>
-          <ul className="mt-5 space-y-3 text-sm leading-7 text-slate-300">
-            <li>- 没有敲出线</li>
-            <li>- 期权费通常更贵</li>
-            <li>- 如果最终价格高于行权价，产生到期收益</li>
-          </ul>
-          <div className="mt-5 rounded-md border border-white/10 bg-black/30 p-4">
-            期权费示例：<span className="font-black text-[#00f0ff]">{day3Config.market.vanillaPremium} 点</span>
+
+          <div className="rounded-lg border border-[#ffd700]/30 bg-[#ffd700]/[0.06] p-5">
+            <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#ffd700]">
+              下跌敲出看涨期权
+            </div>
+            <div className="text-2xl font-black text-slate-100">更便宜，但会看路径</div>
+            <ul className="mt-5 space-y-3 text-sm leading-7 text-slate-300">
+              <li>- 有下方障碍线：{formatPoints(day3Config.market.barrier)}</li>
+              <li>- 期权费更低</li>
+              <li>- 中途触碰障碍，产品提前失效</li>
+            </ul>
+            <div className="mt-5 rounded-md border border-white/10 bg-black/30 p-4">
+              期权费示例：<span className="font-black text-[#ffd700]">{day3Config.market.premium} 点</span>
+            </div>
           </div>
         </div>
 
-        <div className="rounded-lg border border-[#ffd700]/30 bg-[#ffd700]/[0.06] p-5">
-          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#ffd700]">
-            下跌敲出看涨期权
-          </div>
-          <div className="text-2xl font-black text-slate-100">更便宜，但会看路径</div>
-          <ul className="mt-5 space-y-3 text-sm leading-7 text-slate-300">
-            <li>- 有下方障碍线：{formatPoints(day3Config.market.barrier)}</li>
-            <li>- 期权费更低</li>
-            <li>- 中途触碰障碍，产品提前失效</li>
-          </ul>
-          <div className="mt-5 rounded-md border border-white/10 bg-black/30 p-4">
-            期权费示例：<span className="font-black text-[#ffd700]">{day3Config.market.premium} 点</span>
-          </div>
+        <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
+          Martin 小口诀：障碍期权不是”普通期权打折版”。它便宜，是因为客户把一部分路径风险接过去了。
         </div>
 
-        <div className="md:col-span-2 rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
-          Martin 小口诀：障碍期权不是“普通期权打折版”。它便宜，是因为客户把一部分路径风险接过去了。
-        </div>
-
-        <div className="md:col-span-2">
-          <BinomialPricingTool mode="barrier" />
-        </div>
+        <BinomialPricingTool
+          mode="barrier"
+          selectedQuote={selectedQuote}
+          quoteAnalysis={quoteAnalysis}
+          onUpdateQuote={onUpdateQuote}
+          onUpdateTheoretical={onUpdateTheoretical}
+        />
       </div>
     </TerminalCard>
   );
@@ -5499,7 +5634,7 @@ function Day3ClientArrivalPanel() {
             </div>
             <div>
               <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
-                活跃散户
+                预算敏感散户
               </div>
               <div className="mt-2 text-2xl font-black text-slate-100">{client.name}</div>
             </div>
@@ -5554,6 +5689,45 @@ function RealDataContextCard({ context }) {
         {context.source}
       </div>
     </div>
+  );
+}
+
+function Day3ClientResponsePanel({ selectedQuote, clientResponse }) {
+  const response = clientResponse ?? getDay3QuoteAnalysis(selectedQuote);
+  const acceptedText = response.accepted ? "交易接受" : "客户拒绝";
+
+  return (
+    <TerminalCard className="scene-enter overflow-hidden">
+      <TerminalHeader label="客户反馈" accent="障碍报价回执" />
+      <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
+          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+            报价记录
+          </div>
+          <div className="text-5xl font-black text-[#00f0ff]">{selectedQuote} 点</div>
+          <div className="mt-4 text-sm leading-7 text-slate-400">
+            障碍报价已发出，等待市场结算。
+          </div>
+        </div>
+
+        <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-5">
+          <div className="mb-4 flex items-center gap-4">
+            <div className="flex h-16 w-16 items-center justify-center rounded-md border border-[#ffd700]/30 bg-black/40 font-terminal text-3xl font-black text-[#ffd700]">
+              陈
+            </div>
+            <div>
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#ffd700]">
+                陈女士
+              </div>
+              <div className="mt-1 text-sm text-slate-500">{acceptedText}</div>
+            </div>
+          </div>
+          <div className="rounded-md border border-white/10 bg-black/30 p-5 text-xl font-black leading-9 text-slate-100">
+            “{response.customerLine}”
+          </div>
+        </div>
+      </div>
+    </TerminalCard>
   );
 }
 
@@ -5736,11 +5910,16 @@ function Day3ReportPanel({ score }) {
 
   const rows = [
     ["产品", score.productName],
+    ["你的报价", `${score.selectedQuote} 点`],
+    ["客户状态", score.clientStatus],
     ["最终价格", `${formatPoints(score.finalPrice)} 点`],
     ["障碍线", `${formatPoints(day3Config.market.barrier)} 点`],
     ["敲出状态", score.knockedOut ? "已敲出" : "未敲出"],
     ["普通 Call 到期收益", `${score.vanillaPayoff} 点`],
-    ["Barrier Call 净盈亏", `${score.pnl >= 0 ? "+" : ""}${score.pnl} 点`],
+    [
+      "Barrier Call 净盈亏",
+      score.quoteAccepted ? `${score.pnl >= 0 ? "+" : ""}${score.pnl} 点` : "未成交 · 0 点",
+    ],
   ];
 
   return (
@@ -6373,8 +6552,6 @@ function MainPanel({
     day3_intro: <Day3IntroPanel />,
     day3_lesson_barrier_concept: <Day3BarrierConceptPanel />,
     day3_lesson_knock_out: <Day3KnockOutPanel />,
-    day3_research_terminal: <Day3ResearchTerminalPanel />,
-    day3_lesson_compare_vanilla: <Day3CompareVanillaPanel />,
     day3_handbook_updated: <Day3HandbookUpdatedPanel />,
     day3_client_arrival: <Day3ClientArrivalPanel />,
     day3_product_selection: (
@@ -6388,6 +6565,15 @@ function MainPanel({
         accent="选择一个适合客户的结构"
       />
     ),
+    day3_research_terminal: <Day3ResearchTerminalPanel />,
+    day3_lesson_compare_vanilla: (
+      <Day3CompareVanillaPanel
+        selectedQuote={selectedQuote}
+        quoteAnalysis={quoteAnalysis}
+        onUpdateQuote={actions.updateQuote}
+        onUpdateTheoretical={actions.updateTheoretical}
+      />
+    ),
     day3_risk_disclosure: (
       <RiskDisclosurePanel
         selectedDisclosures={selectedDisclosures}
@@ -6395,6 +6581,12 @@ function MainPanel({
         disclosureFeedback={disclosureFeedback}
         items={day3Config.disclosureItems}
         instruction="在确认障碍期权交易前，选择你必须向陈女士说明的内容。"
+      />
+    ),
+    day3_client_response: (
+      <Day3ClientResponsePanel
+        selectedQuote={selectedQuote}
+        clientResponse={clientResponse}
       />
     ),
     day3_market_run: (
@@ -6494,7 +6686,18 @@ export default function Day1TraderSimulator() {
         ? day2Config.market.path.length
         : (day1Config.market.chartPath ?? day1Config.market.path).length;
   const marketComplete = marketHasRun && visibleMarketSteps >= marketPathLength;
-  const quoteAnalysis = useMemo(() => getQuoteAnalysis(selectedQuote, liveTheoretical), [selectedQuote, liveTheoretical]);
+  const quoteAnalysis = useMemo(
+    () =>
+      isDay3Stage
+        ? getQuoteAnalysis(
+            selectedQuote,
+            day2Config.quoteRules.theoreticalPrice,
+            day3Config.clientProfile.name,
+            day3Config.clientProfile.type,
+          )
+        : getQuoteAnalysis(selectedQuote, day2Config.quoteRules.theoreticalPrice),
+    [selectedQuote, isDay3Stage],
+  );
   const isFullWidthStage = fullWidthStages.has(currentStage);
 
   const unlockHandbookEntry = (entryId) => {
@@ -6639,14 +6842,14 @@ export default function Day1TraderSimulator() {
     }
 
     if (currentStage === "day3_risk_disclosure") {
-      setCurrentStage("day3_market_run");
-      setMarketHasRun(true);
-      setVisibleMarketSteps(1);
+      const response = getDay3QuoteAnalysis(selectedQuote);
+      setClientResponse(response);
+      setCurrentStage("day3_client_response");
       return;
     }
 
     if (currentStage === "day2_risk_disclosure") {
-      const response = getQuoteAnalysis(selectedQuote, liveTheoretical);
+      const response = getQuoteAnalysis(selectedQuote, day2Config.quoteRules.theoreticalPrice);
       setClientResponse(response);
       setCurrentStage("day2_client_response");
       return;
@@ -6736,13 +6939,17 @@ export default function Day1TraderSimulator() {
 
   const confirmQuote = () => {
     setSelectedDisclosures([]);
+    if (currentStage === "day3_lesson_compare_vanilla") {
+      setCurrentStage("day3_risk_disclosure");
+      return;
+    }
     setCurrentStage("day2_risk_disclosure");
   };
 
   const evaluateDay2 = () => {
-    const analysis = getQuoteAnalysis(selectedQuote, liveTheoretical);
-    const pricingResult = getDay2PricingScore(selectedQuote, liveTheoretical);
-    const marketResult = getDay2MarketResult(selectedQuote, liveTheoretical);
+    const analysis = getQuoteAnalysis(selectedQuote, day2Config.quoteRules.theoreticalPrice);
+    const pricingResult = getDay2PricingScore(selectedQuote, day2Config.quoteRules.theoreticalPrice);
+    const marketResult = getDay2MarketResult(selectedQuote, day2Config.quoteRules.theoreticalPrice);
     const riskDisclosure = getRiskDisclosureScore(selectedDisclosures, day2Config);
     let overall = "B";
 
@@ -6784,6 +6991,8 @@ export default function Day1TraderSimulator() {
     const productName = product?.name ?? "未选择产品";
     const riskDisclosure = getRiskDisclosureScore(selectedDisclosures, day3Config);
     const result = getDay3MarketResult();
+    const analysis = getDay3QuoteAnalysis(selectedQuote);
+    const traded = analysis.accepted;
     const isCorrectProduct = selectedProduct === day3Config.scoringRules.correctProduct;
     const suitability =
       selectedProduct === "down_out_call"
@@ -6819,11 +7028,14 @@ export default function Day1TraderSimulator() {
 
     return {
       productName,
+      selectedQuote,
+      clientStatus: analysis.status,
+      quoteAccepted: traded,
       finalPrice: result.finalPrice,
       knockedOut: result.knockedOut,
       vanillaPayoff: result.vanillaPayoff,
       barrierPayoff: result.barrierPayoff,
-      pnl: result.pnl,
+      pnl: traded ? result.pnl : 0,
       suitability,
       riskDisclosure,
       pathAwareness,
@@ -7151,6 +7363,9 @@ export default function Day1TraderSimulator() {
     if (currentStage === "day2_client_response" && clientResponse) {
       return `客户反馈：${clientResponse.status}。报价不是只看成交，还要看交易台是否得到合理补偿。`;
     }
+    if (currentStage === "day3_client_response" && clientResponse) {
+      return `客户反馈：${clientResponse.status}。障碍产品的报价纪律：要比普通 Call 便宜，但也要给交易台留下合理利润。`;
+    }
     if (currentStage === "day2_market_run" && marketComplete) {
       return "市场收在行权价上方一点点。普通 Call 的到期收益 = 到期价 − 行权价；交易台这单赚不赚，看你收的报价能不能盖住这笔赔付。";
     }
@@ -7224,7 +7439,7 @@ export default function Day1TraderSimulator() {
   };
 
   const actions = {
-    startGame: startDay1,
+    startGame: startDay3,
     startDay1,
     startDay2,
     startDay3,
@@ -7285,6 +7500,11 @@ export default function Day1TraderSimulator() {
     runMarket,
     toDay2MarketRun: () => {
       setCurrentStage("day2_market_run");
+      setMarketHasRun(true);
+      setVisibleMarketSteps(1);
+    },
+    toDay3MarketRun: () => {
+      setCurrentStage("day3_market_run");
       setMarketHasRun(true);
       setVisibleMarketSteps(1);
     },
