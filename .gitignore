@@ -5,3 +5,5 @@ dist/
 *.log
 dev-server.*.log
 *.zip
+.DS_Store
+docs/
