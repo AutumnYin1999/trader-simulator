@@ -5453,12 +5453,13 @@ function Day2MarketRunPanel({
             {accepted ? (
               <div
                 className={cn(
-                  "mt-2 text-2xl font-black",
-                  liveDeskNet >= 0 ? "text-green-400" : "text-red-400",
+                  "mt-2 text-lg font-bold text-slate-100",
                 )}
               >
-                {liveDeskNet >= 0 ? "+" : ""}
-                {liveDeskNet}
+                {quote} - {liveIntrinsic} ={" "}
+                <span className={liveDeskNet >= 0 ? "text-green-400" : "text-red-400"}>
+                  {liveDeskNet >= 0 ? "+" : ""}{liveDeskNet}
+                </span>
               </div>
             ) : (
               <div className="mt-2 text-lg font-black text-red-300">未成交</div>
@@ -5579,12 +5580,14 @@ function Day2MarketRunPanel({
               <div className={cn("mt-2 text-2xl font-black", accepted ? ((payoff - quote) >= 0 ? "text-green-400" : "text-red-400") : "text-slate-500")}>
                 {accepted ? `${(payoff - quote) >= 0 ? "+" : ""}${payoff - quote}` : "未成交 · 0"}
               </div>
+              {accepted && <p className="mt-2 text-xs leading-5 text-slate-500">到期收益减去支付的期权费。</p>}
             </div>
             <div className={cn("rounded-lg border p-4", accepted ? (deskPnl >= 0 ? "border-green-400/20 bg-green-400/[0.05]" : "border-red-500/25 bg-red-500/[0.06]") : "border-cyan-400/15 bg-black/30")}>
               <div className="font-terminal text-xs text-slate-500">交易台结算</div>
               <div className={cn("mt-2 text-2xl font-black", accepted ? (deskPnl >= 0 ? "text-green-400" : "text-red-400") : "text-slate-500")}>
                 {accepted ? `${deskPnl >= 0 ? "+" : ""}${deskPnl}` : "未成交 · 0"}
               </div>
+              {accepted && <p className="mt-2 text-xs leading-5 text-slate-500">你收的期权费减去要赔付的到期收益。</p>}
             </div>
           </div>
         ) : (
@@ -5614,8 +5617,8 @@ function Day2ReportPanel({ score }) {
     ["客户状态", score.clientStatus],
     ["模拟终值", `${formatPoints(score.marketFinalPrice)} 点`],
     ["模拟 Payoff", `${score.marketPayoff} 点`],
-    ["交易台结算", `${score.deskPnl >= 0 ? "+" : ""}${score.deskPnl} 点`],
     ["客户净盈亏", score.quoteAccepted ? `${score.clientPnl >= 0 ? "+" : ""}${score.clientPnl} 点` : "未成交 · 0 点"],
+    ["交易台结算", `${score.deskPnl >= 0 ? "+" : ""}${score.deskPnl} 点`],
   ];
 
   return (
