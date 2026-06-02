@@ -5560,7 +5560,7 @@ function Day2MarketRunPanel({
         </div>
 
         {finalShown ? (
-          <div className="scene-enter mt-6 grid gap-4 md:grid-cols-3">
+          <div className="scene-enter mt-6 grid gap-4 md:grid-cols-4">
             <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
               <div className="font-terminal text-xs text-slate-500">最终价格</div>
               <div className="mt-2 text-3xl font-black text-[#00f0ff]">
@@ -5574,42 +5574,16 @@ function Day2MarketRunPanel({
                 <span className="text-[#00f0ff]">{payoff}</span>
               </div>
             </div>
-            {accepted ? (
-              <div
-                className={cn(
-                  "rounded-lg border p-4",
-                  deskPnl >= 0
-                    ? "border-green-400/20 bg-green-400/[0.05]"
-                    : "border-red-500/25 bg-red-500/[0.06]",
-                )}
-              >
-                <div className="font-terminal text-xs text-slate-500">交易台结算</div>
-                <div
-                  className={cn(
-                    "mt-2 text-2xl font-black",
-                    deskPnl >= 0 ? "text-green-400" : "text-red-400",
-                  )}
-                >
-                  {quote} - {payoff} = {deskPnl >= 0 ? "+" : ""}
-                  {deskPnl}
-                </div>
-                <p className="mt-2 text-xs leading-5 text-slate-500">
-                  你收的期权费减去要赔付的到期收益。
-                </p>
-              </div>
-            ) : (
-              <div className="rounded-lg border border-red-500/25 bg-red-500/[0.06] p-4">
-                <div className="font-terminal text-xs text-slate-500">交易台结算</div>
-                <div className="mt-2 text-2xl font-black text-red-300">未成交 · 0</div>
-                <p className="mt-2 text-xs leading-5 text-slate-500">
-                  客户报价过高离开，这单没做成，交易台没有收入。
-                </p>
-              </div>
-            )}
             <div className={cn("rounded-lg border p-4", accepted && (payoff - quote) >= 0 ? "border-green-400/20 bg-green-400/[0.05]" : "border-cyan-400/15 bg-black/30")}>
               <div className="font-terminal text-xs text-slate-500">客户净盈亏</div>
               <div className={cn("mt-2 text-2xl font-black", accepted ? ((payoff - quote) >= 0 ? "text-green-400" : "text-red-400") : "text-slate-500")}>
                 {accepted ? `${(payoff - quote) >= 0 ? "+" : ""}${payoff - quote}` : "未成交 · 0"}
+              </div>
+            </div>
+            <div className={cn("rounded-lg border p-4", accepted ? (deskPnl >= 0 ? "border-green-400/20 bg-green-400/[0.05]" : "border-red-500/25 bg-red-500/[0.06]") : "border-cyan-400/15 bg-black/30")}>
+              <div className="font-terminal text-xs text-slate-500">交易台结算</div>
+              <div className={cn("mt-2 text-2xl font-black", accepted ? (deskPnl >= 0 ? "text-green-400" : "text-red-400") : "text-slate-500")}>
+                {accepted ? `${deskPnl >= 0 ? "+" : ""}${deskPnl}` : "未成交 · 0"}
               </div>
             </div>
           </div>
@@ -6245,7 +6219,7 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
         </div>
 
         {finalShown && (
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-4">
             <div className="rounded-lg border border-red-500/25 bg-red-500/[0.06] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-red-300">
                 敲出结果
@@ -6271,13 +6245,11 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
                 {clientPnl} 点
               </div>
             </div>
-          </div>
-        )}
-        {finalShown && (
-          <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
-            <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">交易台结算</div>
-            <div className={cn("mt-2 text-2xl font-black", -clientPnl >= 0 ? "text-green-400" : "text-red-300")}>
-              {-clientPnl >= 0 ? "+" : ""}{-clientPnl} 点
+            <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+              <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">交易台结算</div>
+              <div className={cn("mt-2 text-2xl font-black", -clientPnl >= 0 ? "text-green-400" : "text-red-300")}>
+                {-clientPnl >= 0 ? "+" : ""}{-clientPnl} 点
+              </div>
             </div>
           </div>
         )}
