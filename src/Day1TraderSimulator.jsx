@@ -1730,7 +1730,7 @@ function getDay3QuoteAnalysis(quote, theoretical = day3Config.market.premium) {
     return {
       id: "too_low",
       label: "报价过低",
-      status: "成交了，但报价偏低，交易台损失了利润",
+      status: "成交了，但报价低于理论价，交易台利润被压缩",
       accepted: true,
       customerLine: "这价比普通 Call 便宜太多了，成交！",
       martinComment: `陈女士爽快签了——她占了便宜。障碍模型公允价 ${anchor} 点，你只报了 ${Math.round(q)} 点，交易台等于少收了 ${bargain} 点。给客户优惠可以，但别让到这个地步。`,
@@ -2316,6 +2316,7 @@ function BottomActionBar({
   selectedQuote,
   day4ClientIndex = 0,
   actions,
+  disclosureReady = false,
 }) {
   const quoteEntered =
     selectedQuote !== "" && selectedQuote !== null && Number.isFinite(Number(selectedQuote));
@@ -2380,7 +2381,7 @@ function BottomActionBar({
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
           打开手册
         </PrimaryButton>
-        <PrimaryButton onClick={actions.confirmDisclosure}>确认披露</PrimaryButton>
+        <PrimaryButton onClick={actions.confirmDisclosure} disabled={!disclosureReady}>确认披露</PrimaryButton>
       </>
     ),
     day1_market_run: (
@@ -2485,7 +2486,7 @@ function BottomActionBar({
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
           打开手册
         </PrimaryButton>
-        <PrimaryButton onClick={actions.confirmDisclosure}>
+        <PrimaryButton onClick={actions.confirmDisclosure} disabled={!disclosureReady}>
           确认风险披露
         </PrimaryButton>
       </>
@@ -2588,7 +2589,7 @@ function BottomActionBar({
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
           打开手册
         </PrimaryButton>
-        <PrimaryButton onClick={actions.confirmDisclosure}>
+        <PrimaryButton onClick={actions.confirmDisclosure} disabled={!disclosureReady}>
           确认风险披露
         </PrimaryButton>
       </>
@@ -4709,7 +4710,7 @@ function BinomialPricingTool({
 
   // 每次 tree 重算，把最新理论价传给父组件（仅 vanilla 模式的 Day2 报价联动会传 onUpdateTheoretical）
   useEffect(() => {
-    if (onUpdateTheoretical && Number.isFinite(tree.vanillaPrice)) {
+    if (onUpdateTheoretical && Number.isFinite(tree.vanillaPrice) && tree.vanillaPrice > 0) {
       onUpdateTheoretical(Math.round(tree.vanillaPrice));
     }
   }, [tree.vanillaPrice, onUpdateTheoretical]);
@@ -6119,7 +6120,7 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
             ["现价", formatPoints(market.spot)],
             ["行权价", formatPoints(market.strike)],
             ["障碍线", formatPoints(market.barrier)],
-            ["期权费", `${market.premium} 点`],
+            ["参考理论价", `${market.premium} 点`],
             ["期限", market.maturity],
           ].map(([label, value]) => (
             <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
@@ -8459,6 +8460,7 @@ export default function Day1TraderSimulator() {
           selectedQuote={selectedQuote}
           day4ClientIndex={day4ClientIndex}
           actions={actions}
+          disclosureReady={correctDisclosureIds.every((id) => selectedDisclosures.includes(id))}
         />
       </div>
 
