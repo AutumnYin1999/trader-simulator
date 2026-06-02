@@ -5641,7 +5641,7 @@ function Day2ReportPanel({ score }) {
     ["模拟终值", `${formatPoints(score.marketFinalPrice)} 点`],
     ["模拟 Payoff", `${score.marketPayoff} 点`],
     ["交易台结算", `${score.deskPnl >= 0 ? "+" : ""}${score.deskPnl} 点`],
-    ["客户净盈亏", score.tradeAccepted ? `${score.clientPnl >= 0 ? "+" : ""}${score.clientPnl} 点` : "未成交 · 0 点"],
+    ["客户净盈亏", score.quoteAccepted ? `${score.clientPnl >= 0 ? "+" : ""}${score.clientPnl} 点` : "未成交 · 0 点"],
   ];
 
   return (
@@ -7886,6 +7886,7 @@ export default function Day1TraderSimulator() {
     return {
       theoreticalPrice: liveTheoretical,
       selectedQuote,
+      quoteAccepted: analysis.accepted,
       margin: selectedQuote - liveTheoretical,
       marketPath: marketResult.path,
       marketFinalPrice: marketResult.finalPrice,
