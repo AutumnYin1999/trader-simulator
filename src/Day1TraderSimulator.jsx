@@ -1694,15 +1694,12 @@ function getDay3MarketResult() {
   const knockedOut = knockedOutIndex >= 0;
   const vanillaPayoff = Math.max(finalPrice - market.strike, 0);
   const barrierPayoff = knockedOut ? 0 : vanillaPayoff;
-  const pnl = barrierPayoff - market.premium;
-
   return {
     finalPrice,
     knockedOut,
     knockedOutIndex,
     vanillaPayoff,
     barrierPayoff,
-    pnl,
   };
 }
 
@@ -4061,7 +4058,7 @@ const researchCards = [
     accent: "#4ade80",
     rows: [
       { label: "指数", value: "恒生指数 HSI", note: "香港交易所旗舰指数，50 只成分股" },
-      { label: "年化股息率 q", value: "≈ 3.5%", note: "恒指历史平均股息率（Merton 模型需要）" },
+      { label: "年化股息率 q", value: "≈ 3.5%", note: "恒指历史平均股息率（含股息定价时需扣除）" },
       { label: "步数 N", value: "3 步", note: "教学简化：3 步二叉树，足够展示定价直觉" },
       { label: "注意", value: "今天先不计 q", note: "教学简化：计算器暂不含股息率，真实定价需扣除" },
     ],
@@ -6079,9 +6076,10 @@ function Day3ClientResponsePanel({ selectedQuote, clientResponse }) {
   );
 }
 
-function Day3MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
+function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visibleMarketSteps }) {
   const market = day3Config.market;
   const result = getDay3MarketResult();
+  const clientPnl = result.barrierPayoff - Number(selectedQuote);
   const activeCount = Math.min(Math.max(visibleMarketSteps, 1), market.path.length);
   const activePrices = market.path.slice(0, activeCount);
   const latestPrice = activePrices[activePrices.length - 1] ?? market.spot;
@@ -6235,9 +6233,9 @@ function Day3MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps 
               <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">
                 Barrier Call 净盈亏
               </div>
-              <div className={cn("mt-2 text-2xl font-black", result.pnl >= 0 ? "text-green-400" : "text-red-300")}>
-                {result.pnl >= 0 ? "+" : ""}
-                {result.pnl} 点
+              <div className={cn("mt-2 text-2xl font-black", clientPnl >= 0 ? "text-green-400" : "text-red-300")}>
+                {clientPnl >= 0 ? "+" : ""}
+                {clientPnl} 点
               </div>
             </div>
           </div>
@@ -6266,7 +6264,7 @@ function Day3ReportPanel({ score }) {
     ["普通 Call 到期收益", `${score.vanillaPayoff} 点`],
     [
       "Barrier Call 净盈亏",
-      score.quoteAccepted ? `${score.pnl >= 0 ? "+" : ""}${score.pnl} 点` : "未成交 · 0 点",
+      score.quoteAccepted ? `${score.clientPnl >= 0 ? "+" : ""}${score.clientPnl} 点` : "未成交 · 0 点",
     ],
   ];
 
@@ -7383,6 +7381,7 @@ function MainPanel({
     day3_market_run: (
       <Day3MarketRunPanel
         selectedProduct={selectedProduct}
+        selectedQuote={selectedQuote}
         marketHasRun={marketHasRun}
         visibleMarketSteps={visibleMarketSteps}
       />
@@ -7906,7 +7905,8 @@ export default function Day1TraderSimulator() {
       knockedOut: result.knockedOut,
       vanillaPayoff: result.vanillaPayoff,
       barrierPayoff: result.barrierPayoff,
-      pnl: traded ? result.pnl : 0,
+      clientPnl: traded ? result.barrierPayoff - Number(selectedQuote) : 0,
+      deskPnl: traded ? Number(selectedQuote) - result.barrierPayoff : 0,
       suitability,
       riskDisclosure,
       pathAwareness,
