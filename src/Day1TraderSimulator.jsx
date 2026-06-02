@@ -6257,12 +6257,20 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
             </div>
             <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">
-                Barrier Call 净盈亏
+                客户净盈亏
               </div>
               <div className={cn("mt-2 text-2xl font-black", clientPnl >= 0 ? "text-green-400" : "text-red-300")}>
                 {clientPnl >= 0 ? "+" : ""}
                 {clientPnl} 点
               </div>
+            </div>
+          </div>
+        )}
+        {finalShown && (
+          <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">交易台结算</div>
+            <div className={cn("mt-2 text-2xl font-black", -clientPnl >= 0 ? "text-green-400" : "text-red-300")}>
+              {-clientPnl >= 0 ? "+" : ""}{-clientPnl} 点
             </div>
           </div>
         )}
@@ -6289,8 +6297,12 @@ function Day3ReportPanel({ score }) {
     ["敲出状态", score.knockedOut ? "已敲出" : "未敲出"],
     ["普通 Call 到期收益", `${score.vanillaPayoff} 点`],
     [
-      "Barrier Call 净盈亏",
+      "客户净盈亏",
       score.quoteAccepted ? `${score.clientPnl >= 0 ? "+" : ""}${score.clientPnl} 点` : "未成交 · 0 点",
+    ],
+    [
+      "交易台结算",
+      score.quoteAccepted ? `${score.deskPnl >= 0 ? "+" : ""}${score.deskPnl} 点` : "未成交 · 0 点",
     ],
   ];
 

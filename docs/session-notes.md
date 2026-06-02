@@ -2,7 +2,7 @@
 
 ## 当前状态（2026-06-02）
 
-**全游戏逻辑审计完成，所有已知 bug 已修复并提交。**
+**全游戏逻辑审计完成，所有已知 bug 已修复并提交。Day3 结算面板已补充客户/交易台双视角。**
 
 ---
 
@@ -19,6 +19,7 @@
 | Day3 市场路径敲出判断 | path[3]=20950≤21000 → knockedOut=true ✅ |
 | Day1–Day2 市场结算 | payoff/deskPnl 逻辑正确 ✅ |
 | Day4 三客户产品判断 + 评分 | 合理 ✅ |
+| Day4 结算面板视角 | 纯交易台视角（"报价 / 理论价"），无歧义 ✅ |
 
 ### 已修复 Bug（本次会话全部）
 
@@ -27,8 +28,9 @@
 3. **Day3 市场面板 label** → 「期权费」改为「参考理论价」
 4. **Day3 too_low status** → 去掉「交易台损失了利润」（敲出时 desk 盈利）
 5. **披露按钮无门槛** → 加 `disclosureReady`（须勾全正确项 + 未勾误导项）
-6. **理论价格全部改为引擎实算** → Day2/Day3/Day4 的 theoretical/premium/vanillaPremium 全改为 `buildVanillaBinomialToolTree` / `buildBarrierBinomialToolTree` 在 config 覆盖块里实算，放在 line ~4665
+6. **理论价格全部改为引擎实算** → Day2/Day3/Day4 的 theoretical/premium/vanillaPremium 全改为 `buildVanillaBinomialToolTree` / `buildBarrierBinomialToolTree` 在 config 覆盖块里实算
 7. **Day2 理论价 0 守卫** → `Math.round(vanillaPrice) >= 1` 防极端参数覆盖
+8. **Day3 结算面板双视角** → `"Barrier Call 净盈亏"` 改为 `"客户净盈亏"`，新增 `"交易台结算"` 行（MarketRunPanel + ReportPanel）
 
 ---
 
@@ -36,9 +38,10 @@
 
 - config 覆盖块（line ~4665）：在两个定价引擎函数定义之后、`checkDay2Params` 之前，模块级直接赋值覆盖 config 里的 hardcoded 占位值。
 - `liveTheoretical` 初始值从 `day2Config.quoteRules.theoreticalPrice` 读取，该值在模块加载时已被实算覆盖。
+- Day3 `deskPnl` 存于 `evaluateDay3()` 返回的 score 对象（line ~7947），MarketRunPanel 用 `-clientPnl` 计算，ReportPanel 用 `score.deskPnl`。
 
 ---
 
 ## 开放问题
 
-- 待推送：本地 main 已有 3 个新提交，用 `git push origin main:feature/game-logic-fixes` 推到独立分支再开 PR
+- 待推送：本地 main 现有 4 个新提交，用 `git push origin main:feature/game-logic-fixes` 推到独立分支再开 PR
