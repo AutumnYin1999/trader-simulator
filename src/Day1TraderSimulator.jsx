@@ -5451,15 +5451,8 @@ function Day2MarketRunPanel({
               {accepted ? "交易台实时净值" : "交易状态"}
             </div>
             {accepted ? (
-              <div
-                className={cn(
-                  "mt-2 text-lg font-bold text-slate-100",
-                )}
-              >
-                {quote} - {liveIntrinsic} ={" "}
-                <span className={liveDeskNet >= 0 ? "text-green-400" : "text-red-400"}>
-                  {liveDeskNet >= 0 ? "+" : ""}{liveDeskNet}
-                </span>
+              <div className={cn("mt-2 text-2xl font-black", liveDeskNet >= 0 ? "text-green-400" : "text-red-400")}>
+                {quote} - {liveIntrinsic} = {liveDeskNet >= 0 ? "+" : ""}{liveDeskNet}
               </div>
             ) : (
               <div className="mt-2 text-lg font-black text-red-300">未成交</div>
