@@ -1694,15 +1694,12 @@ function getDay3MarketResult() {
   const knockedOut = knockedOutIndex >= 0;
   const vanillaPayoff = Math.max(finalPrice - market.strike, 0);
   const barrierPayoff = knockedOut ? 0 : vanillaPayoff;
-  const pnl = barrierPayoff - market.premium;
-
   return {
     finalPrice,
     knockedOut,
     knockedOutIndex,
     vanillaPayoff,
     barrierPayoff,
-    pnl,
   };
 }
 
@@ -1733,7 +1730,7 @@ function getDay3QuoteAnalysis(quote, theoretical = day3Config.market.premium) {
     return {
       id: "too_low",
       label: "报价过低",
-      status: "成交了，但报价偏低，交易台损失了利润",
+      status: "成交了，但报价低于理论价，交易台利润被压缩",
       accepted: true,
       customerLine: "这价比普通 Call 便宜太多了，成交！",
       martinComment: `陈女士爽快签了——她占了便宜。障碍模型公允价 ${anchor} 点，你只报了 ${Math.round(q)} 点，交易台等于少收了 ${bargain} 点。给客户优惠可以，但别让到这个地步。`,
@@ -2319,6 +2316,7 @@ function BottomActionBar({
   selectedQuote,
   day4ClientIndex = 0,
   actions,
+  disclosureReady = false,
 }) {
   const quoteEntered =
     selectedQuote !== "" && selectedQuote !== null && Number.isFinite(Number(selectedQuote));
@@ -2383,7 +2381,7 @@ function BottomActionBar({
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
           打开手册
         </PrimaryButton>
-        <PrimaryButton onClick={actions.confirmDisclosure}>确认披露</PrimaryButton>
+        <PrimaryButton onClick={actions.confirmDisclosure} disabled={!disclosureReady}>确认披露</PrimaryButton>
       </>
     ),
     day1_market_run: (
@@ -2488,7 +2486,7 @@ function BottomActionBar({
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
           打开手册
         </PrimaryButton>
-        <PrimaryButton onClick={actions.confirmDisclosure}>
+        <PrimaryButton onClick={actions.confirmDisclosure} disabled={!disclosureReady}>
           确认风险披露
         </PrimaryButton>
       </>
@@ -2591,7 +2589,7 @@ function BottomActionBar({
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
           打开手册
         </PrimaryButton>
-        <PrimaryButton onClick={actions.confirmDisclosure}>
+        <PrimaryButton onClick={actions.confirmDisclosure} disabled={!disclosureReady}>
           确认风险披露
         </PrimaryButton>
       </>
@@ -4061,7 +4059,7 @@ const researchCards = [
     accent: "#4ade80",
     rows: [
       { label: "指数", value: "恒生指数 HSI", note: "香港交易所旗舰指数，50 只成分股" },
-      { label: "年化股息率 q", value: "≈ 3.5%", note: "恒指历史平均股息率（Merton 模型需要）" },
+      { label: "年化股息率 q", value: "≈ 3.5%", note: "恒指历史平均股息率（含股息定价时需扣除）" },
       { label: "步数 N", value: "3 步", note: "教学简化：3 步二叉树，足够展示定价直觉" },
       { label: "注意", value: "今天先不计 q", note: "教学简化：计算器暂不含股息率，真实定价需扣除" },
     ],
@@ -4665,7 +4663,32 @@ function buildBarrierBinomialToolTree(params) {
   };
 }
 
-// Day2 参数检查：与标准值的比较及 Martin 反馈
+// 用定价引擎实算理论价，覆盖 config 里的 hardcoded 占位值
+// Day2 vanilla: S0=21500/K=22000/σ=16%/T=0.08/N=3 → 185.94 ≈ 186
+day2Config.quoteRules.theoreticalPrice = Math.round(
+  buildVanillaBinomialToolTree({ spot: 21500, strike: 22000, rate: 2, sigma: 16, maturity: 0.08, steps: 3 }).vanillaPrice
+);
+// Day3 barrier: S0=21500/K=22000/barrier=21000/σ=30%/T=0.25/N=4 → 934.16 ≈ 934
+day3Config.market.premium = Math.round(
+  buildBarrierBinomialToolTree({ spot: 21500, strike: 22000, barrier: 21000, rate: 2, sigma: 30, maturity: 0.25, steps: 4 }).barrierPrice
+);
+// Day3 vanilla ref: 同参数无障碍 → 1111.73 ≈ 1112
+day3Config.market.vanillaPremium = Math.round(
+  buildVanillaBinomialToolTree({ spot: 21500, strike: 22000, rate: 2, sigma: 30, maturity: 0.25, steps: 4 }).vanillaPrice
+);
+
+// Day4 客户理论价（barrier N=4 / vanilla N=3）
+day4Clients[0].theoretical = Math.round(
+  buildVanillaBinomialToolTree({ spot: 24000, strike: 24500, rate: 2, sigma: 18, maturity: 0.08, steps: 3 }).vanillaPrice
+);
+day4Clients[1].theoretical = Math.round(
+  buildBarrierBinomialToolTree({ spot: 24000, strike: 24500, barrier: 23000, rate: 2, sigma: 28, maturity: 0.25, steps: 4 }).barrierPrice
+);
+day4Clients[2].theoretical = Math.round(
+  buildBarrierBinomialToolTree({ spot: 25000, strike: 25500, barrier: 23500, rate: 2, sigma: 32, maturity: 0.25, steps: 4 }).barrierPrice
+);
+
+// Day2 理论价格 0 守卫：确保 liveTheoretical 只在实算价 >= 1 点时更新
 function checkDay2Params(params) {
   const standard = { spot: 21500, strike: 22000, rate: 2, sigma: 16, maturity: 0.08 };
   const tolerance = { spot: 200, strike: 200, rate: 0.5, sigma: 2, maturity: 0.01 };
@@ -4712,7 +4735,7 @@ function BinomialPricingTool({
 
   // 每次 tree 重算，把最新理论价传给父组件（仅 vanilla 模式的 Day2 报价联动会传 onUpdateTheoretical）
   useEffect(() => {
-    if (onUpdateTheoretical && Number.isFinite(tree.vanillaPrice)) {
+    if (onUpdateTheoretical && Math.round(tree.vanillaPrice) >= 1) {
       onUpdateTheoretical(Math.round(tree.vanillaPrice));
     }
   }, [tree.vanillaPrice, onUpdateTheoretical]);
@@ -5428,14 +5451,8 @@ function Day2MarketRunPanel({
               {accepted ? "交易台实时净值" : "交易状态"}
             </div>
             {accepted ? (
-              <div
-                className={cn(
-                  "mt-2 text-2xl font-black",
-                  liveDeskNet >= 0 ? "text-green-400" : "text-red-400",
-                )}
-              >
-                {liveDeskNet >= 0 ? "+" : ""}
-                {liveDeskNet}
+              <div className={cn("mt-2 text-2xl font-black", liveDeskNet >= 0 ? "text-green-400" : "text-red-400")}>
+                {quote} - {liveIntrinsic} = {liveDeskNet >= 0 ? "+" : ""}{liveDeskNet}
               </div>
             ) : (
               <div className="mt-2 text-lg font-black text-red-300">未成交</div>
@@ -5537,7 +5554,7 @@ function Day2MarketRunPanel({
         </div>
 
         {finalShown ? (
-          <div className="scene-enter mt-6 grid gap-4 md:grid-cols-3">
+          <div className="scene-enter mt-6 grid gap-4 md:grid-cols-4">
             <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
               <div className="font-terminal text-xs text-slate-500">最终价格</div>
               <div className="mt-2 text-3xl font-black text-[#00f0ff]">
@@ -5551,38 +5568,20 @@ function Day2MarketRunPanel({
                 <span className="text-[#00f0ff]">{payoff}</span>
               </div>
             </div>
-            {accepted ? (
-              <div
-                className={cn(
-                  "rounded-lg border p-4",
-                  deskPnl >= 0
-                    ? "border-green-400/20 bg-green-400/[0.05]"
-                    : "border-red-500/25 bg-red-500/[0.06]",
-                )}
-              >
-                <div className="font-terminal text-xs text-slate-500">交易台结算</div>
-                <div
-                  className={cn(
-                    "mt-2 text-2xl font-black",
-                    deskPnl >= 0 ? "text-green-400" : "text-red-400",
-                  )}
-                >
-                  {quote} - {payoff} = {deskPnl >= 0 ? "+" : ""}
-                  {deskPnl}
-                </div>
-                <p className="mt-2 text-xs leading-5 text-slate-500">
-                  你收的期权费减去要赔付的到期收益。
-                </p>
+            <div className={cn("rounded-lg border p-4", accepted && (payoff - quote) >= 0 ? "border-green-400/20 bg-green-400/[0.05]" : "border-cyan-400/15 bg-black/30")}>
+              <div className="font-terminal text-xs text-slate-500">客户净盈亏</div>
+              <div className={cn("mt-2 text-2xl font-black", accepted ? ((payoff - quote) >= 0 ? "text-green-400" : "text-red-400") : "text-slate-500")}>
+                {accepted ? `${(payoff - quote) >= 0 ? "+" : ""}${payoff - quote}` : "未成交 · 0"}
               </div>
-            ) : (
-              <div className="rounded-lg border border-red-500/25 bg-red-500/[0.06] p-4">
-                <div className="font-terminal text-xs text-slate-500">交易台结算</div>
-                <div className="mt-2 text-2xl font-black text-red-300">未成交 · 0</div>
-                <p className="mt-2 text-xs leading-5 text-slate-500">
-                  客户报价过高离开，这单没做成，交易台没有收入。
-                </p>
+              {accepted && <p className="mt-2 text-xs leading-5 text-slate-500">到期收益减去支付的期权费。</p>}
+            </div>
+            <div className={cn("rounded-lg border p-4", accepted ? (deskPnl >= 0 ? "border-green-400/20 bg-green-400/[0.05]" : "border-red-500/25 bg-red-500/[0.06]") : "border-cyan-400/15 bg-black/30")}>
+              <div className="font-terminal text-xs text-slate-500">交易台结算</div>
+              <div className={cn("mt-2 text-2xl font-black", accepted ? (deskPnl >= 0 ? "text-green-400" : "text-red-400") : "text-slate-500")}>
+                {accepted ? `${deskPnl >= 0 ? "+" : ""}${deskPnl}` : "未成交 · 0"}
               </div>
-            )}
+              {accepted && <p className="mt-2 text-xs leading-5 text-slate-500">你收的期权费减去要赔付的到期收益。</p>}
+            </div>
           </div>
         ) : (
           <div className="mt-5 rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
@@ -5611,6 +5610,7 @@ function Day2ReportPanel({ score }) {
     ["客户状态", score.clientStatus],
     ["模拟终值", `${formatPoints(score.marketFinalPrice)} 点`],
     ["模拟 Payoff", `${score.marketPayoff} 点`],
+    ["客户净盈亏", score.quoteAccepted ? `${score.clientPnl >= 0 ? "+" : ""}${score.clientPnl} 点` : "未成交 · 0 点"],
     ["交易台结算", `${score.deskPnl >= 0 ? "+" : ""}${score.deskPnl} 点`],
   ];
 
@@ -6079,9 +6079,10 @@ function Day3ClientResponsePanel({ selectedQuote, clientResponse }) {
   );
 }
 
-function Day3MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
+function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visibleMarketSteps }) {
   const market = day3Config.market;
   const result = getDay3MarketResult();
+  const clientPnl = result.barrierPayoff - Number(selectedQuote);
   const activeCount = Math.min(Math.max(visibleMarketSteps, 1), market.path.length);
   const activePrices = market.path.slice(0, activeCount);
   const latestPrice = activePrices[activePrices.length - 1] ?? market.spot;
@@ -6121,7 +6122,7 @@ function Day3MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps 
             ["现价", formatPoints(market.spot)],
             ["行权价", formatPoints(market.strike)],
             ["障碍线", formatPoints(market.barrier)],
-            ["期权费", `${market.premium} 点`],
+            ["参考理论价", `${market.premium} 点`],
             ["期限", market.maturity],
           ].map(([label, value]) => (
             <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
@@ -6214,7 +6215,7 @@ function Day3MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps 
         </div>
 
         {finalShown && (
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-4">
             <div className="rounded-lg border border-red-500/25 bg-red-500/[0.06] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-red-300">
                 敲出结果
@@ -6233,11 +6234,17 @@ function Day3MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps 
             </div>
             <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">
-                Barrier Call 净盈亏
+                客户净盈亏
               </div>
-              <div className={cn("mt-2 text-2xl font-black", result.pnl >= 0 ? "text-green-400" : "text-red-300")}>
-                {result.pnl >= 0 ? "+" : ""}
-                {result.pnl} 点
+              <div className={cn("mt-2 text-2xl font-black", clientPnl >= 0 ? "text-green-400" : "text-red-300")}>
+                {clientPnl >= 0 ? "+" : ""}
+                {clientPnl} 点
+              </div>
+            </div>
+            <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+              <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">交易台结算</div>
+              <div className={cn("mt-2 text-2xl font-black", -clientPnl >= 0 ? "text-green-400" : "text-red-300")}>
+                {-clientPnl >= 0 ? "+" : ""}{-clientPnl} 点
               </div>
             </div>
           </div>
@@ -6265,8 +6272,12 @@ function Day3ReportPanel({ score }) {
     ["敲出状态", score.knockedOut ? "已敲出" : "未敲出"],
     ["普通 Call 到期收益", `${score.vanillaPayoff} 点`],
     [
-      "Barrier Call 净盈亏",
-      score.quoteAccepted ? `${score.pnl >= 0 ? "+" : ""}${score.pnl} 点` : "未成交 · 0 点",
+      "客户净盈亏",
+      score.quoteAccepted ? `${score.clientPnl >= 0 ? "+" : ""}${score.clientPnl} 点` : "未成交 · 0 点",
+    ],
+    [
+      "交易台结算",
+      score.quoteAccepted ? `${score.deskPnl >= 0 ? "+" : ""}${score.deskPnl} 点` : "未成交 · 0 点",
     ],
   ];
 
@@ -7383,6 +7394,7 @@ function MainPanel({
     day3_market_run: (
       <Day3MarketRunPanel
         selectedProduct={selectedProduct}
+        selectedQuote={selectedQuote}
         marketHasRun={marketHasRun}
         visibleMarketSteps={visibleMarketSteps}
       />
@@ -7842,6 +7854,7 @@ export default function Day1TraderSimulator() {
     return {
       theoreticalPrice: liveTheoretical,
       selectedQuote,
+      quoteAccepted: analysis.accepted,
       margin: selectedQuote - liveTheoretical,
       marketPath: marketResult.path,
       marketFinalPrice: marketResult.finalPrice,
@@ -7906,7 +7919,8 @@ export default function Day1TraderSimulator() {
       knockedOut: result.knockedOut,
       vanillaPayoff: result.vanillaPayoff,
       barrierPayoff: result.barrierPayoff,
-      pnl: traded ? result.pnl : 0,
+      clientPnl: traded ? result.barrierPayoff - Number(selectedQuote) : 0,
+      deskPnl: traded ? Number(selectedQuote) - result.barrierPayoff : 0,
       suitability,
       riskDisclosure,
       pathAwareness,
@@ -8459,6 +8473,10 @@ export default function Day1TraderSimulator() {
           selectedQuote={selectedQuote}
           day4ClientIndex={day4ClientIndex}
           actions={actions}
+          disclosureReady={
+            correctDisclosureIds.every((id) => selectedDisclosures.includes(id)) &&
+            !selectedDisclosures.includes(misleadingDisclosureId)
+          }
         />
       </div>
 
