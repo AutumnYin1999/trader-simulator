@@ -5606,6 +5606,12 @@ function Day2MarketRunPanel({
                 </p>
               </div>
             )}
+            <div className={cn("rounded-lg border p-4", accepted && (payoff - quote) >= 0 ? "border-green-400/20 bg-green-400/[0.05]" : "border-cyan-400/15 bg-black/30")}>
+              <div className="font-terminal text-xs text-slate-500">客户净盈亏</div>
+              <div className={cn("mt-2 text-2xl font-black", accepted ? ((payoff - quote) >= 0 ? "text-green-400" : "text-red-400") : "text-slate-500")}>
+                {accepted ? `${(payoff - quote) >= 0 ? "+" : ""}${payoff - quote}` : "未成交 · 0"}
+              </div>
+            </div>
           </div>
         ) : (
           <div className="mt-5 rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
@@ -5635,6 +5641,7 @@ function Day2ReportPanel({ score }) {
     ["模拟终值", `${formatPoints(score.marketFinalPrice)} 点`],
     ["模拟 Payoff", `${score.marketPayoff} 点`],
     ["交易台结算", `${score.deskPnl >= 0 ? "+" : ""}${score.deskPnl} 点`],
+    ["客户净盈亏", score.tradeAccepted ? `${score.clientPnl >= 0 ? "+" : ""}${score.clientPnl} 点` : "未成交 · 0 点"],
   ];
 
   return (
