@@ -2,286 +2,286 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const day1Config = {
   day: 1,
-  title: "普通期权基础",
+  title: "Vanilla Option Basics",
   stages: {
     title_screen: {
-      label: "开始界面",
-      system: "标题画面",
+      label: "Start Screen",
+      system: "Title Screen",
       mentor: "",
     },
     day1_welcome: {
-      label: "08:55 第一天上班",
-      system: "新人报到",
+      label: "08:55 First Day on the Job",
+      system: "New Hire Check-in",
       mentor:
-        "早上好，欢迎来到中环期权交易台。今天是你第一天上班，别紧张，我会一步一步带你读懂客户需求。",
+        "Good morning, and welcome to the Central options desk. Today is your first day. Don't be nervous — I'll walk you through reading client needs step by step.",
     },
     day1_lesson_basics: {
-      label: "09:00 第一课：选择权",
-      system: "期权直觉",
+      label: "09:00 Lesson 1: The Right to Choose",
+      system: "Option Intuition",
       mentor:
-        "先别想公式。期权的第一层意思就是“选择权”：买方先付一笔钱，换来未来可以选择要不要交易的权利。",
+        "Forget the formulas for now. The first thing an option means is the “right to choose”: the buyer pays a sum upfront in exchange for the right to decide later whether or not to trade.",
     },
     day1_intro: {
-      label: "09:05 Call 与 Put",
-      system: "方向教学",
+      label: "09:05 Call and Put",
+      system: "Direction Lesson",
       mentor:
-        "现在记两个方向词就够了：Call 是看涨，Put 是看跌。客户说“我觉得会涨”，你脑子里先亮起 Call。",
+        "For now, two direction words are enough: Call is bullish, Put is bearish. When a client says “I think it'll go up,” the word Call should light up in your head.",
     },
     day1_lesson_premium: {
-      label: "09:08 期权费",
-      system: "成本与最大亏损",
+      label: "09:08 Premium",
+      system: "Cost and Maximum Loss",
       mentor:
-        "买期权不是免费许愿。客户要先支付期权费。好处是，如果判断错了，普通期权买方通常最多亏掉这笔期权费。",
+        "Buying an option isn't a free wish. The client pays a premium first. The upside is that if they're wrong, a vanilla option buyer usually loses at most that premium.",
     },
     day1_lesson_vanilla_rule: {
-      label: "09:10 普通期权规则",
-      system: "到期价格",
+      label: "09:10 Vanilla Option Rules",
+      system: "Expiry Price",
       mentor:
-        "普通期权像一张到期结算的票。中途价格怎么晃都不会敲出，关键看最后到期那一刻，价格在行权价的哪一边。",
+        "A vanilla option is like a ticket that settles at expiry. No matter how the price swings along the way, it never knocks out — what matters is which side of the strike the price lands on at the final expiry moment.",
     },
     day1_handbook_updated: {
-      label: "09:12 手册更新",
-      system: "工作手册同步",
+      label: "09:12 Handbook Updated",
+      system: "Handbook Sync",
       mentor:
-        "见客户之前先打开工作手册看一眼。它不是答案全书，而是你当前阶段可用的规则本。",
+        "Before you meet the client, open the handbook and take a look. It's not a book of all the answers — it's the rulebook available to you at your current stage.",
     },
     day1_client_arrival: {
-      label: "09:15 第一位客户",
-      system: "客户需求读取",
+      label: "09:15 First Client",
+      system: "Reading Client Needs",
       mentor:
-        "先看客户方向：她看涨。再看风险需求：她希望下行亏损有限。需要的话打开手册，普通 Call 可能符合这个需求。",
+        "First read the client's direction: she's bullish. Then read her risk needs: she wants limited downside loss. Open the handbook if you need to — a vanilla call may fit this need.",
     },
     day1_product_selection: {
-      label: "09:20 产品选择",
-      system: "产品适当性",
+      label: "09:20 Product Selection",
+      system: "Product Suitability",
       mentor:
-        "产品要同时匹配方向和风险需求。看涨且希望最大亏损有限，通常先考虑普通看涨期权。",
+        "The product has to match both the direction and the risk needs. Bullish with a desire for limited maximum loss usually points first to a vanilla call option.",
     },
     day1_risk_disclosure: {
-      label: "09:25 风险披露",
-      system: "风险披露",
+      label: "09:25 Risk Disclosure",
+      system: "Risk Disclosure",
       mentor:
-        "客户必须理解：期权费可能全部损失，而且看对方向也不代表一定赚钱。不要把产品说成稳赚。",
+        "The client must understand: the premium can be lost entirely, and being right on direction doesn't guarantee a profit. Never pitch the product as a sure win.",
     },
     day1_market_run: {
-      label: "09:30 市场运行",
-      system: "市场路径模拟",
+      label: "09:30 Market Run",
+      system: "Market Path Simulation",
       mentor:
-        "运行固定市场路径。第一天只看普通期权到期结果，不接真实行情，也不做复杂定价。",
+        "Run the fixed market path. On day one we only look at the expiry outcome of a vanilla option — no live market feed, and no complex pricing.",
     },
     day1_report: {
-      label: "09:45 日终报告",
-      system: "交易复盘",
+      label: "09:45 End-of-Day Report",
+      system: "Trade Review",
       mentor:
-        "好交易员不只看客户有没有赚钱，还要说明产品是否适合客户。结果只是评分的一半。",
+        "A good trader doesn't just look at whether the client made money — they also explain whether the product suited the client. The outcome is only half the score.",
     },
     day1_complete: {
-      label: "10:00 完成第一天",
-      system: "关卡完成",
+      label: "10:00 Day One Complete",
+      system: "Stage Complete",
       mentor:
-        "做得不错。第一天的重点是方向匹配、期权费风险和适当性纪律。",
+        "Nicely done. The focus of day one was direction matching, premium risk, and suitability discipline.",
     },
   },
   introCards: [
     {
       id: "call_intro",
-      code: "CALL / 看涨",
-      title: "普通看涨期权",
+      code: "CALL / Bullish",
+      title: "Vanilla Call Option",
       tone: "gold",
       bullets: [
-        "适合客户认为标的价格会上涨的情景",
-        "买方支付期权费，获得未来按行权价买入的权利",
-        "到期价格高于行权价时，Call 才会产生内在价值",
-        "买方最大损失通常限于已支付的期权费",
+        "Suited to scenarios where the client expects the underlying price to rise",
+        "The buyer pays a premium for the right to buy at the strike in the future",
+        "A call only gains intrinsic value when the expiry price is above the strike",
+        "The buyer's maximum loss is usually limited to the premium paid",
       ],
     },
     {
       id: "put_intro",
-      code: "PUT / 看跌",
-      title: "普通看跌期权",
+      code: "PUT / Bearish",
+      title: "Vanilla Put Option",
       tone: "cyan",
       bullets: [
-        "适合客户认为标的价格会下跌的情景",
-        "买方支付期权费，获得未来按行权价卖出的权利",
-        "到期价格低于行权价时，Put 才会产生内在价值",
-        "普通 Put 更像下跌保护，不是保本收益承诺",
+        "Suited to scenarios where the client expects the underlying price to fall",
+        "The buyer pays a premium for the right to sell at the strike in the future",
+        "A put only gains intrinsic value when the expiry price is below the strike",
+        "A vanilla put is more like downside protection, not a guaranteed-return promise",
       ],
     },
   ],
   handbookEntries: [
     {
       id: "vanilla_core",
-      title: "普通期权基础",
+      title: "Vanilla Option Basics",
       sections: [
         {
-          title: "普通 Call",
+          title: "Vanilla Call",
           bullets: [
-            "适合看涨观点",
-            "买方支付期权费 premium",
-            "到期时，如果最终价格高于行权价，Call 有价值",
-            "买方最大损失通常是期权费",
+            "Suited to a bullish view",
+            "The buyer pays a premium",
+            "At expiry, the call has value if the final price is above the strike",
+            "The buyer's maximum loss is usually the premium",
           ],
         },
         {
-          title: "普通 Put",
+          title: "Vanilla Put",
           bullets: [
-            "适合看跌观点",
-            "买方支付期权费 premium",
-            "到期时，如果最终价格低于行权价，Put 有价值",
-            "买方最大损失通常是期权费",
+            "Suited to a bearish view",
+            "The buyer pays a premium",
+            "At expiry, the put has value if the final price is below the strike",
+            "The buyer's maximum loss is usually the premium",
           ],
         },
         {
-          title: "期权费 Premium",
+          title: "Premium",
           bullets: [
-            "买方为了获得权利支付的成本",
-            "即使判断错误，买方最大损失通常也是这笔期权费",
+            "The cost the buyer pays to obtain the right",
+            "Even if they're wrong, the buyer's maximum loss is usually this premium",
           ],
         },
         {
-          title: "普通期权规则",
+          title: "Vanilla Option Rules",
           bullets: [
-            "普通期权主要看最终到期价格",
-            "普通期权不会因为中途价格波动而敲出",
-            "今天先不讨论定价模型，只判断方向和风险是否匹配",
+            "A vanilla option mainly depends on the final expiry price",
+            "A vanilla option does not knock out due to price moves along the way",
+            "We won't discuss pricing models today — just judge whether direction and risk match",
           ],
         },
       ],
     },
     {
       id: "suitability_rule",
-      title: "适当性规则",
+      title: "Suitability Rules",
       sections: [
         {
-          title: "方向匹配",
+          title: "Direction Matching",
           bullets: [
-            "客户看涨，通常考虑 Call",
-            "客户看跌，通常考虑 Put",
-            "产品方向必须先匹配客户观点",
+            "If the client is bullish, usually consider a call",
+            "If the client is bearish, usually consider a put",
+            "The product's direction must match the client's view first",
           ],
         },
         {
-          title: "风险需求",
+          title: "Risk Needs",
           bullets: [
-            "客户想控制最大亏损，普通期权比直接买入资产更合适",
-            "不要只因为客户想赚钱就推荐高风险产品",
-            "好结果不一定代表推荐适合",
+            "If the client wants to cap their maximum loss, a vanilla option suits better than buying the asset outright",
+            "Don't recommend a high-risk product just because the client wants to make money",
+            "A good outcome doesn't necessarily mean the recommendation was suitable",
           ],
         },
       ],
     },
     {
       id: "risk_disclosure",
-      title: "风险披露",
+      title: "Risk Disclosure",
       sections: [
         {
-          title: "必须讲清楚",
+          title: "Must Be Made Clear",
           bullets: [
-            "期权不是保本收益产品",
-            "如果市场方向判断错误，期权费可能全部损失",
-            "即使方向判断正确，也可能因为涨幅不够而无法覆盖期权费",
-            "不要告诉客户“只要市场上涨就一定赚钱”",
+            "An option is not a capital-protected, guaranteed-return product",
+            "If the market direction is judged wrong, the premium may be lost entirely",
+            "Even if the direction is right, the gain may be too small to cover the premium",
+            "Don't tell the client “you're sure to make money as long as the market goes up”",
           ],
         },
       ],
     },
   ],
   clientProfile: {
-    name: "李女士",
-    type: "散户投资者",
-    marketView: "看涨恒生指数",
-    riskTolerance: "中等",
-    goal: "想获得上涨收益，但不想承担大额下跌风险",
-    budget: "可以支付有限期权费",
-    experience: "新手",
+    name: "Ms. Li",
+    type: "Retail Investor",
+    marketView: "Bullish on the Hang Seng Index",
+    riskTolerance: "Moderate",
+    goal: "Wants upside gains, but doesn't want to take large downside risk",
+    budget: "Can pay a limited premium",
+    experience: "Beginner",
     dialogue: [
-      "我觉得恒生指数下个月可能会上涨。",
-      "但我不想直接买指数，因为我担心万一跌了亏很多。",
-      "有没有一种产品，可以让我参与上涨，同时把最大亏损限制住？",
+      "I think the Hang Seng Index might rise next month.",
+      "But I don't want to buy the index directly, because I'm worried about losing a lot if it drops.",
+      "Is there a product that lets me participate in the upside while capping my maximum loss?",
     ],
   },
   products: [
     {
       id: "vanilla_call",
-      name: "普通看涨期权",
+      name: "Vanilla Call Option",
       term: "Vanilla Call",
-      status: "可用",
+      status: "Available",
       description: [
-        "适合看涨观点",
-        "买方先支付期权费",
-        "买方最大损失通常限于期权费",
-        "没有敲出风险",
+        "Suited to a bullish view",
+        "The buyer pays a premium upfront",
+        "The buyer's maximum loss is usually limited to the premium",
+        "No knock-out risk",
       ],
       feedback:
-        "很好。客户看涨，同时希望下行亏损有限，普通看涨期权符合这个需求。",
+        "Good. The client is bullish and wants limited downside loss — a vanilla call option fits this need.",
     },
     {
       id: "vanilla_put",
-      name: "普通看跌期权",
+      name: "Vanilla Put Option",
       term: "Vanilla Put",
-      status: "可用",
+      status: "Available",
       description: [
-        "适合看跌观点",
-        "买方先支付期权费",
-        "买方最大损失通常限于期权费",
-        "没有敲出风险",
+        "Suited to a bearish view",
+        "The buyer pays a premium upfront",
+        "The buyer's maximum loss is usually limited to the premium",
+        "No knock-out risk",
       ],
-      feedback: "这个产品适合看跌观点，但客户现在是看涨恒生指数。",
+      feedback: "This product suits a bearish view, but the client is currently bullish on the Hang Seng Index.",
     },
     {
       id: "direct_index",
-      name: "直接买入指数",
+      name: "Buy the Index Directly",
       term: "Direct Index Purchase",
-      status: "可用",
+      status: "Available",
       description: [
-        "完整参与上涨",
-        "也完整承担下跌",
-        "亏损不限制在期权费内",
+        "Full participation in the upside",
+        "Also full exposure to the downside",
+        "Loss is not limited to a premium",
       ],
       feedback:
-        "直接买入指数确实有上涨敞口，但下行亏损并不限制在期权费内。",
+        "Buying the index directly does give upside exposure, but the downside loss is not limited to a premium.",
     },
     {
       id: "barrier_option",
-      name: "障碍期权",
+      name: "Barrier Option",
       term: "Barrier Option",
-      status: "未解锁",
+      status: "Locked",
       locked: true,
       description: [
-        "可能更便宜，但有敲出风险",
-        "今天的训练尚未覆盖",
+        "May be cheaper, but carries knock-out risk",
+        "Not covered in today's training yet",
       ],
-      feedback: "第一天暂未解锁。Martin 还没有教这个产品。",
+      feedback: "Not unlocked on day one. Martin hasn't taught this product yet.",
     },
   ],
   disclosureItems: [
     {
       id: "premium_fully_lost",
-      text: "如果期权到期时没有价值，客户支付的期权费可能全部损失。",
+      text: "If the option has no value at expiry, the premium the client paid may be lost entirely.",
       correct: true,
     },
     {
       id: "max_loss_premium",
-      text: "普通期权买方的最大损失通常限于已支付的期权费。",
+      text: "A vanilla option buyer's maximum loss is usually limited to the premium paid.",
       correct: true,
     },
     {
       id: "profit_not_guaranteed",
-      text: "看涨期权提供上涨敞口，但并不保证一定盈利。",
+      text: "A call option provides upside exposure, but does not guarantee a profit.",
       correct: true,
     },
     {
       id: "guaranteed_profit",
-      text: "只要市场稍微上涨，客户就一定赚钱。",
+      text: "As long as the market rises even slightly, the client is sure to make money.",
       correct: false,
     },
   ],
   market: {
-    underlying: "恒生指数",
+    underlying: "Hang Seng Index",
     spot: 21500,
     strike: 22000,
     premium: 186,
-    maturity: "1个月",
+    maturity: "1 month",
     path: [21500, 21800, 22100, 22400],
     chartPath: [21500, 21380, 21720, 21640, 21800, 22030, 21920, 22100, 22310, 22220, 22400],
   },
@@ -298,208 +298,208 @@ const day1Config = {
 
 const day2Config = {
   day: 2,
-  title: "定价柜台",
+  title: "Pricing Desk",
   stages: {
     day2_intro: {
-      label: "09:00 晨会",
-      system: "定价晨会",
+      label: "09:00 Morning Meeting",
+      system: "Pricing Morning Meeting",
       mentor:
-        "昨天你学会了普通期权是什么。今天换一个更像真实交易台的问题：这个期权到底该报多少钱？",
+        "Yesterday you learned what a vanilla option is. Today we switch to a question that's closer to a real trading desk: what should this option actually be quoted at?",
     },
     day2_lesson_pricing_anchor: {
-      label: "09:03 第一课：报价锚点",
-      system: "为什么要定价",
+      label: "09:03 Lesson 1: The Quote Anchor",
+      system: "Why We Price",
       mentor:
-        "先记住一句话：报价不能凭感觉。理论价格像交易台的锚，先告诉你这个产品大概值多少钱。",
+        "Remember one thing: a quote can't come from a gut feeling. The theoretical price is like the desk's anchor — it tells you roughly what the product is worth first.",
     },
     day2_lesson_tree_paths: {
-      label: "09:06 第二课：二叉树路径",
-      system: "上涨与下跌分叉",
+      label: "09:06 Lesson 2: Binomial Tree Paths",
+      system: "Up and Down Branches",
       mentor:
-        "二叉树不是在预言市场，而是在把未来拆成几种可能。每一步只问两个问题：如果上涨会怎样？如果下跌会怎样？",
+        "A binomial tree isn't predicting the market — it's breaking the future into a few possibilities. At each step it asks just two questions: what if it goes up? what if it goes down?",
     },
     day2_lesson_backward_price: {
-      label: "09:09 第三课：从未来倒推",
-      system: "收益与理论价格",
+      label: "09:09 Lesson 3: Working Backward from the Future",
+      system: "Payoff and Theoretical Price",
       mentor:
-        "到期收益先在最后一层算出来，再从未来倒推回今天。今天我们用简化版，只理解直觉，不考复杂公式。",
+        "The expiry payoff is computed at the final layer first, then worked backward to today. Today we use a simplified version — just grasp the intuition, no complex formulas to memorize.",
     },
     day2_handbook_updated: {
-      label: "09:12 手册更新",
-      system: "二叉树规则同步",
+      label: "09:12 Handbook Updated",
+      system: "Binomial Tree Rules Sync",
       mentor:
-        "见客户之前，先打开工作手册看一下。今天的关键规则很简单：报价要接近理论价格，不能太低，也不能太高。",
+        "Before you meet the client, open the handbook and take a look. Today's key rule is simple: the quote should be close to the theoretical price — not too low, and not too high.",
     },
     day2_research_terminal: {
-      label: "09:18 中环数据台",
-      system: "定价参数查询",
+      label: "09:18 Central Data Desk",
+      system: "Pricing Parameter Lookup",
       mentor:
-        "产品结构确认好了。报价之前，先去数据台把今天的关键参数查齐。现价、波动率、利率、期限——这些数字不是凭空来的，每一个都有出处。把它们记下来，等会儿填进计算器。",
+        "The product structure is confirmed. Before you quote, head to the data desk and gather today's key parameters. Spot, volatility, rate, maturity — these numbers don't come out of thin air; each one has a source. Note them down, you'll plug them into the calculator shortly.",
     },
     day2_client_arrival: {
-      label: "09:14 客户到访",
-      system: "机构客户需求",
+      label: "09:14 Client Arrives",
+      system: "Institutional Client Needs",
       mentor:
-        "他已经明确说了自己要普通看涨期权。今天的重点不是选产品，而是报出合理的期权费。",
+        "He's already said clearly that he wants a vanilla call option. Today's focus isn't picking the product — it's quoting a reasonable premium.",
     },
     day2_product_review: {
-      label: "09:16 产品确认",
-      system: "确认交易结构",
+      label: "09:16 Product Confirmation",
+      system: "Confirm the Trade Structure",
       mentor:
-        "先确认结构：看涨恒生指数、1 个月、普通 Call。结构对了，接下来才轮到定价。",
+        "First confirm the structure: bullish on the Hang Seng Index, 1 month, vanilla call. Once the structure is right, then it's time for pricing.",
     },
     day2_tree_explainer: {
-      label: "09:22 定价树",
-      system: "二叉树定价入门",
+      label: "09:22 Pricing Tree",
+      system: "Intro to Binomial Tree Pricing",
       mentor:
-        "注意，不是所有上涨路径都会让客户赚钱。看涨期权只有在最终价格高于行权价时才有到期价值。",
+        "Note that not every upward path makes the client money. A call option only has expiry value when the final price is above the strike.",
     },
     day2_quote_slider: {
-      label: "09:32 客户报价",
-      system: "报价滑块",
+      label: "09:32 Quote to Client",
+      system: "Quote Slider",
       mentor:
-        "不要为了成交把价格报得太低，也不要报得太贵。好的交易员要在公允价值、客户接受度和交易台利润之间找平衡。",
+        "Don't quote too low just to close the trade, and don't quote too high either. A good trader balances fair value, client acceptance, and desk profit.",
     },
     day2_risk_disclosure: {
-      label: "09:38 风险披露",
-      system: "模型与期权风险",
+      label: "09:38 Risk Disclosure",
+      system: "Model and Option Risk",
       mentor:
-        "定价模型不是盈利保证。客户必须同时理解期权费风险、到期收益规则，以及模型只是在估算今天的价值。",
+        "A pricing model is not a profit guarantee. The client must understand the premium risk, the expiry-payoff rules, and that the model only estimates today's value.",
     },
     day2_client_response: {
-      label: "09:43 客户反馈",
-      system: "报价结果",
+      label: "09:43 Client Feedback",
+      system: "Quote Result",
       mentor:
-        "专业客户会盯着报价。价格离理论价值太远，不管太低还是太高，都会留下问题。",
+        "A professional client will scrutinize the quote. A price too far from theoretical value — whether too low or too high — leaves a problem behind.",
     },
     day2_market_run: {
-      label: "09:46 市场结算",
-      system: "到期路径模拟",
+      label: "09:46 Market Settlement",
+      system: "Expiry Path Simulation",
       mentor:
-        "现在看市场怎么走。价格会一步步跳动，注意盯住到期价格——普通 Call 的结算只看最后那一格落在行权价的哪一边。",
+        "Now watch how the market moves. The price jumps step by step — keep your eye on the expiry price. A vanilla call settles purely on which side of the strike the final cell lands.",
     },
     day2_report: {
-      label: "09:50 日终报告",
-      system: "定价复盘",
+      label: "09:50 End-of-Day Report",
+      system: "Pricing Review",
       mentor:
-        "定价不是背答案，而是先用理论价格做锚点，再判断交易台利润和客户接受度。",
+        "Pricing isn't memorizing answers — it's anchoring on the theoretical price first, then judging desk profit and client acceptance.",
     },
     day2_complete: {
-      label: "10:00 完成第二天",
-      system: "关卡完成",
+      label: "10:00 Day Two Complete",
+      system: "Stage Complete",
       mentor:
-        "今天你完成了第一笔带模型锚点的报价。记住：理论价格是纪律，不是承诺。",
+        "Today you completed your first model-anchored quote. Remember: the theoretical price is discipline, not a promise.",
     },
   },
   handbookEntries: [
     {
       id: "binomial_pricing",
-      title: "二叉树定价 / Binomial Tree Pricing",
+      title: "Binomial Tree Pricing",
       sections: [
         {
-          title: "核心想法",
+          title: "Core Idea",
           bullets: [
-            "二叉树用来模拟标的价格未来可能上涨或下跌",
-            "每一步，价格可能向上走，也可能向下走",
-            "到期时，根据最终价格计算期权到期收益（Payoff）",
-            "然后从最后一层往前倒推，得到今天的理论价格（Theoretical Price）",
+            "A binomial tree models how the underlying price might rise or fall in the future",
+            "At each step, the price can move up or move down",
+            "At expiry, compute the option's payoff from the final price",
+            "Then work backward from the final layer to get today's theoretical price",
           ],
         },
         {
-          title: "普通看涨期权",
+          title: "Vanilla Call Option",
           bullets: [
-            "到期收益（Payoff）= max(最终价格 - 行权价（Strike）, 0)",
-            "如果最终价格高于行权价，看涨期权有价值",
-            "如果最终价格低于行权价，看涨期权到期价值为 0",
+            "Payoff = max(final price - strike, 0)",
+            "If the final price is above the strike, the call has value",
+            "If the final price is below the strike, the call's expiry value is 0",
           ],
         },
         {
-          title: "报价规则",
+          title: "Quoting Rules",
           bullets: [
-            "理论价格是模型计算出来的参考价值",
-            "交易员给客户的报价通常应该接近理论价格",
-            "报价太低：交易台利润太薄，甚至可能承担不划算的风险",
-            "报价太高：客户可能拒绝交易",
-            "合理报价 = 理论价格 + 适当利润空间",
+            "The theoretical price is the reference value computed by the model",
+            "A trader's quote to the client should usually be close to the theoretical price",
+            "Quote too low: desk profit is too thin, and you may even take on unfavorable risk",
+            "Quote too high: the client may reject the trade",
+            "Reasonable quote = theoretical price + an appropriate profit margin",
           ],
         },
         {
-          title: "重要提醒",
+          title: "Important Reminder",
           bullets: [
-            "定价模型不是在保证市场一定会怎么走",
-            "它只是用不同可能路径来估算产品今天的价值",
-            "第二天只学习普通期权定价",
-            "新的产品规则会在后续关卡学习",
+            "A pricing model does not guarantee how the market will move",
+            "It only estimates the product's value today using different possible paths",
+            "Day two covers vanilla option pricing only",
+            "New product rules will be learned in later stages",
           ],
         },
       ],
     },
   ],
   clientProfile: {
-    name: "王先生",
-    type: "机构客户",
-    marketView: "看涨恒生指数",
-    riskTolerance: "中等",
-    goal: "获得未来 1 个月的上涨收益",
-    productNeed: "普通看涨期权",
-    budget: "可以接受合理报价，但不想被报太贵",
-    experience: "专业客户",
+    name: "Mr. Wang",
+    type: "Institutional Client",
+    marketView: "Bullish on the Hang Seng Index",
+    riskTolerance: "Moderate",
+    goal: "Capture upside over the next 1 month",
+    productNeed: "Vanilla call option",
+    budget: "Can accept a reasonable quote, but doesn't want to be overcharged",
+    experience: "Professional client",
     dialogue: [
-      "我想买一份 1 个月到期的恒生指数看涨期权。",
-      "我看涨市场，但我很在意报价。",
-      "请给我一个你认为公允的报价，我会和其他交易台比较一下。",
+      "I want to buy a 1-month Hang Seng Index call option.",
+      "I'm bullish on the market, but I care a lot about the quote.",
+      "Give me a quote you consider fair — I'll compare it against other desks.",
     ],
   },
   productSummary: {
-    product: "普通看涨期权 Vanilla Call",
-    underlying: "恒生指数 HSI",
+    product: "Vanilla Call",
+    underlying: "Hang Seng Index (HSI)",
     spot: 21500,
     strike: 22000,
-    maturity: "1 个月",
-    clientView: "看涨",
-    matchReason: "看涨期权适合表达看涨观点。",
+    maturity: "1 month",
+    clientView: "Bullish",
+    matchReason: "A call option is suited to expressing a bullish view.",
   },
   tree: {
-    underlying: "恒生指数 HSI",
+    underlying: "Hang Seng Index (HSI)",
     spot: 21500,
     strike: 22000,
     upMove: "+2.65%",
     downMove: "-2.58%",
     steps: 3,
-    riskFreeRate: "2%（教学默认）",
+    riskFreeRate: "2% (teaching default)",
     theoreticalPrice: 186,
     nodes: [
-      { id: "s0", step: "第 0 步", label: "今天", price: 21500, x: 8, y: 50 },
-      { id: "u", step: "第 1 步", label: "上涨", price: 22069, x: 29, y: 35 },
-      { id: "d", step: "第 1 步", label: "下跌", price: 20946, x: 29, y: 65 },
+      { id: "s0", step: "Step 0", label: "Today", price: 21500, x: 8, y: 50 },
+      { id: "u", step: "Step 1", label: "Up", price: 22069, x: 29, y: 35 },
+      { id: "d", step: "Step 1", label: "Down", price: 20946, x: 29, y: 65 },
       {
         id: "uu",
-        step: "第 2 步",
-        label: "上涨-上涨",
+        step: "Step 2",
+        label: "Up-Up",
         price: 22653,
         x: 51,
         y: 22,
       },
       {
         id: "mid",
-        step: "第 2 步",
-        label: "一涨一跌",
+        step: "Step 2",
+        label: "One Up, One Down",
         price: 21500,
         x: 51,
         y: 50,
       },
       {
         id: "dd",
-        step: "第 2 步",
-        label: "下跌-下跌",
+        step: "Step 2",
+        label: "Down-Down",
         price: 20405,
         x: 51,
         y: 78,
       },
       {
         id: "uuu",
-        step: "第 3 步",
-        label: "三次上涨",
+        step: "Step 3",
+        label: "Three Ups",
         price: 23253,
         payoff: 1253,
         formula: "max(23,253 - 22,000, 0) = 1,253",
@@ -510,8 +510,8 @@ const day2Config = {
       },
       {
         id: "uum",
-        step: "第 3 步",
-        label: "两涨一跌",
+        step: "Step 3",
+        label: "Two Ups, One Down",
         price: 22069,
         payoff: 69,
         formula: "max(22,069 - 22,000, 0) = 69",
@@ -522,8 +522,8 @@ const day2Config = {
       },
       {
         id: "udd",
-        step: "第 3 步",
-        label: "一涨两跌",
+        step: "Step 3",
+        label: "One Up, Two Downs",
         price: 20946,
         payoff: 0,
         formula: "max(20,946 - 22,000, 0) = 0",
@@ -533,8 +533,8 @@ const day2Config = {
       },
       {
         id: "ddd",
-        step: "第 3 步",
-        label: "三次下跌",
+        step: "Step 3",
+        label: "Three Downs",
         price: 19879,
         payoff: 0,
         formula: "max(19,879 - 22,000, 0) = 0",
@@ -568,34 +568,34 @@ const day2Config = {
     defaultQuote: "",
   },
   market: {
-    underlying: "恒生指数 HSI",
+    underlying: "Hang Seng Index (HSI)",
     path: [21500, 21680, 21940, 22140],
     strike: 22000,
   },
   disclosureItems: [
     {
       id: "day2_premium_loss",
-      text: "如果期权到期时没有价值，客户支付的期权费可能全部损失。",
+      text: "If the option has no value at expiry, the premium the client paid may be lost entirely.",
       correct: true,
     },
     {
       id: "day2_not_guaranteed",
-      text: "看涨期权可以提供上涨收益，但不保证一定赚钱。",
+      text: "A call option can provide upside gains, but does not guarantee a profit.",
       correct: true,
     },
     {
       id: "day2_model_paths",
-      text: "报价基于定价模型和未来可能路径，不代表市场一定会按这个方向走。",
+      text: "The quote is based on a pricing model and possible future paths; it does not mean the market will move that way.",
       correct: true,
     },
     {
       id: "day2_below_strike_zero",
-      text: "如果最终价格低于行权价，看涨期权到期收益为 0。",
+      text: "If the final price is below the strike, the call option's expiry payoff is 0.",
       correct: true,
     },
     {
       id: "day2_model_guarantee",
-      text: "只要模型给出了理论价格，客户就一定能赚钱。",
+      text: "As long as the model gives a theoretical price, the client is sure to make money.",
       correct: false,
     },
   ],
@@ -612,247 +612,247 @@ const day2Config = {
 
 const day3Config = {
   day: 3,
-  title: "障碍期权",
+  title: "Barrier Options",
   stages: {
     day3_intro: {
-      label: "09:00 晨会",
-      system: "路径风险晨会",
+      label: "09:00 Morning Meeting",
+      system: "Path-Risk Morning Meeting",
       mentor:
-        "前两天你已经学会了普通期权和模型报价。今天加一个真正会改变结局的规则：障碍。价格不是只看最后一刻，中途碰到某条线，产品可能直接结束。",
+        "Over the past two days you've learned vanilla options and model-based quoting. Today we add a rule that genuinely changes the outcome: the barrier. The price isn't judged only at the final moment — if it hits a certain line along the way, the product can end outright.",
     },
     day3_lesson_barrier_concept: {
-      label: "09:04 第一课：障碍线",
-      system: "Barrier 直觉",
+      label: "09:04 Lesson 1: The Barrier Level",
+      system: "Barrier Intuition",
       mentor:
-        "把障碍想成交易合约里的红线。普通期权只看到期价格；障碍期权还会看路径，中途有没有碰到这条红线。",
+        "Think of the barrier as a red line in the trade contract. A vanilla option only looks at the expiry price; a barrier option also looks at the path — whether it touched that red line along the way.",
     },
     day3_lesson_knock_out: {
-      label: "09:08 第二课：敲出",
-      system: "Knock-Out 规则",
+      label: "09:08 Lesson 2: Knock-Out",
+      system: "Knock-Out Rule",
       mentor:
-        "敲出（Knock-Out）的意思是：只要标的价格碰到障碍线，期权就提前失效。哪怕最后市场又涨回来，已经敲出的产品也不能复活。",
+        "Knock-out means: the moment the underlying price touches the barrier level, the option expires early. Even if the market later climbs back, a knocked-out product cannot come back to life.",
     },
     day3_handbook_updated: {
-      label: "09:12 手册更新",
-      system: "障碍规则同步",
+      label: "09:12 Handbook Updated",
+      system: "Barrier Rules Sync",
       mentor:
-        "工作手册已经新增障碍期权页面。今天见客户前一定要看：障碍产品最容易出错的地方，就是把它当成普通期权来讲。",
+        "The handbook now has a barrier-option page. Be sure to read it before meeting the client today: the easiest mistake with a barrier product is pitching it as if it were a vanilla option.",
     },
     day3_client_arrival: {
-      label: "09:14 客户到访",
-      system: "预算敏感客户",
+      label: "09:14 Client Arrives",
+      system: "Budget-Sensitive Client",
       mentor:
-        "她看涨，但又嫌普通 Call 太贵。现在先问清楚：她是否能接受”中途跌破某条线就提前失效”的规则。",
+        "She's bullish, but finds a vanilla call too expensive. First make sure of one thing: whether she can accept the rule that “if it drops below a certain line along the way, it expires early.”",
     },
     day3_product_selection: {
-      label: "09:18 产品选择",
-      system: "障碍结构匹配",
+      label: "09:18 Product Selection",
+      system: "Barrier Structure Matching",
       mentor:
-        "客户看涨、预算有限、愿意接受下方障碍风险。今天的目标产品是下跌敲出看涨期权，也就是 Down-and-Out Call。",
+        "The client is bullish, on a limited budget, and willing to accept downside barrier risk. Today's target product is a down-and-out call option, i.e. a Down-and-Out Call.",
     },
     day3_research_terminal: {
-      label: "09:22 障碍数据台",
-      system: "障碍参数查询",
+      label: "09:22 Barrier Data Desk",
+      system: "Barrier Parameter Lookup",
       mentor:
-        "障碍产品定价前，先去数据台把参数查齐。今天比昨天多一个关键数字——障碍价。现价、波动率、利率、期限你已经熟了，重点看那张障碍合约卡，把障碍价记下来。",
+        "Before pricing a barrier product, head to the data desk and gather the parameters. Today there's one extra key number compared with yesterday — the barrier level. You already know spot, volatility, rate, and maturity; focus on that barrier contract card and note the barrier level down.",
     },
     day3_lesson_compare_vanilla: {
-      label: "09:26 定价树",
-      system: "Barrier 定价",
+      label: "09:26 Pricing Tree",
+      system: "Barrier Pricing",
       mentor:
-        "现在用计算器对比 Vanilla 和 Barrier 的理论价。障碍期权通常更便宜，因为买方接受了额外风险。便宜不是优惠券，而是用敲出风险换来的低期权费。",
+        "Now use the calculator to compare the theoretical price of the vanilla and the barrier. A barrier option is usually cheaper because the buyer accepts extra risk. Cheap isn't a coupon — it's a lower premium bought with knock-out risk.",
     },
     day3_risk_disclosure: {
-      label: "09:38 风险披露",
-      system: "路径风险披露",
+      label: "09:38 Risk Disclosure",
+      system: "Path-Risk Disclosure",
       mentor:
-        "障碍产品必须把路径风险讲清楚：不是只看最终价格。碰到障碍线后，就算最后价格很漂亮，客户也可能拿不到收益。",
+        "A barrier product must spell out the path risk: it's not only about the final price. Once the barrier level is touched, the client may get no payoff even if the final price looks great.",
     },
     day3_client_response: {
-      label: "09:42 客户反馈",
-      system: "障碍报价结果",
+      label: "09:42 Client Feedback",
+      system: "Barrier Quote Result",
       mentor:
-        "障碍产品的卖点就是比普通 Call 便宜。报太低交易台少赚，报太高客户宁愿直接买普通 Call。看陈女士怎么回应。",
+        "A barrier product's selling point is that it's cheaper than a vanilla call. Quote too low and the desk earns less; quote too high and the client would rather just buy a vanilla call. See how Ms. Chen responds.",
     },
     day3_market_run: {
-      label: "09:46 市场路径",
-      system: "敲出路径模拟",
+      label: "09:46 Market Path",
+      system: "Knock-Out Path Simulation",
       mentor:
-        "现在看一条固定市场路径。注意盯住障碍线，不要只盯最终价格。下面这条是教学演示路径，旁边我放了一段真实参照——2020 年新冠股灾时，恒指真的跌到过 21,000 一带，障碍随时会被击穿。",
+        "Now watch a fixed market path. Keep your eye on the barrier level, not only the final price. The path below is a teaching demo — alongside it I've put a real-world reference: during the 2020 COVID crash, the HSI really did fall to around 21,000, and the barrier could be breached at any moment.",
     },
     day3_report: {
-      label: "09:52 日终报告",
-      system: "障碍期权复盘",
+      label: "09:52 End-of-Day Report",
+      system: "Barrier Option Review",
       mentor:
-        "障碍产品的评分重点是：产品是否适合、敲出风险是否充分披露、客户是否真的理解路径依赖。",
+        "The scoring focus for a barrier product is: whether the product suited the client, whether the knock-out risk was fully disclosed, and whether the client truly understood the path dependence.",
     },
     day3_complete: {
-      label: "10:00 完成第三天",
-      system: "关卡完成",
+      label: "10:00 Day Three Complete",
+      system: "Stage Complete",
       mentor:
-        "今天你见过了路径依赖的第一课。普通期权看终点，障碍期权还看旅途。",
+        "Today you had your first lesson in path dependence. A vanilla option looks at the destination; a barrier option also looks at the journey.",
     },
   },
   handbookEntries: [
     {
       id: "barrier_options",
-      title: "障碍期权 / Barrier Options",
+      title: "Barrier Options",
       sections: [
         {
-          title: "核心想法",
+          title: "Core Idea",
           bullets: [
-            "障碍期权会额外设置一条障碍价格（Barrier）",
-            "产品结果不仅看最终到期价格，也看中途是否触碰障碍",
-            "触碰障碍可能让期权提前生效或提前失效",
+            "A barrier option adds an extra barrier level",
+            "The product's outcome depends not only on the final expiry price, but also on whether the barrier is touched along the way",
+            "Touching the barrier can make the option activate early (knock-in) or expire early (knock-out)",
           ],
         },
         {
-          title: "敲出 Knock-Out",
+          title: "Knock-Out",
           bullets: [
-            "Knock-Out 表示触碰障碍后，期权提前失效",
-            "失效后即使最终价格重新回到有利位置，产品也不会自动复活",
-            "下跌敲出看涨期权（Down-and-Out Call）适合看涨但愿意承担下方障碍风险的客户",
+            "Knock-out means the option expires early once the barrier is touched",
+            "Once it's expired, the product won't automatically revive even if the final price returns to a favorable level",
+            "A down-and-out call option (Down-and-Out Call) suits clients who are bullish but willing to take downside barrier risk",
           ],
         },
         {
-          title: "为什么更便宜",
+          title: "Why It's Cheaper",
           bullets: [
-            "障碍期权通常比同类普通期权便宜",
-            "便宜来自额外敲出风险，不是无条件折扣",
-            "客户必须理解：更低期权费换来的是更复杂的路径风险",
+            "A barrier option is usually cheaper than a comparable vanilla option",
+            "The discount comes from the extra knock-out risk, not an unconditional reduction",
+            "The client must understand: a lower premium is bought with more complex path risk",
           ],
         },
         {
-          title: "风险披露",
+          title: "Risk Disclosure",
           bullets: [
-            "必须说明障碍价格和观察方式",
-            "必须说明触碰障碍后产品可能提前失效",
-            "必须说明最终价格有利，也可能因为曾经敲出而没有收益",
-            "不要把障碍期权说成普通期权的便宜版本",
-            "本模拟用离散观察点演示路径，真实障碍产品多为连续监控，敲出更容易发生",
+            "Must explain the barrier level and how it is observed",
+            "Must explain that the product may expire early once the barrier is touched",
+            "Must explain that even a favorable final price may yield no payoff if it had previously knocked out",
+            "Don't pitch a barrier option as a cheaper version of a vanilla option",
+            "This simulation demonstrates the path with discrete observation points; real barrier products are mostly monitored continuously, so knock-outs happen more easily",
           ],
         },
       ],
     },
   ],
   clientProfile: {
-    name: "陈女士",
-    type: "预算敏感散户",
-    marketView: "看涨恒生指数",
-    riskTolerance: "中高",
-    goal: "想用较低期权费参与未来上涨",
-    productNeed: "愿意接受额外条件，但不想让亏损失控",
-    budget: "普通 Call 觉得太贵，希望期权费更低",
-    experience: "买过普通期权，但第一次接触障碍结构",
+    name: "Ms. Chen",
+    type: "Budget-Sensitive Retail Investor",
+    marketView: "Bullish on the Hang Seng Index",
+    riskTolerance: "Moderate-High",
+    goal: "Wants to participate in future upside at a lower premium",
+    productNeed: "Willing to accept extra conditions, but doesn't want losses to run out of control",
+    budget: "Finds a vanilla call too expensive, wants a lower premium",
+    experience: "Has bought vanilla options, but new to barrier structures",
     dialogue: [
-      "我还是看涨恒生指数，但昨天那种普通 Call 对我来说有点贵。",
-      "如果能便宜一些，我可以接受一些额外条件。",
-      "你帮我看看，有没有比普通 Call 更适合我预算的方案？",
+      "I'm still bullish on the Hang Seng Index, but that vanilla call from yesterday is a bit pricey for me.",
+      "If it could be cheaper, I'm willing to accept some extra conditions.",
+      "Can you find me an option that fits my budget better than a vanilla call?",
     ],
   },
   products: [
     {
       id: "down_out_call",
-      name: "下跌敲出看涨期权",
+      name: "Down-and-Out Call Option",
       term: "Down-and-Out Call",
-      status: "可用",
+      status: "Available",
       description: [
-        "适合看涨观点",
-        "期权费低于同类普通 Call",
-        "如果中途触碰下方障碍线，产品提前失效",
-        "买方最大损失通常限于期权费",
+        "Suited to a bullish view",
+        "Premium is lower than a comparable vanilla call",
+        "If it touches the lower barrier level along the way, the product expires early",
+        "The buyer's maximum loss is usually limited to the premium",
       ],
       feedback:
-        "方向和预算都匹配。关键是你必须把下方障碍和敲出后不可复活讲清楚。",
+        "Both direction and budget match. The key is that you must clearly explain the lower barrier and the fact that it can't revive once knocked out.",
     },
     {
       id: "vanilla_call",
-      name: "普通看涨期权",
+      name: "Vanilla Call Option",
       term: "Vanilla Call",
-      status: "可用",
+      status: "Available",
       description: [
-        "适合看涨观点",
-        "没有敲出风险",
-        "期权费更高",
-        "主要看最终到期价格",
+        "Suited to a bullish view",
+        "No knock-out risk",
+        "Higher premium",
+        "Mainly depends on the final expiry price",
       ],
       feedback:
-        "普通 Call 方向正确、风险更简单，但没有回应客户“希望更便宜并接受额外条件”的需求。",
+        "A vanilla call has the right direction and simpler risk, but doesn't address the client's need to be “cheaper and willing to accept extra conditions.”",
     },
     {
       id: "up_out_call",
-      name: "上涨敲出看涨期权",
+      name: "Up-and-Out Call Option",
       term: "Up-and-Out Call",
-      status: "可用",
+      status: "Available",
       description: [
-        "价格上涨太多时可能敲出",
-        "和客户想参与上涨的目标有冲突",
-        "需要非常明确的收益上限和敲出解释",
+        "May knock out if the price rises too far",
+        "Conflicts with the client's goal of participating in the upside",
+        "Requires a very clear explanation of the payoff cap and knock-out",
       ],
       feedback:
-        "客户想参与上涨。上涨敲出 Call 会在市场上涨过强时失效，和这位客户的直觉不太匹配。",
+        "The client wants to participate in the upside. An up-and-out call expires when the market rises too strongly, which doesn't fit this client's instinct.",
     },
     {
       id: "direct_index",
-      name: "直接买入指数",
+      name: "Buy the Index Directly",
       term: "Direct Index Purchase",
-      status: "可用",
+      status: "Available",
       description: [
-        "完整参与上涨",
-        "没有期权费",
-        "下跌风险不限制在期权费内",
+        "Full participation in the upside",
+        "No premium",
+        "Downside risk is not limited to a premium",
       ],
       feedback:
-        "这不是期权结构，也没有满足客户想用有限期权费表达观点的需求。",
+        "This isn't an option structure, and it doesn't meet the client's need to express a view with a limited premium.",
     },
   ],
   disclosureItems: [
     {
       id: "day3_path_dependent",
-      text: "障碍期权不只看最终价格，也看中途价格路径是否触碰障碍线。",
+      text: "A barrier option depends not only on the final price, but also on whether the price path touches the barrier level along the way.",
       correct: true,
     },
     {
       id: "day3_knock_out_loss",
-      text: "如果触碰敲出障碍，产品可能提前失效，客户支付的期权费可能全部损失。",
+      text: "If the knock-out barrier is touched, the product may expire early, and the premium the client paid may be lost entirely.",
       correct: true,
     },
     {
       id: "day3_final_price_not_enough",
-      text: "即使最终价格高于行权价，如果之前已经敲出，客户也可能没有收益。",
+      text: "Even if the final price is above the strike, the client may get no payoff if it had already knocked out earlier.",
       correct: true,
     },
     {
       id: "day3_cheaper_reason",
-      text: "障碍期权更便宜，是因为客户承担了额外的敲出风险。",
+      text: "A barrier option is cheaper because the client takes on extra knock-out risk.",
       correct: true,
     },
     {
       id: "day3_same_as_vanilla",
-      text: "障碍期权和普通期权一样，只需要看最终到期价格。",
+      text: "A barrier option is just like a vanilla option — you only need to look at the final expiry price.",
       correct: false,
     },
   ],
   market: {
-    underlying: "恒生指数",
+    underlying: "Hang Seng Index",
     spot: 21500,
     strike: 22000,
     barrier: 21000,
     premium: 934,
     vanillaPremium: 1112,
-    maturity: "3个月",
+    maturity: "3 months",
     path: [21500, 21820, 21460, 20950, 21680, 22400],
   },
-  // 真实市场背景：教学路径是简化演示，这里引用真实历史数据作为「现实参照」。
-  // 数据来源：同组数学引擎队抓取的真实行情（central-trader/data）。
+  // Real market background: the teaching path is a simplified demo; here we cite real historical data as a "real-world reference".
+  // Data source: real market data scraped by the math-engine team in our group (central-trader/data).
   marketContext: {
-    title: "现实参照 · 2020 新冠股灾",
-    source: "数据来源：恒指日线 hsi_2020_covid.csv ＋ VHSI vhsi_history.csv（同组数学引擎队抓取）",
+    title: "Real-World Reference · 2020 COVID Crash",
+    source: "Data source: HSI daily hsi_2020_covid.csv + VHSI vhsi_history.csv (scraped by the math-engine team in our group)",
     bullets: [
-      "2020-03-19 恒指盘中跌至 21,139 点，正好贴近本关现价 21,500 与障碍 21,000 的量级",
-      "2020-03-23 恒指收报 21,696 点，触及本轮新冠最低区域后才反弹",
-      "同期 VHSI（恒指波动率指数）冲到 60.19（2020-03-19），市场恐慌使下方障碍极易被击穿",
-      "真实教训：高波动期，下跌敲出障碍比平静期更容易触发——便宜的代价是路径风险",
+      "On 2020-03-19 the HSI fell intraday to 21,139 — right in line with this stage's spot of 21,500 and barrier of 21,000",
+      "On 2020-03-23 the HSI closed at 21,696, rebounding only after touching this COVID-cycle low zone",
+      "Over the same period the VHSI (HSI volatility index) spiked to 60.19 (2020-03-19); market panic made the lower barrier extremely easy to breach",
+      "Real-world lesson: in high-volatility periods, a down-and-out barrier triggers more easily than in calm ones — the price of cheap is path risk",
     ],
   },
   scoringRules: {
@@ -867,277 +867,277 @@ const day3Config = {
   },
 };
 
-// 已归档：CBBC（牛熊证）内容。2026-06 用户决定 Day4 改成「三客户定价实战 / 结业篇」，
-// 这份数据保留备查（牛证/熊证/MCE/收回价/适当性），不再驱动 Day4 流程。
-// 若以后想捡回 CBBC，把它接回 dayConfigs/stageConfig 即可。配套的旧面板见 Day4Cbbc*_ARCHIVED。
+// Archived: CBBC (Callable Bull/Bear Contract) content. In 2026-06 the user decided to change Day4 to "Three-Client Pricing Live Round / Graduation".
+// This data is kept for reference (bull/bear, MCE, call price, suitability) and no longer drives the Day4 flow.
+// If you ever want to bring CBBC back, just wire it into dayConfigs/stageConfig. See Day4Cbbc*_ARCHIVED for the matching old panels.
 const day4CbbcConfig_ARCHIVED = {
   day: 4,
-  title: "牛熊证与收回价",
+  title: "CBBCs and the Call Price",
   stages: {
     day4_intro: {
-      label: "09:00 晨会",
-      system: "CBBC 产品晨会",
+      label: "09:00 Morning Meeting",
+      system: "CBBC Product Morning Meeting",
       mentor:
-        "今天把牛熊证讲完整一点。牛证看涨，熊证看跌。它们都带杠杆，也都带收回价。今天我们用熊证的上方收回价做案例。",
+        "Today let's cover CBBCs more fully. A bull contract is bullish, a bear contract is bearish. Both carry leverage, and both have a call price. Today we'll use a bear contract's upper call price as our case study.",
     },
     day4_handbook_updated: {
-      label: "09:05 手册更新",
-      system: "牛熊证规则同步",
+      label: "09:05 Handbook Updated",
+      system: "CBBC Rules Sync",
       mentor:
-        "工作手册新增了牛熊证页面。注意对称关系：牛证怕标的跌到收回价，熊证怕标的涨到收回价。",
+        "The handbook has a new CBBC page. Note the symmetry: a bull contract fears the underlying falling to the call price; a bear contract fears the underlying rising to the call price.",
     },
     day4_client_arrival: {
-      label: "09:10 客户到访",
-      system: "适当性读取",
+      label: "09:10 Client Arrives",
+      system: "Reading Suitability",
       mentor:
-        "先听客户方向。她看跌，想要杠杆，也知道强制收回风险。今天重点是判断熊证是否匹配，以及上方收回价如何触发 MCE。",
+        "First listen for the client's direction. She's bearish, wants leverage, and knows the mandatory call (forced redemption) risk. Today's focus is judging whether a bear contract fits, and how an upper call price triggers an MCE.",
     },
     day4_suitability_check: {
-      label: "09:16 适当性判断",
-      system: "是否适合 CBBC",
+      label: "09:16 Suitability Assessment",
+      system: "Is a CBBC Suitable",
       mentor:
-        "这一步像合规闸门。客户方向、风险承受能力、产品经验和是否理解 MCE，都要一起看。",
+        "This step is like a compliance gate. The client's direction, risk tolerance, product experience, and whether they understand the MCE all have to be weighed together.",
     },
     day4_product_selection: {
-      label: "09:24 产品推荐",
-      system: "推荐最终产品",
+      label: "09:24 Product Recommendation",
+      system: "Recommend the Final Product",
       mentor:
-        "客户看跌、想要杠杆、能接受强制收回。熊证方向匹配，但你必须把上方收回价讲清楚。",
+        "The client is bearish, wants leverage, and can accept the mandatory call. A bear contract matches the direction, but you must clearly explain the upper call price.",
     },
     day4_risk_disclosure: {
-      label: "09:32 风险披露",
-      system: "CBBC 风险说明",
+      label: "09:32 Risk Disclosure",
+      system: "CBBC Risk Explanation",
       mentor:
-        "熊证不是普通 Put 的便宜版本。必须讲清楚：标的上涨触及收回价会触发 MCE，之后即使市场再跌，也不会恢复。",
+        "A bear contract is not a cheaper version of a vanilla put. You must make it clear: if the underlying rises and touches the call price, it triggers an MCE, and even if the market falls again afterward, it won't recover.",
     },
     day4_market_run: {
-      label: "09:42 市场路径",
-      system: "CBBC 对比路径",
+      label: "09:42 Market Path",
+      system: "CBBC Comparison Path",
       mentor:
-        "这条路径会让你看到上方 barrier：恒指先冲上去触发熊证 MCE，后来才跌下来。最终方向对，也救不回已收回的产品。旁边那段真实参照就是活教材——2020 年 2 月恒指先冲到 28,000，3 月才崩到 21,700，先冲高后大跌正是熊证最怕的剧本。",
+        "This path shows you the upper barrier: the HSI first spikes up and triggers the bear contract's MCE, only falling later. The right final direction can't rescue an already-redeemed product. That real-world reference beside it is a live textbook — in February 2020 the HSI first spiked to 28,000, only crashing to 21,700 in March; spiking high then crashing is exactly the bear contract's worst nightmare.",
     },
     day4_report: {
-      label: "09:52 日终报告",
-      system: "CBBC 适当性复盘",
+      label: "09:52 End-of-Day Report",
+      system: "CBBC Suitability Review",
       mentor:
-        "第四天的重点是对称理解。牛证看涨但怕下跌触发收回；熊证看跌但怕上涨触发收回。",
+        "The focus of day four is understanding the symmetry. A bull contract is bullish but fears a fall triggering the call; a bear contract is bearish but fears a rise triggering the call.",
     },
     day4_complete: {
-      label: "10:00 完成第四天",
-      system: "关卡完成",
+      label: "10:00 Day Four Complete",
+      system: "Stage Complete",
       mentor:
-        "你已经见过下方障碍，也见过上方收回价。路径依赖产品最重要的不是终点，而是中途有没有碰线。",
+        "You've now seen both a lower barrier and an upper call price. What matters most for a path-dependent product isn't the destination — it's whether it touches a line along the way.",
     },
   },
   handbookEntries: [
     {
       id: "cbbc_basics",
-      title: "牛熊证 / CBBC",
+      title: "CBBC",
       sections: [
         {
-          title: "核心想法",
+          title: "Core Idea",
           bullets: [
-            "CBBC 是 Callable Bull/Bear Contract，中文常叫牛熊证",
-            "牛证（Bull CBBC）适合看涨观点：标的上涨通常对牛证有利",
-            "熊证（Bear CBBC）适合看跌观点：标的下跌通常对熊证有利",
-            "CBBC 通常带有杠杆，标的轻微波动也可能造成产品价格明显变化",
-            "牛熊证不是普通期权，它们有强制收回机制",
+            "CBBC stands for Callable Bull/Bear Contract",
+            "A bull contract (Bull CBBC) suits a bullish view: a rise in the underlying usually benefits a bull contract",
+            "A bear contract (Bear CBBC) suits a bearish view: a fall in the underlying usually benefits a bear contract",
+            "A CBBC usually carries leverage, so even a small move in the underlying can cause a noticeable change in the product price",
+            "CBBCs are not vanilla options — they have a mandatory call mechanism",
           ],
         },
         {
-          title: "牛证 vs 熊证",
+          title: "Bull vs Bear Contract",
           bullets: [
-            "牛证像带杠杆的看涨工具，但下跌触及收回价会触发 MCE",
-            "熊证像带杠杆的看跌工具，但上涨触及收回价会触发 MCE",
-            "牛证的危险线通常在现价下方",
-            "熊证的危险线通常在现价上方",
+            "A bull contract is like a leveraged bullish instrument, but a fall touching the call price triggers an MCE",
+            "A bear contract is like a leveraged bearish instrument, but a rise touching the call price triggers an MCE",
+            "A bull contract's danger line is usually below the spot",
+            "A bear contract's danger line is usually above the spot",
           ],
         },
         {
-          title: "强制收回事件 MCE",
+          title: "Mandatory Call Event (MCE)",
           bullets: [
-            "CBBC 有收回价（Call Price）",
-            "牛证：标的价格触及或低于收回价，会触发强制收回事件",
-            "熊证：标的价格触及或高于收回价，会触发强制收回事件",
-            "触发 MCE 后，产品提前终止，交易停止",
-            "本模拟为离散观察点，真实牛熊证连续监控，收回更容易发生",
+            "A CBBC has a call price",
+            "Bull contract: if the underlying price touches or falls below the call price, a mandatory call event is triggered",
+            "Bear contract: if the underlying price touches or rises above the call price, a mandatory call event is triggered",
+            "Once an MCE is triggered, the product terminates early and trading stops",
+            "This simulation uses discrete observation points; real CBBCs are monitored continuously, so a call happens more easily",
           ],
         },
         {
-          title: "残值与损失",
+          title: "Residual Value and Loss",
           bullets: [
-            "MCE 后不保证有残值",
-            "有些 CBBC 可能有残值，有些可能没有残值",
-            "教学简化：今天把残值视为 0，用来强调强制收回风险",
-            "客户最大损失通常限于投入金额和交易成本，但亏损发生得很快",
+            "After an MCE, residual value is not guaranteed",
+            "Some CBBCs may have residual value, some may have none",
+            "Teaching simplification: today we treat residual value as 0 to emphasize mandatory-call risk",
+            "The client's maximum loss is usually limited to the amount invested plus trading costs, but the loss happens very fast",
           ],
         },
         {
-          title: "价格与杠杆（教学简化）",
+          title: "Price and Leverage (Teaching Simplification)",
           bullets: [
-            "真实牛熊证价格 ≈ |现价 − 行权价| × 换股比率 + 财务费用，不是用期权费定价",
-            "本模拟把熊证当成带杠杆的线性看跌工具：投入资金固定，盈亏 = 投入 × 杠杆 × 标的下跌比例",
-            "因此模拟里的「熊证成本/盈亏」是示意性杠杆数值，不代表真实换股比率定价",
-            "杠杆放大收益，也放大亏损；未敲出时最大亏损仍以投入资金为限",
+            "A real CBBC price ≈ |spot − strike| × conversion ratio + financing cost — it is not priced via a premium",
+            "This simulation treats a bear contract as a leveraged linear bearish instrument: the invested amount is fixed, P&L = investment × leverage × the underlying's percentage fall",
+            "So the “bear-contract cost/P&L” in the simulation is an illustrative leverage figure, not real conversion-ratio pricing",
+            "Leverage amplifies gains and losses alike; until knocked out, the maximum loss is still capped at the invested amount",
           ],
         },
         {
-          title: "适当性规则",
+          title: "Suitability Rules",
           bullets: [
-            "方向正确不等于产品适合",
-            "客户不能接受强制收回，就不适合 CBBC",
-            "客户风险承受能力低，不应为了便宜或杠杆推荐 CBBC",
-            "客户必须理解：最后方向判断正确，也可能因为中途 MCE 而损失",
-            "不要把牛熊证说成普通期权的便宜替代品",
+            "The right direction does not mean the product is suitable",
+            "If the client can't accept a mandatory call, a CBBC isn't suitable",
+            "If the client has low risk tolerance, you shouldn't recommend a CBBC just for being cheap or for leverage",
+            "The client must understand: even with the right final direction, they can still lose due to an MCE along the way",
+            "Don't pitch a CBBC as a cheaper substitute for a vanilla option",
           ],
         },
       ],
     },
   ],
   clientProfile: {
-    name: "周女士",
-    type: "活跃零售客户",
-    marketView: "看跌恒生指数",
-    riskTolerance: "高",
-    goal: "想用较低资金参与短期下跌",
-    productNeed: "想了解熊证，接受杠杆和强制收回风险",
-    budget: "愿意投入有限资金，但希望下跌时反应更快",
-    experience: "交易过普通 Put，第一次正式交易牛熊证",
+    name: "Ms. Zhou",
+    type: "Active Retail Client",
+    marketView: "Bearish on the Hang Seng Index",
+    riskTolerance: "High",
+    goal: "Wants to participate in a short-term decline with a smaller outlay",
+    productNeed: "Wants to learn about bear contracts; accepts leverage and mandatory-call risk",
+    budget: "Willing to invest a limited amount, but wants a faster response on the way down",
+    experience: "Has traded vanilla puts; first time formally trading a CBBC",
     dialogue: [
-      "我觉得恒生指数短期可能会回落。普通 Put 风险更简单，但期权费和杠杆效果都不是我最想要的。",
-      "朋友提到熊证，说下跌时反应更快，但我知道它可能会被强制收回。",
-      "你帮我判断一下，如果我要做看跌交易，熊证是不是合适？",
+      "I think the Hang Seng Index might pull back in the short term. A vanilla put has simpler risk, but its premium and leverage aren't quite what I want.",
+      "A friend mentioned bear contracts, saying they react faster on the way down, but I know it might get mandatorily called.",
+      "Help me decide — if I want to take a bearish trade, is a bear contract suitable?",
     ],
   },
   suitabilityOptions: [
     {
       id: "not_suitable",
-      title: "不适合推荐 CBBC",
-      tag: "过度保守",
+      title: "Not Suitable to Recommend a CBBC",
+      tag: "Overly Conservative",
       description:
-        "客户虽然看跌，但只要有强制收回风险，就一律不推荐 CBBC。",
+        "Although the client is bearish, a CBBC is ruled out entirely simply because there is mandatory-call risk.",
       feedback:
-        "这次有点过度保守。周女士风险承受能力高，也明确知道 MCE 风险，可以继续评估熊证。",
+        "This is a bit overly conservative. Ms. Zhou has high risk tolerance and clearly understands the MCE risk, so you can continue evaluating a bear contract.",
     },
     {
       id: "suitable",
-      title: "可以评估 Bear CBBC",
-      tag: "正确",
+      title: "Can Evaluate a Bear CBBC",
+      tag: "Correct",
       description:
-        "客户看跌、风险承受能力高、了解强制收回风险。可以评估熊证，但必须充分披露上方收回价。",
+        "The client is bearish, has high risk tolerance, and understands mandatory-call risk. A bear contract can be evaluated, but the upper call price must be fully disclosed.",
       feedback:
-        "判断正确。她不是低风险客户，也没有回避 MCE；下一步要选择方向匹配的熊证，并讲清楚上方收回价。",
+        "Correct call. She isn't a low-risk client and isn't avoiding the MCE; next, choose a bear contract that matches her direction and clearly explain the upper call price.",
     },
   ],
   products: [
     {
       id: "bull_cbbc",
-      name: "恒指牛证",
+      name: "HSI Bull Contract",
       term: "Bull CBBC",
-      status: "可用",
+      status: "Available",
       description: [
-        "适合看涨观点",
-        "带杠杆，价格波动更敏感",
-        "触及或低于收回价会触发 MCE",
-        "方向与本客户看跌观点相反",
+        "Suited to a bullish view",
+        "Leveraged, more sensitive to price moves",
+        "Touching or falling below the call price triggers an MCE",
+        "Direction is opposite to this client's bearish view",
       ],
       feedback:
-        "客户是看跌观点，牛证方向相反。牛证是看涨工具，不适合这个订单。",
+        "The client is bearish, and a bull contract points the opposite way. A bull contract is a bullish instrument — not suitable for this order.",
     },
     {
       id: "bear_cbbc",
-      name: "恒指熊证",
+      name: "HSI Bear Contract",
       term: "Bear CBBC",
-      status: "可用",
+      status: "Available",
       description: [
-        "适合看跌观点",
-        "带杠杆，价格波动更敏感",
-        "标的上涨触及或高于收回价会触发 MCE",
-        "使用上方收回价作为风险边界",
+        "Suited to a bearish view",
+        "Leveraged, more sensitive to price moves",
+        "A rise in the underlying touching or above the call price triggers an MCE",
+        "Uses an upper call price as the risk boundary",
       ],
       feedback:
-        "方向匹配。客户看跌、能承受高风险，可以考虑熊证，但必须说明上方收回价和 MCE。",
+        "Direction matches. The client is bearish and can take high risk, so a bear contract can be considered — but you must explain the upper call price and the MCE.",
     },
     {
       id: "vanilla_call",
-      name: "普通看涨期权",
+      name: "Vanilla Call Option",
       term: "Vanilla Call",
-      status: "可用",
+      status: "Available",
       description: [
-        "适合看涨观点",
-        "没有强制收回事件",
-        "买方最大损失通常限于期权费",
-        "方向与客户观点不匹配",
+        "Suited to a bullish view",
+        "No mandatory call event",
+        "The buyer's maximum loss is usually limited to the premium",
+        "Direction doesn't match the client's view",
       ],
       feedback:
-        "普通 Call 没有 MCE 风险，但方向是看涨，和客户看跌观点不匹配。",
+        "A vanilla call has no MCE risk, but its direction is bullish, which doesn't match the client's bearish view.",
     },
     {
       id: "vanilla_put",
-      name: "普通看跌期权",
+      name: "Vanilla Put Option",
       term: "Vanilla Put",
-      status: "可用",
+      status: "Available",
       description: [
-        "适合看跌观点",
-        "没有强制收回事件",
-        "买方最大损失通常限于期权费",
-        "风险更简单，但没有 CBBC 杠杆特征",
+        "Suited to a bearish view",
+        "No mandatory call event",
+        "The buyer's maximum loss is usually limited to the premium",
+        "Simpler risk, but without the CBBC's leverage characteristics",
       ],
-      feedback: "普通 Put 方向正确、风险更简单，但客户明确想评估杠杆型熊证。它可以作为更保守备选。",
+      feedback: "A vanilla put has the right direction and simpler risk, but the client explicitly wants to evaluate a leveraged bear contract. It can serve as a more conservative fallback.",
     },
   ],
   disclosureItems: [
     {
       id: "day4_mce",
-      text: "CBBC 有收回价（Call Price），触及收回价会触发强制收回事件（MCE）。",
+      text: "A CBBC has a call price; touching the call price triggers a mandatory call event (MCE).",
       correct: true,
     },
     {
       id: "day4_bear_trigger",
-      text: "熊证中，标的价格触及或高于收回价，产品可能提前终止。",
+      text: "In a bear contract, if the underlying price touches or rises above the call price, the product may terminate early.",
       correct: true,
     },
     {
       id: "day4_residual_not_guaranteed",
-      text: "MCE 后残值不保证，教学简化下可视为可能损失全部投入金额。",
+      text: "After an MCE, residual value is not guaranteed; under the teaching simplification, treat it as a possible total loss of the invested amount.",
       correct: true,
     },
     {
       id: "day4_leverage",
-      text: "CBBC 带杠杆，价格波动和亏损速度都可能被放大。",
+      text: "A CBBC is leveraged, so both price moves and the speed of losses can be amplified.",
       correct: true,
     },
     {
       id: "day4_recover_after_mce",
-      text: "如果 MCE 后市场又跌回来，熊证会自动恢复交易并继续赚钱。",
+      text: "If the market falls back after an MCE, the bear contract will automatically resume trading and keep making money.",
       correct: false,
     },
   ],
   market: {
-    underlying: "恒生指数",
+    underlying: "Hang Seng Index",
     spot: 21500,
-    // 普通 Put 比较产品的行权价（价外 Put，现价 21500 之下）
+    // Strike of the vanilla put comparison product (out-of-the-money put, below the spot of 21500)
     strike: 21200,
-    // 熊证结构：现价 ≤ 收回价 ≤ 行权价。N 类熊证 行权价 = 收回价 = 22000，无残值。
+    // Bear contract structure: spot ≤ call price ≤ strike. Category-N bear contract: strike = call price = 22000, no residual value.
     cbbcStrike: 22000,
     cbbcCallPrice: 22000,
     cbbcEntryCost: 80,
-    // 熊证是带杠杆的线性跟踪工具，不是用期权费定价。这里用示意性杠杆倍数表达「下跌反应更快」。
+    // A bear contract is a leveraged linear tracking instrument, not priced via a premium. Here an illustrative leverage multiple expresses "reacts faster on the way down".
     cbbcLeverage: 7,
     vanillaPremium: 150,
-    maturity: "1个月",
+    maturity: "1 month",
     path: [21500, 21780, 22050, 21600, 21100, 20750],
   },
-  // 真实市场背景：教学路径是简化演示，这里引用真实历史数据作为「现实参照」。
-  // 数据来源：同组数学引擎队抓取的真实行情（central-trader/data）。
+  // Real market background: the teaching path is a simplified demo; here we cite real historical data as a "real-world reference".
+  // Data source: real market data scraped by the math-engine team in our group (central-trader/data).
   marketContext: {
-    title: "现实参照 · 2020 新冠：先冲高、再崩盘",
-    source: "数据来源：恒指日线 hsi_2020_covid.csv（同组数学引擎队抓取）",
+    title: "Real-World Reference · 2020 COVID: Spike First, Then Crash",
+    source: "Data source: HSI daily hsi_2020_covid.csv (scraped by the math-engine team in our group)",
     bullets: [
-      "2020-02-17 恒指曾上探 28,055 点——先冲高的走势，正是熊证最怕的「上方收回」剧本",
-      "若当时持有上方收回价偏低的熊证，这波上冲就可能触发强制收回（MCE）",
-      "随后疫情扩散，恒指在 2020-03-23 一路跌到 21,696 点——方向其实对了",
-      "但已被收回的熊证无法复活：本关「先冲高触发 MCE、后大跌」的剧情，正是真实市场的缩影",
+      "On 2020-02-17 the HSI reached as high as 28,055 — a spike-first move, exactly the “upper call” scenario a bear contract fears most",
+      "Holding a bear contract with a low upper call price at the time, this surge could have triggered a mandatory call (MCE)",
+      "The pandemic then spread, and the HSI fell all the way to 21,696 on 2020-03-23 — the direction was actually right",
+      "But an already-called bear contract can't revive: this stage's plot of “spike first to trigger an MCE, then crash” is a microcosm of the real market",
     ],
   },
   scoringRules: {
@@ -1154,126 +1154,126 @@ const day4CbbcConfig_ARCHIVED = {
 };
 
 // ===================================================================
-// Day4 实战篇 · 三客户定价实战（结业）
-// 叙事：Day3（2020 covid 股灾）数月后，恒指从 21,000 低位回升到 24,000–25,000。
-// 玩家用 Day2(普通期权定价) + Day3(障碍期权定价) 学到的技能，给 3 位需求各异的客户实战报价。
-// 三客户难度递增、提示递减；客户③不点产品，要玩家自己判断该上普通还是障碍。
-// 理论价锚点均由项目二叉树「实算」（r=2%，vanilla N=3 / barrier N=4），与计算器一字不差。
-//   ① 张先生 vanilla：S0 24000/K 24500/σ18%/T0.08 → 297.06 ≈ 297
-//   ② 李小姐 barrier：S0 24000/K 24500/障碍23000/σ28%/T0.25 → 980.77 ≈ 981（普通 Call 1167）
-//   ③ 何先生 barrier：S0 25000/K 25500/障碍23500/σ32%/T0.25 → 1184.20 ≈ 1184（普通 Call 1411）
+// Day4 Live Round · Three-Client Pricing Live Round (Graduation)
+// Narrative: Several months after Day3 (the 2020 COVID crash), the HSI has recovered from the 21,000 low to 24,000–25,000.
+// The player uses the skills learned in Day2 (vanilla option pricing) + Day3 (barrier option pricing) to give live quotes to 3 clients with differing needs.
+// The three clients increase in difficulty with decreasing hints; client #3 doesn't name a product, so the player must judge whether to go vanilla or barrier.
+// All theoretical-price anchors are computed live by the project's binomial tree (r=2%, vanilla N=3 / barrier N=4), matching the calculator exactly.
+//   1) Mr. Zhang vanilla: S0 24000 / K 24500 / σ18% / T0.08 → 297.06 ≈ 297
+//   2) Ms. Li barrier: S0 24000 / K 24500 / barrier 23000 / σ28% / T0.25 → 980.77 ≈ 981 (vanilla call 1167)
+//   3) Mr. He barrier: S0 25000 / K 25500 / barrier 23500 / σ32% / T0.25 → 1184.20 ≈ 1184 (vanilla call 1411)
 // ===================================================================
 const day4Clients = [
   {
     id: "zhang",
-    avatar: "张",
-    typeLabel: "机构客户",
-    taskType: "price", // 已点名产品，直接报价
+    avatar: "Z",
+    typeLabel: "Institutional Client",
+    taskType: "price", // Product already named, quote directly
     mode: "vanilla",
     correctProduct: "vanilla_call",
-    productLabel: "普通 Call",
-    hintLevel: "示范",
+    productLabel: "Vanilla Call",
+    hintLevel: "Demonstration",
     params: { spot: 24000, strike: 24500, barrier: null, rate: 2, sigma: 18, maturity: 0.08, steps: 3 },
-    theoretical: 297, // 实算 297.06，vanilla N=3
+    theoretical: 297, // computed live 297.06, vanilla N=3
     vanillaRef: 297,
     profile: {
-      name: "张先生",
-      type: "机构客户（偏保守）",
-      marketView: "看涨恒生指数",
-      riskTolerance: "中等",
-      goal: "用 1 个月期权抓一波上涨",
-      productNeed: "最简单的看涨工具，亏损只限于权利金",
-      budget: "可以接受合理报价，但不想被宰",
-      experience: "常年交易普通期权",
+      name: "Mr. Zhang",
+      type: "Institutional Client (conservative)",
+      marketView: "Bullish on the Hang Seng Index",
+      riskTolerance: "Moderate",
+      goal: "Catch a move up with a 1-month option",
+      productNeed: "The simplest bullish instrument, with loss limited to the premium",
+      budget: "Can accept a reasonable quote, but doesn't want to be fleeced",
+      experience: "Trades vanilla options year-round",
     },
     dialogue: [
-      "我看涨恒指，想买一个月的看涨期权。",
-      "我要最干净的那种——亏损就限于我付的权利金，别给我加什么附加条件。",
-      "你算个公允价给我，我会拿去和别家比。",
+      "I'm bullish on the HSI and want to buy a one-month call option.",
+      "I want the cleanest kind — loss limited to the premium I pay, no extra conditions attached.",
+      "Work out a fair price for me; I'll take it and compare against others.",
     ],
   },
   {
     id: "li",
-    avatar: "李",
-    typeLabel: "预算敏感客户",
-    taskType: "price", // 需求里点了「换便宜/接受敲出」，等于半点名
+    avatar: "L",
+    typeLabel: "Budget-Sensitive Client",
+    taskType: "price", // Need mentions "swap for cheaper / accept knock-out", effectively a half-naming
     mode: "barrier",
     correctProduct: "down_out_call",
-    productLabel: "障碍 Call",
-    hintLevel: "减少",
+    productLabel: "Barrier Call",
+    hintLevel: "Reduced",
     params: { spot: 24000, strike: 24500, barrier: 23000, rate: 2, sigma: 28, maturity: 0.25, steps: 4 },
-    theoretical: 981, // 实算 980.77，barrier N=4
-    vanillaRef: 1167, // 实算 1167.35
+    theoretical: 981, // computed live 980.77, barrier N=4
+    vanillaRef: 1167, // computed live 1167.35
     profile: {
-      name: "李小姐",
-      type: "预算敏感客户",
-      marketView: "看涨恒生指数",
-      riskTolerance: "中高",
-      goal: "看涨，但想压低权利金",
-      productNeed: "愿意接受「中途跌破某条线就提前作废」换更便宜",
-      budget: "普通 Call 太贵，希望便宜一些",
-      experience: "买过普通期权，也碰过障碍结构",
+      name: "Ms. Li",
+      type: "Budget-Sensitive Client",
+      marketView: "Bullish on the Hang Seng Index",
+      riskTolerance: "Moderate-High",
+      goal: "Bullish, but wants to keep the premium down",
+      productNeed: "Willing to accept “expires early if it drops below a certain line along the way” in exchange for a cheaper price",
+      budget: "A vanilla call is too expensive, wants something cheaper",
+      experience: "Has bought vanilla options and dealt with barrier structures",
     },
     dialogue: [
-      "我也看涨恒指，但上次那种普通 Call 对我来说太贵了。",
-      "如果能便宜些，我可以接受「中途跌破某条线就提前作废」。",
-      "帮我配个比普通 Call 便宜的看涨方案，算个公允价给我。",
+      "I'm also bullish on the HSI, but that vanilla call last time was too expensive for me.",
+      "If it can be cheaper, I'm willing to accept “it expires early if it drops below a certain line along the way.”",
+      "Set me up with a bullish option cheaper than a vanilla call, and work out a fair price for me.",
     ],
   },
   {
     id: "he",
-    avatar: "何",
-    typeLabel: "结业判断客户",
-    taskType: "judge", // 不点产品，玩家先选品再报价
+    avatar: "H",
+    typeLabel: "Graduation Judgment Client",
+    taskType: "judge", // Doesn't name a product; the player picks the product first, then quotes
     mode: "barrier",
     correctProduct: "down_out_call",
-    productLabel: "障碍 Call",
-    hintLevel: "最少",
+    productLabel: "Barrier Call",
+    hintLevel: "Minimal",
     params: { spot: 25000, strike: 25500, barrier: 23500, rate: 2, sigma: 32, maturity: 0.25, steps: 4 },
-    theoretical: 1184, // 实算 1184.20，barrier N=4
-    vanillaRef: 1411, // 实算 1411.24
+    theoretical: 1184, // computed live 1184.20, barrier N=4
+    vanillaRef: 1411, // computed live 1411.24
     profile: {
-      name: "何先生",
-      type: "小企业主",
-      marketView: "看涨恒生指数",
-      riskTolerance: "中高",
-      goal: "看涨，想做这一波，但预算很紧",
-      productNeed: "没明说要哪种——你得自己判断",
-      budget: "预算只有一千出头，再贵就买不起",
-      experience: "买过普通期权，也买过障碍期权",
+      name: "Mr. He",
+      type: "Small Business Owner",
+      marketView: "Bullish on the Hang Seng Index",
+      riskTolerance: "Moderate-High",
+      goal: "Bullish, wants to ride this move, but budget is very tight",
+      productNeed: "Hasn't said which kind — you have to judge it yourself",
+      budget: "Budget is only a little over a thousand; anything pricier is out of reach",
+      experience: "Has bought both vanilla options and barrier options",
     },
     dialogue: [
-      "我看涨恒指，想做这一波。",
-      "但我预算很紧，手里也就一千点出头，普通 Call 那种价我下不了手。",
-      "我不怕它中途跌——真跌破某个位置当它作废、我也认。你看着给我配个合适的。",
+      "I'm bullish on the HSI and want to ride this move.",
+      "But my budget is very tight — I've only got a little over a thousand points, and I can't bring myself to pay a vanilla-call price.",
+      "I'm not afraid of it dropping along the way — if it really breaches a certain level and gets voided, I can live with that. Use your judgment and set me up with something suitable.",
     ],
     judgeProducts: [
       {
         id: "vanilla_call",
-        name: "普通看涨期权",
+        name: "Vanilla Call Option",
         term: "Vanilla Call",
-        status: "可用",
-        description: ["适合看涨观点", "没有敲出风险，结构最简单", "权利金最高", "只看最终到期价格"],
+        status: "Available",
+        description: ["Suited to a bullish view", "No knock-out risk, the simplest structure", "Highest premium", "Depends only on the final expiry price"],
         feedback:
-          "方向对，但普通 Call 是这里最贵的，正撞上何先生「预算只有一千出头」的红线。他买不起。",
+          "Right direction, but a vanilla call is the most expensive here, running straight into Mr. He's “budget only a little over a thousand” red line. He can't afford it.",
       },
       {
         id: "down_out_call",
-        name: "下跌敲出看涨期权",
+        name: "Down-and-Out Call Option",
         term: "Down-and-Out Call",
-        status: "可用",
-        description: ["适合看涨观点", "权利金低于普通 Call", "中途跌破下方障碍线则提前失效", "买方最大损失通常限于权利金"],
+        status: "Available",
+        description: ["Suited to a bullish view", "Premium lower than a vanilla call", "Expires early if it drops below the lower barrier level along the way", "The buyer's maximum loss is usually limited to the premium"],
         feedback:
-          "判断正确。预算紧 + 能接受下方敲出——障碍 Call 用更低权利金换路径风险，正好卡进他的预算。算它的理论价再报。",
+          "Correct call. Tight budget + willing to accept a downside knock-out — a barrier call trades a lower premium for path risk, fitting right into his budget. Compute its theoretical price, then quote.",
       },
       {
         id: "up_out_call",
-        name: "上涨敲出看涨期权",
+        name: "Up-and-Out Call Option",
         term: "Up-and-Out Call",
-        status: "可用",
-        description: ["看涨，但涨太多会敲出", "和「参与上涨」的目标冲突", "需要明确的收益上限解释"],
+        status: "Available",
+        description: ["Bullish, but knocks out if it rises too much", "Conflicts with the goal of “participating in the upside”", "Requires a clear explanation of the payoff cap"],
         feedback:
-          "他想参与上涨，上涨敲出会在市场涨太强时失效，跟他的目标冲突。不匹配。",
+          "He wants to participate in the upside; an up-and-out call expires when the market rises too strongly, which conflicts with his goal. Not a match.",
       },
     ],
   },
@@ -1281,63 +1281,63 @@ const day4Clients = [
 
 const day4Config = {
   day: 4,
-  title: "结业实战 · 三客户定价",
+  title: "Graduation Live Round · Three-Client Pricing",
   clients: day4Clients,
   handbookEntries: [],
-  martinPrinciple: "先读方向，再读风险承受度和预算，最后才想产品；报价永远以模型理论价为锚，再加合理利润。",
-  // 安全占位：让既有 isDay4Stage 派生逻辑（披露评分 / 市场结算路径）读不到 undefined。
-  // 新 Day4 流程没有风险披露步骤，也没有自动市场结算，这些字段仅为防御。
+  martinPrinciple: "Read the direction first, then risk tolerance and budget, and only then think about the product; always anchor the quote on the model's theoretical price, then add a reasonable profit.",
+  // Safety placeholder: keeps the existing isDay4Stage derived logic (disclosure scoring / market-settlement path) from reading undefined.
+  // The new Day4 flow has no risk-disclosure step and no automatic market settlement; these fields are purely defensive.
   disclosureItems: [],
   market: { path: [] },
   scoringRules: { correctDisclosureIds: [], misleadingDisclosureId: "__day4_none__" },
   stages: {
     day4_intro: {
-      label: "09:00 结业晨会",
-      system: "三客户定价实战",
+      label: "09:00 Graduation Morning Meeting",
+      system: "Three-Client Pricing Live Round",
       mentor:
-        "今天没有新产品要学。前三天你学了普通期权、定价、障碍——今天是结业实战：三位客户排队等你报价。原则我只说一次：先读方向，再读风险承受度和预算，最后才想产品；报价永远以模型理论价为锚，再加合理利润。我不会告诉你该选什么、报多少。",
+        "No new products to learn today. Over the past three days you learned vanilla options, pricing, and barriers — today is the graduation live round: three clients queued up waiting for your quote. I'll say the principle only once: read the direction first, then risk tolerance and budget, and only then think about the product; always anchor the quote on the model's theoretical price, then add a reasonable profit. I won't tell you what to pick or what to quote.",
     },
     day4_client_arrival: {
-      label: "09:10 客户到访",
-      system: "读懂客户需求",
+      label: "09:10 Client Arrives",
+      system: "Understand Client Needs",
       mentor:
-        "先把客户资料和对白读透。方向、预算、能不能接受附加条件——线索都在里面。读完再决定怎么做。",
+        "First read the client's profile and dialogue thoroughly. Direction, budget, whether they can accept extra conditions — the clues are all in there. Decide what to do only after you've read them.",
     },
     day4_judge: {
-      label: "09:16 判断产品",
-      system: "自己选结构",
+      label: "09:16 Judge the Product",
+      system: "Pick the Structure Yourself",
       mentor:
-        "这位客户没说要哪种产品。从他的预算和风险话术里判断：该上普通 Call，还是用更便宜的障碍 Call？选错了客户会走。",
+        "This client didn't say which product he wants. Judge from his budget and risk language: should you go with a vanilla call, or a cheaper barrier call? Pick wrong and the client walks.",
     },
     day4_pricing: {
-      label: "09:22 计算器报价",
-      system: "算理论价并报价",
+      label: "09:22 Quote via the Calculator",
+      system: "Compute the Theoretical Price and Quote",
       mentor:
-        "把客户卡上的参数填进计算器，算出理论价，再加合理利润报出去。系统不会提前告诉你对不对，提交后才见分晓。",
+        "Plug the parameters from the client card into the calculator, compute the theoretical price, then add a reasonable profit and quote it. The system won't tell you in advance whether you're right — you'll find out only after you submit.",
     },
     day4_client_response: {
-      label: "09:30 客户反馈",
-      system: "报价回执",
+      label: "09:30 Client Feedback",
+      system: "Quote Receipt",
       mentor:
-        "看客户怎么回应。报太低交易台白送利润，报太高客户掉头就走，公允加利润才是定价纪律。",
+        "See how the client responds. Quote too low and the desk gives away profit; quote too high and the client turns and walks. Fair plus profit is the pricing discipline.",
     },
     day4_scorecard: {
-      label: "09:45 结业成绩单",
-      system: "三单复盘",
+      label: "09:45 Graduation Scorecard",
+      system: "Three-Trade Review",
       mentor:
-        "三位客户都接待完了。逐单看：产品选对没、报价偏差多少、成交了几单。这就是你这四天学到的全部。",
+        "All three clients are handled. Go trade by trade: did you pick the right product, how far off was the quote, how many trades were filled. This is everything you've learned in these four days.",
     },
     day4_complete: {
-      label: "10:00 结业",
-      system: "训练完成",
+      label: "10:00 Graduation",
+      system: "Training Complete",
       mentor:
-        "从期权基础到定价、障碍，再到今天的实战报价——你已经把一个新人交易员该有的定价纪律走了一遍。",
+        "From option basics to pricing, barriers, and today's live quoting — you've now walked through the pricing discipline a new trader should have.",
     },
   },
 };
 
-// Day4 报价评价：合并 vanilla(Day2 带) 与 barrier(Day3 带) 两套区间，按 client.mode 出文案。
-// vanilla 带：理论价 +4 / +34 / +74；barrier 带：理论价 ×1.183(合理上限) / ×1.398(拒绝上限)。
+// Day4 quote evaluation: merges the two band sets — vanilla (from Day2) and barrier (from Day3) — and produces copy based on client.mode.
+// Vanilla band: theoretical +4 / +34 / +74; barrier band: theoretical ×1.183 (reasonable cap) / ×1.398 (rejection cap).
 function getDay4QuoteAnalysis(quote, client) {
   const theoretical = client.theoretical;
   const name = client.profile.name;
@@ -1349,12 +1349,12 @@ function getDay4QuoteAnalysis(quote, client) {
   if (!Number.isFinite(q) || q <= 0) {
     return {
       id: "empty",
-      label: "未报价",
-      status: "尚未报价",
+      label: "No Quote",
+      status: "Not yet quoted",
       accepted: false,
       score: "D",
-      customerLine: "你还没给我报价呢。",
-      martinComment: `还没报价。先在计算器里算出${productLabel}的理论价，再加点利润报给${name}。`,
+      customerLine: "You haven't given me a quote yet.",
+      martinComment: `No quote yet. First compute the theoretical price of the ${productLabel} in the calculator, then add some profit and quote it to ${name}.`,
       margin: 0,
       theoretical,
     };
@@ -1364,12 +1364,12 @@ function getDay4QuoteAnalysis(quote, client) {
     const bargain = Math.round(theoretical - q);
     return {
       id: "too_low",
-      label: "报价过低",
-      status: "成交了，但报价偏低，交易台损失了利润",
+      label: "Quote Too Low",
+      status: "Filled, but the quote was too low and the desk lost profit",
       accepted: true,
       score: "C",
-      customerLine: "这个价很划算，成交！",
-      martinComment: `${name}几乎没还价就签了——他清楚自己占了便宜。${productLabel}模型公允价约 ${anchor} 点，你只报了 ${Math.round(q)} 点，等于白送客户 ${bargain} 点。先看模型理论价，再加利润。`,
+      customerLine: "Great price, done!",
+      martinComment: `${name} signed with barely any haggling — he knows he got a bargain. The ${productLabel} model fair value is about ${anchor} points, but you only quoted ${Math.round(q)} points, effectively giving the client ${bargain} points for free. Look at the model's theoretical price first, then add profit.`,
       margin,
       theoretical,
     };
@@ -1381,12 +1381,12 @@ function getDay4QuoteAnalysis(quote, client) {
     if (q <= fairHigh) {
       return {
         id: "fair",
-        label: "合理报价",
-        status: "成交，定价漂亮",
+        label: "Reasonable Quote",
+        status: "Filled, beautifully priced",
         accepted: true,
         score: "A",
-        customerLine: "比普通 Call 便宜，又没便宜得离谱，可以，成交。",
-        martinComment: `漂亮。你拿障碍模型价 ${anchor} 点当锚，又加了 ${margin} 点利润——客户觉得比普通 Call 划算，交易台也拿到补偿。这就是障碍定价的纪律。`,
+        customerLine: "Cheaper than a vanilla call, and not absurdly cheap either — okay, done.",
+        martinComment: `Beautiful. You anchored on the barrier model value of ${anchor} points and added ${margin} points of profit — the client finds it a better deal than a vanilla call, and the desk gets compensated too. That's the discipline of barrier pricing.`,
         margin,
         theoretical,
       };
@@ -1394,42 +1394,42 @@ function getDay4QuoteAnalysis(quote, client) {
     if (q <= rejectAbove) {
       return {
         id: "expensive",
-        label: "偏贵",
-        status: "勉强成交，客户不满意",
+        label: "On the Pricey Side",
+        status: "Reluctantly filled, client not satisfied",
         accepted: true,
         score: "C",
-        customerLine: "障碍产品不就图个便宜吗？这价有点贵……行吧，先这样。",
-        martinComment: `${name}皱着眉签了。障碍产品的卖点就是便宜，你报这么贵，等于把它最大的优势抹掉了。这种体验留不住回头客。`,
+        customerLine: "Isn't the whole point of a barrier product that it's cheap? This is a bit pricey… fine, this time then.",
+        martinComment: `${name} signed with a frown. The selling point of a barrier product is its low price; quoting this high wipes out its biggest advantage. This kind of experience won't bring back repeat clients.`,
         margin,
         theoretical,
       };
     }
     return {
       id: "too_high",
-      label: "报价过高",
-      status: "客户拒绝，转身离开",
+      label: "Quote Too High",
+      status: "Client refuses and walks away",
       accepted: false,
       score: "D",
-      customerLine: "这么贵我还买障碍干嘛？我不如直接买普通 Call。",
-      martinComment: `${name}起身就走了。障碍报到这个价，客户宁愿去买普通 Call。报价离公允价值太远，再好的客户也会走。`,
+      customerLine: "If it's this expensive, why would I even buy a barrier? I'd be better off just buying a vanilla call.",
+      martinComment: `${name} got up and left. At this price for a barrier, the client would rather buy a vanilla call. A quote too far from fair value will lose even the best client.`,
       margin,
       theoretical,
     };
   }
 
-  // vanilla 带
+  // vanilla band
   const fairLow = theoretical + 4;
   const fairHigh = theoretical + 34;
   const rejectAbove = theoretical + 74;
   if (q < fairLow) {
     return {
       id: "thin_margin",
-      label: "利润很薄",
-      status: "成交，但利润薄如纸",
+      label: "Very Thin Margin",
+      status: "Filled, but the margin is paper-thin",
       accepted: true,
       score: "B",
-      customerLine: "可以，我接受这个报价。",
-      martinComment: `${name}爽快接受。你守住了理论价 ${anchor} 点，但利润薄得几乎看不见。成交是成交了，交易台这单基本白忙。`,
+      customerLine: "Okay, I'll take that quote.",
+      martinComment: `${name} accepted readily. You held the theoretical price of ${anchor} points, but the margin is almost invisible. The trade went through, but the desk basically worked this one for nothing.`,
       margin,
       theoretical,
     };
@@ -1437,12 +1437,12 @@ function getDay4QuoteAnalysis(quote, client) {
   if (q <= fairHigh) {
     return {
       id: "fair",
-      label: "合理报价",
-      status: "成交，定价漂亮",
+      label: "Reasonable Quote",
+      status: "Filled, beautifully priced",
       accepted: true,
       score: "A",
-      customerLine: "价格公道，成交。",
-      martinComment: `漂亮。你拿模型理论价 ${anchor} 点当锚，又留了 ${margin} 点利润——客户爽快接受，交易台也有钱赚。这就是定价纪律。`,
+      customerLine: "Fair price, done.",
+      martinComment: `Beautiful. You anchored on the model's theoretical price of ${anchor} points and left ${margin} points of profit — the client accepted readily, and the desk made money too. That's pricing discipline.`,
       margin,
       theoretical,
     };
@@ -1450,24 +1450,24 @@ function getDay4QuoteAnalysis(quote, client) {
   if (q <= rejectAbove) {
     return {
       id: "expensive",
-      label: "偏贵",
-      status: "勉强成交，客户不满意",
+      label: "On the Pricey Side",
+      status: "Reluctantly filled, client not satisfied",
       accepted: true,
       score: "C",
-      customerLine: "有点贵……行吧，这次先这样。",
-      martinComment: `${name}皱着眉签了字。报得偏高，客户明显不爽。这种客户体验留不住回头客。`,
+      customerLine: "A bit pricey… fine, this time then.",
+      martinComment: `${name} signed with a frown. You quoted on the high side, and the client is clearly unhappy. This kind of client experience won't bring back repeat business.`,
       margin,
       theoretical,
     };
   }
   return {
     id: "too_high",
-    label: "报价过高",
-    status: "客户拒绝，转身离开",
+    label: "Quote Too High",
+    status: "Client refuses and walks away",
     accepted: false,
     score: "D",
-    customerLine: "这个价太离谱了，我去别家比比。",
-    martinComment: `${name}合上笔记本起身就走了。报这么高把客户吓跑，这单黄了。模型是用来守纪律的，不是用来宰客的。`,
+    customerLine: "That price is outrageous — I'll go compare elsewhere.",
+    martinComment: `${name} closed the notebook, got up, and left. Quoting this high scared the client off, and the trade is dead. The model is for keeping discipline, not for fleecing clients.`,
     margin,
     theoretical,
   };
@@ -1517,11 +1517,11 @@ function formatPoints(value) {
 function getQuoteAnalysis(
   quote,
   theoretical = day2Config.quoteRules.theoreticalPrice,
-  clientName = "王先生",
-  clientDesc = "专业客户",
+  clientName = "Mr. Wang",
+  clientDesc = "A professional client",
 ) {
   const margin = quote - theoretical;
-  // 合理区间：理论价 + 4 到 理论价 + 34（相对偏移，不再写死绝对值）
+  // Reasonable range: theoretical + 4 to theoretical + 34 (relative offsets, no longer hard-coded absolutes)
   const fairLow = theoretical + 4;
   const fairHigh = theoretical + 34;
   const rejectAbove = theoretical + 74;
@@ -1530,17 +1530,17 @@ function getQuoteAnalysis(
     const bargain = theoretical - quote;
     return {
       id: "too_low",
-      label: "报价过低",
+      label: "Quote Too Low",
       score: "D",
       tone: "danger",
-      status: "成交了，但报价偏低，交易台损失了利润",
+      status: "Filled, but the quote was too low and the desk lost profit",
       accepted: true,
-      customerPreview: "客户会立刻抓住这个便宜价。",
-      customerLine: "这个价格很划算，成交。",
+      customerPreview: "The client will grab this cheap price immediately.",
+      customerLine: "That's a great price, done.",
       reportText:
-        "你的报价低于这张期权的合理价值，客户几乎是立刻就接受了——心里清楚自己占了便宜。",
+        "Your quote was below the option's fair value, and the client accepted almost immediately — well aware they got a bargain.",
       martinComment:
-        `${clientName}眼睛一亮，几乎没还价就签了字。你把一张大约值 ${theoretical} 点的期权报了 ${quote} 点，等于白送客户 ${bargain} 点。${clientDesc}最会捡这种便宜。下次先看模型算出的理论价，再加利润，别让交易台吃哑巴亏。`,
+        `${clientName}'s eyes lit up and he signed with barely any haggling. You quoted ${quote} points for an option worth about ${theoretical} points, effectively giving the client ${bargain} points for free. ${clientDesc} is best at snapping up bargains like this. Next time, look at the model's theoretical price first, then add profit — don't let the desk take a silent loss.`,
       margin,
       theoretical,
     };
@@ -1549,16 +1549,16 @@ function getQuoteAnalysis(
   if (quote < fairLow) {
     return {
       id: "thin_margin",
-      label: "利润很薄",
+      label: "Very Thin Margin",
       score: "B-",
       tone: "warn",
-      status: "成交，但利润薄如纸",
+      status: "Filled, but the margin is paper-thin",
       accepted: true,
-      customerPreview: "客户会爽快接受，但交易台几乎没赚头。",
-      customerLine: "可以，我接受这个报价。",
-      reportText: "报价对客户很友好，但交易台利润薄得几乎看不见。",
+      customerPreview: "The client will accept readily, but the desk earns almost nothing.",
+      customerLine: "Okay, I'll take that quote.",
+      reportText: "The quote is very client-friendly, but the desk's margin is almost invisible.",
       martinComment:
-        "你守住了理论价，但利润薄得几乎看不见。成交是成交了，交易台这单基本白忙。真实交易台会再问一句：这点利润，值得承担这笔风险吗？",
+        "You held the theoretical price, but the margin is almost invisible. The trade went through, but the desk basically worked this one for nothing. A real desk would ask one more question: is this sliver of profit worth taking on this risk?",
       margin,
       theoretical,
     };
@@ -1567,16 +1567,16 @@ function getQuoteAnalysis(
   if (quote <= fairHigh) {
     return {
       id: "fair",
-      label: "合理报价",
+      label: "Reasonable Quote",
       score: "A",
       tone: "good",
-      status: "成交，定价漂亮",
+      status: "Filled, beautifully priced",
       accepted: true,
-      customerPreview: "报价公平，也有合理利润空间。",
-      customerLine: "价格公道，成交。",
-      reportText: "你参考了理论价格，并加入了合理利润空间，客户和交易台都满意。",
+      customerPreview: "The quote is fair, with a reasonable profit margin.",
+      customerLine: "Fair price, done.",
+      reportText: "You referenced the theoretical price and added a reasonable profit margin; both client and desk are satisfied.",
       martinComment:
-        `漂亮。你拿模型理论价 ${theoretical} 点当锚，又留了 ${margin} 点利润——客户爽快接受，交易台也有钱赚。这就是定价纪律。`,
+        `Beautiful. You anchored on the model's theoretical price of ${theoretical} points and left ${margin} points of profit — the client accepted readily, and the desk made money too. That's pricing discipline.`,
       margin,
       theoretical,
     };
@@ -1585,16 +1585,16 @@ function getQuoteAnalysis(
   if (quote <= rejectAbove) {
     return {
       id: "expensive",
-      label: "偏贵",
+      label: "On the Pricey Side",
       score: "C",
       tone: "warn",
-      status: "勉强成交，客户不满意",
+      status: "Reluctantly filled, client not satisfied",
       accepted: true,
-      customerPreview: "客户会皱眉，勉强成交。",
-      customerLine: "有点贵……行吧，这次先这样。",
-      reportText: "报价高于合理区间，客户勉强接受，但明显不满意。",
+      customerPreview: "The client will frown and reluctantly accept.",
+      customerLine: "A bit pricey… fine, this time then.",
+      reportText: "The quote is above the reasonable range; the client reluctantly accepts but is clearly unhappy.",
       martinComment:
-        `${clientName}皱着眉签了字。成交是成交了，但你报得偏高，客户明显不爽。这种客户体验留不住回头客——${clientDesc}会记得谁宰过自己。`,
+        `${clientName} signed with a frown. The trade went through, but you quoted on the high side and the client is clearly unhappy. This kind of client experience won't bring back repeat business — ${clientDesc} remembers who overcharged them.`,
       margin,
       theoretical,
     };
@@ -1602,16 +1602,16 @@ function getQuoteAnalysis(
 
   return {
     id: "too_high",
-    label: "报价过高",
+    label: "Quote Too High",
     score: "D",
     tone: "danger",
-    status: "客户拒绝，转身离开",
+    status: "Client refuses and walks away",
     accepted: false,
-    customerPreview: "客户很可能掉头就走。",
-    customerLine: "这个价太离谱了，我去别家比比。",
-    reportText: "报价过高，客户当场拒绝，转身离开，这单没成。",
+    customerPreview: "The client will very likely turn and walk.",
+    customerLine: "That price is outrageous — I'll go compare elsewhere.",
+    reportText: "The quote was too high; the client refused on the spot and walked away, and the trade fell through.",
     martinComment:
-      `${clientName}合上笔记本起身就走了。报这么高把客户吓跑，这单黄了，交易台一分钱没赚到。模型是用来守纪律的，不是用来宰客的——报价离公允价值太远，再好的客户也会走。`,
+      `${clientName} closed the notebook, got up, and left. Quoting this high scared the client off, the trade is dead, and the desk made nothing. The model is for keeping discipline, not for fleecing clients — a quote too far from fair value will lose even the best client.`,
     margin,
     theoretical,
   };
@@ -1643,7 +1643,7 @@ function getDay2PricingScore(quote, theoretical = day2Config.quoteRules.theoreti
   if (!analysis.accepted) {
     return {
       score: "D",
-      comment: "报价过高，客户拒绝交易。市场后来上涨，但交易台没有成交，也没有收入。",
+      comment: "The quote was too high and the client refused the trade. The market later rose, but the desk made no trade and earned nothing.",
     };
   }
 
@@ -1652,8 +1652,8 @@ function getDay2PricingScore(quote, theoretical = day2Config.quoteRules.theoreti
       score: marketResult.deskPnl < 0 ? "D" : "C",
       comment:
         marketResult.deskPnl < 0
-          ? "报价低于理论价格，市场上涨后交易台实际亏损。低价成交不等于好报价。"
-          : "报价低于理论价格，这次市场结果还能覆盖收益，但定价纪律不够。",
+          ? "The quote was below the theoretical price; after the market rose, the desk actually took a loss. A cheap fill isn't a good quote."
+          : "The quote was below the theoretical price; this time the market outcome still covered the payoff, but the pricing discipline was lacking.",
     };
   }
 
@@ -1662,28 +1662,28 @@ function getDay2PricingScore(quote, theoretical = day2Config.quoteRules.theoreti
       score: marketResult.deskPnl >= 0 ? "A" : "B",
       comment:
         marketResult.deskPnl >= 0
-          ? "报价接近模型价格，并留下合理利润空间；模拟市场结算后交易台仍有正收益。"
-          : "报价纪律不错，但这条市场路径让交易台承受了亏损。模型是报价锚点，不是收益保证。",
+          ? "The quote was close to the model price with a reasonable profit margin; after the simulated market settlement, the desk still had a positive P&L."
+          : "Good pricing discipline, but this market path left the desk with a loss. The model is a quote anchor, not a profit guarantee.",
     };
   }
 
   if (quote < fairLow) {
     return {
       score: "B-",
-      comment: "报价守住理论价格，但利润空间偏薄；市场结算后需要检查这笔风险是否值得。",
+      comment: "The quote held the theoretical price, but the profit margin is thin; after market settlement, you need to check whether this risk was worth it.",
     };
   }
 
   if (quote <= theoretical + 74) {
     return {
       score: "C",
-      comment: "报价高于合理区间，虽然客户勉强接受，但客户满意度下降。",
+      comment: "The quote was above the reasonable range; although the client reluctantly accepted, client satisfaction dropped.",
     };
   }
 
   return {
     score: "D",
-    comment: "报价远离模型价格，客户拒绝交易。",
+    comment: "The quote was far from the model price, and the client refused the trade.",
   };
 }
 
@@ -1703,8 +1703,8 @@ function getDay3MarketResult() {
   };
 }
 
-// Day3 障碍报价评价：以障碍产品的模型公允价（day3Config.market.premium ≈ 934）为锚，
-// 区间按 Day2 的相对比例缩放（合理加价 ~+2%..+18%，超过 ~+40% 客户宁愿买普通 Call 而拒绝）。
+// Day3 barrier quote evaluation: anchors on the barrier product's model fair value (day3Config.market.premium ≈ 934),
+// with the range scaled by Day2's relative proportions (reasonable markup ~+2%..+18%; above ~+40% the client would rather buy a vanilla call and rejects).
 function getDay3QuoteAnalysis(quote, theoretical = day3Config.market.premium) {
   const q = Number(quote);
   const margin = Math.round(q - theoretical);
@@ -1715,11 +1715,11 @@ function getDay3QuoteAnalysis(quote, theoretical = day3Config.market.premium) {
   if (!Number.isFinite(q) || q <= 0) {
     return {
       id: "empty",
-      label: "未报价",
-      status: "尚未报价",
+      label: "No Quote",
+      status: "Not yet quoted",
       accepted: false,
-      customerLine: "你还没给我报价呢。",
-      martinComment: "还没报价。先在计算器里算出障碍理论价，再加一点利润报给陈女士。",
+      customerLine: "You haven't given me a quote yet.",
+      martinComment: "No quote yet. First compute the barrier's theoretical price in the calculator, then add a little profit and quote it to Ms. Chen.",
       margin: 0,
       theoretical,
     };
@@ -1729,11 +1729,11 @@ function getDay3QuoteAnalysis(quote, theoretical = day3Config.market.premium) {
     const bargain = Math.round(theoretical - q);
     return {
       id: "too_low",
-      label: "报价过低",
-      status: "成交了，但报价低于理论价，交易台利润被压缩",
+      label: "Quote Too Low",
+      status: "Filled, but the quote was below the theoretical price and the desk's profit was squeezed",
       accepted: true,
-      customerLine: "这价比普通 Call 便宜太多了，成交！",
-      martinComment: `陈女士爽快签了——她占了便宜。障碍模型公允价 ${anchor} 点，你只报了 ${Math.round(q)} 点，交易台等于少收了 ${bargain} 点。给客户优惠可以，但别让到这个地步。`,
+      customerLine: "This is way cheaper than a vanilla call, done!",
+      martinComment: `Ms. Chen signed readily — she got a bargain. The barrier model fair value is ${anchor} points, but you only quoted ${Math.round(q)} points, so the desk took in ${bargain} points less. A discount for the client is fine, but don't take it this far.`,
       margin,
       theoretical,
     };
@@ -1742,11 +1742,11 @@ function getDay3QuoteAnalysis(quote, theoretical = day3Config.market.premium) {
   if (q <= fairHigh) {
     return {
       id: "fair",
-      label: "合理报价",
-      status: "成交，定价漂亮",
+      label: "Reasonable Quote",
+      status: "Filled, beautifully priced",
       accepted: true,
-      customerLine: "比普通 Call 便宜，又没便宜得离谱，可以，成交。",
-      martinComment: `漂亮。你拿障碍模型价 ${anchor} 点当锚，又加了 ${margin} 点利润——客户觉得比普通 Call 划算，交易台也拿到补偿。这就是障碍定价的纪律。`,
+      customerLine: "Cheaper than a vanilla call, and not absurdly cheap either — okay, done.",
+      martinComment: `Beautiful. You anchored on the barrier model value of ${anchor} points and added ${margin} points of profit — the client finds it a better deal than a vanilla call, and the desk gets compensated too. That's the discipline of barrier pricing.`,
       margin,
       theoretical,
     };
@@ -1755,11 +1755,11 @@ function getDay3QuoteAnalysis(quote, theoretical = day3Config.market.premium) {
   if (q <= rejectAbove) {
     return {
       id: "expensive",
-      label: "偏贵",
-      status: "勉强成交，客户不满意",
+      label: "On the Pricey Side",
+      status: "Reluctantly filled, client not satisfied",
       accepted: true,
-      customerLine: "障碍产品不就图个便宜吗？这价有点贵……行吧，先这样。",
-      martinComment: "陈女士皱着眉签了。障碍产品的卖点就是便宜，你报这么贵，等于把它最大的优势抹掉了。这种体验留不住回头客。",
+      customerLine: "Isn't the whole point of a barrier product that it's cheap? This is a bit pricey… fine, this time then.",
+      martinComment: "Ms. Chen signed with a frown. The selling point of a barrier product is its low price; quoting this high wipes out its biggest advantage. This kind of experience won't bring back repeat clients.",
       margin,
       theoretical,
     };
@@ -1767,28 +1767,28 @@ function getDay3QuoteAnalysis(quote, theoretical = day3Config.market.premium) {
 
   return {
     id: "too_high",
-    label: "报价过高",
-    status: "客户拒绝，转身离开",
+    label: "Quote Too High",
+    status: "Client refuses and walks away",
     accepted: false,
-    customerLine: "这么贵我还买障碍干嘛？我不如直接买普通 Call。",
-    martinComment: `陈女士掉头就走了。障碍比普通 Call 还贵，等于自己否定自己——客户当然不签。报价离障碍公允价 ${anchor} 点太远，这单黄了。`,
+    customerLine: "If it's this expensive, why would I even buy a barrier? I'd be better off just buying a vanilla call.",
+    martinComment: `Ms. Chen turned and left. A barrier priced higher than a vanilla call contradicts itself — of course the client won't sign. The quote is too far from the barrier fair value of ${anchor} points, and the trade is dead.`,
     margin,
     theoretical,
   };
 }
 
-// 已归档（CBBC）：原 Day4 熊证市场结算，新流程不再使用。
+// Archived (CBBC): the original Day4 bear-contract market settlement, no longer used in the new flow.
 function getDay4CbbcMarketResult_ARCHIVED() {
   const market = day4CbbcConfig_ARCHIVED.market;
   const finalPrice = market.path[market.path.length - 1];
   const mceIndex = market.path.findIndex((price) => price >= market.cbbcCallPrice);
   const mceTriggered = mceIndex >= 0;
-  // 普通 Put 比较产品：使用 Put 自己的行权价 strike(21200)
+  // Vanilla put comparison product: uses the put's own strike (21200)
   const vanillaPayoff = Math.max(market.strike - finalPrice, 0);
   const vanillaPnl = vanillaPayoff - market.vanillaPremium;
-  // 熊证按「带杠杆的线性看跌敞口」建模（而非期权 payoff），避免出现「小成本博大内在价值」的伪套利。
-  // 未触发 MCE：盈亏 = 投入资金 × 杠杆 × 标的相对入场的下跌比例（下跌为正，上涨为负）。
-  // 触发 MCE：损失全部投入（教学简化：残值 = 0）。亏损下限为投入资金。
+  // The bear contract is modeled as "leveraged linear bearish exposure" (rather than an option payoff), avoiding the pseudo-arbitrage of "small cost for large intrinsic value".
+  // MCE not triggered: P&L = invested amount × leverage × the underlying's percentage fall from entry (a fall is positive, a rise is negative).
+  // MCE triggered: lose the entire investment (teaching simplification: residual value = 0). The loss floor is the invested amount.
   const bearMovePct = (market.spot - finalPrice) / market.spot;
   const bearCbbcPnl = mceTriggered
     ? -market.cbbcEntryCost
@@ -2180,59 +2180,59 @@ function SideData({ currentDay }) {
   const side =
     currentDay === 4
       ? {
-          leftStatus: "理论价",
-          dayLabel: "结业实战",
-          mode: "实战报价",
-          topic: "三客户定价",
+          leftStatus: "Theoretical Price",
+          dayLabel: "Graduation Round",
+          mode: "Live Quoting",
+          topic: "Three-Client Pricing",
         }
       : currentDay === 3
       ? {
-          leftStatus: "障碍线",
-          dayLabel: "第三天",
-          mode: "路径",
+          leftStatus: "Barrier Level",
+          dayLabel: "Day Three",
+          mode: "Path",
           topic: "KNOCK-OUT",
         }
       : currentDay === 2
         ? {
-            leftStatus: "理论价",
-            dayLabel: "第二天",
-            mode: "报价",
-            topic: "二叉树",
+            leftStatus: "Theoretical Price",
+            dayLabel: "Day Two",
+            mode: "Quoting",
+            topic: "Binomial Tree",
           }
         : {
-            leftStatus: "固定路径",
-            dayLabel: "第一天",
-            mode: "教学",
+            leftStatus: "Fixed Path",
+            dayLabel: "Day One",
+            mode: "Teaching",
             topic: "CALL / PUT",
           };
 
   return (
     <>
       <div className="font-terminal fixed left-8 top-1/2 z-10 hidden -translate-y-1/2 text-sm leading-8 text-slate-700 lg:block">
-        <div className="text-slate-600">恒指</div>
+        <div className="text-slate-600">HSI</div>
         <div className="text-[#00f0ff]">21,500.00</div>
         <div className="text-green-500">{side.leftStatus}</div>
         <div className="text-[#ffd700]">{side.dayLabel}</div>
         <br />
-        <div className="text-slate-600">模式</div>
+        <div className="text-slate-600">Mode</div>
         <div className="text-[#00f0ff]">{side.mode}</div>
       </div>
 
       <div className="font-terminal fixed right-8 top-1/2 z-10 hidden -translate-y-1/2 text-right text-sm leading-8 text-slate-700 lg:block">
-        <div className="text-slate-600">产品</div>
+        <div className="text-slate-600">Product</div>
         <div className="text-[#00f0ff]">
           {currentDay === 4
-            ? "普通 / 障碍"
+            ? "Vanilla / Barrier"
             : currentDay === 3
-              ? "障碍期权"
-              : "普通期权"}
+              ? "Barrier Option"
+              : "Vanilla Option"}
         </div>
         <br />
-        <div className="text-slate-600">主题</div>
+        <div className="text-slate-600">Topic</div>
         <div className="text-[#00f0ff]">{side.topic}</div>
         <br />
-        <div className="text-slate-600">柜台</div>
-        <div className="text-[#00f0ff]">中环</div>
+        <div className="text-slate-600">Desk</div>
+        <div className="text-[#00f0ff]">Central</div>
       </div>
     </>
   );
@@ -2247,15 +2247,15 @@ function TopBar({
   onOpenHandbook,
 }) {
   const dayConfig = dayConfigs[currentDay] ?? day1Config;
-  const stageMeta = stageConfig[stage] ?? { label: "待命" };
+  const stageMeta = stageConfig[stage] ?? { label: "Standby" };
 
   return (
     <div className="mx-auto flex w-full max-w-[1180px] flex-wrap items-center justify-between gap-3 border-b border-cyan-400/15 py-4 text-sm md:mt-5">
       <div className="font-terminal tracking-[0.16em] text-[#00f0ff]">
-        第 {currentDay} 天：{dayConfig.title}
+        Day {currentDay}: {dayConfig.title}
       </div>
       <div className="font-terminal text-slate-500">
-        时间：<span className="text-slate-300">{stageMeta.label}</span>
+        Time: <span className="text-slate-300">{stageMeta.label}</span>
       </div>
       <div className="flex flex-wrap items-center gap-2">
         <button
@@ -2264,7 +2264,7 @@ function TopBar({
           disabled={!canGoBack}
           className="font-terminal rounded-md border border-cyan-400/25 bg-cyan-400/[0.04] px-4 py-2 text-xs font-bold tracking-[0.16em] text-[#00f0ff] transition duration-300 hover:bg-cyan-400/[0.09] disabled:pointer-events-none disabled:opacity-35"
         >
-          上一页
+          Back
         </button>
         <button
           type="button"
@@ -2276,7 +2276,7 @@ function TopBar({
               : "border-cyan-400/25 bg-cyan-400/[0.04] text-[#00f0ff] hover:bg-cyan-400/[0.09]",
           )}
         >
-          打开手册 {handbookHasNew ? "/ 新内容" : ""}
+          Open Handbook {handbookHasNew ? "/ New" : ""}
         </button>
       </div>
     </div>
@@ -2286,7 +2286,7 @@ function TopBar({
 function MentorPanel({ text, skipSignal }) {
   return (
     <TerminalCard className="h-full overflow-hidden">
-      <TerminalHeader label="导师面板 / MARTIN" accent="在线" />
+      <TerminalHeader label="MENTOR PANEL / MARTIN" accent="Online" />
       <div className="p-5">
         <div className="mb-5 flex items-center gap-4">
           <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#00f0ff,#0088aa)] font-terminal text-2xl font-black text-[#0a0a1a] shadow-[0_0_28px_rgba(0,240,255,0.25)]">
@@ -2294,9 +2294,9 @@ function MentorPanel({ text, skipSignal }) {
           </div>
           <div>
             <div className="font-terminal text-sm tracking-[0.18em] text-[#00f0ff]">
-              导师 MARTIN
+              Mentor MARTIN
             </div>
-            <div className="mt-1 text-xs text-slate-500">新人交易员引导</div>
+            <div className="mt-1 text-xs text-slate-500">New Trader Onboarding</div>
           </div>
         </div>
 
@@ -2325,355 +2325,355 @@ function BottomActionBar({
   const actionSets = {
     day1_welcome: (
       <PrimaryButton onClick={actions.startBriefing} className="px-10">
-        开始晨会
+        Start Morning Meeting
       </PrimaryButton>
     ),
     day1_lesson_basics: (
       <PrimaryButton onClick={actions.toCallPutLesson} className="px-10">
-        继续：Call 与 Put
+        Continue: Call and Put
       </PrimaryButton>
     ),
     day1_intro: (
       <PrimaryButton onClick={actions.toPremiumLesson} className="px-10">
-        继续：期权费
+        Continue: Premium
       </PrimaryButton>
     ),
     day1_lesson_premium: (
       <PrimaryButton onClick={actions.toVanillaRuleLesson} className="px-10">
-        继续：普通期权规则
+        Continue: Vanilla Option Rules
       </PrimaryButton>
     ),
     day1_lesson_vanilla_rule: (
       <PrimaryButton onClick={actions.finishLesson} className="px-10">
-        更新工作手册
+        Update Handbook
       </PrimaryButton>
     ),
     day1_handbook_updated: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
-        <PrimaryButton onClick={actions.meetClient}>接待第一位客户</PrimaryButton>
+        <PrimaryButton onClick={actions.meetClient}>Meet the First Client</PrimaryButton>
       </>
     ),
     day1_client_arrival: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
         <PrimaryButton onClick={actions.toProductSelection}>
-          进入产品选择
+          Go to Product Selection
         </PrimaryButton>
       </>
     ),
     day1_product_selection: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
         <PrimaryButton onClick={actions.confirmProduct} disabled={!selectedProduct}>
-          确认产品
+          Confirm Product
         </PrimaryButton>
       </>
     ),
     day1_risk_disclosure: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
-        <PrimaryButton onClick={actions.confirmDisclosure} disabled={!disclosureReady}>确认披露</PrimaryButton>
+        <PrimaryButton onClick={actions.confirmDisclosure} disabled={!disclosureReady}>Confirm Disclosure</PrimaryButton>
       </>
     ),
     day1_market_run: (
       marketComplete ? (
         <PrimaryButton onClick={actions.viewReport} tone="gold">
-          查看报告
+          View Report
         </PrimaryButton>
       ) : null
     ),
     day1_report: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
-        <PrimaryButton onClick={actions.finishDay}>完成第一天</PrimaryButton>
+        <PrimaryButton onClick={actions.finishDay}>Complete Day One</PrimaryButton>
       </>
     ),
     day1_complete: (
       <>
         <PrimaryButton tone="gold" onClick={actions.startDay2}>
-          进入第二天：定价柜台
+          Enter Day Two: Pricing Desk
         </PrimaryButton>
         <PrimaryButton tone="ghost" onClick={actions.restartDay1}>
-          重新开始第一天
+          Restart Day One
         </PrimaryButton>
       </>
     ),
     day2_intro: (
       <PrimaryButton onClick={actions.toDay2PricingAnchor} className="px-10">
-        开始定价课
+        Start the Pricing Lesson
       </PrimaryButton>
     ),
     day2_lesson_pricing_anchor: (
       <PrimaryButton onClick={actions.toDay2TreePaths} className="px-10">
-        继续：二叉树路径
+        Continue: Binomial Tree Paths
       </PrimaryButton>
     ),
     day2_lesson_tree_paths: (
       <PrimaryButton onClick={actions.toDay2BackwardPrice} className="px-10">
-        继续：到期收益与倒推
+        Continue: Payoff and Backward Induction
       </PrimaryButton>
     ),
     day2_lesson_backward_price: (
       <PrimaryButton onClick={actions.finishDay2Intro} className="px-10">
-        更新工作手册
+        Update Handbook
       </PrimaryButton>
     ),
     day2_handbook_updated: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
-        <PrimaryButton onClick={actions.meetDay2Client}>接待客户</PrimaryButton>
+        <PrimaryButton onClick={actions.meetDay2Client}>Meet the Client</PrimaryButton>
       </>
     ),
     day2_research_terminal: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
-        <PrimaryButton onClick={actions.toDay2TreeExplainer}>参数已记录，进入定价台</PrimaryButton>
+        <PrimaryButton onClick={actions.toDay2TreeExplainer}>Parameters Noted, Go to the Pricing Desk</PrimaryButton>
       </>
     ),
     day2_client_arrival: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
         <PrimaryButton onClick={actions.toDay2ProductReview}>
-          进入产品确认
+          Go to Product Confirmation
         </PrimaryButton>
       </>
     ),
     day2_product_review: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
-        <PrimaryButton onClick={actions.confirmProduct}>确认产品</PrimaryButton>
+        <PrimaryButton onClick={actions.confirmProduct}>Confirm Product</PrimaryButton>
       </>
     ),
     day2_tree_explainer: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
         <PrimaryButton onClick={actions.confirmQuote} disabled={!quoteEntered}>
-          {quoteEntered ? "继续风险披露" : "请先填写报价"}
+          {quoteEntered ? "Continue to Risk Disclosure" : "Please Enter a Quote First"}
         </PrimaryButton>
       </>
     ),
     day2_quote_slider: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
-        <PrimaryButton onClick={actions.confirmQuote}>确认报价</PrimaryButton>
+        <PrimaryButton onClick={actions.confirmQuote}>Confirm Quote</PrimaryButton>
       </>
     ),
     day2_risk_disclosure: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
         <PrimaryButton onClick={actions.confirmDisclosure} disabled={!disclosureReady}>
-          确认风险披露
+          Confirm Risk Disclosure
         </PrimaryButton>
       </>
     ),
     day2_client_response: (
-      <PrimaryButton onClick={actions.toDay2MarketRun}>查看市场结算</PrimaryButton>
+      <PrimaryButton onClick={actions.toDay2MarketRun}>View Market Settlement</PrimaryButton>
     ),
     day2_market_run: (
       marketComplete ? (
         <PrimaryButton onClick={actions.viewReport} tone="gold">
-          查看报告
+          View Report
         </PrimaryButton>
       ) : (
-        <PrimaryButton disabled>行情运行中…</PrimaryButton>
+        <PrimaryButton disabled>Market Running…</PrimaryButton>
       )
     ),
     day2_report: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
-        <PrimaryButton onClick={actions.finishDay2}>完成第二天</PrimaryButton>
+        <PrimaryButton onClick={actions.finishDay2}>Complete Day Two</PrimaryButton>
       </>
     ),
     day2_complete: (
       <>
         <PrimaryButton tone="gold" onClick={actions.startDay3}>
-          进入第三天：障碍期权
+          Enter Day Three: Barrier Options
         </PrimaryButton>
         <PrimaryButton tone="ghost" onClick={actions.restartDay2}>
-          重新开始第二天
+          Restart Day Two
         </PrimaryButton>
       </>
     ),
     day3_intro: (
       <PrimaryButton onClick={actions.toDay3BarrierConcept} className="px-10">
-        开始障碍课
+        Start the Barrier Lesson
       </PrimaryButton>
     ),
     day3_lesson_barrier_concept: (
       <PrimaryButton onClick={actions.toDay3KnockOut} className="px-10">
-        继续：什么是敲出
+        Continue: What Is Knock-Out
       </PrimaryButton>
     ),
     day3_lesson_knock_out: (
       <PrimaryButton onClick={actions.finishDay3Intro} className="px-10">
-        更新工作手册
+        Update Handbook
       </PrimaryButton>
     ),
     day3_research_terminal: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
         <PrimaryButton onClick={actions.toDay3CompareVanilla}>
-          参数已记录，继续定价
+          Parameters Noted, Continue to Pricing
         </PrimaryButton>
       </>
     ),
     day3_lesson_compare_vanilla: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
         <PrimaryButton onClick={actions.confirmQuote} disabled={!quoteEntered}>
-          {quoteEntered ? "继续风险披露" : "请先填写报价"}
+          {quoteEntered ? "Continue to Risk Disclosure" : "Please Enter a Quote First"}
         </PrimaryButton>
       </>
     ),
     day3_handbook_updated: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
-        <PrimaryButton onClick={actions.meetDay3Client}>接待客户</PrimaryButton>
+        <PrimaryButton onClick={actions.meetDay3Client}>Meet the Client</PrimaryButton>
       </>
     ),
     day3_client_arrival: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
         <PrimaryButton onClick={actions.toDay3ProductSelection}>
-          进入产品选择
+          Go to Product Selection
         </PrimaryButton>
       </>
     ),
     day3_product_selection: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
         <PrimaryButton onClick={actions.toDay3ResearchTerminal}>
-          前往数据台查参数
+          Go to the Data Desk for Parameters
         </PrimaryButton>
       </>
     ),
     day3_risk_disclosure: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
         <PrimaryButton onClick={actions.confirmDisclosure} disabled={!disclosureReady}>
-          确认风险披露
+          Confirm Risk Disclosure
         </PrimaryButton>
       </>
     ),
     day3_client_response: (
-      <PrimaryButton onClick={actions.toDay3MarketRun}>查看市场结算</PrimaryButton>
+      <PrimaryButton onClick={actions.toDay3MarketRun}>View Market Settlement</PrimaryButton>
     ),
     day3_market_run: (
       marketComplete ? (
         <PrimaryButton onClick={actions.viewReport} tone="gold">
-          查看报告
+          View Report
         </PrimaryButton>
       ) : null
     ),
     day3_report: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
-        <PrimaryButton onClick={actions.finishDay3}>完成第三天</PrimaryButton>
+        <PrimaryButton onClick={actions.finishDay3}>Complete Day Three</PrimaryButton>
       </>
     ),
     day3_complete: (
       <>
         <PrimaryButton tone="gold" onClick={actions.startDay4}>
-          进入结业实战：三客户定价
+          Enter the Graduation Round: Three-Client Pricing
         </PrimaryButton>
         <PrimaryButton tone="ghost" onClick={actions.restartDay3}>
-          重新开始第三天
+          Restart Day Three
         </PrimaryButton>
       </>
     ),
     day4_intro: (
       <PrimaryButton onClick={actions.beginDay4Clients} className="px-10">
-        开始接待客户
+        Start Meeting Clients
       </PrimaryButton>
     ),
     day4_client_arrival: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
         <PrimaryButton onClick={actions.toDay4Task}>
-          {day4IsJudge ? "我已读懂需求，去判断产品" : "我已读懂需求，去报价"}
+          {day4IsJudge ? "I've Read the Needs, Go Judge the Product" : "I've Read the Needs, Go Quote"}
         </PrimaryButton>
       </>
     ),
     day4_judge: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
         <PrimaryButton onClick={actions.confirmProduct} disabled={!selectedProduct}>
-          确认产品，进入报价
+          Confirm Product, Go to Quoting
         </PrimaryButton>
       </>
     ),
     day4_pricing: (
       <>
         <PrimaryButton tone="ghost" onClick={actions.openHandbook}>
-          打开手册
+          Open Handbook
         </PrimaryButton>
         <PrimaryButton onClick={actions.submitDay4Quote} disabled={!quoteEntered}>
-          {quoteEntered ? "提交报价" : "请先填写报价"}
+          {quoteEntered ? "Submit Quote" : "Please Enter a Quote First"}
         </PrimaryButton>
       </>
     ),
     day4_client_response: (
       <PrimaryButton onClick={actions.nextDay4Client} tone="gold">
-        {day4IsLastClient ? "查看结业成绩单" : "下一位客户"}
+        {day4IsLastClient ? "View Graduation Scorecard" : "Next Client"}
       </PrimaryButton>
     ),
     day4_scorecard: (
       <PrimaryButton onClick={actions.finishDay4} tone="gold" className="px-10">
-        完成结业
+        Complete Graduation
       </PrimaryButton>
     ),
     day4_complete: (
       <>
         <PrimaryButton tone="ghost" disabled>
-          全部课程已完成
+          All Lessons Complete
         </PrimaryButton>
         <PrimaryButton tone="gold" onClick={actions.restartDay4}>
-          重新开始结业实战
+          Restart the Graduation Round
         </PrimaryButton>
       </>
     ),
@@ -2699,12 +2699,12 @@ function HandbookOverlay({ open, unlockedEntries, onClose }) {
         <div className="flex items-center justify-between border-b border-white/10 bg-[#1a1c24] px-5 py-4">
           <div>
             <div className="font-terminal text-sm tracking-[0.2em] text-[#00f0ff]">
-              交易员工作手册
+              Trader's Handbook
             </div>
-            <div className="mt-1 text-xs text-slate-500">Martin 的阶段规则本</div>
+            <div className="mt-1 text-xs text-slate-500">Martin's Stage Rulebook</div>
           </div>
           <PrimaryButton tone="ghost" onClick={onClose} className="px-4 py-2 text-xs">
-            关闭手册
+            Close Handbook
           </PrimaryButton>
         </div>
 
@@ -2712,10 +2712,10 @@ function HandbookOverlay({ open, unlockedEntries, onClose }) {
           {entries.length === 0 ? (
             <div className="flex min-h-96 flex-col items-center justify-center text-center">
               <div className="font-terminal mb-4 text-3xl font-black tracking-[0.18em] text-slate-700">
-                空白
+                Empty
               </div>
               <p className="max-w-md text-sm leading-7 text-slate-500">
-                还没有解锁任何手册内容。先听完 Martin 的晨会教学。
+                No handbook content unlocked yet. First sit through Martin's morning-meeting lesson.
               </p>
             </div>
           ) : (
@@ -2724,7 +2724,7 @@ function HandbookOverlay({ open, unlockedEntries, onClose }) {
                 <div key={entry.id} className="scene-enter">
                   <div className="mb-4 rounded-md border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
                     <div className="font-terminal text-xs tracking-[0.18em] text-[#ffd700]">
-                      已解锁
+                      Unlocked
                     </div>
                     <h2 className="mt-2 text-2xl font-black text-slate-100">{entry.title}</h2>
                   </div>
@@ -2762,9 +2762,9 @@ function HandbookOverlay({ open, unlockedEntries, onClose }) {
 function StartScreen({ onStart, skipSignal }) {
   const [introDone, setIntroDone] = useState(false);
   const [titleReady, setTitleReady] = useState(false);
-  const titleChars = "中环风云".split("");
+  const titleChars = "Central Trader".split("");
   const introText =
-    "一场金融风暴正在逼近。你是中环投行新来的期权交易员。第一天上班，导师 Martin 会教你用最基础的普通期权，接待第一位客户。";
+    "A financial storm is closing in. You're the new options trader at a Central investment bank. On your first day, your mentor Martin will teach you the most basic vanilla options and walk you through meeting your first client.";
 
   useEffect(() => {
     const timerId = window.setTimeout(() => setTitleReady(true), 2800);
@@ -2807,7 +2807,7 @@ function StartScreen({ onStart, skipSignal }) {
         </h1>
       </div>
       <div className="title-subtitle font-terminal mt-5 text-xl tracking-[0.32em] text-[#ffd700]">
-        CHAPTER 1 · 1997 亚洲金融风暴
+        CHAPTER 1 · 1997 Asian Financial Crisis
       </div>
       <p className="mt-10 min-h-24 max-w-2xl text-lg leading-9 text-slate-400">
         <TypewriterText
@@ -2825,7 +2825,7 @@ function StartScreen({ onStart, skipSignal }) {
         )}
       >
         <PrimaryButton onClick={onStart} className="px-14 py-4 text-lg">
-          进入游戏
+          Enter the Game
         </PrimaryButton>
       </div>
       <div className="title-footer font-terminal fixed bottom-8 z-10 text-xs tracking-[0.2em] text-slate-700">
@@ -2838,24 +2838,24 @@ function StartScreen({ onStart, skipSignal }) {
 function WelcomePanel() {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="新人报到 / 交易台" accent="第一天上班" />
+      <TerminalHeader label="New Hire Check-in / Desk" accent="First Day on the Job" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="flex flex-col items-center justify-center rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-6 text-center">
           <div className="mb-5 flex h-28 w-28 items-center justify-center rounded-full bg-[linear-gradient(135deg,#00f0ff,#0088aa)] font-terminal text-5xl font-black text-[#0a0a1a] shadow-[0_0_38px_rgba(0,240,255,0.25)]">
             M
           </div>
           <div className="font-terminal text-sm tracking-[0.18em] text-[#00f0ff]">MENTOR MARTIN</div>
-          <div className="mt-3 text-2xl font-black text-slate-100">“欢迎上班，新人。”</div>
+          <div className="mt-3 text-2xl font-black text-slate-100">“Welcome aboard, rookie.”</div>
           <p className="mt-4 text-sm leading-7 text-slate-400">
-            你不用一开始就懂金融市场。今天只学三个东西：方向、期权费、适当性。
+            You don't need to understand the financial markets right away. Today you only learn three things: direction, premium, and suitability.
           </p>
         </div>
 
         <div className="space-y-4">
           {[
-            ["你的身份", "期权交易柜台的新手交易员，负责读懂客户需求并推荐合适产品。"],
-            ["今天目标", "先不要碰复杂定价，只把普通期权 Call / Put / Premium 的直觉建立起来。"],
-            ["Martin 的规则", "看不懂就打开手册。真正的交易员不是死记硬背，而是会查规则、会问问题。"],
+            ["Your Role", "A new trader on the options desk, responsible for reading client needs and recommending suitable products."],
+            ["Today's Goal", "Don't touch complex pricing yet — just build up the intuition for vanilla options: Call / Put / Premium."],
+            ["Martin's Rule", "Open the handbook when you're unsure. A real trader doesn't memorize by rote — they look up the rules and ask questions."],
           ].map(([label, text]) => (
             <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
               <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[#00f0ff]">{label}</div>
@@ -2871,24 +2871,24 @@ function WelcomePanel() {
 function BasicsLessonPanel() {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第一课 / 什么是期权" accent="先讲直觉，不讲公式" />
+      <TerminalHeader label="Lesson 1 / What Is an Option" accent="Intuition First, No Formulas" />
       <div className="space-y-5 p-6">
         <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
-            核心比喻：一张未来选择券
+            Core Analogy: A Future-Choice Voucher
           </div>
           <p className="text-lg leading-9 text-slate-300">
-            期权不是股票，也不是“我猜涨跌”的按钮。你可以把它想成一张
-            <span className="font-bold text-[#ffd700]">未来选择券</span>：
-            今天先付一笔小钱，未来如果情况对你有利，你就使用这张券；如果情况不利，你可以选择不用。
+            An option isn't a stock, nor a “guess up or down” button. Think of it as a
+            <span className="font-bold text-[#ffd700]">future-choice voucher</span>:
+            you pay a small sum today, and if things turn out in your favor, you use the voucher; if they don't, you can choose not to.
           </p>
         </div>
 
         <div className="grid gap-4 md:grid-cols-3">
           {[
-            ["买方", "付钱买到选择权。未来有利就用，不利可以不用。"],
-            ["卖方", "先收钱，但未来可能要履行承诺。今天你主要从买方角度理解。"],
-            ["期权费", "买方付出的入场券价格。判断错了，这笔钱可能全部损失。"],
+            ["Buyer", "Pays to acquire the right to choose. Uses it if the future is favorable, skips it if not."],
+            ["Seller", "Collects money upfront, but may have to honor a commitment later. Today you mainly view it from the buyer's side."],
+            ["Premium", "The entry-ticket price the buyer pays. If they're wrong, this money may be lost entirely."],
           ].map(([title, body]) => (
             <div key={title} className="rounded-lg border border-cyan-400/15 bg-cyan-400/[0.04] p-5">
               <div className="mb-3 text-xl font-black text-[#00f0ff]">{title}</div>
@@ -2898,7 +2898,7 @@ function BasicsLessonPanel() {
         </div>
 
         <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
-          Martin 小口诀：期权买方买的是“权利”，不是“保证赚钱”。这句话记住，后面的客户决策就不会乱。
+          Martin's mnemonic: an option buyer is buying a “right,” not a “guarantee of profit.” Keep this in mind and your later client decisions won't go astray.
         </div>
       </div>
     </TerminalCard>
@@ -2911,11 +2911,11 @@ function CallPutVisualExample() {
   return (
     <div className="mt-6 rounded-lg border border-cyan-400/15 bg-black/30 p-5">
       <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
-        图表例子 / 到期价格怎么影响方向
+        Chart Example / How the Expiry Price Affects Direction
       </div>
       <div className="grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="rounded-md border border-white/10 bg-[#080d19]/80 p-4">
-          <svg viewBox="0 0 620 230" className="h-auto w-full" role="img" aria-label="Call 与 Put 到期方向图">
+          <svg viewBox="0 0 620 230" className="h-auto w-full" role="img" aria-label="Call and Put expiry-direction chart">
             <defs>
               <linearGradient id="callZone" x1="0" x2="1">
                 <stop offset="0%" stopColor="rgba(255,215,0,0)" />
@@ -2933,7 +2933,7 @@ function CallPutVisualExample() {
             <line x1="55" y1="132" x2="565" y2="132" stroke="rgba(226,232,240,0.45)" strokeWidth="2" />
             <line x1="310" y1="55" x2="310" y2="174" stroke="#ffffff" strokeDasharray="5 7" />
             <text x="310" y="44" textAnchor="middle" className="fill-slate-200 text-[13px]">
-              行权价 100
+              Strike 100
             </text>
 
             {points.map((point) => {
@@ -2966,13 +2966,13 @@ function CallPutVisualExample() {
             />
 
             <text x="118" y="74" className="fill-[#00f0ff] text-[16px] font-bold">
-              Put 更开心
+              Put Wins
             </text>
             <text x="420" y="74" className="fill-[#ffd700] text-[16px] font-bold">
-              Call 更开心
+              Call Wins
             </text>
             <text x="310" y="204" textAnchor="middle" className="fill-slate-400 text-[13px]">
-              标的到期价格从低到高 →
+              Underlying expiry price, low to high →
             </text>
           </svg>
         </div>
@@ -2980,18 +2980,18 @@ function CallPutVisualExample() {
         <div className="grid gap-3 text-sm leading-7 text-slate-300">
           <div className="rounded-md border border-cyan-400/20 bg-cyan-400/[0.05] p-4">
             <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[#00f0ff]">
-              如果到期价格低于 100
+              If the Expiry Price Is Below 100
             </div>
-            Put 有价值，因为客户拥有“按 100 卖出”的权利；市场越低，这个卖出权越有用。
+            The put has value, because the client holds the right to “sell at 100”; the lower the market, the more useful that right to sell.
           </div>
           <div className="rounded-md border border-[#ffd700]/20 bg-[#ffd700]/[0.06] p-4">
             <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[#ffd700]">
-              如果到期价格高于 100
+              If the Expiry Price Is Above 100
             </div>
-            Call 有价值，因为客户拥有“按 100 买入”的权利；市场越高，这个买入权越有用。
+            The call has value, because the client holds the right to “buy at 100”; the higher the market, the more useful that right to buy.
           </div>
           <div className="rounded-md border border-white/10 bg-white/[0.03] p-4">
-            现在先不用算多少钱，只记住方向：左边偏 Put，右边偏 Call。
+            For now, don't worry about how much it's worth — just remember the direction: Put on the left, Call on the right.
           </div>
         </div>
       </div>
@@ -3002,16 +3002,16 @@ function CallPutVisualExample() {
 function IntroPanel() {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第一课 / Call 与 Put" accent="方向判断" />
+      <TerminalHeader label="Lesson 1 / Call and Put" accent="Reading Direction" />
       <div className="p-6">
         <div className="font-terminal mb-4 text-xs tracking-[0.32em] text-[#00f0ff]">
-          先判断客户方向，再谈产品
+          Read the Client's Direction First, Then Talk Product
         </div>
         <h1 className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-4xl font-black tracking-[0.08em] text-transparent md:text-6xl">
           CALL / PUT
         </h1>
         <div className="font-terminal mt-3 text-xl tracking-[0.22em] text-[#ffd700]">
-          看涨与看跌，是交易台最先听见的两个词
+          Bullish and bearish — the first two words a desk hears
         </div>
 
         <div className="mt-8 grid gap-5 md:grid-cols-2">
@@ -3049,7 +3049,7 @@ function IntroPanel() {
         </div>
 
         <div className="mt-6 rounded-md border-l-4 border-[#00f0ff] bg-cyan-400/[0.04] p-4 text-sm leading-7 text-slate-300">
-          第一关先不进入定价，只建立交易台最重要的直觉：客户看涨看 Call，客户看跌看 Put，买方为了这个权利支付期权费。
+          Stage one doesn't get into pricing yet — it just builds the desk's most important intuition: a bullish client points to Call, a bearish client points to Put, and the buyer pays a premium for that right.
         </div>
 
         <CallPutVisualExample />
@@ -3061,25 +3061,25 @@ function IntroPanel() {
 function PremiumLessonPanel() {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第二课 / 期权费" accent="买方最大的心理账户" />
+      <TerminalHeader label="Lesson 2 / Premium" accent="The Buyer's Biggest Mental Account" />
       <div className="grid gap-5 p-6 lg:grid-cols-[1fr_1fr]">
         <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#ffd700]">
-            PREMIUM / 期权费
+            PREMIUM
           </div>
-          <h2 className="mb-4 text-2xl font-black text-slate-100">先付一笔钱，买未来的选择</h2>
+          <h2 className="mb-4 text-2xl font-black text-slate-100">Pay Upfront to Buy a Future Choice</h2>
           <p className="text-base leading-8 text-slate-300">
-            如果客户买一份普通期权，他不是免费获得机会，而是先支付一笔
-            <span className="font-bold text-[#ffd700]">期权费</span>。这笔钱就像电影票：
-            你买了票，就获得进场权；最后电影好不好看，不会退票。
+            When a client buys a vanilla option, they don't get the opportunity for free — they pay a
+            <span className="font-bold text-[#ffd700]">premium</span> first. It's like a movie ticket:
+            buy the ticket and you get to go in; whether the movie turns out good or not, there are no refunds.
           </p>
         </div>
 
         <div className="space-y-4">
           {[
-            ["市场方向判断正确", "期权可能产生价值，但还要先覆盖期权费，客户才真正赚钱。"],
-            ["市场方向判断错误", "期权可能到期一文不值，客户损失已支付的期权费。"],
-            ["最大损失直觉", "普通期权买方通常不会亏超过期权费，但这不等于产品稳赚。"],
+            ["Market Direction Right", "The option may gain value, but it must first cover the premium before the client truly profits."],
+            ["Market Direction Wrong", "The option may expire worthless, and the client loses the premium paid."],
+            ["Max-Loss Intuition", "A vanilla option buyer usually won't lose more than the premium, but that doesn't make the product a sure win."],
           ].map(([title, body]) => (
             <div key={title} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
               <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[#00f0ff]">
@@ -3092,20 +3092,20 @@ function PremiumLessonPanel() {
 
         <div className="lg:col-span-2 rounded-lg border border-cyan-400/15 bg-black/30 p-5">
           <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#00f0ff]">
-            小例子
+            A Small Example
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             <div className="rounded-md border border-white/10 bg-white/[0.03] p-4">
-              <div className="text-sm text-slate-500">客户支付</div>
-              <div className="mt-2 text-2xl font-black text-[#ffd700]">186 点期权费</div>
+              <div className="text-sm text-slate-500">Client Pays</div>
+              <div className="mt-2 text-2xl font-black text-[#ffd700]">186-point premium</div>
             </div>
             <div className="rounded-md border border-white/10 bg-white/[0.03] p-4">
-              <div className="text-sm text-slate-500">换来</div>
-              <div className="mt-2 text-2xl font-black text-[#00f0ff]">未来上涨机会</div>
+              <div className="text-sm text-slate-500">In Return For</div>
+              <div className="mt-2 text-2xl font-black text-[#00f0ff]">Future upside opportunity</div>
             </div>
             <div className="rounded-md border border-red-500/20 bg-red-500/[0.05] p-4">
-              <div className="text-sm text-slate-500">最坏情况</div>
-              <div className="mt-2 text-2xl font-black text-red-300">亏掉 186 点</div>
+              <div className="text-sm text-slate-500">Worst Case</div>
+              <div className="mt-2 text-2xl font-black text-red-300">Lose 186 points</div>
             </div>
           </div>
         </div>
@@ -3116,23 +3116,23 @@ function PremiumLessonPanel() {
 
 function VanillaRulePanel() {
   const examples = [
-    ["中途先跌", "21,500 → 21,100 → 22,400", "只要最终到期高于行权价，普通 Call 仍可能有价值。"],
-    ["中途先涨", "21,500 → 22,600 → 21,900", "如果最终到期低于行权价，普通 Call 可能没有价值。"],
-    ["关键区别", "普通期权 ≠ 障碍期权", "普通期权不会因为中途碰到某个价格就自动敲出。"],
+    ["Dips First Along the Way", "21,500 → 21,100 → 22,400", "As long as the final expiry is above the strike, a vanilla call can still have value."],
+    ["Rises First Along the Way", "21,500 → 22,600 → 21,900", "If the final expiry is below the strike, a vanilla call may have no value."],
+    ["The Key Difference", "Vanilla option ≠ barrier option", "A vanilla option doesn't auto-knock-out just because it touches some price along the way."],
   ];
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第三课 / 普通期权规则" accent="重点看到期价格" />
+      <TerminalHeader label="Lesson 3 / Vanilla Option Rules" accent="Focus on the Expiry Price" />
       <div className="space-y-5 p-6">
         <div className="rounded-lg border border-cyan-400/15 bg-cyan-400/[0.04] p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
-            VANILLA OPTION / 普通期权
+            VANILLA OPTION
           </div>
           <p className="text-lg leading-9 text-slate-300">
-            “普通”两个字很重要。普通期权主要看
-            <span className="font-bold text-[#ffd700]">最终到期价格</span>。
-            中途市场上下波动不会让它自动消失。客户最终赚不赚钱，要看到期收益能不能覆盖期权费。
+            The word “vanilla” matters. A vanilla option depends mainly on the
+            <span className="font-bold text-[#ffd700]">final expiry price</span>.
+            Market swings along the way don't make it disappear. Whether the client profits in the end depends on whether the expiry payoff covers the premium.
           </p>
         </div>
 
@@ -3149,7 +3149,7 @@ function VanillaRulePanel() {
         </div>
 
         <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
-          今天不要碰障碍期权、敲出、二叉树或复杂定价。你只要会读客户方向，并知道普通期权买方最大损失通常是期权费。
+          Don't touch barrier options, knock-outs, binomial trees, or complex pricing today. You just need to read the client's direction and know that a vanilla option buyer's maximum loss is usually the premium.
         </div>
       </div>
     </TerminalCard>
@@ -3159,16 +3159,16 @@ function VanillaRulePanel() {
 function HandbookUpdatedPanel() {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="系统消息" accent="工作手册新增页面" />
+      <TerminalHeader label="System Message" accent="New Handbook Page Added" />
       <div className="flex min-h-[430px] flex-col items-center justify-center p-6 text-center">
         <div className="font-terminal mb-4 text-sm tracking-[0.32em] text-[#00f0ff]">
-          工作手册已更新
+          Handbook Updated
         </div>
         <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-4xl font-black tracking-[0.1em] text-transparent md:text-5xl">
-          普通期权基础
+          Vanilla Option Basics
         </div>
         <p className="mt-8 max-w-2xl text-base leading-8 text-slate-300">
-          手册现在只解锁了最基础的普通期权页面。后面遇到客户和风险披露时，Martin 会继续补充新的规则，不会一次把所有内容都倒给你。
+          The handbook has only unlocked the most basic vanilla-option page for now. As you meet clients and reach risk disclosure later, Martin will keep adding new rules — he won't dump everything on you at once.
         </p>
       </div>
     </TerminalCard>
@@ -3178,19 +3178,19 @@ function HandbookUpdatedPanel() {
 function ClientArrivalPanel() {
   const client = day1Config.clientProfile;
   const profileRows = [
-    ["姓名", client.name],
-    ["客户类型", client.type],
-    ["市场观点", client.marketView],
-    ["风险承受", client.riskTolerance],
-    ["目标", client.goal],
-    ["预算", client.budget],
-    ["经验", client.experience],
+    ["Name", client.name],
+    ["Client Type", client.type],
+    ["Market View", client.marketView],
+    ["Risk Tolerance", client.riskTolerance],
+    ["Goal", client.goal],
+    ["Budget", client.budget],
+    ["Experience", client.experience],
   ];
 
   return (
     <div className="scene-enter grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
       <TerminalCard className="overflow-hidden">
-        <TerminalHeader label="客户资料" accent="散户订单流" />
+        <TerminalHeader label="Client Profile" accent="Retail Order Flow" />
         <div className="p-5">
           <div className="mx-auto mb-5 flex h-24 w-24 items-center justify-center rounded-full bg-[linear-gradient(135deg,#ffd700,#ff8c00)] font-terminal text-3xl font-black text-[#0a0a1a] shadow-[0_0_36px_rgba(255,215,0,0.24)]">
             L
@@ -3213,14 +3213,14 @@ function ClientArrivalPanel() {
       </TerminalCard>
 
       <TerminalCard className="overflow-hidden">
-        <TerminalHeader label="客户对白" accent="需求记录" />
+        <TerminalHeader label="Client Dialogue" accent="Needs Log" />
         <div className="space-y-4 p-5">
           {client.dialogue.map((line) => (
             <div
               key={line}
               className="rounded-lg border border-cyan-400/15 bg-black/30 p-4 text-lg leading-8 text-slate-200"
             >
-              <span className="font-terminal mr-2 text-xs text-[#ffd700]">李女士</span>
+              <span className="font-terminal mr-2 text-xs text-[#ffd700]">Ms. Li</span>
               “{line}”
             </div>
           ))}
@@ -3236,8 +3236,8 @@ function ProductSelectionPanel({
   onSelectProduct,
   products = day1Config.products,
   correctProductId = day1Config.scoringRules.correctProduct,
-  title = "产品选择台",
-  accent = "选择一个产品",
+  title = "Product Selection Desk",
+  accent = "Select a Product",
 }) {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
@@ -3280,7 +3280,7 @@ function ProductSelectionPanel({
                   </div>
                   {selected && (
                     <div className="font-terminal rounded border border-[#ffd700]/40 px-2 py-1 text-xs text-[#ffd700]">
-                      已选择
+                      Selected
                     </div>
                   )}
                 </div>
@@ -3296,7 +3296,7 @@ function ProductSelectionPanel({
 
                 {product.locked && (
                   <div className="mt-4 rounded border border-red-500/25 bg-red-500/[0.06] p-3 text-xs leading-5 text-red-300">
-                    未解锁：Martin 还没有教授这个产品。
+                    Locked: Martin hasn't taught this product yet.
                   </div>
                 )}
               </button>
@@ -3326,13 +3326,13 @@ function RiskDisclosurePanel({
   onToggleDisclosure,
   disclosureFeedback,
   items = day1Config.disclosureItems,
-  instruction = "在确认交易前，选择你必须向李女士说明的风险内容。",
+  instruction = "Before confirming the trade, select the risks you must explain to Ms. Li.",
 }) {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="风险披露" accent="选择必须说明的内容" />
+      <TerminalHeader label="Risk Disclosure" accent="Select What Must Be Explained" />
       <div className="p-5">
-        <h2 className="mb-2 text-2xl font-black text-slate-100">风险披露</h2>
+        <h2 className="mb-2 text-2xl font-black text-slate-100">Risk Disclosure</h2>
         <p className="mb-5 text-sm leading-7 text-slate-400">
           {instruction}
         </p>
@@ -3358,7 +3358,7 @@ function RiskDisclosurePanel({
                 />
                 <div>
                   <div className="font-terminal mb-1 text-xs tracking-[0.16em] text-slate-500">
-                    披露项 {index + 1}
+                    Disclosure {index + 1}
                   </div>
                   <div className="text-sm leading-7 text-slate-200">{item.text}</div>
                 </div>
@@ -3393,7 +3393,7 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
   const payoff = Math.max(finalPrice - market.strike, 0);
   const netPnl = payoff - market.premium;
   const selectedProductName =
-    day1Config.products.find((product) => product.id === selectedProduct)?.name ?? "未选择产品";
+    day1Config.products.find((product) => product.id === selectedProduct)?.name ?? "No Product Selected";
   const activeCount = Math.min(Math.max(visibleMarketSteps, 1), chartPath.length);
   const activePrices = chartPath.slice(0, activeCount);
   const latestPrice = activePrices[activePrices.length - 1] ?? market.spot;
@@ -3444,15 +3444,15 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="市场路径" accent={finalShown ? "收盘价已锁定" : "行情自动运行中"} />
+      <TerminalHeader label="Market Path" accent={finalShown ? "Closing Price Locked" : "Market Running Automatically"} />
       <div className="p-5">
         <div className="grid gap-4 md:grid-cols-5">
           {[
-            ["标的", market.underlying],
-            ["开盘", formatPoints(market.spot)],
-            ["行权价", formatPoints(market.strike)],
-            ["期权费", `${market.premium} 点`],
-            ["期限", market.maturity],
+            ["Underlying", market.underlying],
+            ["Open", formatPoints(market.spot)],
+            ["Strike", formatPoints(market.strike)],
+            ["Premium", `${market.premium} pts`],
+            ["Maturity", market.maturity],
           ].map(([label, value]) => (
             <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
@@ -3466,19 +3466,19 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
         <div className="mt-5 grid gap-4 lg:grid-cols-[0.85fr_1.15fr]">
           <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-4">
             <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">
-              已选产品
+              Selected Product
             </div>
             <div className="mt-2 text-xl font-black text-slate-100">{selectedProductName}</div>
           </div>
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
-              <div className="font-terminal text-xs text-slate-500">实时价格</div>
+              <div className="font-terminal text-xs text-slate-500">Live Price</div>
               <div className="live-price-pulse mt-2 text-3xl font-black text-[#00f0ff]">
                 {formatPoints(latestPrice)}
               </div>
             </div>
             <div className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs text-slate-500">本跳变动</div>
+              <div className="font-terminal text-xs text-slate-500">Tick Change</div>
               <div
                 className={cn(
                   "mt-2 text-2xl font-black",
@@ -3490,7 +3490,7 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
               </div>
             </div>
             <div className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs text-slate-500">Call 实时净值</div>
+              <div className="font-terminal text-xs text-slate-500">Call Live Net</div>
               <div
                 className={cn(
                   "mt-2 text-2xl font-black",
@@ -3511,7 +3511,7 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
                 LIVE HSI PATH
               </div>
               <div className="mt-1 text-xs text-slate-500">
-                价格自动跳动，终点用于普通期权到期结算
+                The price ticks automatically; the endpoint is used for vanilla-option expiry settlement
               </div>
             </div>
             <div
@@ -3600,7 +3600,7 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
               {formatPoints(latestPrice)}
             </text>
             <text x={chart.xScale(chartPath.length - 1)} y={chart.height - 12} textAnchor="end" className="fill-slate-500 text-[12px]">
-              进度 {Math.round(progress)}%
+              Progress {Math.round(progress)}%
             </text>
           </svg>
         </div>
@@ -3608,19 +3608,19 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
         {finalShown ? (
           <div className="scene-enter mt-6 grid gap-4 md:grid-cols-3">
             <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
-              <div className="font-terminal text-xs text-slate-500">最终价格</div>
+              <div className="font-terminal text-xs text-slate-500">Final Price</div>
               <div className="mt-2 text-3xl font-black text-[#00f0ff]">
                 {formatPoints(finalPrice)}
               </div>
             </div>
             <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
-              <div className="font-terminal text-xs text-slate-500">Call 到期收益</div>
+              <div className="font-terminal text-xs text-slate-500">Call Expiry Payoff</div>
               <div className="mt-2 text-lg font-bold text-slate-100">
                 max(22,400 - 22,000, 0) = <span className="text-[#00f0ff]">{payoff}</span>
               </div>
             </div>
             <div className="rounded-lg border border-green-400/20 bg-green-400/[0.05] p-4">
-              <div className="font-terminal text-xs text-slate-500">净盈亏</div>
+              <div className="font-terminal text-xs text-slate-500">Net P&L</div>
               <div className="mt-2 text-2xl font-black text-green-400">
                 {payoff} - {market.premium} = +{netPnl}
               </div>
@@ -3628,7 +3628,7 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
           </div>
         ) : (
           <div className="mt-5 rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
-            行情正在自动播放：价格可能先跌、再反抽、再突破。不要被中途波动吓到，普通期权最后看的是到期价格。
+            The market is playing out automatically: the price may dip first, snap back, then break out. Don't be scared by the swings along the way — a vanilla option ultimately depends on the expiry price.
           </div>
         )}
       </div>
@@ -3657,32 +3657,32 @@ function ReportPanel({ score }) {
   if (!score) {
     return (
       <TerminalCard className="scene-enter p-6">
-        <div className="text-slate-400">报告正在等待市场路径运行完成。</div>
+        <div className="text-slate-400">The report is waiting for the market path to finish running.</div>
       </TerminalCard>
     );
   }
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="日终报告" accent="第一天待结算" />
+      <TerminalHeader label="End-of-Day Report" accent="Day One Pending Settlement" />
       <div className="space-y-5 p-5">
         <div>
-          <h2 className="text-3xl font-black text-slate-100">日终报告</h2>
+          <h2 className="text-3xl font-black text-slate-100">End-of-Day Report</h2>
           <p className="mt-2 text-sm leading-7 text-slate-400">
-            恒生指数从 21,500 上涨到 22,400。
+            The Hang Seng Index rose from 21,500 to 22,400.
           </p>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
           <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
             <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
-              产品
+              Product
             </div>
             <div className="mt-2 text-2xl font-black text-[#00f0ff]">{score.productName}</div>
           </div>
           <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
             <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
-              结果
+              Outcome
             </div>
             <div className="mt-2 text-base leading-7 text-slate-200">{score.outcome}</div>
           </div>
@@ -3690,9 +3690,9 @@ function ReportPanel({ score }) {
 
         <div className="grid gap-4 md:grid-cols-3">
           {[
-            ["收益", score.payoff],
-            ["期权费", score.premium],
-            ["客户盈亏", score.clientPnl],
+            ["Payoff", score.payoff],
+            ["Premium", score.premium],
+            ["Client P&L", score.clientPnl],
           ].map(([label, value]) => (
             <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
@@ -3705,10 +3705,10 @@ function ReportPanel({ score }) {
 
         <div className="grid gap-4 md:grid-cols-4">
           {[
-            ["适当性", score.suitability],
-            ["风险披露", score.riskDisclosure],
-            ["客户结果", score.clientOutcome],
-            ["总评", score.overall],
+            ["Suitability", score.suitability],
+            ["Risk Disclosure", score.riskDisclosure],
+            ["Client Outcome", score.clientOutcome],
+            ["Overall", score.overall],
           ].map(([label, value]) => (
             <div
               key={label}
@@ -3730,19 +3730,19 @@ function ReportPanel({ score }) {
 
 function CompletePanel() {
   const summary = [
-    "Call 用于表达看涨观点。",
-    "Put 用于表达看跌观点。",
-    "期权费是买方为了获得期权权利支付的成本。",
-    "普通期权买方的最大损失通常是期权费。",
-    "适当性和市场结果同样重要。",
+    "A call expresses a bullish view.",
+    "A put expresses a bearish view.",
+    "The premium is the cost the buyer pays to acquire the option right.",
+    "A vanilla option buyer's maximum loss is usually the premium.",
+    "Suitability matters just as much as the market outcome.",
   ];
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第一天完成" accent="训练记录已保存" />
+      <TerminalHeader label="Day One Complete" accent="Training Record Saved" />
       <div className="flex min-h-[520px] flex-col items-center justify-center p-6 text-center">
         <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-5xl font-black tracking-[0.12em] text-transparent md:text-6xl">
-          第一日完成
+          Day One Complete
         </div>
         <div className="mt-8 grid w-full max-w-2xl gap-3 text-left">
           {summary.map((item) => (
@@ -3750,7 +3750,7 @@ function CompletePanel() {
               key={item}
               className="rounded-md border border-cyan-400/15 bg-black/30 px-4 py-3 text-sm leading-7 text-slate-300"
             >
-              <span className="font-terminal mr-2 text-[#00f0ff]">规则</span>
+              <span className="font-terminal mr-2 text-[#00f0ff]">Rule</span>
               {item}
             </div>
           ))}
@@ -3762,24 +3762,24 @@ function CompletePanel() {
 
 function Day2IntroPanel() {
   const lines = [
-    "昨天你已经学会了普通期权是什么。",
-    "今天我们要解决一个更实际的问题：期权价格到底是怎么来的？",
-    "交易员不能随便给客户报价。我们需要用模型估算这个产品现在值多少钱。",
-    "一个简单的定价模型就是二叉树。它把未来拆成一条条可能的上涨和下跌路径，然后从未来倒推回今天的价格。",
+    "Yesterday you learned what a vanilla option is.",
+    "Today we tackle a more practical question: where does the option price actually come from?",
+    "A trader can't just quote clients off the cuff. We need a model to estimate what the product is worth right now.",
+    "One simple pricing model is the binomial tree. It breaks the future into possible up and down paths, then works backward from the future to today's price.",
   ];
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第二天 / 定价柜台" accent="报价不是拍脑袋" />
+      <TerminalHeader label="Day Two / Pricing Desk" accent="A Quote Isn't a Gut Call" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="flex flex-col items-center justify-center rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-6 text-center">
           <div className="mb-5 flex h-28 w-28 items-center justify-center rounded-full bg-[linear-gradient(135deg,#ffd700,#00f0ff)] font-terminal text-5xl font-black text-[#0a0a1a] shadow-[0_0_38px_rgba(255,215,0,0.2)]">
             M
           </div>
-          <div className="font-terminal text-sm tracking-[0.18em] text-[#00f0ff]">MARTIN 晨会</div>
-          <div className="mt-3 text-2xl font-black text-slate-100">“今天学报价纪律。”</div>
+          <div className="font-terminal text-sm tracking-[0.18em] text-[#00f0ff]">MARTIN'S MORNING MEETING</div>
+          <div className="mt-3 text-2xl font-black text-slate-100">“Today we learn pricing discipline.”</div>
           <p className="mt-4 text-sm leading-7 text-slate-400">
-            第二天不考新产品，考你能不能把模型价格、客户接受度和交易台利润放在同一张桌上。
+            Day two doesn't test new products — it tests whether you can put model price, client acceptance, and desk profit on the same table.
           </p>
         </div>
 
@@ -3802,37 +3802,37 @@ function Day2PricingAnchorPanel() {
   const theoreticalPrice = day2Config.quoteRules.theoreticalPrice;
   const examples = [
     {
-      label: "报价太低",
-      quote: "120 点",
-      note: `客户当然开心，但如果模型认为产品值 ${theoreticalPrice} 点，交易台等于用便宜价格卖出风险。`,
+      label: "Quote Too Low",
+      quote: "120 pts",
+      note: `The client is happy, of course, but if the model says the product is worth ${theoreticalPrice} points, the desk is effectively selling risk at a cheap price.`,
       tone: "danger",
     },
     {
-      label: "接近理论价",
-      quote: "200 点",
-      note: `以 ${theoreticalPrice} 点理论价格为锚，再加一点利润空间，客户和交易台都比较容易接受。`,
+      label: "Close to Theoretical",
+      quote: "200 pts",
+      note: `Anchor on the theoretical price of ${theoreticalPrice} points, add a little profit margin, and both client and desk find it easier to accept.`,
       tone: "good",
     },
     {
-      label: "报价太高",
-      quote: "280 点",
-      note: "交易台利润看起来厚，但专业客户会觉得不公平，很可能直接拒绝交易。",
+      label: "Quote Too High",
+      quote: "280 pts",
+      note: "The desk profit looks fat, but a professional client will think it unfair and may well reject the trade outright.",
       tone: "warn",
     },
   ];
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第一课 / 为什么要定价" accent="理论价格是报价锚点" />
+      <TerminalHeader label="Lesson 1 / Why We Price" accent="The Theoretical Price Is the Quote Anchor" />
       <div className="space-y-6 p-6">
         <div className="rounded-lg border border-cyan-400/15 bg-cyan-400/[0.04] p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
-            交易台直觉
+            Desk Intuition
           </div>
-          <h2 className="text-3xl font-black text-slate-100">期权费不是随便报一个数字</h2>
+          <h2 className="text-3xl font-black text-slate-100">A Premium Isn't Just a Number You Pull Out of Thin Air</h2>
           <p className="mt-4 text-base leading-8 text-slate-300">
-            客户买期权，要支付期权费（Premium）。你作为交易员卖给客户这个权利，就要先估算：
-            这个权利今天大概值多少钱？这个估算值就是理论价格（Theoretical Price）。
+            A client buying an option pays a premium. As the trader selling them this right, you must first estimate:
+            roughly what is this right worth today? That estimate is the theoretical price.
           </p>
         </div>
 
@@ -3859,7 +3859,7 @@ function Day2PricingAnchorPanel() {
         </div>
 
         <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
-          今天先把 {theoreticalPrice} 点当成模型算出来的理论价格。你的任务不是背这个数字，而是理解：报价要围绕它上下调整。
+          For now, treat {theoreticalPrice} points as the theoretical price the model computed. Your job isn't to memorize this number, but to understand: the quote should be adjusted up or down around it.
         </div>
       </div>
     </TerminalCard>
@@ -3868,40 +3868,40 @@ function Day2PricingAnchorPanel() {
 
 function Day2TreePathsLessonPanel() {
   const steps = [
-    ["今天", "21,500", "这是现在的恒生指数价格。"],
-    ["第一步上涨", "22,069", "如果市场上涨 2.65%，价格走到上方节点。"],
-    ["第一步下跌", "20,946", "如果市场下跌 2.58%，价格走到下方节点。"],
-    ["第二步合并", "三个中间节点", "上涨后下跌和下跌后上涨会回到同一个价格，所以可以合并显示。"],
-    ["第三步到期", "四个终端节点", "最后一层就是到期价格，我们会在这些节点上直接计算期权收益。"],
+    ["Today", "21,500", "This is the current Hang Seng Index price."],
+    ["Step 1 Up", "22,069", "If the market rises 2.65%, the price moves to the upper node."],
+    ["Step 1 Down", "20,946", "If the market falls 2.58%, the price moves to the lower node."],
+    ["Step 2 Recombine", "Three middle nodes", "Up-then-down and down-then-up return to the same price, so they can be merged in the display."],
+    ["Step 3 Expiry", "Four terminal nodes", "The final layer is the expiry price; we'll compute the option payoff directly at these nodes."],
   ];
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第二课 / 二叉树路径" accent="把未来拆成分叉" />
+      <TerminalHeader label="Lesson 2 / Binomial Tree Paths" accent="Break the Future into Branches" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.95fr_1.05fr]">
         <div className="rounded-lg border border-cyan-400/15 bg-[#070d19]/80 p-5">
           <div className="font-terminal mb-5 text-xs tracking-[0.18em] text-[#00f0ff]">
-            路径示意
+            Path Diagram
           </div>
           <div className="space-y-4">
             <div className="mx-auto w-44 rounded-lg border border-[#00f0ff]/50 bg-cyan-400/[0.08] p-4 text-center">
-              <div className="font-terminal text-xs text-slate-500">今天</div>
+              <div className="font-terminal text-xs text-slate-500">Today</div>
               <div className="text-2xl font-black text-[#00f0ff]">21,500</div>
             </div>
             <div className="grid grid-cols-2 gap-5">
               <div className="rounded-lg border border-green-400/35 bg-green-400/[0.08] p-4 text-center">
-                <div className="font-terminal text-xs text-green-300">上涨 2.65%</div>
+                <div className="font-terminal text-xs text-green-300">Up 2.65%</div>
                 <div className="mt-2 text-2xl font-black text-slate-100">22,069</div>
               </div>
               <div className="rounded-lg border border-red-500/35 bg-red-500/[0.08] p-4 text-center">
-                <div className="font-terminal text-xs text-red-300">下跌 2.58%</div>
+                <div className="font-terminal text-xs text-red-300">Down 2.58%</div>
                 <div className="mt-2 text-2xl font-black text-slate-100">20,946</div>
               </div>
             </div>
             <div className="grid grid-cols-3 gap-3 text-center">
               {["22,653", "21,500", "20,405"].map((price, index) => (
                 <div key={`${price}-${index}`} className="rounded-md border border-white/10 bg-black/35 p-3">
-                  <div className="font-terminal text-[10px] text-slate-500">第二步</div>
+                  <div className="font-terminal text-[10px] text-slate-500">Step 2</div>
                   <div className="mt-1 text-lg font-black text-slate-100">{price}</div>
                 </div>
               ))}
@@ -3917,7 +3917,7 @@ function Day2TreePathsLessonPanel() {
                       : "border-white/10 bg-black/35",
                   )}
                 >
-                  <div className="font-terminal text-[10px] text-slate-500">到期</div>
+                  <div className="font-terminal text-[10px] text-slate-500">Expiry</div>
                   <div className="mt-1 text-lg font-black text-slate-100">{price}</div>
                 </div>
               ))}
@@ -3927,9 +3927,9 @@ function Day2TreePathsLessonPanel() {
 
         <div className="space-y-4">
           <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-5">
-            <h2 className="text-2xl font-black text-slate-100">二叉树不是水晶球</h2>
+            <h2 className="text-2xl font-black text-slate-100">A Binomial Tree Is Not a Crystal Ball</h2>
             <p className="mt-4 text-base leading-8 text-slate-300">
-              它不说“市场一定上涨”或“市场一定下跌”。它只是把未来可能路线画出来，让交易员能逐个检查每条路线下期权可能值多少钱。
+              It doesn't say “the market will definitely rise” or “the market will definitely fall.” It just maps out the possible future routes, so the trader can check, route by route, what the option might be worth.
             </p>
           </div>
           {steps.map(([label, value, note]) => (
@@ -3948,17 +3948,17 @@ function Day2TreePathsLessonPanel() {
 function Day2BackwardPriceLessonPanel() {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第三课 / 到期收益与倒推" accent="先算未来，再回到今天" />
+      <TerminalHeader label="Lesson 3 / Payoff and Backward Induction" accent="Compute the Future First, Then Return to Today" />
       <div className="space-y-6 p-6">
         <div className="rounded-lg border border-cyan-400/15 bg-cyan-400/[0.04] p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
-            普通看涨期权公式
+            Vanilla Call Formula
           </div>
           <div className="text-3xl font-black text-slate-100">
-            到期收益（Payoff）= max(最终价格 - 行权价（Strike）, 0)
+            Payoff = max(final price - strike, 0)
           </div>
           <p className="mt-4 text-base leading-8 text-slate-300">
-            看涨期权只有在最终价格高于行权价时才有价值。低于行权价时，买方不会用一个更贵的价格去买，所以到期收益为 0。
+            A call option only has value when the final price is above the strike. Below the strike, the buyer won't pay a higher price to buy, so the expiry payoff is 0.
           </p>
         </div>
 
@@ -3966,9 +3966,9 @@ function Day2BackwardPriceLessonPanel() {
 
         <div className="grid gap-4 md:grid-cols-3">
           {[
-            ["最后一层", "先看所有到期节点，算每条路径的到期收益。"],
-            ["往前倒推", "把未来可能收益折算回前一层，再继续往今天推。"],
-            ["今天价格", `教学简化后，模型给今天的理论价格：${day2Config.quoteRules.theoreticalPrice} 点。`],
+            ["Final Layer", "First look at all the expiry nodes and compute the payoff for each path."],
+            ["Work Backward", "Discount the possible future payoffs back to the previous layer, then keep stepping back toward today."],
+            ["Today's Price", `After the teaching simplification, the model gives today's theoretical price: ${day2Config.quoteRules.theoreticalPrice} points.`],
           ].map(([title, text]) => (
             <div key={title} className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">{title}</div>
@@ -3978,7 +3978,7 @@ function Day2BackwardPriceLessonPanel() {
         </div>
 
         <div className="rounded-md border-l-4 border-[#00f0ff] bg-cyan-400/[0.06] p-4 text-base leading-8 text-slate-200">
-          今天先别急着啃完整定价公式。你只要顺着树看：价格可能往上或往下走，到期后每条路各自结算，再一步步推回现在，就能得到一个报价参考。
+          Don't rush to digest the full pricing formula today. Just follow the tree: the price can go up or down, each path settles at expiry, then you step it back to now — and you get a quote reference.
         </div>
       </div>
     </TerminalCard>
@@ -3988,82 +3988,82 @@ function Day2BackwardPriceLessonPanel() {
 function Day2HandbookUpdatedPanel() {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="系统提示" accent="工作手册新增页面" />
+      <TerminalHeader label="System Notice" accent="New Handbook Page Added" />
       <div className="flex min-h-[430px] flex-col items-center justify-center p-6 text-center">
         <div className="font-terminal mb-4 text-sm tracking-[0.32em] text-[#00f0ff]">
-          工作手册已更新
+          Handbook Updated
         </div>
         <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-4xl font-black tracking-[0.08em] text-transparent md:text-5xl">
-          二叉树定价
+          Binomial Tree Pricing
         </div>
         <p className="mt-8 max-w-2xl text-base leading-8 text-slate-300">
-          今天新增的是定价柜台规则。你已经拥有第一天的普通期权页面，现在多了一页用来判断报价是否接近理论价格。
+          Today's addition is the pricing-desk rules. You already have day one's vanilla-option page; now there's an extra page for judging whether a quote is close to the theoretical price.
         </p>
       </div>
     </TerminalCard>
   );
 }
 
-// ─── 中环数据台 ────────────────────────────────────────────────────────────────
-// 真实数据来源：同组数学引擎队抓取的 CSV（vhsi_history.csv / option_chain_current.csv）
-// 玩家在这里查找定价所需的 4 个关键参数，然后自己填进计算器。
+// ─── Central Data Desk ────────────────────────────────────────────────────────
+// Real data source: CSVs scraped by the math-engine team in our group (vhsi_history.csv / option_chain_current.csv)
+// Here the player looks up the 4 key parameters needed for pricing, then fills them into the calculator themselves.
 const researchCards = [
   {
     id: "market_quote",
     icon: "📈",
-    title: "行情终端 · Market Data",
+    title: "Market Terminal · Market Data",
     accent: "#00f0ff",
     rows: [
-      { label: "标的", value: "恒生指数 HSI", note: "" },
-      { label: "现价 S₀", value: "21,500 点", note: "今日开盘参考价" },
-      { label: "VHSI 波动率指数 σ", value: "≈ 16%", note: "恒指 30 日隐含波动率（平静市场参考值）" },
-      { label: "数据来源", value: "vhsi_history.csv", note: "同组数学引擎队抓取，2003–2026" },
+      { label: "Underlying", value: "Hang Seng Index (HSI)", note: "" },
+      { label: "Spot S₀", value: "21,500 pts", note: "Today's opening reference price" },
+      { label: "VHSI Volatility Index σ", value: "≈ 16%", note: "HSI 30-day implied volatility (calm-market reference value)" },
+      { label: "Data Source", value: "vhsi_history.csv", note: "Scraped by the math-engine team in our group, 2003–2026" },
     ],
-    hint: "把 VHSI 当作 σ（波动率）填进计算器。注意：危机期间 VHSI 可飙到 60%+，今天用平静市场值。",
+    hint: "Use the VHSI as σ (volatility) in the calculator. Note: in a crisis the VHSI can spike to 60%+; today we use a calm-market value.",
   },
   {
     id: "contract_spec",
     icon: "📋",
-    title: "合约规格 · Contract Spec",
+    title: "Contract Spec",
     accent: "#ffd700",
     rows: [
-      { label: "产品", value: "恒指欧式看涨期权", note: "European Call，现金结算" },
-      { label: "行权价 K", value: "22,000 点", note: "客户指定（OTM Call）" },
-      { label: "到期日", value: "约 1 个月后", note: "参考真实期权链：2026-04-17 到期" },
-      { label: "年化期限 T", value: "≈ 0.08 年", note: "1 个月 ÷ 12 ≈ 0.083" },
-      { label: "合约乘数", value: "HK$ 50 / 点", note: "HKEX 标准" },
+      { label: "Product", value: "HSI European Call Option", note: "European Call, cash-settled" },
+      { label: "Strike K", value: "22,000 pts", note: "Client-specified (OTM call)" },
+      { label: "Expiry Date", value: "About 1 month out", note: "Per the real option chain: expires 2026-04-17" },
+      { label: "Annualized Maturity T", value: "≈ 0.08 yr", note: "1 month ÷ 12 ≈ 0.083" },
+      { label: "Contract Multiplier", value: "HK$ 50 / pt", note: "HKEX standard" },
     ],
-    hint: "把行权价 22,000 和年化期限 0.08 填进计算器。",
+    hint: "Fill in the strike of 22,000 and the annualized maturity of 0.08 in the calculator.",
     realData: [
-      "HK.HSI260417C21800000 — 行权价 21,800",
-      "HK.HSI260417C22000000 — 行权价 22,000 ← 客户需求",
-      "HK.HSI260417C22200000 — 行权价 22,200",
+      "HK.HSI260417C21800000 — strike 21,800",
+      "HK.HSI260417C22000000 — strike 22,000 ← client need",
+      "HK.HSI260417C22200000 — strike 22,200",
     ],
   },
   {
     id: "rate_board",
     icon: "🏦",
-    title: "利率公告板 · Rate Board",
+    title: "Rate Board",
     accent: "#a78bfa",
     rows: [
-      { label: "港元无风险利率 r", value: "2%", note: "参考 HIBOR 1 个月利率（教学简化值）" },
-      { label: "参考基准", value: "HIBOR 1M", note: "香港银行同业拆息，由香港银行公会公布" },
-      { label: "实际 HIBOR 区间", value: "1.5% – 3%", note: "视市场环境而定，今天用 2% 作教学锚点" },
+      { label: "HKD Risk-Free Rate r", value: "2%", note: "Per the 1-month HIBOR rate (teaching-simplified value)" },
+      { label: "Reference Benchmark", value: "HIBOR 1M", note: "Hong Kong Interbank Offered Rate, published by the Hong Kong Association of Banks" },
+      { label: "Actual HIBOR Range", value: "1.5% – 3%", note: "Depends on market conditions; today we use 2% as the teaching anchor" },
     ],
-    hint: "把 r = 2 填进计算器的「无风险利率 %」栏。",
+    hint: "Enter r = 2 in the calculator's “Risk-Free Rate %” field.",
   },
   {
     id: "index_profile",
     icon: "📊",
-    title: "指数概况 · Index Profile",
+    title: "Index Profile",
     accent: "#4ade80",
     rows: [
-      { label: "指数", value: "恒生指数 HSI", note: "香港交易所旗舰指数，50 只成分股" },
-      { label: "年化股息率 q", value: "≈ 3.5%", note: "恒指历史平均股息率（含股息定价时需扣除）" },
-      { label: "步数 N", value: "3 步", note: "教学简化：3 步二叉树，足够展示定价直觉" },
-      { label: "注意", value: "今天先不计 q", note: "教学简化：计算器暂不含股息率，真实定价需扣除" },
+      { label: "Index", value: "Hang Seng Index (HSI)", note: "HKEX's flagship index, 50 constituent stocks" },
+      { label: "Annualized Dividend Yield q", value: "≈ 3.5%", note: "HSI historical average dividend yield (must be deducted for dividend-adjusted pricing)" },
+      { label: "Number of Steps N", value: "3 steps", note: "Teaching simplification: a 3-step binomial tree, enough to show the pricing intuition" },
+      { label: "Note", value: "q not counted today", note: "Teaching simplification: the calculator omits the dividend yield for now; real pricing needs to deduct it" },
     ],
-    hint: "今天的计算器暂不含 q，但记住：真实恒指定价需要扣除约 3.5% 股息率，否则会系统性高估 Call 价格。",
+    hint: "Today's calculator omits q for now, but remember: real HSI pricing needs to deduct about a 3.5% dividend yield, or it systematically overestimates the call price.",
   },
 ];
 
@@ -4071,114 +4071,114 @@ const day3ResearchCards = [
   {
     id: "market_quote_d3",
     icon: "📈",
-    title: "行情终端 · Market Data",
+    title: "Market Terminal · Market Data",
     accent: "#00f0ff",
     rows: [
-      { label: "标的", value: "恒生指数 HSI", note: "" },
-      { label: "现价 S₀", value: "21,500 点", note: "今日开盘参考价（与昨天同一水平）" },
-      { label: "VHSI 波动率指数 σ", value: "≈ 30%", note: "市场转紧张的隐含波动率（真实参照：2020-02-28 covid 避险升温，VHSI 跳到 32.7）" },
-      { label: "数据来源", value: "vhsi_history.csv", note: "同组数学引擎队抓取，2003–2026" },
+      { label: "Underlying", value: "Hang Seng Index (HSI)", note: "" },
+      { label: "Spot S₀", value: "21,500 pts", note: "Today's opening reference price (same level as yesterday)" },
+      { label: "VHSI Volatility Index σ", value: "≈ 30%", note: "Implied volatility as the market turns tense (real-world reference: on 2020-02-28 COVID risk-aversion rose and the VHSI jumped to 32.7)" },
+      { label: "Data Source", value: "vhsi_history.csv", note: "Scraped by the math-engine team in our group, 2003–2026" },
     ],
-    hint: "把 VHSI 当作 σ 填进计算器。记住：波动率越高，标的越容易触及障碍线被敲出——这正是障碍产品对 σ 特别敏感的原因。",
+    hint: "Use the VHSI as σ in the calculator. Remember: the higher the volatility, the more easily the underlying touches the barrier level and knocks out — that's exactly why a barrier product is especially sensitive to σ.",
   },
   {
     id: "barrier_contract",
     icon: "🚧",
-    title: "障碍合约卡 · Barrier Spec",
+    title: "Barrier Contract Card · Barrier Spec",
     accent: "#ffd700",
     isNew: true,
     rows: [
-      { label: "产品", value: "下跌敲出看涨期权", note: "Down-and-Out Call，现金结算" },
-      { label: "行权价 K", value: "22,000 点", note: "客户指定（OTM Call，与普通 Call 相同）" },
-      { label: "障碍价 Barrier", value: "21,000 点", note: "🔓 今日新增参数：标的向下触及即失效" },
-      { label: "敲出类型", value: "向下触障即失效", note: "一旦碰到 21,000 提前结束，不复活" },
-      { label: "到期日", value: "约 3 个月后", note: "参考真实期权链：2026-09 到期" },
-      { label: "年化期限 T", value: "≈ 0.25 年", note: "3 个月 ÷ 12 = 0.25（比昨天的 1 个月长）" },
-      { label: "合约乘数", value: "HK$ 50 / 点", note: "HKEX 标准" },
+      { label: "Product", value: "Down-and-Out Call Option", note: "Down-and-Out Call, cash-settled" },
+      { label: "Strike K", value: "22,000 pts", note: "Client-specified (OTM call, same as the vanilla call)" },
+      { label: "Barrier", value: "21,000 pts", note: "🔓 New parameter today: the option expires if the underlying touches it downward" },
+      { label: "Knock-Out Type", value: "Expires on a downward barrier touch", note: "Once it touches 21,000, it ends early and does not revive" },
+      { label: "Expiry Date", value: "About 3 months out", note: "Per the real option chain: expires 2026-09" },
+      { label: "Annualized Maturity T", value: "≈ 0.25 yr", note: "3 months ÷ 12 = 0.25 (longer than yesterday's 1 month)" },
+      { label: "Contract Multiplier", value: "HK$ 50 / pt", note: "HKEX standard" },
     ],
-    hint: "今天比昨天多一个参数：障碍价 21,000。把 K=22,000、T=0.25、障碍价=21,000 都填进障碍版计算器。",
+    hint: "Today has one more parameter than yesterday: the barrier level of 21,000. Enter K=22,000, T=0.25, and barrier=21,000 into the barrier version of the calculator.",
     realData: [
-      "HK.HSI260918C22000000 — 行权价 22,000，到期 2026-09-18",
-      "  └ 加挂下跌敲出条款：障碍 21,000（KO Barrier）",
-      "对比普通 Call HK.HSI260918C22000000：同行权价、无障碍，期权费更高",
+      "HK.HSI260918C22000000 — strike 22,000, expires 2026-09-18",
+      "  └ With an added down-and-out clause: barrier 21,000 (KO Barrier)",
+      "vs. the vanilla call HK.HSI260918C22000000: same strike, no barrier, higher premium",
     ],
   },
   {
     id: "rate_board_d3",
     icon: "🏦",
-    title: "利率公告板 · Rate Board",
+    title: "Rate Board",
     accent: "#a78bfa",
     rows: [
-      { label: "港元无风险利率 r", value: "2%", note: "参考 HIBOR 1 个月利率（教学简化值）" },
-      { label: "参考基准", value: "HIBOR 1M", note: "香港银行同业拆息，由香港银行公会公布" },
-      { label: "实际 HIBOR 区间", value: "1.5% – 3%", note: "视市场环境而定，今天用 2% 作教学锚点" },
+      { label: "HKD Risk-Free Rate r", value: "2%", note: "Per the 1-month HIBOR rate (teaching-simplified value)" },
+      { label: "Reference Benchmark", value: "HIBOR 1M", note: "Hong Kong Interbank Offered Rate, published by the Hong Kong Association of Banks" },
+      { label: "Actual HIBOR Range", value: "1.5% – 3%", note: "Depends on market conditions; today we use 2% as the teaching anchor" },
     ],
-    hint: "把 r = 2 填进计算器的「无风险利率 %」栏（和昨天一样）。",
+    hint: "Enter r = 2 in the calculator's “Risk-Free Rate %” field (same as yesterday).",
   },
   {
     id: "barrier_risk",
     icon: "⚠️",
-    title: "障碍风险卡 · Barrier Risk",
+    title: "Barrier Risk Card · Barrier Risk",
     accent: "#f87171",
     isNew: true,
     rows: [
-      { label: "障碍距现价", value: "约 2.33%", note: "(21,500 − 21,000) ÷ 21,500，离得很近" },
-      { label: "敲出难度", value: "容易", note: "障碍离现价越近，越容易被打穿" },
-      { label: "现实参照", value: "2020-03 恒指 ≈ 21,700", note: "盘中低见 21,139，这种障碍会被击穿" },
-      { label: "代价与回报", value: "便宜 ↔ 易敲出", note: "障碍越近，期权费越便宜，但敲出风险越大" },
+      { label: "Barrier Distance from Spot", value: "About 2.33%", note: "(21,500 − 21,000) ÷ 21,500 — very close" },
+      { label: "Knock-Out Difficulty", value: "Easy", note: "The closer the barrier is to the spot, the more easily it's breached" },
+      { label: "Real-World Reference", value: "2020-03 HSI ≈ 21,700", note: "Intraday low of 21,139 — a barrier like this would be breached" },
+      { label: "Cost vs Reward", value: "Cheap ↔ easy to knock out", note: "The closer the barrier, the cheaper the premium, but the greater the knock-out risk" },
     ],
-    hint: "要点：障碍设得离现价越近，期权费越便宜，但越容易敲出。今天障碍只在现价下方约 2.3%，是一张「便宜但脆弱」的合约。",
+    hint: "Key point: the closer the barrier is set to the spot, the cheaper the premium, but the more easily it knocks out. Today the barrier is only about 2.3% below the spot — a “cheap but fragile” contract.",
     realData: [
-      "2020-02-17 恒指高点 28,055（疫情前）",
-      "2020-03-19 盘中低点 21,139 ← 已跌破 21,000 障碍",
-      "2020-03-23 收盘 21,696，VHSI 一度冲到 60+",
-      "来源：hsi_2020_covid.csv（同组数学引擎队抓取）",
+      "2020-02-17 HSI high of 28,055 (pre-pandemic)",
+      "2020-03-19 intraday low of 21,139 ← already below the 21,000 barrier",
+      "2020-03-23 close of 21,696, VHSI briefly spiked above 60",
+      "Source: hsi_2020_covid.csv (scraped by the math-engine team in our group)",
     ],
   },
 ];
 
-// 客户③（何先生·结业判断）专用资料卡：呼应「提示递减」，不再像 Day4ParamCard 那样
-// 把参数摆好+「照着填」，改成 Day2/Day3 的数据台风格让玩家自己 sourcing。
-// 障碍价只在玩家已判断出障碍产品、进到报价页后才出现，不在判断前泄题。
+// Dedicated data cards for client #3 (Mr. He · graduation judgment): echoing "decreasing hints", instead of the Day4ParamCard
+// approach of laying out parameters + "fill them in as shown", this uses the Day2/Day3 data-desk style so the player sources them.
+// The barrier level only appears after the player has judged the barrier product and reached the quoting page — it doesn't give the answer away beforehand.
 const day4HeResearchCards = [
   {
     id: "market_quote_d4he",
     icon: "📈",
-    title: "行情终端 · Market Data",
+    title: "Market Terminal · Market Data",
     accent: "#00f0ff",
     rows: [
-      { label: "标的", value: "恒生指数 HSI", note: "" },
-      { label: "现价 S₀", value: "25,000 点", note: "covid 股灾数月后，恒指已从低位回升" },
-      { label: "VHSI 波动率指数 σ", value: "≈ 32%", note: "市场尚未完全平静，隐含波动率仍偏高" },
-      { label: "数据来源", value: "vhsi_history.csv", note: "同组数学引擎队抓取" },
+      { label: "Underlying", value: "Hang Seng Index (HSI)", note: "" },
+      { label: "Spot S₀", value: "25,000 pts", note: "Months after the COVID crash, the HSI has recovered from its low" },
+      { label: "VHSI Volatility Index σ", value: "≈ 32%", note: "The market isn't fully calm yet; implied volatility is still elevated" },
+      { label: "Data Source", value: "vhsi_history.csv", note: "Scraped by the math-engine team in our group" },
     ],
   },
   {
     id: "he_order",
     icon: "🚧",
-    title: "何先生订单 · Client Order",
+    title: "Mr. He's Order · Client Order",
     accent: "#ffd700",
     rows: [
-      { label: "行权价 K", value: "25,500 点", note: "何先生想在这个位置行权" },
-      { label: "可接受的失效线", value: "23,500 点", note: "他说「真跌破某个位置当它作废、我也认」" },
-      { label: "期限", value: "约 3 个月", note: "他要做这一波恒指反弹" },
-      { label: "年化期限 T", value: "≈ 0.25 年", note: "3 个月 ÷ 12" },
+      { label: "Strike K", value: "25,500 pts", note: "Mr. He wants to exercise at this level" },
+      { label: "Acceptable Knock-Out Line", value: "23,500 pts", note: "He said “if it really breaches a certain level and gets voided, I can live with that”" },
+      { label: "Maturity", value: "About 3 months", note: "He wants to ride this HSI rebound" },
+      { label: "Annualized Maturity T", value: "≈ 0.25 yr", note: "3 months ÷ 12" },
     ],
   },
   {
     id: "rate_board_d4he",
     icon: "🏦",
-    title: "利率公告板 · Rate Board",
+    title: "Rate Board",
     accent: "#a78bfa",
     rows: [
-      { label: "港元无风险利率 r", value: "2%", note: "与前几天一致的教学锚点" },
+      { label: "HKD Risk-Free Rate r", value: "2%", note: "The same teaching anchor as the previous days" },
     ],
   },
 ];
 
 function ResearchTerminalPanel({
-  title = "中环数据台",
-  accent = "定价参数查询 · Research Terminal",
+  title = "Central Data Desk",
+  accent = "Pricing Parameter Lookup · Research Terminal",
   taskText,
   cards,
   footerHint,
@@ -4193,7 +4193,7 @@ function ResearchTerminalPanel({
       <TerminalHeader label={title} accent={accent} />
       <div className="space-y-5 p-5">
         <div className="rounded-md border border-[#00f0ff]/20 bg-[#00f0ff]/[0.04] p-4 text-sm leading-7 text-slate-300">
-          <span className="font-terminal text-[#00f0ff]">任务：</span>
+          <span className="font-terminal text-[#00f0ff]">Task: </span>
           {taskText}
         </div>
 
@@ -4251,7 +4251,7 @@ function ResearchTerminalPanel({
                     onClick={() => toggle(card.id)}
                     className="font-terminal text-[11px] tracking-[0.12em] text-slate-500 hover:text-slate-300 transition-colors"
                   >
-                    {revealed[card.id] ? "▲ 收起真实期权链" : "▼ 查看真实期权链（同组数据）"}
+                    {revealed[card.id] ? "▲ Collapse Real Option Chain" : "▼ View Real Option Chain (our group's data)"}
                   </button>
                   {revealed[card.id] && (
                     <div className="mt-2 rounded border border-white/10 bg-black/40 p-3 space-y-1">
@@ -4261,7 +4261,7 @@ function ResearchTerminalPanel({
                         </div>
                       ))}
                       <div className="mt-2 font-terminal text-[10px] text-slate-600">
-                        来源：option_chain_current.csv（同组数学引擎队抓取，HKEX 真实数据）
+                        Source: option_chain_current.csv (scraped by the math-engine team in our group, real HKEX data)
                       </div>
                     </div>
                   )}
@@ -4282,17 +4282,17 @@ function ResearchTerminalPanel({
 function Day2ResearchTerminalPanel() {
   return (
     <ResearchTerminalPanel
-      title="中环数据台"
-      accent="定价参数查询 · Research Terminal"
+      title="Central Data Desk"
+      accent="Pricing Parameter Lookup · Research Terminal"
       cards={researchCards}
       taskText={
         <>
-          查阅下方 4 张资料卡，自己判断今天定价需要哪些关键参数——
-          <span className="font-black text-slate-100"> S₀（标的现价）、K（行权价）、T（年化期限）、r（无风险利率）、σ（年化波动率）</span>。
-          资料卡只给你原始行情，不给现成答案。把对应的数字找出来、记下来，等会儿手动填进二叉树计算器，算出理论价格，再去报价。
+          Review the 4 data cards below and decide for yourself which key parameters today's pricing needs —
+          <span className="font-black text-slate-100"> S₀ (spot), K (strike), T (annualized maturity), r (risk-free rate), σ (annualized volatility)</span>.
+          The cards give you only raw market data, not ready-made answers. Find the relevant numbers, note them down, then manually enter them into the binomial-tree calculator, compute the theoretical price, and go quote.
         </>
       }
-      footerHint="提示：上面四张卡里藏着定价要用的全部数字，但没有现成的「速查表」。哪个数据对应计算器的哪个输入框，需要你自己判断——这正是交易员每天在做的事：sourcing the inputs。"
+      footerHint="Hint: the four cards above hide all the numbers you need for pricing, but there's no ready-made “cheat sheet.” Which data maps to which input field is for you to judge — this is exactly what traders do every day: sourcing the inputs."
     />
   );
 }
@@ -4300,21 +4300,21 @@ function Day2ResearchTerminalPanel() {
 function Day3ResearchTerminalPanel() {
   return (
     <ResearchTerminalPanel
-      title="中环数据台 · 障碍专场"
-      accent="障碍参数查询 · Barrier Research"
+      title="Central Data Desk · Barrier Edition"
+      accent="Barrier Parameter Lookup · Barrier Research"
       cards={day3ResearchCards}
       taskText={
         <>
-          今天的产品多了一层「障碍」。除了昨天那几个参数，你还要查一个全新的关键数字——
-          <span className="font-black text-[#ffd700]"> 障碍价 Barrier</span>。
-          下面 4 张卡里，自己找出
-          <span className="font-black text-slate-100"> S₀、K、T、r、σ </span>
-          以及
-          <span className="font-black text-[#ffd700]">障碍价 Barrier</span>
-          ，记下来，等会儿填进障碍版计算器。注意：今天期限是 3 个月，比昨天长。
+          Today's product adds an extra layer: the barrier. On top of yesterday's parameters, you also need to look up one brand-new key number —
+          <span className="font-black text-[#ffd700]"> the barrier level</span>.
+          From the 4 cards below, find for yourself
+          <span className="font-black text-slate-100"> S₀, K, T, r, σ </span>
+          as well as the
+          <span className="font-black text-[#ffd700]">barrier level</span>
+          , note them down, then enter them into the barrier version of the calculator. Note: today's maturity is 3 months, longer than yesterday.
         </>
       }
-      footerHint="提示：障碍合约卡里的「障碍价 Barrier」是今天新增的参数，也是计算器今天多出来的那一行。和昨天一样，没有速查表——哪个数据对应哪个输入框，自己判断。"
+      footerHint="Hint: the “barrier level” on the barrier contract card is today's new parameter, and the extra row in the calculator today. As with yesterday, there's no cheat sheet — judge for yourself which data maps to which input field."
     />
   );
 }
@@ -4322,28 +4322,28 @@ function Day3ResearchTerminalPanel() {
 function Day2ClientArrivalPanel() {
   const client = day2Config.clientProfile;
   const profileRows = [
-    ["姓名", client.name],
-    ["客户类型", client.type],
-    ["市场观点", client.marketView],
-    ["风险承受能力", client.riskTolerance],
-    ["目标", client.goal],
-    ["产品需求", client.productNeed],
-    ["预算", client.budget],
-    ["经验", client.experience],
+    ["Name", client.name],
+    ["Client Type", client.type],
+    ["Market View", client.marketView],
+    ["Risk Tolerance", client.riskTolerance],
+    ["Goal", client.goal],
+    ["Product Need", client.productNeed],
+    ["Budget", client.budget],
+    ["Experience", client.experience],
   ];
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="客户资料" accent="机构客户订单" />
+      <TerminalHeader label="Client Profile" accent="Institutional Client Order" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.85fr_1.15fr]">
         <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
           <div className="mb-5 flex items-center gap-4">
             <div className="flex h-20 w-20 items-center justify-center rounded-md border border-[#ffd700]/30 bg-[#ffd700]/[0.08] font-terminal text-4xl font-black text-[#ffd700]">
-              王
+              W
             </div>
             <div>
               <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
-                专业客户
+                Professional Client
               </div>
               <div className="mt-2 text-2xl font-black text-slate-100">{client.name}</div>
             </div>
@@ -4362,12 +4362,12 @@ function Day2ClientArrivalPanel() {
 
         <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-5">
           <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#ffd700]">
-            客户对白
+            Client Dialogue
           </div>
           <div className="space-y-4">
             {client.dialogue.map((line) => (
               <div key={line} className="rounded-md border border-white/10 bg-black/30 p-4 text-base leading-8 text-slate-200">
-                王先生：“{line}”
+                Mr. Wang: “{line}”
               </div>
             ))}
           </div>
@@ -4380,25 +4380,25 @@ function Day2ClientArrivalPanel() {
 function Day2ProductReviewPanel() {
   const product = day2Config.productSummary;
   const rows = [
-    ["产品", product.product],
-    ["标的", product.underlying],
-    ["当前价格 Spot", formatPoints(product.spot)],
-    ["行权价 Strike", formatPoints(product.strike)],
-    ["期限", product.maturity],
-    ["客户观点", product.clientView],
+    ["Product", product.product],
+    ["Underlying", product.underlying],
+    ["Spot", formatPoints(product.spot)],
+    ["Strike", formatPoints(product.strike)],
+    ["Maturity", product.maturity],
+    ["Client View", product.clientView],
   ];
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="产品确认" accent="客户已指定普通 Call" />
+      <TerminalHeader label="Product Confirmation" accent="Client Has Specified a Vanilla Call" />
       <div className="space-y-5 p-6">
         <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-5">
           <div className="font-terminal mb-2 text-xs tracking-[0.18em] text-[#ffd700]">
-            VANILLA CALL / 普通看涨期权
+            VANILLA CALL
           </div>
           <div className="text-3xl font-black text-slate-100">{product.product}</div>
           <p className="mt-4 text-base leading-8 text-slate-300">
-            {product.matchReason} 第二天的任务不是重新挑产品，而是确认结构后打开定价树，给出合理期权费（Premium）。
+            {product.matchReason} The task on day two isn't to re-pick a product, but to confirm the structure, open the pricing tree, and give a reasonable premium.
           </p>
         </div>
 
@@ -4473,7 +4473,7 @@ function BinomialTreeVisual() {
                   </div>
                 )}
                 <div className={cn("rounded border px-2 py-1 text-xs font-black", node.hot ? "border-[#ffd700]/40 text-[#ffd700]" : "border-white/10 text-slate-500")}>
-                  到期收益：{formatPoints(node.payoff)}
+                  Payoff: {formatPoints(node.payoff)}
                 </div>
               </div>
             )}
@@ -4663,7 +4663,7 @@ function buildBarrierBinomialToolTree(params) {
   };
 }
 
-// 用定价引擎实算理论价，覆盖 config 里的 hardcoded 占位值
+// Use the pricing engine to compute theoretical prices live, overriding the hardcoded placeholder values in config
 // Day2 vanilla: S0=21500/K=22000/σ=16%/T=0.08/N=3 → 185.94 ≈ 186
 day2Config.quoteRules.theoreticalPrice = Math.round(
   buildVanillaBinomialToolTree({ spot: 21500, strike: 22000, rate: 2, sigma: 16, maturity: 0.08, steps: 3 }).vanillaPrice
@@ -4672,12 +4672,12 @@ day2Config.quoteRules.theoreticalPrice = Math.round(
 day3Config.market.premium = Math.round(
   buildBarrierBinomialToolTree({ spot: 21500, strike: 22000, barrier: 21000, rate: 2, sigma: 30, maturity: 0.25, steps: 4 }).barrierPrice
 );
-// Day3 vanilla ref: 同参数无障碍 → 1111.73 ≈ 1112
+// Day3 vanilla ref: same params, no barrier → 1111.73 ≈ 1112
 day3Config.market.vanillaPremium = Math.round(
   buildVanillaBinomialToolTree({ spot: 21500, strike: 22000, rate: 2, sigma: 30, maturity: 0.25, steps: 4 }).vanillaPrice
 );
 
-// Day4 客户理论价（barrier N=4 / vanilla N=3）
+// Day4 client theoretical prices (barrier N=4 / vanilla N=3)
 day4Clients[0].theoretical = Math.round(
   buildVanillaBinomialToolTree({ spot: 24000, strike: 24500, rate: 2, sigma: 18, maturity: 0.08, steps: 3 }).vanillaPrice
 );
@@ -4688,7 +4688,7 @@ day4Clients[2].theoretical = Math.round(
   buildBarrierBinomialToolTree({ spot: 25000, strike: 25500, barrier: 23500, rate: 2, sigma: 32, maturity: 0.25, steps: 4 }).barrierPrice
 );
 
-// Day2 理论价格 0 守卫：确保 liveTheoretical 只在实算价 >= 1 点时更新
+// Day2 zero-theoretical-price guard: ensures liveTheoretical only updates when the computed price is >= 1 point
 function checkDay2Params(params) {
   const standard = { spot: 21500, strike: 22000, rate: 2, sigma: 16, maturity: 0.08 };
   const tolerance = { spot: 200, strike: 200, rate: 0.5, sigma: 2, maturity: 0.01 };
@@ -4711,13 +4711,13 @@ function BinomialPricingTool({
   quoteAnalysis,
   onUpdateQuote,
   onUpdateTheoretical,
-  enableParamCheck = true, // Day2 用标准参数对照提醒；Day4 各客户参数不同，关掉
-  quoteHint, // 报价输入框的提示文案（Day4 按客户定制）；不传则用默认
+  enableParamCheck = true, // Day2 uses standard-parameter comparison reminders; Day4 clients have different parameters, so turn it off
+  quoteHint, // Hint text for the quote input field (customized per client on Day4); falls back to default if not passed
 }) {
   const isBarrier = mode === "barrier";
 
-  // 默认值故意设成各参数的最小值（占位），逼玩家自己从数据台抄真实参数填进来
-  // 步数 N 是建模选择（不是要从数据台查的市场参数），固定锁死：Day2=3、Day3=4
+  // Defaults are deliberately set to each parameter's minimum (placeholder), forcing the player to copy the real parameters from the data desk themselves
+  // The number of steps N is a modeling choice (not a market parameter to look up at the data desk), and is locked fixed: Day2=3, Day3=4
   const fixedSteps = isBarrier ? 4 : 3;
   const [params, setParams] = useState(
     isBarrier
@@ -4733,7 +4733,7 @@ function BinomialPricingTool({
     [params, isBarrier],
   );
 
-  // 每次 tree 重算，把最新理论价传给父组件（仅 vanilla 模式的 Day2 报价联动会传 onUpdateTheoretical）
+  // On every tree recompute, pass the latest theoretical price to the parent component (only the vanilla-mode Day2 quote linkage passes onUpdateTheoretical)
   useEffect(() => {
     if (onUpdateTheoretical && Math.round(tree.vanillaPrice) >= 1) {
       onUpdateTheoretical(Math.round(tree.vanillaPrice));
@@ -4748,7 +4748,7 @@ function BinomialPricingTool({
     }));
   };
 
-  // Day2 参数检查（仅 vanilla 模式）
+  // Day2 parameter check (vanilla mode only)
   const day2ParamIssues = useMemo(
     () => (!isBarrier && enableParamCheck ? checkDay2Params(params) : []),
     [params, isBarrier, enableParamCheck],
@@ -4756,19 +4756,19 @@ function BinomialPricingTool({
 
   const inputMeta = isBarrier
     ? [
-        ["spot", "S0 现价", 1000, 50000, 100],
-        ["strike", "K 行权价", 1000, 50000, 100],
-        ["barrier", "障碍价格", 1000, 50000, 100],
-        ["rate", "r 无风险利率 %", -5, 20, 0.25],
-        ["sigma", "σ 波动率 %", 1, 80, 1],
-        ["maturity", "T 年化期限", 0.05, 3, 0.05],
+        ["spot", "S0 Spot", 1000, 50000, 100],
+        ["strike", "K Strike", 1000, 50000, 100],
+        ["barrier", "Barrier Level", 1000, 50000, 100],
+        ["rate", "r Risk-Free Rate %", -5, 20, 0.25],
+        ["sigma", "σ Volatility %", 1, 80, 1],
+        ["maturity", "T Annualized Maturity", 0.05, 3, 0.05],
       ]
     : [
-        ["spot", "S0 现价", 1000, 50000, 100],
-        ["strike", "K 行权价", 1000, 50000, 100],
-        ["rate", "r 无风险利率 %", -5, 20, 0.25],
-        ["sigma", "σ 波动率 %", 1, 80, 1],
-        ["maturity", "T 年化期限", 0.02, 3, 0.01],
+        ["spot", "S0 Spot", 1000, 50000, 100],
+        ["strike", "K Strike", 1000, 50000, 100],
+        ["rate", "r Risk-Free Rate %", -5, 20, 0.25],
+        ["sigma", "σ Volatility %", 1, 80, 1],
+        ["maturity", "T Annualized Maturity", 0.02, 3, 0.01],
       ];
 
   return (
@@ -4776,12 +4776,12 @@ function BinomialPricingTool({
       <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
         <div>
           <div className="font-terminal text-xs tracking-[0.2em] text-[#00f0ff]">
-            {isBarrier ? "障碍期权二叉树计算器" : "普通期权二叉树计算器"}
+            {isBarrier ? "Barrier Option Binomial Tree Calculator" : "Vanilla Option Binomial Tree Calculator"}
           </div>
           <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-400">
             {isBarrier
-              ? "和昨天同一个计算器，今天多了一行金色的「障碍价格」。红色节点表示触及障碍被敲出，绿色路径表示仍然存活；下方并排比较普通 Call 与下跌敲出 Call 的模型价格。"
-              : "这里先只看普通 Call。改变现价、行权价、波动率或步数，观察价格树、到期收益和今天理论价格如何同步变化。"}
+              ? "Same calculator as yesterday, with one extra gold row today: the “barrier level.” Red nodes indicate the barrier was touched and knocked out, green paths indicate it's still alive; below, the model prices of a vanilla call and a down-and-out call are compared side by side."
+              : "Here we look at a vanilla call only for now. Change the spot, strike, volatility, or number of steps, and watch how the price tree, expiry payoffs, and today's theoretical price update together."}
           </p>
         </div>
         <div
@@ -4806,7 +4806,7 @@ function BinomialPricingTool({
       >
         <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
           <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#00f0ff]">
-            参数输入
+            Parameter Input
           </div>
           <div className="grid gap-3">
             {inputMeta.map(([key, label, min, max, step]) => {
@@ -4846,38 +4846,38 @@ function BinomialPricingTool({
 
             <label className="grid gap-2">
               <span className="font-terminal flex items-center gap-2 text-[11px] tracking-[0.12em] text-slate-500">
-                N 步数
+                N Steps
                 <span className="rounded-full border border-white/15 bg-white/[0.04] px-2 py-0.5 text-[9px] font-black tracking-[0.18em] text-slate-500">
-                  🔒 固定
+                  🔒 Fixed
                 </span>
               </span>
               <div className="rounded-md border border-white/10 bg-black/40 px-3 py-2 font-terminal text-sm text-slate-400">
-                {params.steps} 步（建模选择，不用查）
+                {params.steps} steps (modeling choice, no need to look up)
               </div>
             </label>
           </div>
 
           <div className="mt-4 grid gap-3 rounded-md border border-white/10 bg-white/[0.03] p-3 text-xs leading-6 text-slate-400">
             <div>
-              上涨因子 u：
+              Up factor u:
               <span className="font-terminal text-[#00f0ff]"> {tree.up.toFixed(4)}</span>
             </div>
             <div>
-              下跌因子 d：
+              Down factor d:
               <span className="font-terminal text-[#00f0ff]"> {tree.down.toFixed(4)}</span>
             </div>
             <div>
-              风险中性概率 p：
+              Risk-neutral probability p:
               <span className="font-terminal text-[#ffd700]"> {tree.probability.toFixed(4)}</span>
             </div>
             {!tree.noArbitrage && (
               <div className="rounded border border-red-500/30 bg-red-500/[0.08] px-2 py-1 text-red-300">
-                参数不满足 d &lt; e^(rΔt) &lt; u，风险中性概率超出 0-1。
+                Parameters don't satisfy d &lt; e^(rΔt) &lt; u; the risk-neutral probability is outside 0–1.
               </div>
             )}
             {!isBarrier && (
               <div>
-                普通 Call 理论价：
+                Vanilla Call theoretical price:
                 <span className="font-terminal text-green-300"> {tree.vanillaPrice.toFixed(2)}</span>
               </div>
             )}
@@ -4885,14 +4885,14 @@ function BinomialPricingTool({
 
           {!isBarrier && day2ParamIssues.length > 0 && (
             <div className="mt-4 rounded-md border border-orange-500/40 bg-orange-500/[0.08] p-3 text-xs leading-5 text-orange-300">
-              <div className="font-terminal mb-2 tracking-[0.12em]">⚠️ Martin 提醒</div>
+              <div className="font-terminal mb-2 tracking-[0.12em]">⚠️ Martin's Reminder</div>
               {day2ParamIssues.map(({ key, value, stdValue }) => (
                 <div key={key} className="mb-1">
-                  {key === "spot" && `现价 S0：你填 ${Number(value).toLocaleString()} 点，数据台行情终端应该是 21,500`}
-                  {key === "strike" && `行权价 K：你填 ${Number(value).toLocaleString()} 点，应该是 22,000`}
-                  {key === "rate" && `利率 r：你填 ${value}%，应该是 2%`}
-                  {key === "sigma" && `波动率 σ：你填 ${value}%，应该是 16%（来自 VHSI）`}
-                  {key === "maturity" && `期限 T：你填 ${value} 年，1 个月应该是约 0.08 年`}
+                  {key === "spot" && `Spot S0: you entered ${Number(value).toLocaleString()} pts; the data desk's market terminal should be 21,500`}
+                  {key === "strike" && `Strike K: you entered ${Number(value).toLocaleString()} pts; it should be 22,000`}
+                  {key === "rate" && `Rate r: you entered ${value}%; it should be 2%`}
+                  {key === "sigma" && `Volatility σ: you entered ${value}%; it should be 16% (from the VHSI)`}
+                  {key === "maturity" && `Maturity T: you entered ${value} yr; 1 month should be about 0.08 yr`}
                 </div>
               ))}
             </div>
@@ -4999,24 +4999,24 @@ function BinomialPricingTool({
             <div className="mt-4 grid gap-3 md:grid-cols-2">
               <div className="rounded-lg border border-cyan-400/20 bg-cyan-400/[0.05] p-4">
                 <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
-                  普通 Call 理论价
+                  Vanilla Call Theoretical Price
                 </div>
                 <div className="mt-2 text-3xl font-black text-slate-100">
                   {tree.vanillaPrice.toFixed(2)}
                 </div>
                 <p className="mt-2 text-xs leading-6 text-slate-400">
-                  不观察障碍，只根据到期收益 max(S - K, 0) 倒推。
+                  Ignores the barrier; worked backward purely from the expiry payoff max(S - K, 0).
                 </p>
               </div>
               <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
                 <div className="font-terminal text-xs tracking-[0.18em] text-[#ffd700]">
-                  下跌敲出 Call 理论价
+                  Down-and-Out Call Theoretical Price
                 </div>
                 <div className="mt-2 text-3xl font-black text-[#ffd700]">
                   {tree.barrierPrice.toFixed(2)}
                 </div>
                 <p className="mt-2 text-xs leading-6 text-slate-400">
-                  一旦节点价格低于或等于障碍价，该节点之后价值归零。
+                  Once a node price falls to or below the barrier level, the value from that node onward goes to zero.
                 </p>
               </div>
             </div>
@@ -5024,26 +5024,26 @@ function BinomialPricingTool({
             <div className="mt-4 grid gap-3 md:grid-cols-3">
               <div className="rounded-lg border border-cyan-400/20 bg-cyan-400/[0.05] p-4">
                 <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
-                  价格树
+                  Price Tree
                 </div>
                 <p className="mt-2 text-xs leading-6 text-slate-400">
-                  现价和波动率会改变未来节点价格。
+                  The spot and volatility change the future node prices.
                 </p>
               </div>
               <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
                 <div className="font-terminal text-xs tracking-[0.18em] text-[#ffd700]">
-                  到期收益
+                  Expiry Payoff
                 </div>
                 <p className="mt-2 text-xs leading-6 text-slate-400">
-                  行权价 K 不改变价格树，但会改变终点 Payoff。
+                  The strike K doesn't change the price tree, but it does change the terminal payoff.
                 </p>
               </div>
               <div className="rounded-lg border border-green-400/20 bg-green-400/[0.06] p-4">
                 <div className="font-terminal text-xs tracking-[0.18em] text-green-300">
-                  倒推价格
+                  Backward-Induced Price
                 </div>
                 <p className="mt-2 text-xs leading-6 text-slate-400">
-                  从终点收益一路倒推，得到今天理论价格。
+                  Working backward from the terminal payoffs gives today's theoretical price.
                 </p>
               </div>
             </div>
@@ -5055,28 +5055,28 @@ function BinomialPricingTool({
         <div className="mt-5 rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.05] p-5">
           <div className="mb-4">
             <div className="font-terminal text-xs tracking-[0.2em] text-[#ffd700]">
-              报价输入 / Premium Quote
+              Quote Input / Premium Quote
             </div>
             <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-400">
               {quoteHint
                 ? quoteHint
                 : isBarrier
-                  ? "参考上面计算器算出的「下跌敲出 Call 理论价」，加上你认为合理的利润空间，给陈女士报一个期权费。"
-                  : "参考上面计算器算出的「普通 Call 理论价」，加上你认为合理的利润空间，给王先生报一个期权费。"}
-              <span className="text-slate-300">报多少由你决定——系统不会提前告诉你对不对，提交后才见分晓。</span>
+                  ? "Using the “Down-and-Out Call theoretical price” computed by the calculator above, add a profit margin you consider reasonable, and quote Ms. Chen a premium."
+                  : "Using the “Vanilla Call theoretical price” computed by the calculator above, add a profit margin you consider reasonable, and quote Mr. Wang a premium."}
+              <span className="text-slate-300">How much to quote is up to you — the system won't tell you in advance whether you're right; you'll find out only after you submit.</span>
             </p>
           </div>
 
           <label className="grid max-w-xs gap-2">
             <span className="font-terminal text-[11px] tracking-[0.14em] text-slate-500">
-              你的报价（点）
+              Your Quote (points)
             </span>
             <input
               type="number"
               min={day2Config.quoteRules.sliderMin}
               max={day2Config.quoteRules.sliderMax}
               step="5"
-              placeholder="自己填一个报价"
+              placeholder="Enter a quote yourself"
               value={selectedQuote}
               onChange={(event) =>
                 onUpdateQuote(event.target.value === "" ? "" : Number(event.target.value))
@@ -5093,44 +5093,44 @@ function BinomialPricingTool({
 function BinomialFormulaPanel() {
   const steps = [
     {
-      title: "1. 先生成价格树",
+      title: "1. Generate the Price Tree First",
       formula: "u = e^(σ√Δt),   d = 1/u",
-      text: "从今天的价格 S0 出发，每一步价格可能乘以上涨因子 u 或下跌因子 d，于是形成一棵价格树。",
+      text: "Starting from today's price S0, at each step the price can multiply by the up factor u or the down factor d, forming a price tree.",
     },
     {
-      title: "2. 到期节点算 Payoff",
+      title: "2. Compute the Payoff at the Expiry Nodes",
       formula: "Call Payoff = max(S_T - K, 0)",
-      text: "走到最右侧到期节点后，先计算每个终点的期权收益。普通 Call 只看最终价格是否高于行权价。",
+      text: "Once you reach the rightmost expiry nodes, compute the option payoff at each terminal point first. A vanilla call only looks at whether the final price is above the strike.",
     },
     {
-      title: "3. 计算风险中性概率",
+      title: "3. Compute the Risk-Neutral Probability",
       formula: "p = (e^(rΔt) - d) / (u - d)",
-      text: "p 不是主观上涨概率，而是让二叉树在无套利条件下可以折现倒推的风险中性概率。",
+      text: "p is not a subjective probability of an up move — it's the risk-neutral probability that lets the binomial tree be discounted backward under no-arbitrage conditions.",
     },
     {
-      title: "4. 从未来倒推回今天",
+      title: "4. Work Backward from the Future to Today",
       formula: "V = e^{-rΔt} × [pV_up + (1-p)V_down]",
-      text: "把下一步上涨和下跌的可能价值加权，再折现回来。一路倒推到最左侧，就是今天的理论价格。",
+      text: "Weight the possible up and down values of the next step, then discount them back. Work backward all the way to the far left, and that's today's theoretical price.",
     },
   ];
   const symbols = [
-    ["S0", "今天的标的价格，也就是计算起点"],
-    ["S / S_T", "某个节点价格 / 到期最终价格。T 是到期时间 Terminal time"],
-    ["K", "行权价。Call 到期时会拿最终价格和 K 比较"],
-    ["u / d", "每一步向上或向下的价格倍数"],
-    ["r", "无风险利率，用来把未来价值折现回今天"],
-    ["Δt", "每一步代表的时间长度"],
-    ["p", "风险中性概率，用来给上涨、下跌两种未来加权"],
-    ["V", "期权在某个节点上的理论价值"],
+    ["S0", "Today's underlying price, i.e. the starting point of the calculation"],
+    ["S / S_T", "A node price / the final price at expiry. T is the terminal time"],
+    ["K", "The strike. At expiry, a call compares the final price against K"],
+    ["u / d", "The price multiple for each up or down step"],
+    ["r", "The risk-free rate, used to discount future value back to today"],
+    ["Δt", "The length of time each step represents"],
+    ["p", "The risk-neutral probability, used to weight the up and down futures"],
+    ["V", "The option's theoretical value at a given node"],
   ];
 
   return (
     <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.05] p-5">
       <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[#ffd700]">
-        定价机制 / 先懂公式，再看计算器
+        Pricing Mechanism / Understand the Formula First, Then Use the Calculator
       </div>
       <div className="mb-5 text-2xl font-black text-slate-100">
-        二叉树不是猜市场，而是把未来路径拆开，再从终点倒推今天价格
+        A binomial tree doesn't guess the market — it breaks the future into paths, then works backward from the endpoints to today's price
       </div>
       <div className="grid gap-4 lg:grid-cols-2">
         {steps.map((step) => (
@@ -5147,7 +5147,7 @@ function BinomialFormulaPanel() {
       </div>
       <div className="mt-5 rounded-lg border border-cyan-400/15 bg-black/25 p-4">
         <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
-          符号说明 / 不用背，先知道它们在说什么
+          Symbol Glossary / No Need to Memorize, Just Know What They Mean
         </div>
         <div className="grid gap-3 md:grid-cols-3">
           {symbols.map(([symbol, meaning]) => (
@@ -5159,7 +5159,7 @@ function BinomialFormulaPanel() {
         </div>
       </div>
       <div className="mt-4 rounded-md border-l-4 border-[#00f0ff] bg-cyan-400/[0.06] p-4 text-sm leading-7 text-slate-200">
-        看计算器时重点观察三件事：价格树如何展开、行权价如何影响到期收益、终点收益如何倒推成今天的理论价格。
+        When using the calculator, focus on three things: how the price tree unfolds, how the strike affects the expiry payoff, and how the terminal payoffs are worked backward into today's theoretical price.
       </div>
     </div>
   );
@@ -5168,19 +5168,19 @@ function BinomialFormulaPanel() {
 function Day2TreeExplainerPanel({ selectedQuote, quoteAnalysis, onUpdateQuote, onUpdateTheoretical }) {
   const tree = day2Config.tree;
   const params = [
-    ["标的", tree.underlying],
-    ["当前价格 S0", formatPoints(tree.spot)],
-    ["行权价 K", formatPoints(tree.strike)],
-    ["上涨幅度", tree.upMove],
-    ["下跌幅度", tree.downMove],
-    ["步数", `${tree.steps} 步`],
-    ["无风险利率", tree.riskFreeRate],
-    ["简化理论价格", `${tree.theoreticalPrice} 点`],
+    ["Underlying", tree.underlying],
+    ["Spot S0", formatPoints(tree.spot)],
+    ["Strike K", formatPoints(tree.strike)],
+    ["Up Move", tree.upMove],
+    ["Down Move", tree.downMove],
+    ["Steps", `${tree.steps} steps`],
+    ["Risk-Free Rate", tree.riskFreeRate],
+    ["Simplified Theoretical Price", `${tree.theoreticalPrice} pts`],
   ];
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="二叉树定价终端" accent="三步二叉树（3-step Binomial Tree）" />
+      <TerminalHeader label="Binomial Tree Pricing Terminal" accent="3-step Binomial Tree" />
       <div className="space-y-5 p-6">
         <div className="grid gap-3 md:grid-cols-4">
           {params.map(([label, value]) => (
@@ -5197,12 +5197,12 @@ function Day2TreeExplainerPanel({ selectedQuote, quoteAnalysis, onUpdateQuote, o
 
         <div className="grid gap-4 md:grid-cols-3">
           {[
-            "现价 S0 和波动率 σ 会改变未来价格节点，让价格树变宽或变窄。",
-            "行权价 K 不会改变标的价格路径，但会改变每个到期节点的 Payoff。",
-            "步数 N 越多，树越细；今天先看直觉，不要求你手算每个节点。",
+            "The spot S0 and volatility σ change the future price nodes, making the price tree wider or narrower.",
+            "The strike K doesn't change the underlying's price path, but it does change the payoff at each expiry node.",
+            "The more steps N, the finer the tree; today just grasp the intuition — you're not asked to compute every node by hand.",
           ].map((text, index) => (
             <div key={text} className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-4 text-sm leading-7 text-[#ffd700]">
-              <span className="font-terminal mr-2 text-[#00f0ff]">提示 {index + 1}</span>
+              <span className="font-terminal mr-2 text-[#00f0ff]">Hint {index + 1}</span>
               {text}
             </div>
           ))}
@@ -5240,14 +5240,14 @@ function Day2QuoteSliderPanel({
 
   const content = (
     <>
-      <TerminalHeader label="报价终端（Pricing Terminal）" accent="调整期权费（Premium）" />
+      <TerminalHeader label="Pricing Terminal" accent="Adjust the Premium" />
       <div className="space-y-6 p-6">
         <div className="grid gap-4 md:grid-cols-4">
           {[
-            ["你的报价", `${selectedQuote} 点`, "#00f0ff"],
-            ["模型理论价", `${liveTheoretical} 点`, "#ffd700"],
-            ["交易台利润", `${profit >= 0 ? "+" : ""}${profit} 点`, profit >= 0 ? "#4ade80" : "#f87171"],
-            ["建议区间", `${fairLow} - ${fairHigh} 点`, "#e2e8f0"],
+            ["Your Quote", `${selectedQuote} pts`, "#00f0ff"],
+            ["Model Theoretical Price", `${liveTheoretical} pts`, "#ffd700"],
+            ["Desk Profit", `${profit >= 0 ? "+" : ""}${profit} pts`, profit >= 0 ? "#4ade80" : "#f87171"],
+            ["Suggested Range", `${fairLow} - ${fairHigh} pts`, "#e2e8f0"],
           ].map(([label, value, color]) => (
             <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
@@ -5264,9 +5264,9 @@ function Day2QuoteSliderPanel({
           <div className="mb-4 flex items-center justify-between gap-4">
             <div>
               <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
-                报价滑块
+                Quote Slider
               </div>
-              <div className="mt-1 text-sm text-slate-500">范围：{rules.sliderMin} - {rules.sliderMax} 点</div>
+              <div className="mt-1 text-sm text-slate-500">Range: {rules.sliderMin} - {rules.sliderMax} pts</div>
             </div>
             <div className={cn("rounded-md border px-4 py-2 font-terminal text-xs tracking-[0.14em]", toneClass)}>
               {quoteAnalysis.label}
@@ -5284,15 +5284,15 @@ function Day2QuoteSliderPanel({
           />
           <div className="mt-3 flex justify-between text-xs text-slate-500">
             <span>{rules.sliderMin}</span>
-            <span>{liveTheoretical} 理论价</span>
-            <span>{fairLow}–{fairHigh} 合理区间</span>
-            <span>{liveTheoretical + 74} 拒绝线</span>
+            <span>{liveTheoretical} theoretical</span>
+            <span>{fairLow}–{fairHigh} fair range</span>
+            <span>{liveTheoretical + 74} rejection line</span>
             <span>{rules.sliderMax}</span>
           </div>
         </div>
 
         <div className={cn("rounded-md border-l-4 p-4 text-base leading-8", toneClass)}>
-          客户反应预览：{quoteAnalysis.customerPreview}
+          Client reaction preview: {quoteAnalysis.customerPreview}
         </div>
       </div>
     </>
@@ -5315,30 +5315,30 @@ function Day2QuoteSliderPanel({
 
 function Day2ClientResponsePanel({ selectedQuote, clientResponse, liveTheoretical = day2Config.quoteRules.theoreticalPrice }) {
   const response = clientResponse ?? getQuoteAnalysis(selectedQuote, day2Config.quoteRules.theoreticalPrice);
-  const acceptedText = response.accepted ? "交易接受" : "客户拒绝";
+  const acceptedText = response.accepted ? "Trade Accepted" : "Client Refused";
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="客户反馈" accent="报价回执" />
+      <TerminalHeader label="Client Feedback" accent="Quote Receipt" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
-            报价记录
+            Quote Record
           </div>
-          <div className="text-5xl font-black text-[#00f0ff]">{selectedQuote} 点</div>
+          <div className="text-5xl font-black text-[#00f0ff]">{selectedQuote} pts</div>
           <div className="mt-4 text-sm leading-7 text-slate-400">
-            报价已发出，等待市场结算。
+            The quote has been sent; awaiting market settlement.
           </div>
         </div>
 
         <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-5">
           <div className="mb-4 flex items-center gap-4">
             <div className="flex h-16 w-16 items-center justify-center rounded-md border border-[#ffd700]/30 bg-black/40 font-terminal text-3xl font-black text-[#ffd700]">
-              王
+              W
             </div>
             <div>
               <div className="font-terminal text-xs tracking-[0.18em] text-[#ffd700]">
-                王先生
+                Mr. Wang
               </div>
               <div className="mt-1 text-sm text-slate-500">{acceptedText}</div>
             </div>
@@ -5408,15 +5408,15 @@ function Day2MarketRunPanel({
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="市场路径" accent={finalShown ? "收盘价已锁定" : "行情自动运行中"} />
+      <TerminalHeader label="Market Path" accent={finalShown ? "Closing Price Locked" : "Market Running Automatically"} />
       <div className="p-5">
         <div className="grid gap-4 md:grid-cols-5">
           {[
-            ["标的", "恒生指数 HSI"],
-            ["开盘", formatPoints(spot)],
-            ["行权价", formatPoints(market.strike)],
-            ["你的报价", `${quote} 点`],
-            ["期限", "1 个月"],
+            ["Underlying", "Hang Seng Index (HSI)"],
+            ["Open", formatPoints(spot)],
+            ["Strike", formatPoints(market.strike)],
+            ["Your Quote", `${quote} pts`],
+            ["Maturity", "1 month"],
           ].map(([label, value]) => (
             <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
@@ -5429,13 +5429,13 @@ function Day2MarketRunPanel({
 
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
           <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
-            <div className="font-terminal text-xs text-slate-500">实时价格</div>
+            <div className="font-terminal text-xs text-slate-500">Live Price</div>
             <div className="live-price-pulse mt-2 text-3xl font-black text-[#00f0ff]">
               {formatPoints(latestPrice)}
             </div>
           </div>
           <div className="rounded-lg border border-white/10 bg-black/30 p-4">
-            <div className="font-terminal text-xs text-slate-500">本跳变动</div>
+            <div className="font-terminal text-xs text-slate-500">Tick Change</div>
             <div
               className={cn(
                 "mt-2 text-2xl font-black",
@@ -5448,14 +5448,14 @@ function Day2MarketRunPanel({
           </div>
           <div className="rounded-lg border border-white/10 bg-black/30 p-4">
             <div className="font-terminal text-xs text-slate-500">
-              {accepted ? "交易台实时净值" : "交易状态"}
+              {accepted ? "Desk Live Net" : "Trade Status"}
             </div>
             {accepted ? (
               <div className={cn("mt-2 text-2xl font-black", liveDeskNet >= 0 ? "text-green-400" : "text-red-400")}>
                 {quote} - {liveIntrinsic} = {liveDeskNet >= 0 ? "+" : ""}{liveDeskNet}
               </div>
             ) : (
-              <div className="mt-2 text-lg font-black text-red-300">未成交</div>
+              <div className="mt-2 text-lg font-black text-red-300">No Deal</div>
             )}
           </div>
         </div>
@@ -5467,7 +5467,7 @@ function Day2MarketRunPanel({
                 LIVE HSI PATH
               </div>
               <div className="mt-1 text-xs text-slate-500">
-                价格自动跳动，终点用于普通 Call 到期结算
+                The price ticks automatically; the endpoint is used for the vanilla call's expiry settlement
               </div>
             </div>
             <div
@@ -5548,7 +5548,7 @@ function Day2MarketRunPanel({
               {formatPoints(latestPrice)}
             </text>
             <text x={chart.xScale(path.length - 1)} y={chart.height - 12} textAnchor="end" className="fill-slate-500 text-[12px]">
-              进度 {Math.round(progress)}%
+              Progress {Math.round(progress)}%
             </text>
           </svg>
         </div>
@@ -5556,36 +5556,36 @@ function Day2MarketRunPanel({
         {finalShown ? (
           <div className="scene-enter mt-6 grid gap-4 md:grid-cols-4">
             <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
-              <div className="font-terminal text-xs text-slate-500">最终价格</div>
+              <div className="font-terminal text-xs text-slate-500">Final Price</div>
               <div className="mt-2 text-3xl font-black text-[#00f0ff]">
                 {formatPoints(finalPrice)}
               </div>
             </div>
             <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
-              <div className="font-terminal text-xs text-slate-500">Call 到期收益</div>
+              <div className="font-terminal text-xs text-slate-500">Call Expiry Payoff</div>
               <div className="mt-2 text-lg font-bold text-slate-100">
                 max({formatPoints(finalPrice)} - {formatPoints(market.strike)}, 0) ={" "}
                 <span className="text-[#00f0ff]">{payoff}</span>
               </div>
             </div>
             <div className={cn("rounded-lg border p-4", accepted && (payoff - quote) >= 0 ? "border-green-400/20 bg-green-400/[0.05]" : "border-cyan-400/15 bg-black/30")}>
-              <div className="font-terminal text-xs text-slate-500">客户净盈亏</div>
+              <div className="font-terminal text-xs text-slate-500">Client Net P&L</div>
               <div className={cn("mt-2 text-2xl font-black", accepted ? ((payoff - quote) >= 0 ? "text-green-400" : "text-red-400") : "text-slate-500")}>
-                {accepted ? `${(payoff - quote) >= 0 ? "+" : ""}${payoff - quote}` : "未成交 · 0"}
+                {accepted ? `${(payoff - quote) >= 0 ? "+" : ""}${payoff - quote}` : "No Deal · 0"}
               </div>
-              {accepted && <p className="mt-2 text-xs leading-5 text-slate-500">到期收益减去支付的期权费。</p>}
+              {accepted && <p className="mt-2 text-xs leading-5 text-slate-500">Expiry payoff minus the premium paid.</p>}
             </div>
             <div className={cn("rounded-lg border p-4", accepted ? (deskPnl >= 0 ? "border-green-400/20 bg-green-400/[0.05]" : "border-red-500/25 bg-red-500/[0.06]") : "border-cyan-400/15 bg-black/30")}>
-              <div className="font-terminal text-xs text-slate-500">交易台结算</div>
+              <div className="font-terminal text-xs text-slate-500">Desk Settlement</div>
               <div className={cn("mt-2 text-2xl font-black", accepted ? (deskPnl >= 0 ? "text-green-400" : "text-red-400") : "text-slate-500")}>
-                {accepted ? `${deskPnl >= 0 ? "+" : ""}${deskPnl}` : "未成交 · 0"}
+                {accepted ? `${deskPnl >= 0 ? "+" : ""}${deskPnl}` : "No Deal · 0"}
               </div>
-              {accepted && <p className="mt-2 text-xs leading-5 text-slate-500">你收的期权费减去要赔付的到期收益。</p>}
+              {accepted && <p className="mt-2 text-xs leading-5 text-slate-500">The premium you collected minus the expiry payoff you owe.</p>}
             </div>
           </div>
         ) : (
           <div className="mt-5 rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
-            行情正在自动播放：价格可能先跌、再反抽、再突破。别被中途波动吓到，普通 Call 最后只看到期价格落在行权价哪一边。
+            The market is playing out automatically: the price may dip first, snap back, then break out. Don't be scared by the swings along the way — a vanilla call ultimately depends only on which side of the strike the expiry price lands.
           </div>
         )}
       </div>
@@ -5597,26 +5597,26 @@ function Day2ReportPanel({ score }) {
   if (!score) {
     return (
       <TerminalCard className="scene-enter p-6">
-        <div className="text-slate-400">报告生成中。</div>
+        <div className="text-slate-400">Generating report.</div>
       </TerminalCard>
     );
   }
 
   const rows = [
-    ["产品", "普通看涨期权 Vanilla Call"],
-    ["理论价格", `${score.theoreticalPrice} 点`],
-    ["你的报价", `${score.selectedQuote} 点`],
-    ["模型利润空间", `${score.margin >= 0 ? "+" : ""}${score.margin} 点`],
-    ["客户状态", score.clientStatus],
-    ["模拟终值", `${formatPoints(score.marketFinalPrice)} 点`],
-    ["模拟 Payoff", `${score.marketPayoff} 点`],
-    ["客户净盈亏", score.quoteAccepted ? `${score.clientPnl >= 0 ? "+" : ""}${score.clientPnl} 点` : "未成交 · 0 点"],
-    ["交易台结算", `${score.deskPnl >= 0 ? "+" : ""}${score.deskPnl} 点`],
+    ["Product", "Vanilla Call"],
+    ["Theoretical Price", `${score.theoreticalPrice} pts`],
+    ["Your Quote", `${score.selectedQuote} pts`],
+    ["Model Profit Margin", `${score.margin >= 0 ? "+" : ""}${score.margin} pts`],
+    ["Client Status", score.clientStatus],
+    ["Simulated Final Value", `${formatPoints(score.marketFinalPrice)} pts`],
+    ["Simulated Payoff", `${score.marketPayoff} pts`],
+    ["Client Net P&L", score.quoteAccepted ? `${score.clientPnl >= 0 ? "+" : ""}${score.clientPnl} pts` : "No Deal · 0 pts"],
+    ["Desk Settlement", `${score.deskPnl >= 0 ? "+" : ""}${score.deskPnl} pts`],
   ];
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第二天日终报告" accent="定价柜台复盘" />
+      <TerminalHeader label="Day Two End-of-Day Report" accent="Pricing Desk Review" />
       <div className="space-y-5 p-6">
         <div className="grid gap-4 md:grid-cols-3">
           {rows.map(([label, value]) => (
@@ -5631,9 +5631,9 @@ function Day2ReportPanel({ score }) {
 
         <div className="grid gap-4 md:grid-cols-3">
           {[
-            ["定价评分", score.pricingScore],
-            ["风险披露", score.riskDisclosure],
-            ["总评分", score.overall],
+            ["Pricing Score", score.pricingScore],
+            ["Risk Disclosure", score.riskDisclosure],
+            ["Overall Score", score.overall],
           ].map(([label, value]) => (
             <div
               key={label}
@@ -5646,16 +5646,16 @@ function Day2ReportPanel({ score }) {
         </div>
 
         <div className="rounded-md border-l-4 border-[#00f0ff] bg-cyan-400/[0.06] p-4 text-base leading-8 text-slate-200">
-          定价评价：{score.pricingComment}
+          Pricing assessment: {score.pricingComment}
         </div>
 
         <div className="rounded-md border border-cyan-400/15 bg-black/30 p-4 text-sm leading-7 text-slate-300">
-          模拟市场路径：{score.marketPath.map((price) => formatPoints(price)).join(" → ")}。
-          客户到期收益为 {score.marketPayoff} 点，客户净盈亏为 {score.clientPnl >= 0 ? "+" : ""}{score.clientPnl} 点。
+          Simulated market path: {score.marketPath.map((price) => formatPoints(price)).join(" → ")}.
+          The client's expiry payoff is {score.marketPayoff} points, and the client's net P&L is {score.clientPnl >= 0 ? "+" : ""}{score.clientPnl} points.
         </div>
 
         <div className="rounded-md border border-white/10 bg-white/[0.03] p-4 text-sm leading-7 text-slate-400">
-          教学说明：真实交易台会对冲方向风险（如用期货或反向期权轧平 Delta），此处展示的是未对冲的单笔结果，仅用于理解定价盈亏，不代表交易台真实风险敞口。
+          Teaching note: a real desk would hedge directional risk (e.g. flattening Delta with futures or offsetting options). What's shown here is the unhedged result of a single trade, used only to understand pricing P&L — it doesn't represent the desk's true risk exposure.
         </div>
       </div>
     </TerminalCard>
@@ -5664,19 +5664,19 @@ function Day2ReportPanel({ score }) {
 
 function Day2CompletePanel() {
   const summary = [
-    "二叉树展示了未来可能的价格路径。",
-    "普通看涨期权的到期收益是 max(最终价格 - 行权价, 0)。",
-    "理论价格是报价锚点，不是盈利保证。",
-    "交易员报价要平衡公允价值、交易台利润和客户接受度。",
-    "下一关会加入一个新规则：敲出障碍（Barrier）。",
+    "A binomial tree shows the possible future price paths.",
+    "A vanilla call's expiry payoff is max(final price - strike, 0).",
+    "The theoretical price is a quote anchor, not a profit guarantee.",
+    "A trader's quote must balance fair value, desk profit, and client acceptance.",
+    "The next stage adds a new rule: the knock-out barrier.",
   ];
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第二天完成" accent="定价训练完成" />
+      <TerminalHeader label="Day Two Complete" accent="Pricing Training Complete" />
       <div className="flex min-h-[520px] flex-col items-center justify-center p-6 text-center">
         <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-5xl font-black tracking-[0.12em] text-transparent md:text-6xl">
-          第二天完成
+          Day Two Complete
         </div>
         <div className="mt-8 grid w-full max-w-2xl gap-3 text-left">
           {summary.map((item) => (
@@ -5684,7 +5684,7 @@ function Day2CompletePanel() {
               key={item}
               className="rounded-md border border-cyan-400/15 bg-black/30 px-4 py-3 text-sm leading-7 text-slate-300"
             >
-              <span className="font-terminal mr-2 text-[#00f0ff]">规则</span>
+              <span className="font-terminal mr-2 text-[#00f0ff]">Rule</span>
               {item}
             </div>
           ))}
@@ -5697,26 +5697,26 @@ function Day2CompletePanel() {
 function Day3IntroPanel() {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第三天晨会" accent="路径依赖产品" />
+      <TerminalHeader label="Day Three Morning Meeting" accent="Path-Dependent Products" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-6">
           <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[#ffd700]">
-            BARRIER OPTION / 障碍期权
+            BARRIER OPTION
           </div>
           <h1 className="text-4xl font-black leading-tight text-slate-100 md:text-5xl">
-            不只看终点，还要看路上有没有碰线
+            Not just the destination — whether it touches a line along the way
           </h1>
           <p className="mt-5 text-base leading-8 text-slate-300">
-            前两天的普通期权像“到终点再结算”。第三天的障碍期权更像一份带红线的合约：
-            中途碰到某个价格，产品命运就会改变。
+            The vanilla options of the past two days were like “settle at the destination.” Day three's barrier option is more like a contract with a red line:
+            touch a certain price along the way, and the product's fate changes.
           </p>
         </div>
 
         <div className="grid gap-4">
           {[
-            ["普通期权", "主要看最终到期价格。中途价格怎么波动，通常不会提前终止。"],
-            ["障碍期权", "额外观察一条障碍线。中途触碰障碍，产品可能敲入或敲出。"],
-            ["今天重点", "只做敲出（Knock-Out）入门：碰到障碍线，产品提前失效。"],
+            ["Vanilla Option", "Depends mainly on the final expiry price. No matter how the price swings along the way, it usually doesn't terminate early."],
+            ["Barrier Option", "Additionally observes a barrier level. Touch the barrier along the way and the product may knock in or knock out."],
+            ["Today's Focus", "An intro to knock-out only: touch the barrier level and the product expires early."],
           ].map(([title, text]) => (
             <div key={title} className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
               <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
@@ -5737,22 +5737,22 @@ function Day3BarrierConceptPanel() {
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第一课 / 障碍线" accent="Barrier 是合约红线" />
+      <TerminalHeader label="Lesson 1 / The Barrier Level" accent="The Barrier Is the Contract's Red Line" />
       <div className="space-y-5 p-6">
         <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
-            直觉
+            Intuition
           </div>
           <p className="text-lg leading-9 text-slate-300">
-            障碍线不是预测线，而是
-            <span className="font-bold text-[#ffd700]">合约规则线</span>。
-            如果产品约定“跌到 21,000 点就敲出”，那市场只要中途碰到或跌破 21,000，
-            后面再涨回来也要按敲出规则处理。
+            The barrier isn't a prediction line — it's a
+            <span className="font-bold text-[#ffd700]">contract rule line</span>.
+            If the product stipulates “knock out if it falls to 21,000,” then the moment the market touches or drops below 21,000 along the way,
+            it must be handled under the knock-out rule even if it later climbs back.
           </p>
         </div>
 
         <div className="rounded-lg border border-cyan-400/15 bg-[#070d19]/85 p-5">
-          <svg viewBox="0 0 760 260" className="h-auto w-full" role="img" aria-label="障碍线示意图">
+          <svg viewBox="0 0 760 260" className="h-auto w-full" role="img" aria-label="Barrier level diagram">
             <defs>
               <linearGradient id="day3PathGlow" x1="0" x2="1">
                 <stop offset="0%" stopColor="#00f0ff" />
@@ -5771,7 +5771,7 @@ function Day3BarrierConceptPanel() {
             ))}
             <line x1="58" x2="710" y1="168" y2="168" stroke="#ef4444" strokeWidth="2" strokeDasharray="8 8" />
             <text x="62" y="158" className="fill-red-300 text-[13px] font-bold">
-              下方障碍线 {formatPoints(barrier)}
+              Lower Barrier {formatPoints(barrier)}
             </text>
             <polyline
               points={prices
@@ -5808,7 +5808,7 @@ function Day3BarrierConceptPanel() {
               );
             })}
             <text x="374" y="238" textAnchor="middle" className="fill-slate-500 text-[13px]">
-              价格路径从左到右运行。障碍产品会记住中途有没有碰线。
+              The price path runs left to right. A barrier product remembers whether it touched the line along the way.
             </text>
           </svg>
         </div>
@@ -5820,13 +5820,13 @@ function Day3BarrierConceptPanel() {
 function Day3KnockOutPanel() {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第二课 / Knock-Out" accent="敲出后不可复活" />
+      <TerminalHeader label="Lesson 2 / Knock-Out" accent="No Revival After Knock-Out" />
       <div className="space-y-5 p-6">
         <div className="grid gap-4 md:grid-cols-3">
           {[
-            ["1. 设定障碍线", "合约写明：例如恒指跌到 21,000 点或以下，产品敲出。"],
-            ["2. 观察全过程", "不是只看收盘或到期。只要路径中碰到障碍，就触发规则。"],
-            ["3. 敲出后归零", "产品提前失效。最后涨回去，也不能把已经敲出的期权叫回来。"],
+            ["1. Set the Barrier Level", "The contract states, for example: if the HSI falls to 21,000 or below, the product knocks out."],
+            ["2. Observe the Whole Path", "Not just the close or expiry. The moment the path touches the barrier, the rule triggers."],
+            ["3. Goes to Zero After Knock-Out", "The product expires early. Even if it climbs back at the end, a knocked-out option can't be called back."],
           ].map(([title, text]) => (
             <div key={title} className="rounded-lg border border-cyan-400/15 bg-cyan-400/[0.04] p-5">
               <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
@@ -5839,34 +5839,34 @@ function Day3KnockOutPanel() {
 
         <div className="rounded-lg border border-red-500/25 bg-red-500/[0.06] p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-red-300">
-            交易台最常见误解
+            The Desk's Most Common Misconception
           </div>
           <div className="text-2xl font-black text-slate-100">
-            “最后涨回来了，为什么还没收益？”
+            “It climbed back at the end — why is there still no payoff?”
           </div>
           <p className="mt-4 text-base leading-8 text-slate-300">
-            因为障碍期权看路径。只要中途敲出，合约就提前结束。最后价格漂亮，
-            对已经结束的合约没有帮助。
+            Because a barrier option depends on the path. The moment it knocks out along the way, the contract ends early. A beautiful final price
+            does nothing for a contract that has already ended.
           </p>
         </div>
 
         <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#ffd700]">
-            为什么要设置障碍？
+            Why Set a Barrier?
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             {[
               [
-                "换取更低期权费",
-                "买方接受“碰线就失效”的额外条件，产品通常会比同类普通期权便宜。",
+                "In Exchange for a Lower Premium",
+                "By accepting the extra condition of “expires if it touches the line,” the buyer usually gets a product cheaper than a comparable vanilla option.",
               ],
               [
-                "表达更精细观点",
-                "客户不只是说“会涨”，还可能认为“会涨，但不会先大跌到某条线”。障碍就是把这个观点写进合约。",
+                "To Express a More Refined View",
+                "The client doesn't just say “it'll rise” — they may think “it'll rise, but won't first plunge to a certain line.” A barrier writes that view into the contract.",
               ],
               [
-                "控制交易台风险",
-                "卖方收取较低期权费时，需要一条规则限制极端路径风险。障碍线就是风险边界。",
+                "To Control Desk Risk",
+                "When the seller collects a lower premium, they need a rule to cap extreme path risk. The barrier level is that risk boundary.",
               ],
             ].map(([title, text]) => (
               <div key={title} className="rounded-md border border-white/10 bg-black/25 p-4">
@@ -5878,7 +5878,7 @@ function Day3KnockOutPanel() {
             ))}
           </div>
           <div className="mt-4 rounded-md border-l-4 border-[#ffd700] bg-black/25 p-4 text-sm leading-7 text-[#ffd700]">
-            Martin 小结：障碍不是白送的限制。它让产品更便宜、更贴合某种市场观点，但代价是客户必须承担路径风险。
+            Martin's takeaway: a barrier isn't a free restriction. It makes the product cheaper and better-fitted to a particular market view, but the cost is that the client must take on path risk.
           </div>
         </div>
       </div>
@@ -5889,42 +5889,42 @@ function Day3KnockOutPanel() {
 function Day3CompareVanillaPanel({ selectedQuote, quoteAnalysis, onUpdateQuote, onUpdateTheoretical }) {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="定价树" accent="Barrier 定价" />
+      <TerminalHeader label="Pricing Tree" accent="Barrier Pricing" />
       <div className="space-y-5 p-6">
         <div className="grid gap-4 md:grid-cols-2">
           <div className="rounded-lg border border-cyan-400/25 bg-cyan-400/[0.05] p-5">
             <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
-              普通看涨期权
+              Vanilla Call Option
             </div>
-            <div className="text-2xl font-black text-slate-100">只看最终价格</div>
+            <div className="text-2xl font-black text-slate-100">Depends Only on the Final Price</div>
             <ul className="mt-5 space-y-3 text-sm leading-7 text-slate-300">
-              <li>- 没有敲出线</li>
-              <li>- 期权费通常更贵</li>
-              <li>- 如果最终价格高于行权价，产生到期收益</li>
+              <li>- No knock-out line</li>
+              <li>- Premium is usually more expensive</li>
+              <li>- Produces an expiry payoff if the final price is above the strike</li>
             </ul>
             <div className="mt-5 rounded-md border border-white/10 bg-black/30 p-4">
-              期权费示例：<span className="font-black text-[#00f0ff]">{day3Config.market.vanillaPremium} 点</span>
+              Example premium: <span className="font-black text-[#00f0ff]">{day3Config.market.vanillaPremium} pts</span>
             </div>
           </div>
 
           <div className="rounded-lg border border-[#ffd700]/30 bg-[#ffd700]/[0.06] p-5">
             <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#ffd700]">
-              下跌敲出看涨期权
+              Down-and-Out Call Option
             </div>
-            <div className="text-2xl font-black text-slate-100">更便宜，但会看路径</div>
+            <div className="text-2xl font-black text-slate-100">Cheaper, but Watches the Path</div>
             <ul className="mt-5 space-y-3 text-sm leading-7 text-slate-300">
-              <li>- 有下方障碍线：{formatPoints(day3Config.market.barrier)}</li>
-              <li>- 期权费更低</li>
-              <li>- 中途触碰障碍，产品提前失效</li>
+              <li>- Has a lower barrier: {formatPoints(day3Config.market.barrier)}</li>
+              <li>- Lower premium</li>
+              <li>- Expires early if it touches the barrier along the way</li>
             </ul>
             <div className="mt-5 rounded-md border border-white/10 bg-black/30 p-4">
-              期权费示例：<span className="font-black text-[#ffd700]">{day3Config.market.premium} 点</span>
+              Example premium: <span className="font-black text-[#ffd700]">{day3Config.market.premium} pts</span>
             </div>
           </div>
         </div>
 
         <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
-          Martin 小口诀：障碍期权不是”普通期权打折版”。它便宜，是因为客户把一部分路径风险接过去了。
+          Martin's mnemonic: a barrier option isn't a “discounted vanilla option.” It's cheap because the client takes on part of the path risk.
         </div>
 
         <BinomialPricingTool
@@ -5942,16 +5942,16 @@ function Day3CompareVanillaPanel({ selectedQuote, quoteAnalysis, onUpdateQuote, 
 function Day3HandbookUpdatedPanel() {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="系统提示" accent="工作手册新增页面" />
+      <TerminalHeader label="System Notice" accent="New Handbook Page Added" />
       <div className="flex min-h-[430px] flex-col items-center justify-center p-6 text-center">
         <div className="font-terminal mb-4 text-sm tracking-[0.32em] text-[#00f0ff]">
-          工作手册已更新
+          Handbook Updated
         </div>
         <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-4xl font-black tracking-[0.08em] text-transparent md:text-5xl">
-          障碍期权
+          Barrier Options
         </div>
         <p className="mt-8 max-w-2xl text-base leading-8 text-slate-300">
-          新页面说明了障碍线、敲出规则、为什么更便宜，以及必须向客户披露的路径风险。
+          The new page explains the barrier level, the knock-out rule, why it's cheaper, and the path risk that must be disclosed to the client.
         </p>
       </div>
     </TerminalCard>
@@ -5961,28 +5961,28 @@ function Day3HandbookUpdatedPanel() {
 function Day3ClientArrivalPanel() {
   const client = day3Config.clientProfile;
   const profileRows = [
-    ["姓名", client.name],
-    ["客户类型", client.type],
-    ["市场观点", client.marketView],
-    ["风险承受能力", client.riskTolerance],
-    ["目标", client.goal],
-    ["产品需求", client.productNeed],
-    ["预算", client.budget],
-    ["经验", client.experience],
+    ["Name", client.name],
+    ["Client Type", client.type],
+    ["Market View", client.marketView],
+    ["Risk Tolerance", client.riskTolerance],
+    ["Goal", client.goal],
+    ["Product Need", client.productNeed],
+    ["Budget", client.budget],
+    ["Experience", client.experience],
   ];
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="客户资料" accent="预算敏感订单" />
+      <TerminalHeader label="Client Profile" accent="Budget-Sensitive Order" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.85fr_1.15fr]">
         <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
           <div className="mb-5 flex items-center gap-4">
             <div className="flex h-20 w-20 items-center justify-center rounded-md border border-[#ffd700]/30 bg-[#ffd700]/[0.08] font-terminal text-4xl font-black text-[#ffd700]">
-              陈
+              C
             </div>
             <div>
               <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
-                预算敏感散户
+                Budget-Sensitive Retail Investor
               </div>
               <div className="mt-2 text-2xl font-black text-slate-100">{client.name}</div>
             </div>
@@ -6001,12 +6001,12 @@ function Day3ClientArrivalPanel() {
 
         <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-5">
           <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#ffd700]">
-            客户对白
+            Client Dialogue
           </div>
           <div className="space-y-4">
             {client.dialogue.map((line) => (
               <div key={line} className="rounded-md border border-white/10 bg-black/30 p-4 text-base leading-8 text-slate-200">
-                陈女士：“{line}”
+                Ms. Chen: “{line}”
               </div>
             ))}
           </div>
@@ -6042,30 +6042,30 @@ function RealDataContextCard({ context }) {
 
 function Day3ClientResponsePanel({ selectedQuote, clientResponse }) {
   const response = clientResponse ?? getDay3QuoteAnalysis(selectedQuote);
-  const acceptedText = response.accepted ? "交易接受" : "客户拒绝";
+  const acceptedText = response.accepted ? "Trade Accepted" : "Client Refused";
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="客户反馈" accent="障碍报价回执" />
+      <TerminalHeader label="Client Feedback" accent="Barrier Quote Receipt" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
-            报价记录
+            Quote Record
           </div>
-          <div className="text-5xl font-black text-[#00f0ff]">{selectedQuote} 点</div>
+          <div className="text-5xl font-black text-[#00f0ff]">{selectedQuote} pts</div>
           <div className="mt-4 text-sm leading-7 text-slate-400">
-            障碍报价已发出，等待市场结算。
+            The barrier quote has been sent; awaiting market settlement.
           </div>
         </div>
 
         <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-5">
           <div className="mb-4 flex items-center gap-4">
             <div className="flex h-16 w-16 items-center justify-center rounded-md border border-[#ffd700]/30 bg-black/40 font-terminal text-3xl font-black text-[#ffd700]">
-              陈
+              C
             </div>
             <div>
               <div className="font-terminal text-xs tracking-[0.18em] text-[#ffd700]">
-                陈女士
+                Ms. Chen
               </div>
               <div className="mt-1 text-sm text-slate-500">{acceptedText}</div>
             </div>
@@ -6088,7 +6088,7 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
   const latestPrice = activePrices[activePrices.length - 1] ?? market.spot;
   const knockedNow = activePrices.some((price) => price <= market.barrier);
   const selectedProductName =
-    day3Config.products.find((product) => product.id === selectedProduct)?.name ?? "未选择产品";
+    day3Config.products.find((product) => product.id === selectedProduct)?.name ?? "No Product Selected";
   const finalShown = marketHasRun && visibleMarketSteps >= market.path.length;
 
   const chart = useMemo(() => {
@@ -6114,16 +6114,16 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="障碍市场路径" accent={finalShown ? "路径已结算" : "实时观察障碍线"} />
+      <TerminalHeader label="Barrier Market Path" accent={finalShown ? "Path Settled" : "Watching the Barrier Level Live"} />
       <div className="space-y-5 p-5">
         <div className="grid gap-4 md:grid-cols-6">
           {[
-            ["标的", market.underlying],
-            ["现价", formatPoints(market.spot)],
-            ["行权价", formatPoints(market.strike)],
-            ["障碍线", formatPoints(market.barrier)],
-            ["参考理论价", `${market.premium} 点`],
-            ["期限", market.maturity],
+            ["Underlying", market.underlying],
+            ["Spot", formatPoints(market.spot)],
+            ["Strike", formatPoints(market.strike)],
+            ["Barrier", formatPoints(market.barrier)],
+            ["Reference Theoretical Price", `${market.premium} pts`],
+            ["Maturity", market.maturity],
           ].map(([label, value]) => (
             <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
@@ -6139,11 +6139,11 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
         <div className="grid gap-4 lg:grid-cols-[0.75fr_1.25fr]">
           <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-4">
             <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">
-              已选产品
+              Selected Product
             </div>
             <div className="mt-2 text-xl font-black text-slate-100">{selectedProductName}</div>
             <div className="mt-4 rounded-md border border-white/10 bg-black/30 p-3 text-sm leading-7 text-slate-300">
-              当前价格：
+              Current price:
               <span className={cn("font-terminal ml-1 text-2xl font-black", knockedNow ? "text-red-300" : "text-[#00f0ff]")}>
                 {formatPoints(latestPrice)}
               </span>
@@ -6156,12 +6156,12 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
                   : "border-green-400/30 bg-green-400/[0.06] text-green-300",
               )}
             >
-              {knockedNow ? "障碍已触碰 / 产品敲出" : "障碍尚未触碰"}
+              {knockedNow ? "Barrier Touched / Product Knocked Out" : "Barrier Not Yet Touched"}
             </div>
           </div>
 
           <div className="market-chart-panel rounded-lg border border-cyan-400/15 bg-[#070d19]/85 p-4">
-            <svg viewBox={`0 0 ${chart.width} ${chart.height}`} className="h-auto w-full" role="img" aria-label="Day 3 障碍期权市场路径">
+            <svg viewBox={`0 0 ${chart.width} ${chart.height}`} className="h-auto w-full" role="img" aria-label="Day 3 barrier option market path">
               {chart.yTicks.map((tick) => (
                 <g key={tick}>
                   <line x1="58" x2="780" y1={chart.yScale(tick)} y2={chart.yScale(tick)} stroke="rgba(148,163,184,0.15)" />
@@ -6172,11 +6172,11 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
               ))}
               <line x1="58" x2="780" y1={barrierY} y2={barrierY} stroke="#ef4444" strokeWidth="3" strokeDasharray="8 8" />
               <text x="625" y={barrierY - 10} className="fill-red-300 text-[13px] font-bold">
-                敲出障碍 {formatPoints(market.barrier)}
+                Knock-Out Barrier {formatPoints(market.barrier)}
               </text>
               <line x1="58" x2="780" y1={strikeY} y2={strikeY} stroke="#ffd700" strokeWidth="2" strokeDasharray="6 7" />
               <text x="625" y={strikeY - 10} className="fill-[#ffd700] text-[13px] font-bold">
-                行权价 {formatPoints(market.strike)}
+                Strike {formatPoints(market.strike)}
               </text>
               <polyline
                 points={activeLine}
@@ -6218,15 +6218,15 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
           <div className="grid gap-4 md:grid-cols-4">
             <div className="rounded-lg border border-red-500/25 bg-red-500/[0.06] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-red-300">
-                敲出结果
+                Knock-Out Result
               </div>
               <div className="mt-2 text-2xl font-black text-red-300">
-                {result.knockedOut ? `第 ${result.knockedOutIndex + 1} 个价格点触碰障碍` : "未敲出"}
+                {result.knockedOut ? `Price point #${result.knockedOutIndex + 1} touched the barrier` : "Not Knocked Out"}
               </div>
             </div>
             <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
-                最终价格
+                Final Price
               </div>
               <div className="mt-2 text-2xl font-black text-[#00f0ff]">
                 {formatPoints(result.finalPrice)}
@@ -6234,17 +6234,17 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
             </div>
             <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">
-                客户净盈亏
+                Client Net P&L
               </div>
               <div className={cn("mt-2 text-2xl font-black", clientPnl >= 0 ? "text-green-400" : "text-red-300")}>
                 {clientPnl >= 0 ? "+" : ""}
-                {clientPnl} 点
+                {clientPnl} pts
               </div>
             </div>
             <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
-              <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">交易台结算</div>
+              <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">Desk Settlement</div>
               <div className={cn("mt-2 text-2xl font-black", -clientPnl >= 0 ? "text-green-400" : "text-red-300")}>
-                {-clientPnl >= 0 ? "+" : ""}{-clientPnl} 点
+                {-clientPnl >= 0 ? "+" : ""}{-clientPnl} pts
               </div>
             </div>
           </div>
@@ -6258,32 +6258,32 @@ function Day3ReportPanel({ score }) {
   if (!score) {
     return (
       <TerminalCard className="scene-enter p-6">
-        <div className="text-slate-400">报告生成中。</div>
+        <div className="text-slate-400">Generating report.</div>
       </TerminalCard>
     );
   }
 
   const rows = [
-    ["产品", score.productName],
-    ["你的报价", `${score.selectedQuote} 点`],
-    ["客户状态", score.clientStatus],
-    ["最终价格", `${formatPoints(score.finalPrice)} 点`],
-    ["障碍线", `${formatPoints(day3Config.market.barrier)} 点`],
-    ["敲出状态", score.knockedOut ? "已敲出" : "未敲出"],
-    ["普通 Call 到期收益", `${score.vanillaPayoff} 点`],
+    ["Product", score.productName],
+    ["Your Quote", `${score.selectedQuote} pts`],
+    ["Client Status", score.clientStatus],
+    ["Final Price", `${formatPoints(score.finalPrice)} pts`],
+    ["Barrier", `${formatPoints(day3Config.market.barrier)} pts`],
+    ["Knock-Out Status", score.knockedOut ? "Knocked Out" : "Not Knocked Out"],
+    ["Vanilla Call Expiry Payoff", `${score.vanillaPayoff} pts`],
     [
-      "客户净盈亏",
-      score.quoteAccepted ? `${score.clientPnl >= 0 ? "+" : ""}${score.clientPnl} 点` : "未成交 · 0 点",
+      "Client Net P&L",
+      score.quoteAccepted ? `${score.clientPnl >= 0 ? "+" : ""}${score.clientPnl} pts` : "No Deal · 0 pts",
     ],
     [
-      "交易台结算",
-      score.quoteAccepted ? `${score.deskPnl >= 0 ? "+" : ""}${score.deskPnl} 点` : "未成交 · 0 点",
+      "Desk Settlement",
+      score.quoteAccepted ? `${score.deskPnl >= 0 ? "+" : ""}${score.deskPnl} pts` : "No Deal · 0 pts",
     ],
   ];
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第三天日终报告" accent="障碍期权复盘" />
+      <TerminalHeader label="Day Three End-of-Day Report" accent="Barrier Option Review" />
       <div className="space-y-5 p-6">
         <div className="grid gap-4 md:grid-cols-3">
           {rows.map(([label, value]) => (
@@ -6298,10 +6298,10 @@ function Day3ReportPanel({ score }) {
 
         <div className="grid gap-4 md:grid-cols-4">
           {[
-            ["产品适当性", score.suitability],
-            ["风险披露", score.riskDisclosure],
-            ["路径判断", score.pathAwareness],
-            ["总评分", score.overall],
+            ["Product Suitability", score.suitability],
+            ["Risk Disclosure", score.riskDisclosure],
+            ["Path Awareness", score.pathAwareness],
+            ["Overall Score", score.overall],
           ].map(([label, value]) => (
             <div
               key={label}
@@ -6314,12 +6314,12 @@ function Day3ReportPanel({ score }) {
         </div>
 
         <div className="rounded-md border-l-4 border-red-400 bg-red-500/[0.06] p-4 text-base leading-8 text-red-200">
-          市场复盘：价格中途跌破 {formatPoints(day3Config.market.barrier)} 点，触发敲出。
-          最终价格虽然回到 {formatPoints(score.finalPrice)} 点，但敲出产品已经提前失效。
+          Market review: the price dropped below {formatPoints(day3Config.market.barrier)} points along the way, triggering a knock-out.
+          Although the final price returned to {formatPoints(score.finalPrice)} points, the knocked-out product had already expired early.
         </div>
 
         <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
-          Martin 复盘：{score.martinComment}
+          Martin's review: {score.martinComment}
         </div>
       </div>
     </TerminalCard>
@@ -6328,19 +6328,19 @@ function Day3ReportPanel({ score }) {
 
 function Day3CompletePanel() {
   const summary = [
-    "普通期权主要看最终到期价格。",
-    "障碍期权还要看中途路径是否触碰障碍线。",
-    "Knock-Out 表示触碰障碍后产品提前失效。",
-    "障碍期权更便宜，是因为客户承担了额外路径风险。",
-    "适当性和风险披露在复杂产品里比市场方向更重要。",
+    "A vanilla option depends mainly on the final expiry price.",
+    "A barrier option also depends on whether the path touches the barrier level along the way.",
+    "Knock-out means the product expires early once the barrier is touched.",
+    "A barrier option is cheaper because the client takes on extra path risk.",
+    "For complex products, suitability and risk disclosure matter more than market direction.",
   ];
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第三天完成" accent="障碍训练完成" />
+      <TerminalHeader label="Day Three Complete" accent="Barrier Training Complete" />
       <div className="flex min-h-[520px] flex-col items-center justify-center p-6 text-center">
         <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-5xl font-black tracking-[0.12em] text-transparent md:text-6xl">
-          第三天完成
+          Day Three Complete
         </div>
         <div className="mt-8 grid w-full max-w-2xl gap-3 text-left">
           {summary.map((item) => (
@@ -6348,7 +6348,7 @@ function Day3CompletePanel() {
               key={item}
               className="rounded-md border border-cyan-400/15 bg-black/30 px-4 py-3 text-sm leading-7 text-slate-300"
             >
-              <span className="font-terminal mr-2 text-[#00f0ff]">规则</span>
+              <span className="font-terminal mr-2 text-[#00f0ff]">Rule</span>
               {item}
             </div>
           ))}
@@ -6358,32 +6358,32 @@ function Day3CompletePanel() {
   );
 }
 
-// ===== 以下 Day4 CBBC 面板已归档（2026-06 改定价实战）=====
-// 这些函数不再挂载到 MainPanel.panels / BottomActionBar，仅保留备查。
+// ===== The Day4 CBBC panels below are archived (changed to the pricing live round in 2026-06) =====
+// These functions are no longer mounted to MainPanel.panels / BottomActionBar; kept for reference only.
 function Day4CbbcIntroPanel_ARCHIVED() {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第四天晨会" accent="牛证、熊证与上方收回价" />
+      <TerminalHeader label="Day Four Morning Meeting" accent="Bull, Bear, and the Upper Call Price" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-6">
           <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[#ffd700]">
-            CBBC / 牛熊证
+            CBBC
           </div>
           <h1 className="text-4xl font-black leading-tight text-slate-100 md:text-5xl">
-            牛证看涨，熊证看跌，但两边都有危险线
+            A bull contract is bullish, a bear contract bearish — but both have a danger line
           </h1>
           <p className="mt-5 text-base leading-8 text-slate-300">
-            牛熊证可以先当成一种带强制收回机制的杠杆型障碍产品。
-            牛证押上涨，但怕标的向下碰到收回价；熊证押下跌，但怕标的向上碰到收回价。
-            今天我们专门看熊证的上方收回价。
+            For now, think of a CBBC as a leveraged barrier product with a mandatory-call mechanism.
+            A bull contract bets on a rise, but fears the underlying touching the call price on the way down; a bear contract bets on a fall, but fears the underlying touching the call price on the way up.
+            Today we focus specifically on a bear contract's upper call price.
           </p>
         </div>
 
         <div className="grid gap-4">
           {[
-            ["牛证 Bull CBBC", "适合看涨。标的上涨通常有利；但如果先跌到或低于下方收回价，会触发 MCE。"],
-            ["熊证 Bear CBBC", "适合看跌。标的下跌通常有利；但如果先涨到或高于上方收回价，会触发 MCE。"],
-            ["今日重点", "熊证的危险线在上方。市场最后跌下来也不够，中途先冲上收回价就已经出局。"],
+            ["Bull CBBC", "Suited to a bullish view. A rise in the underlying is usually favorable; but if it first falls to or below the lower call price, it triggers an MCE."],
+            ["Bear CBBC", "Suited to a bearish view. A fall in the underlying is usually favorable; but if it first rises to or above the upper call price, it triggers an MCE."],
+            ["Today's Focus", "A bear contract's danger line is on the upside. The market falling in the end isn't enough — spiking up to the call price along the way already knocks you out."],
           ].map(([title, text]) => (
             <div key={title} className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
               <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
@@ -6401,16 +6401,16 @@ function Day4CbbcIntroPanel_ARCHIVED() {
 function Day4CbbcHandbookUpdatedPanel_ARCHIVED() {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="系统提示" accent="工作手册新增页面" />
+      <TerminalHeader label="System Notice" accent="New Handbook Page Added" />
       <div className="flex min-h-[430px] flex-col items-center justify-center p-6 text-center">
         <div className="font-terminal mb-4 text-sm tracking-[0.32em] text-[#00f0ff]">
-          工作手册已更新
+          Handbook Updated
         </div>
         <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-4xl font-black tracking-[0.08em] text-transparent md:text-5xl">
-          牛熊证 / CBBC
+          CBBC
         </div>
         <p className="mt-8 max-w-2xl text-base leading-8 text-slate-300">
-          今天把 Day 3 的障碍规则应用到港股市场常见的牛熊证产品，并重点观察熊证的上方收回价。
+          Today we apply Day 3's barrier rules to the CBBC products common in the Hong Kong market, focusing on a bear contract's upper call price.
         </p>
       </div>
     </TerminalCard>
@@ -6420,28 +6420,28 @@ function Day4CbbcHandbookUpdatedPanel_ARCHIVED() {
 function Day4CbbcClientArrivalPanel_ARCHIVED() {
   const client = day4CbbcConfig_ARCHIVED.clientProfile;
   const profileRows = [
-    ["姓名", client.name],
-    ["客户类型", client.type],
-    ["市场观点", client.marketView],
-    ["风险承受能力", client.riskTolerance],
-    ["目标", client.goal],
-    ["产品需求", client.productNeed],
-    ["预算", client.budget],
-    ["经验", client.experience],
+    ["Name", client.name],
+    ["Client Type", client.type],
+    ["Market View", client.marketView],
+    ["Risk Tolerance", client.riskTolerance],
+    ["Goal", client.goal],
+    ["Product Need", client.productNeed],
+    ["Budget", client.budget],
+    ["Experience", client.experience],
   ];
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="客户资料" accent="CBBC 咨询订单" />
+      <TerminalHeader label="Client Profile" accent="CBBC Consultation Order" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.85fr_1.15fr]">
         <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
           <div className="mb-5 flex items-center gap-4">
             <div className="flex h-20 w-20 items-center justify-center rounded-md border border-[#ffd700]/30 bg-[#ffd700]/[0.08] font-terminal text-4xl font-black text-[#ffd700]">
-              周
+              Z
             </div>
             <div>
               <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
-                活跃零售客户
+                Active Retail Client
               </div>
               <div className="mt-2 text-2xl font-black text-slate-100">{client.name}</div>
             </div>
@@ -6460,12 +6460,12 @@ function Day4CbbcClientArrivalPanel_ARCHIVED() {
 
         <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-5">
           <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#ffd700]">
-            客户对白
+            Client Dialogue
           </div>
           <div className="space-y-4">
             {client.dialogue.map((line) => (
               <div key={line} className="rounded-md border border-white/10 bg-black/30 p-4 text-base leading-8 text-slate-200">
-                周女士：“{line}”
+                Ms. Zhou: “{line}”
               </div>
             ))}
           </div>
@@ -6478,17 +6478,17 @@ function Day4CbbcClientArrivalPanel_ARCHIVED() {
 function Day4CbbcSuitabilityPanel_ARCHIVED({ selectedSuitability, suitabilityMessage, onSelectSuitability }) {
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="适当性判断" accent="先判断客户，再判断产品" />
+      <TerminalHeader label="Suitability Assessment" accent="Judge the Client First, Then the Product" />
       <div className="space-y-5 p-6">
         <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
-            问题
+            Question
           </div>
           <div className="text-2xl font-black text-slate-100">
-            周女士适合评估熊证吗？
+            Is Ms. Zhou suitable to evaluate a bear contract?
           </div>
           <p className="mt-4 text-base leading-8 text-slate-300">
-            她看跌、风险承受能力高，也知道 MCE 风险。现在要判断：能不能进入熊证推荐，而不是机械地回避所有 CBBC。
+            She's bearish, has high risk tolerance, and understands the MCE risk. The judgment now: can you proceed to recommending a bear contract, rather than mechanically avoiding all CBBCs.
           </p>
         </div>
 
@@ -6518,7 +6518,7 @@ function Day4CbbcSuitabilityPanel_ARCHIVED({ selectedSuitability, suitabilityMes
                   </div>
                   {selected && (
                     <div className="font-terminal rounded border border-[#ffd700]/40 px-2 py-1 text-xs text-[#ffd700]">
-                      已选择
+                      Selected
                     </div>
                   )}
                 </div>
@@ -6553,7 +6553,7 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
   const latestPrice = activePrices[activePrices.length - 1] ?? market.spot;
   const mceNow = activePrices.some((price) => price >= market.cbbcCallPrice);
   const selectedProductName =
-    day4CbbcConfig_ARCHIVED.products.find((product) => product.id === selectedProduct)?.name ?? "未选择产品";
+    day4CbbcConfig_ARCHIVED.products.find((product) => product.id === selectedProduct)?.name ?? "No Product Selected";
   const finalShown = marketHasRun && visibleMarketSteps >= market.path.length;
 
   const chart = useMemo(() => {
@@ -6579,16 +6579,16 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="CBBC 市场路径" accent={finalShown ? "路径已结算" : "观察 MCE"} />
+      <TerminalHeader label="CBBC Market Path" accent={finalShown ? "Path Settled" : "Watching for an MCE"} />
       <div className="space-y-5 p-5">
         <div className="grid gap-4 md:grid-cols-6">
           {[
-            ["标的", market.underlying],
-            ["现价", formatPoints(market.spot)],
-            ["行权价", formatPoints(market.strike)],
-            ["熊证收回价", formatPoints(market.cbbcCallPrice)],
-            ["熊证成本", `${market.cbbcEntryCost} 点（约 ${market.cbbcLeverage}× 杠杆，示意）`],
-            ["普通 Put 期权费", `${market.vanillaPremium} 点`],
+            ["Underlying", market.underlying],
+            ["Spot", formatPoints(market.spot)],
+            ["Strike", formatPoints(market.strike)],
+            ["Bear Contract Call Price", formatPoints(market.cbbcCallPrice)],
+            ["Bear Contract Cost", `${market.cbbcEntryCost} pts (about ${market.cbbcLeverage}× leverage, illustrative)`],
+            ["Vanilla Put Premium", `${market.vanillaPremium} pts`],
           ].map(([label, value]) => (
             <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
@@ -6604,11 +6604,11 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
         <div className="grid gap-4 lg:grid-cols-[0.75fr_1.25fr]">
           <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-4">
             <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">
-              玩家推荐
+              Player's Recommendation
             </div>
             <div className="mt-2 text-xl font-black text-slate-100">{selectedProductName}</div>
             <div className="mt-4 rounded-md border border-white/10 bg-black/30 p-3 text-sm leading-7 text-slate-300">
-              实时恒指：
+              Live HSI:
               <span className={cn("font-terminal ml-1 text-2xl font-black", mceNow ? "text-red-300" : "text-[#00f0ff]")}>
                 {formatPoints(latestPrice)}
               </span>
@@ -6621,12 +6621,12 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
                   : "border-green-400/30 bg-green-400/[0.06] text-green-300",
               )}
             >
-              {mceNow ? "Bear CBBC 已触发 MCE" : "Bear CBBC 尚未触发 MCE"}
+              {mceNow ? "Bear CBBC Has Triggered an MCE" : "Bear CBBC Has Not Yet Triggered an MCE"}
             </div>
           </div>
 
           <div className="market-chart-panel rounded-lg border border-cyan-400/15 bg-[#070d19]/85 p-4">
-            <svg viewBox={`0 0 ${chart.width} ${chart.height}`} className="h-auto w-full" role="img" aria-label="Day 4 CBBC 市场路径">
+            <svg viewBox={`0 0 ${chart.width} ${chart.height}`} className="h-auto w-full" role="img" aria-label="Day 4 CBBC market path">
               {chart.yTicks.map((tick) => (
                 <g key={tick}>
                   <line x1="58" x2="780" y1={chart.yScale(tick)} y2={chart.yScale(tick)} stroke="rgba(148,163,184,0.15)" />
@@ -6637,11 +6637,11 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
               ))}
               <line x1="58" x2="780" y1={callPriceY} y2={callPriceY} stroke="#ef4444" strokeWidth="3" strokeDasharray="8 8" />
               <text x="612" y={callPriceY - 10} className="fill-red-300 text-[13px] font-bold">
-                熊证上方收回价 {formatPoints(market.cbbcCallPrice)}
+                Bear Contract Upper Call Price {formatPoints(market.cbbcCallPrice)}
               </text>
               <line x1="58" x2="780" y1={strikeY} y2={strikeY} stroke="#ffd700" strokeWidth="2" strokeDasharray="6 7" />
               <text x="612" y={strikeY - 10} className="fill-[#ffd700] text-[13px] font-bold">
-                普通 Put 行权价 {formatPoints(market.strike)}
+                Vanilla Put Strike {formatPoints(market.strike)}
               </text>
               <polyline
                 points={activeLine}
@@ -6683,27 +6683,27 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
           <div className="grid gap-4 md:grid-cols-3">
             <div className="rounded-lg border border-red-500/25 bg-red-500/[0.06] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-red-300">
-                Bear CBBC 结果
+                Bear CBBC Result
               </div>
               <div className="mt-2 text-2xl font-black text-red-300">
-                {result.mceTriggered ? `第 ${result.mceIndex + 1} 个价格点触发 MCE` : "未触发 MCE"}
+                {result.mceTriggered ? `Price point #${result.mceIndex + 1} triggered the MCE` : "MCE Not Triggered"}
               </div>
             </div>
             <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
-                普通 Put 净盈亏
+                Vanilla Put Net P&L
               </div>
               <div className={cn("mt-2 text-2xl font-black", result.vanillaPnl >= 0 ? "text-green-400" : "text-red-300")}>
                 {result.vanillaPnl >= 0 ? "+" : ""}
-                {result.vanillaPnl} 点
+                {result.vanillaPnl} pts
               </div>
             </div>
             <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">
-                教学结论
+                Teaching Conclusion
               </div>
               <div className="mt-2 text-base font-black leading-7 text-[#ffd700]">
-                最后跌回来，不代表 MCE 后的熊证能复活。
+                Falling back at the end doesn't mean a bear contract can revive after an MCE.
               </div>
             </div>
           </div>
@@ -6717,23 +6717,23 @@ function Day4CbbcReportPanel_ARCHIVED({ score }) {
   if (!score) {
     return (
       <TerminalCard className="scene-enter p-6">
-        <div className="text-slate-400">报告生成中。</div>
+        <div className="text-slate-400">Generating report.</div>
       </TerminalCard>
     );
   }
 
   const rows = [
-    ["客户适当性判断", score.suitabilityChoice],
-    ["推荐产品", score.productName],
-    ["最终价格", `${formatPoints(score.finalPrice)} 点`],
-    ["Bear CBBC 状态", score.mceTriggered ? "已触发 MCE" : "未触发 MCE"],
-    ["Bear CBBC P&L", `${score.bearCbbcPnl >= 0 ? "+" : ""}${score.bearCbbcPnl} 点`],
-    ["普通 Put P&L", `${score.vanillaPnl >= 0 ? "+" : ""}${score.vanillaPnl} 点`],
+    ["Client Suitability Decision", score.suitabilityChoice],
+    ["Recommended Product", score.productName],
+    ["Final Price", `${formatPoints(score.finalPrice)} pts`],
+    ["Bear CBBC Status", score.mceTriggered ? "MCE Triggered" : "MCE Not Triggered"],
+    ["Bear CBBC P&L", `${score.bearCbbcPnl >= 0 ? "+" : ""}${score.bearCbbcPnl} pts`],
+    ["Vanilla Put P&L", `${score.vanillaPnl >= 0 ? "+" : ""}${score.vanillaPnl} pts`],
   ];
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第四天日终报告" accent="CBBC 适当性复盘" />
+      <TerminalHeader label="Day Four End-of-Day Report" accent="CBBC Suitability Review" />
       <div className="space-y-5 p-6">
         <div className="grid gap-4 md:grid-cols-3">
           {rows.map(([label, value]) => (
@@ -6748,10 +6748,10 @@ function Day4CbbcReportPanel_ARCHIVED({ score }) {
 
         <div className="grid gap-4 md:grid-cols-4">
           {[
-            ["适当性", score.suitabilityScore],
-            ["产品推荐", score.productScore],
-            ["风险说明", score.riskDisclosure],
-            ["总评分", score.overall],
+            ["Suitability", score.suitabilityScore],
+            ["Product Recommendation", score.productScore],
+            ["Risk Explanation", score.riskDisclosure],
+            ["Overall Score", score.overall],
           ].map(([label, value]) => (
             <div
               key={label}
@@ -6764,12 +6764,12 @@ function Day4CbbcReportPanel_ARCHIVED({ score }) {
         </div>
 
         <div className="rounded-md border-l-4 border-red-400 bg-red-500/[0.06] p-4 text-base leading-8 text-red-200">
-          路径复盘：恒指中途冲高触及熊证上方收回价 {formatPoints(day4CbbcConfig_ARCHIVED.market.cbbcCallPrice)} 点，
-          触发 MCE。后面虽然跌到 {formatPoints(score.finalPrice)} 点，熊证也不会自动恢复。
+          Path review: the HSI spiked up along the way and touched the bear contract's upper call price of {formatPoints(day4CbbcConfig_ARCHIVED.market.cbbcCallPrice)} points,
+          triggering an MCE. Even though it later fell to {formatPoints(score.finalPrice)} points, the bear contract won't automatically recover.
         </div>
 
         <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
-          Martin 复盘：{score.martinComment}
+          Martin's review: {score.martinComment}
         </div>
       </div>
     </TerminalCard>
@@ -6778,20 +6778,20 @@ function Day4CbbcReportPanel_ARCHIVED({ score }) {
 
 function Day4CbbcCompletePanel_ARCHIVED() {
   const summary = [
-    "Bull CBBC 是看涨杠杆产品，Bear CBBC 是看跌杠杆产品。",
-    "CBBC 有收回价，触及收回价会触发强制收回事件（MCE）。",
-    "牛证通常看下方收回价，熊证通常看上方收回价。",
-    "MCE 后产品提前终止，残值不保证。",
-    "最后方向判断正确，也可能因为中途 MCE 而损失。",
-    "推荐 CBBC 前必须确认客户理解杠杆、收回价和残值风险。",
+    "A Bull CBBC is a leveraged bullish product, a Bear CBBC a leveraged bearish product.",
+    "A CBBC has a call price; touching it triggers a mandatory call event (MCE).",
+    "A bull contract usually watches the lower call price, a bear contract the upper call price.",
+    "After an MCE, the product terminates early and residual value is not guaranteed.",
+    "Even with the right final direction, you can still lose due to an MCE along the way.",
+    "Before recommending a CBBC, you must confirm the client understands leverage, the call price, and residual-value risk.",
   ];
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="第四天完成" accent="CBBC 适当性训练完成" />
+      <TerminalHeader label="Day Four Complete" accent="CBBC Suitability Training Complete" />
       <div className="flex min-h-[520px] flex-col items-center justify-center p-6 text-center">
         <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-5xl font-black tracking-[0.12em] text-transparent md:text-6xl">
-          第四天完成
+          Day Four Complete
         </div>
         <div className="mt-8 grid w-full max-w-2xl gap-3 text-left">
           {summary.map((item) => (
@@ -6799,7 +6799,7 @@ function Day4CbbcCompletePanel_ARCHIVED() {
               key={item}
               className="rounded-md border border-cyan-400/15 bg-black/30 px-4 py-3 text-sm leading-7 text-slate-300"
             >
-              <span className="font-terminal mr-2 text-[#00f0ff]">规则</span>
+              <span className="font-terminal mr-2 text-[#00f0ff]">Rule</span>
               {item}
             </div>
           ))}
@@ -6808,40 +6808,40 @@ function Day4CbbcCompletePanel_ARCHIVED() {
     </TerminalCard>
   );
 }
-// ===== Day4 CBBC 归档面板结束 =====
+// ===== End of archived Day4 CBBC panels =====
 
-// ===== Day4 实战篇 · 新面板（通用、index 驱动）=====
+// ===== Day4 Live Round · New panels (generic, index-driven) =====
 
 function Day4BriefingPanel() {
   const steps = [
-    ["① 读方向", "客户看涨还是看跌？这决定产品大类。"],
-    ["② 读风险与预算", "能不能接受附加条件（如跌破某线作废）？预算紧不紧？这决定普通还是障碍。"],
-    ["③ 算理论价再报价", "把参数填进计算器算出理论价，加合理利润——不能太低（白送），也不能太高（吓跑）。"],
+    ["① Read the Direction", "Is the client bullish or bearish? This decides the product category."],
+    ["② Read Risk and Budget", "Can they accept extra conditions (e.g. voided if it drops below a line)? Is the budget tight? This decides vanilla vs barrier."],
+    ["③ Compute the Theoretical Price, Then Quote", "Enter the parameters into the calculator, compute the theoretical price, and add a reasonable profit — not too low (giving it away), and not too high (scaring them off)."],
   ];
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="结业晨会" accent="三客户定价实战" />
+      <TerminalHeader label="Graduation Morning Meeting" accent="Three-Client Pricing Live Round" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.95fr_1.05fr]">
         <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-6">
           <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[#ffd700]">
-            结业实战 / GRADUATION
+            GRADUATION ROUND
           </div>
           <h1 className="text-4xl font-black leading-tight text-slate-100 md:text-5xl">
-            没有新产品，今天考的是你的定价判断
+            No new products — today tests your pricing judgment
           </h1>
           <p className="mt-5 text-base leading-8 text-slate-300">
-            前三天你学了普通期权、二叉树定价、障碍期权。今天三位客户排队等你报价——
-            用的全是你已经会的工具：普通 Call、障碍 Call，和那台二叉树计算器。
+            Over the past three days you learned vanilla options, binomial-tree pricing, and barrier options. Today three clients queue up for your quote —
+            using only the tools you already know: the vanilla call, the barrier call, and that binomial-tree calculator.
           </p>
           <p className="mt-4 text-base leading-8 text-slate-300">
-            Martin 只给你通用原则，<span className="font-black text-[#ffd700]">不会告诉你该选什么、报多少</span>。
-            选错或报错客户会有反应，但答案要你自己判断。
+            Martin gives you only the general principles — <span className="font-black text-[#ffd700]">he won't tell you what to pick or what to quote</span>.
+            The client reacts if you pick or quote wrong, but the answer is for you to judge.
           </p>
         </div>
 
         <div className="grid gap-4">
           <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
-            Martin 的通用原则
+            Martin's General Principles
           </div>
           {steps.map(([title, text]) => (
             <div key={title} className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
@@ -6850,7 +6850,7 @@ function Day4BriefingPanel() {
             </div>
           ))}
           <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
-            今日客户：3 位，难度递增、提示递减。最后一位不会告诉你要哪种产品。
+            Today's clients: 3, increasing in difficulty with decreasing hints. The last one won't tell you which product they want.
           </div>
         </div>
       </div>
@@ -6876,7 +6876,7 @@ function Day4ClientQueueBadge({ index, total }) {
           {i + 1}
         </span>
       ))}
-      <span className="ml-1">第 {index + 1} / {total} 位客户</span>
+      <span className="ml-1">Client {index + 1} / {total}</span>
     </div>
   );
 }
@@ -6884,20 +6884,20 @@ function Day4ClientQueueBadge({ index, total }) {
 function Day4ClientProfilePanel({ client, index, total }) {
   const { profile } = client;
   const profileRows = [
-    ["姓名", profile.name],
-    ["客户类型", profile.type],
-    ["市场观点", profile.marketView],
-    ["风险承受能力", profile.riskTolerance],
-    ["目标", profile.goal],
-    ["产品需求", profile.productNeed],
-    ["预算", profile.budget],
-    ["经验", profile.experience],
+    ["Name", profile.name],
+    ["Client Type", profile.type],
+    ["Market View", profile.marketView],
+    ["Risk Tolerance", profile.riskTolerance],
+    ["Goal", profile.goal],
+    ["Product Need", profile.productNeed],
+    ["Budget", profile.budget],
+    ["Experience", profile.experience],
   ];
   const isJudge = client.taskType === "judge";
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="客户资料" accent={isJudge ? "结业判断订单" : "实战报价订单"} />
+      <TerminalHeader label="Client Profile" accent={isJudge ? "Graduation Judgment Order" : "Live Quote Order"} />
       <div className="px-6 pt-5">
         <Day4ClientQueueBadge index={index} total={total} />
       </div>
@@ -6929,7 +6929,7 @@ function Day4ClientProfilePanel({ client, index, total }) {
         <div className="space-y-4">
           <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-5">
             <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#ffd700]">
-              客户对白
+              Client Dialogue
             </div>
             <div className="space-y-4">
               {client.dialogue.map((line) => (
@@ -6937,14 +6937,14 @@ function Day4ClientProfilePanel({ client, index, total }) {
                   key={line}
                   className="rounded-md border border-white/10 bg-black/30 p-4 text-base leading-8 text-slate-200"
                 >
-                  {profile.name}：“{line}”
+                  {profile.name}: “{line}”
                 </div>
               ))}
             </div>
           </div>
           {isJudge && (
             <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
-              注意：他没说要哪种产品。下一步你要自己判断——从他的预算和「能接受跌破某位置作废」里嗅出该上普通 Call 还是障碍 Call。
+              Note: he didn't say which product he wants. Next, you have to judge it yourself — sniff out from his budget and his “can accept being voided if it drops below a certain level” whether to go with a vanilla call or a barrier call.
             </div>
           )}
         </div>
@@ -6956,18 +6956,18 @@ function Day4ClientProfilePanel({ client, index, total }) {
 function Day4ParamCard({ client }) {
   const { params } = client;
   const rows = [
-    ["S₀ 现价", formatPoints(params.spot)],
-    ["K 行权价", formatPoints(params.strike)],
-    ...(client.mode === "barrier" ? [["障碍价格", formatPoints(params.barrier)]] : []),
-    ["σ 波动率", `${params.sigma}%`],
-    ["T 年化期限", `${params.maturity}（${client.mode === "barrier" ? "3 个月" : "1 个月"}）`],
-    ["r 无风险利率", `${params.rate}%`],
-    ["N 步数", `${params.steps} 步（固定）`],
+    ["S₀ Spot", formatPoints(params.spot)],
+    ["K Strike", formatPoints(params.strike)],
+    ...(client.mode === "barrier" ? [["Barrier Level", formatPoints(params.barrier)]] : []),
+    ["σ Volatility", `${params.sigma}%`],
+    ["T Annualized Maturity", `${params.maturity} (${client.mode === "barrier" ? "3 months" : "1 month"})`],
+    ["r Risk-Free Rate", `${params.rate}%`],
+    ["N Steps", `${params.steps} steps (fixed)`],
   ];
   return (
     <div className="rounded-lg border border-cyan-400/20 bg-cyan-400/[0.04] p-5">
       <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
-        {client.profile.name} 的成交参数（照着填进计算器）
+        {client.profile.name}'s Trade Parameters (fill them into the calculator as shown)
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {rows.map(([label, value]) => (
@@ -6978,21 +6978,21 @@ function Day4ParamCard({ client }) {
         ))}
       </div>
       <div className="mt-3 text-xs leading-6 text-slate-500">
-        计算器默认值是占位最小值，需要你把上面这些参数手动填进去，才能算出{client.profile.name}这单的理论价。
+        The calculator defaults are placeholder minimums; you need to enter these parameters above by hand to compute the theoretical price for {client.profile.name}'s trade.
       </div>
     </div>
   );
 }
 
-// 结业资料卡（无外层卡壳，嵌在报价页计算器上方）：复用 Day2/Day3 数据台「自己 sourcing」风格。
+// Graduation data cards (no outer card shell, embedded above the calculator on the quoting page): reuse the Day2/Day3 data-desk "source it yourself" style.
 function Day4SourcingCards({ cards }) {
   return (
     <div className="rounded-lg border border-cyan-400/20 bg-cyan-400/[0.04] p-5">
       <div className="mb-3 rounded-md border border-[#00f0ff]/20 bg-[#00f0ff]/[0.05] p-4 text-sm leading-7 text-slate-300">
-        <span className="font-terminal text-[#00f0ff]">任务：</span>
-        何先生没给你参数清单。你已经替他判断了产品——现在自己从下面的资料里把定价要用的数字找齐：
-        <span className="font-black text-slate-100"> S₀、K、σ、T、r</span>
-        ，还有这单的<span className="font-black text-[#ffd700]">障碍价</span>。没有速查表，也没人告诉你哪个数填哪一栏。结业了，靠自己。
+        <span className="font-terminal text-[#00f0ff]">Task: </span>
+        Mr. He didn't give you a parameter list. You've already judged the product for him — now gather the numbers you need for pricing from the material below yourself:
+        <span className="font-black text-slate-100"> S₀, K, σ, T, r</span>
+        , plus this trade's <span className="font-black text-[#ffd700]">barrier level</span>. No cheat sheet, and no one telling you which number goes in which field. You've graduated — rely on yourself.
       </div>
       <div className="grid gap-4 md:grid-cols-2">
         {cards.map((card) => (
@@ -7032,7 +7032,7 @@ function Day4SourcingCards({ cards }) {
         ))}
       </div>
       <div className="mt-3 text-xs leading-6 text-slate-500">
-        哪个数据对应计算器的哪个输入框，自己判断——前三天你已经做过很多遍。计算器默认是占位最小值，要你手动填。
+        Which data maps to which input field is for you to judge — you've done it many times over the past three days. The calculator defaults are placeholder minimums; fill them in by hand.
       </div>
     </div>
   );
@@ -7042,13 +7042,13 @@ function Day4PricingPanel({ client, selectedQuote, onUpdateQuote }) {
   const isBarrier = client.mode === "barrier";
   const isJudge = client.taskType === "judge";
   const quoteHint = isBarrier
-    ? `参考计算器算出的「下跌敲出 Call 理论价」，加上合理利润，给${client.profile.name}报一个权利金。障碍产品的卖点是比普通 Call 便宜。`
-    : `参考计算器算出的「普通 Call 理论价」，加上合理利润，给${client.profile.name}报一个权利金。`;
+    ? `Using the “Down-and-Out Call theoretical price” computed by the calculator, add a reasonable profit, and quote ${client.profile.name} a premium. The barrier product's selling point is that it's cheaper than a vanilla call.`
+    : `Using the “Vanilla Call theoretical price” computed by the calculator, add a reasonable profit, and quote ${client.profile.name} a premium.`;
   return (
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader
-        label="计算器报价"
-        accent={isBarrier ? "障碍 Call · 盲报" : "普通 Call · 盲报"}
+        label="Quote via the Calculator"
+        accent={isBarrier ? "Barrier Call · Blind Quote" : "Vanilla Call · Blind Quote"}
       />
       <div className="space-y-5 p-6">
         {isJudge ? (
@@ -7070,20 +7070,20 @@ function Day4PricingPanel({ client, selectedQuote, onUpdateQuote }) {
 
 function Day4ClientResponsePanel({ client, selectedQuote, clientResponse }) {
   const response = clientResponse ?? getDay4QuoteAnalysis(selectedQuote, client);
-  const acceptedText = response.accepted ? "交易接受" : "客户拒绝";
+  const acceptedText = response.accepted ? "Trade Accepted" : "Client Refused";
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="客户反馈" accent="报价回执" />
+      <TerminalHeader label="Client Feedback" accent="Quote Receipt" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
-            报价记录
+            Quote Record
           </div>
-          <div className="text-5xl font-black text-[#00f0ff]">{selectedQuote} 点</div>
+          <div className="text-5xl font-black text-[#00f0ff]">{selectedQuote} pts</div>
           <div className="mt-4 rounded-md border border-white/10 bg-white/[0.03] p-3 text-sm leading-7 text-slate-400">
-            理论价锚点 ≈ <span className="font-black text-slate-200">{response.theoretical} 点</span>
-            ，你的利润 {response.margin >= 0 ? "+" : ""}
-            {response.margin} 点。
+            Theoretical price anchor ≈ <span className="font-black text-slate-200">{response.theoretical} pts</span>
+            , your profit {response.margin >= 0 ? "+" : ""}
+            {response.margin} pts.
           </div>
         </div>
 
@@ -7122,51 +7122,51 @@ function Day4ScorecardPanel({ results, clients }) {
   const martinSummary = (() => {
     const parts = [];
     if (correctProductCount === clients.length) {
-      parts.push("三位客户的产品判断全对——方向、预算、能不能接受敲出，你都读准了。");
+      parts.push("Product judgment correct on all three clients — direction, budget, and whether they can accept a knock-out, you read them all right. ");
     } else {
-      parts.push(`产品判断对了 ${correctProductCount}/${clients.length} 单。选错产品，再漂亮的报价也救不回来。`);
+      parts.push(`Product judgment correct on ${correctProductCount}/${clients.length} trades. Pick the wrong product, and no quote, however beautiful, can rescue it. `);
     }
     if (dealCount === clients.length) {
-      parts.push(`三单全部成交，定价区间拿捏得不错。`);
+      parts.push(`All three trades filled — you judged the pricing range well. `);
     } else if (dealCount === 0) {
-      parts.push(`一单都没成交——报价离公允价值太远，客户全走了。模型是用来守纪律的。`);
+      parts.push(`Not a single trade filled — the quotes were too far from fair value, and every client walked. The model is for keeping discipline. `);
     } else {
-      parts.push(`成交 ${dealCount}/${clients.length} 单。`);
+      parts.push(`${dealCount}/${clients.length} trades filled. `);
     }
-    parts.push("记住：先读客户、再选产品、最后以理论价为锚加合理利润。这就是这四天的全部。");
+    parts.push("Remember: read the client first, then pick the product, then anchor on the theoretical price and add a reasonable profit. That's everything from these four days.");
     return parts.join("");
   })();
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="结业成绩单" accent="三客户定价复盘" />
+      <TerminalHeader label="Graduation Scorecard" accent="Three-Client Pricing Review" />
       <div className="space-y-5 p-6">
         <div className="grid gap-4 md:grid-cols-3">
           <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
-            <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">成交</div>
+            <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">Filled</div>
             <div className="mt-2 text-3xl font-black text-slate-100">
-              {dealCount} / {clients.length} 单
+              {dealCount} / {clients.length} trades
             </div>
           </div>
           <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
-            <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">产品判断</div>
+            <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">Product Judgment</div>
             <div className="mt-2 text-3xl font-black text-slate-100">
-              {correctProductCount} / {clients.length} 对
+              {correctProductCount} / {clients.length} correct
             </div>
           </div>
           <div className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.03] p-4">
-            <span className="font-terminal text-xs text-slate-500">总评分</span>
+            <span className="font-terminal text-xs text-slate-500">Overall Score</span>
             <ScoreBadge score={overall} />
           </div>
         </div>
 
         <div className="overflow-hidden rounded-lg border border-cyan-400/15">
           <div className="grid grid-cols-[1.1fr_1fr_0.9fr_0.7fr_0.5fr] gap-2 border-b border-white/10 bg-black/40 px-4 py-3 font-terminal text-[11px] tracking-[0.12em] text-slate-500">
-            <span>客户</span>
-            <span>产品</span>
-            <span>报价 / 理论价</span>
-            <span>结果</span>
-            <span>评分</span>
+            <span>Client</span>
+            <span>Product</span>
+            <span>Quote / Theoretical</span>
+            <span>Result</span>
+            <span>Grade</span>
           </div>
           {results.map((r, i) => {
             const client = clients[i];
@@ -7177,7 +7177,7 @@ function Day4ScorecardPanel({ results, clients }) {
                   className="grid grid-cols-[1.1fr_1fr_0.9fr_0.7fr_0.5fr] gap-2 border-b border-white/5 px-4 py-3 text-sm text-slate-600"
                 >
                   <span>{client.profile.name}</span>
-                  <span className="col-span-4">未接待</span>
+                  <span className="col-span-4">Not Served</span>
                 </div>
               );
             }
@@ -7199,7 +7199,7 @@ function Day4ScorecardPanel({ results, clients }) {
                   </span>
                 </span>
                 <span className={cn(r.accepted ? "text-green-300" : "text-red-300")}>
-                  {r.accepted ? "成交" : "未成交·0"}
+                  {r.accepted ? "Filled" : "No Deal·0"}
                 </span>
                 <ScoreBadge score={r.grade} />
               </div>
@@ -7208,7 +7208,7 @@ function Day4ScorecardPanel({ results, clients }) {
         </div>
 
         <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
-          Martin 总评：{martinSummary}
+          Martin's overall: {martinSummary}
         </div>
       </div>
     </TerminalCard>
@@ -7217,20 +7217,20 @@ function Day4ScorecardPanel({ results, clients }) {
 
 function Day4GraduationPanel() {
   const summary = [
-    "Day1：看懂期权——Call 看涨、Put 看跌，买方最大损失限于权利金。",
-    "Day2：二叉树定价——理论价是报价的锚，不能太低（白送）也不能太高（吓跑）。",
-    "Day3：障碍期权——便宜来自路径风险（敲出），不是无条件折扣。",
-    "Day4：实战报价——先读客户方向与预算，再选普通 / 障碍，最后以理论价为锚加合理利润。",
+    "Day 1: Understand options — Call is bullish, Put is bearish, the buyer's maximum loss is limited to the premium.",
+    "Day 2: Binomial-tree pricing — the theoretical price is the quote anchor, not too low (giving it away) and not too high (scaring them off).",
+    "Day 3: Barrier options — the discount comes from path risk (knock-out), not an unconditional reduction.",
+    "Day 4: Live quoting — read the client's direction and budget first, then pick vanilla / barrier, then anchor on the theoretical price and add a reasonable profit.",
   ];
   return (
     <TerminalCard className="scene-enter overflow-hidden">
-      <TerminalHeader label="结业" accent="新人定价训练完成" />
+      <TerminalHeader label="Graduation" accent="New-Trader Pricing Training Complete" />
       <div className="flex min-h-[520px] flex-col items-center justify-center p-6 text-center">
         <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-5xl font-black tracking-[0.12em] text-transparent md:text-6xl">
-          结业完成
+          Graduation Complete
         </div>
         <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300">
-          你走完了从期权基础到实战定价的全过程。一个新人交易员该有的定价纪律，你已经练过一遍。
+          You've walked through the whole process from option basics to live pricing. The pricing discipline a new trader should have — you've practiced it all.
         </p>
         <div className="mt-8 grid w-full max-w-2xl gap-3 text-left">
           {summary.map((item) => (
@@ -7238,7 +7238,7 @@ function Day4GraduationPanel() {
               key={item}
               className="rounded-md border border-cyan-400/15 bg-black/30 px-4 py-3 text-sm leading-7 text-slate-300"
             >
-              <span className="font-terminal mr-2 text-[#00f0ff]">回顾</span>
+              <span className="font-terminal mr-2 text-[#00f0ff]">Recap</span>
               {item}
             </div>
           ))}
@@ -7331,7 +7331,7 @@ function MainPanel({
         onToggleDisclosure={actions.toggleDisclosure}
         disclosureFeedback={disclosureFeedback}
         items={day2Config.disclosureItems}
-        instruction="在确认报价前，请选择你必须向客户说明的内容。"
+        instruction="Before confirming the quote, select what you must explain to the client."
       />
     ),
     day2_client_response: (
@@ -7363,8 +7363,8 @@ function MainPanel({
         onSelectProduct={actions.selectProduct}
         products={day3Config.products}
         correctProductId={day3Config.scoringRules.correctProduct}
-        title="障碍产品选择台"
-        accent="选择一个适合客户的结构"
+        title="Barrier Product Selection Desk"
+        accent="Select a Structure That Suits the Client"
       />
     ),
     day3_research_terminal: <Day3ResearchTerminalPanel />,
@@ -7382,7 +7382,7 @@ function MainPanel({
         onToggleDisclosure={actions.toggleDisclosure}
         disclosureFeedback={disclosureFeedback}
         items={day3Config.disclosureItems}
-        instruction="在确认障碍期权交易前，选择你必须向陈女士说明的内容。"
+        instruction="Before confirming the barrier option trade, select what you must explain to Ms. Chen."
       />
     ),
     day3_client_response: (
@@ -7416,8 +7416,8 @@ function MainPanel({
         onSelectProduct={actions.selectProduct}
         products={day4Client.judgeProducts ?? []}
         correctProductId={day4Client.correctProduct}
-        title="产品判断台"
-        accent="客户没说要哪种——你来判断"
+        title="Product Judgment Desk"
+        accent="The Client Didn't Say Which — You Decide"
       />
     ),
     day4_pricing: (
@@ -7458,7 +7458,7 @@ export default function Day1TraderSimulator() {
   const [day2Score, setDay2Score] = useState(null);
   const [day3Score, setDay3Score] = useState(null);
   const [day4Score, setDay4Score] = useState(null);
-  // Day4 实战篇：通用 stage + index 驱动的客户队列
+  // Day4 live round: a generic stage + index-driven client queue
   const [day4ClientIndex, setDay4ClientIndex] = useState(0);
   const [day4Results, setDay4Results] = useState([]);
   const [selectedSuitability, setSelectedSuitability] = useState(null);
@@ -7573,7 +7573,7 @@ export default function Day1TraderSimulator() {
     }
 
     if (!selectedProduct) {
-      setProductMessage("请先选择一个可用产品，再确认推荐。");
+      setProductMessage("Please select an available product before confirming the recommendation.");
       return;
     }
 
@@ -7584,7 +7584,7 @@ export default function Day1TraderSimulator() {
     }
 
     if (currentStage === "day4_judge") {
-      // 客户③：选好产品后进入计算器报价（产品对错记在提交报价时一并评分）
+      // Client #3: after picking the product, go to the calculator quote (product correctness is scored together when the quote is submitted)
       setCurrentStage("day4_pricing");
       return;
     }
@@ -7593,7 +7593,7 @@ export default function Day1TraderSimulator() {
     setCurrentStage("day1_risk_disclosure");
   };
 
-  // 已归档（CBBC）：原 Day4 适当性判断，新流程不再使用。
+  // Archived (CBBC): the original Day4 suitability judgment, no longer used in the new flow.
   const selectSuitability = (suitabilityId) => {
     const option = day4CbbcConfig_ARCHIVED.suitabilityOptions.find((item) => item.id === suitabilityId);
     if (!option) return;
@@ -7602,10 +7602,10 @@ export default function Day1TraderSimulator() {
     setSuitabilityMessage(option.feedback);
   };
 
-  // 已归档（CBBC）：原 Day4 适当性确认，新流程不再使用。
+  // Archived (CBBC): the original Day4 suitability confirmation, no longer used in the new flow.
   const confirmSuitability = () => {
     if (!selectedSuitability) {
-      setSuitabilityMessage("请先判断客户是否适合 CBBC。");
+      setSuitabilityMessage("Please first judge whether the client is suitable for a CBBC.");
       return;
     }
 
@@ -7614,7 +7614,7 @@ export default function Day1TraderSimulator() {
     setCurrentStage("day4_product_selection");
   };
 
-  // ===== Day4 实战篇 · 客户队列调度（通用 stage + index 驱动）=====
+  // ===== Day4 live round · client queue scheduling (generic stage + index-driven) =====
   const beginDay4Clients = () => {
     setDay4ClientIndex(0);
     setDay4Results([]);
@@ -7640,15 +7640,15 @@ export default function Day1TraderSimulator() {
     const client = day4Clients[day4ClientIndex];
     if (!client) return;
     const analysis = getDay4QuoteAnalysis(selectedQuote, client);
-    // 客户③要先选对产品；①②产品已点名（默认正确）。
+    // Client #3 must pick the right product first; clients #1/#2 have a named product (correct by default).
     const chosenProductId =
       client.taskType === "judge" ? selectedProduct : client.correctProduct;
     const productName =
       client.taskType === "judge"
-        ? (client.judgeProducts?.find((p) => p.id === chosenProductId)?.name ?? "未选择产品")
+        ? (client.judgeProducts?.find((p) => p.id === chosenProductId)?.name ?? "No Product Selected")
         : client.productLabel;
     const productCorrect = chosenProductId === client.correctProduct;
-    // 选错产品：再漂亮的报价也救不回来——判 D 且不成交。
+    // Wrong product: no quote, however beautiful, can rescue it — graded D and not filled.
     const grade = productCorrect ? analysis.score : "D";
     const accepted = productCorrect ? analysis.accepted : false;
     const result = {
@@ -7672,8 +7672,8 @@ export default function Day1TraderSimulator() {
       : {
           ...analysis,
           accepted: false,
-          customerLine: "这个产品不是我要的，我先不买了。",
-          status: "产品不匹配，客户离开",
+          customerLine: "This isn't the product I wanted — I'll pass for now.",
+          status: "Product doesn't match, client leaves",
         };
     setClientResponse(response);
     setCurrentStage("day4_client_response");
@@ -7750,7 +7750,7 @@ export default function Day1TraderSimulator() {
 
   const evaluateDay1 = () => {
     const product = day1Config.products.find((item) => item.id === selectedProduct);
-    const productName = product?.name ?? "未选择产品";
+    const productName = product?.name ?? "No Product Selected";
     const riskDisclosure = getRiskDisclosureScore();
     const market = day1Config.market;
     const finalPrice = market.path[market.path.length - 1];
@@ -7761,47 +7761,47 @@ export default function Day1TraderSimulator() {
       const overall = riskDisclosure === "A" ? "A" : riskDisclosure === "C" ? "B" : "C";
       return {
         productName,
-        outcome: "Call 到期为价内期权。",
-        payoff: `${callPayoff} 点`,
-        premium: `${market.premium} 点`,
-        clientPnl: `+${callPnl} 点`,
+        outcome: "The call expires in-the-money.",
+        payoff: `${callPayoff} pts`,
+        premium: `${market.premium} pts`,
+        clientPnl: `+${callPnl} pts`,
         suitability: "A",
         riskDisclosure,
         clientOutcome: "A",
         overall,
         martinComment:
-          "你把客户的看涨观点和普通 Call 匹配起来了。客户最大亏损限制在期权费内，并且在市场上涨后获得了收益。",
+          "You matched the client's bullish view with a vanilla call. The client's maximum loss is capped at the premium, and they gained a payoff after the market rose.",
       };
     }
 
     if (selectedProduct === "vanilla_put") {
       return {
         productName,
-        outcome: "市场上涨，Put 到期没有价值。",
-        payoff: "0 点",
-        premium: `${market.premium} 点`,
-        clientPnl: `-${market.premium} 点`,
+        outcome: "The market rose, and the put expires worthless.",
+        payoff: "0 pts",
+        premium: `${market.premium} pts`,
+        clientPnl: `-${market.premium} pts`,
         suitability: "D",
         riskDisclosure,
         clientOutcome: "D",
         overall: "D",
         martinComment:
-          "客户是看涨观点，但你选择了看跌产品。永远先把产品方向和客户的市场观点匹配起来。",
+          "The client was bullish, but you chose a bearish product. Always match the product's direction to the client's market view first.",
       };
     }
 
     return {
       productName,
-      outcome: "指数上涨，直接买入指数获得收益，但下行亏损没有被限制。",
-      payoff: "+900 点等效收益",
-      premium: "没有期权费",
-      clientPnl: "+900 点等效收益",
+      outcome: "The index rose; buying the index directly produced a gain, but the downside loss was not limited.",
+      payoff: "+900 pts equivalent gain",
+      premium: "No premium",
+      clientPnl: "+900 pts equivalent gain",
       suitability: "C",
       riskDisclosure,
       clientOutcome: "B",
       overall: riskDisclosure === "D" ? "D" : "C",
       martinComment:
-        "客户确实因为市场上涨获利，但这个产品没有满足她“下行亏损有限”的需求。结果好不代表推荐一定适合。",
+        "The client did profit from the market rise, but this product didn't meet her need for “limited downside loss.” A good outcome doesn't mean the recommendation was suitable.",
     };
   };
 
@@ -7849,7 +7849,7 @@ export default function Day1TraderSimulator() {
     const disclosureWarning =
       riskDisclosure === "A"
         ? ""
-        : " 定价只是第一步。客户还必须明白：模型价格不是盈利保证。";
+        : " Pricing is only the first step. The client must also understand: the model price is not a profit guarantee.";
 
     return {
       theoreticalPrice: liveTheoretical,
@@ -7872,7 +7872,7 @@ export default function Day1TraderSimulator() {
 
   const evaluateDay3 = () => {
     const product = day3Config.products.find((item) => item.id === selectedProduct);
-    const productName = product?.name ?? "未选择产品";
+    const productName = product?.name ?? "No Product Selected";
     const riskDisclosure = getRiskDisclosureScore(selectedDisclosures, day3Config);
     const result = getDay3MarketResult();
     const analysis = getDay3QuoteAnalysis(selectedQuote);
@@ -7898,17 +7898,17 @@ export default function Day1TraderSimulator() {
     }
 
     const productComment = isCorrectProduct
-      ? "你选中了下跌敲出看涨期权，方向、预算和客户接受额外条件都匹配。"
+      ? "You picked the down-and-out call option — direction, budget, and the client's acceptance of extra conditions all match."
       : selectedProduct === "vanilla_call"
-        ? "普通 Call 风险更简单，但没有满足客户想降低期权费的预算需求。"
+        ? "A vanilla call has simpler risk, but didn't meet the client's budget need to lower the premium."
         : selectedProduct === "up_out_call"
-          ? "上涨敲出会在市场上涨过强时失效，和客户想参与上涨的目标冲突。"
-          : "这个产品没有把客户的看涨观点和期权费预算结合起来。";
+          ? "An up-and-out call expires when the market rises too strongly, conflicting with the client's goal of participating in the upside."
+          : "This product didn't combine the client's bullish view with their premium budget.";
 
     const disclosureComment =
       riskDisclosure === "A"
-        ? "你也把路径依赖和敲出风险讲清楚了。"
-        : "但风险披露还不够完整。障碍产品必须强调：最终价格有利也不代表一定有收益。";
+        ? "You also clearly explained the path dependence and knock-out risk."
+        : "But the risk disclosure isn't complete enough. A barrier product must stress: a favorable final price doesn't guarantee a payoff.";
 
     return {
       productName,
@@ -7929,10 +7929,10 @@ export default function Day1TraderSimulator() {
     };
   };
 
-  // 已归档（CBBC）：原 Day4 熊证适当性评分，新流程改用 submitDay4Quote + Day4ScorecardPanel。
+  // Archived (CBBC): the original Day4 bear-contract suitability scoring; the new flow uses submitDay4Quote + Day4ScorecardPanel instead.
   const evaluateDay4Cbbc_ARCHIVED = () => {
     const product = day4CbbcConfig_ARCHIVED.products.find((item) => item.id === selectedProduct);
-    const productName = product?.name ?? "未选择产品";
+    const productName = product?.name ?? "No Product Selected";
     const suitabilityOption = day4CbbcConfig_ARCHIVED.suitabilityOptions.find(
       (item) => item.id === selectedSuitability,
     );
@@ -7960,20 +7960,20 @@ export default function Day1TraderSimulator() {
 
     const productComment =
       selectedProduct === "bear_cbbc"
-        ? "你选中了熊证：方向匹配客户看跌观点，也符合她愿意承担高风险、希望获得杠杆的需求。"
+        ? "You picked the bear contract: the direction matches the client's bearish view, and it fits her willingness to take high risk and desire for leverage."
         : selectedProduct === "bull_cbbc"
-          ? "Bull CBBC 是看涨工具，方向和客户看跌观点相反。"
+          ? "A Bull CBBC is a bullish instrument, opposite in direction to the client's bearish view."
           : selectedProduct === "vanilla_put"
-            ? "普通 Put 方向正确、风险更简单，但没有提供客户想要的 CBBC 杠杆特征。"
-            : "普通 Call 是看涨工具，方向和客户看跌观点相反。";
+            ? "A vanilla put has the right direction and simpler risk, but doesn't provide the CBBC leverage the client wanted."
+            : "A vanilla call is a bullish instrument, opposite in direction to the client's bearish view.";
 
     const disclosureComment =
       riskDisclosure === "A"
-        ? "CBBC 风险说明也完整覆盖了收回价、MCE、残值和杠杆。"
-        : "但 CBBC 风险说明还不完整。客户必须理解 MCE 后不会因为市场反弹而恢复。";
+        ? "The CBBC risk explanation also fully covers the call price, MCE, residual value, and leverage."
+        : "But the CBBC risk explanation isn't complete. The client must understand that after an MCE it won't recover on a market rebound.";
 
     return {
-      suitabilityChoice: suitabilityOption?.title ?? "未判断",
+      suitabilityChoice: suitabilityOption?.title ?? "Not Judged",
       productName,
       finalPrice: result.finalPrice,
       mceTriggered: result.mceTriggered,
@@ -8181,12 +8181,12 @@ export default function Day1TraderSimulator() {
       return {
         tone: "danger",
         text: isDay4Stage
-          ? "这句话会误导客户。MCE 后熊证不会因为市场回落而自动恢复。"
+          ? "This statement would mislead the client. After an MCE, a bear contract won't automatically recover on a market pullback."
           : isDay3Stage
-            ? "这句话会误导客户。障碍期权不能只看最终到期价格。"
+            ? "This statement would mislead the client. A barrier option can't be judged solely on the final expiry price."
             : isDay2Stage
-              ? "这句话会误导客户。模型价格不是盈利保证。"
-              : "这句话会误导客户。市场上涨不代表扣除期权费后一定赚钱。",
+              ? "This statement would mislead the client. The model price is not a profit guarantee."
+              : "This statement would mislead the client. A market rise doesn't guarantee a profit after deducting the premium.",
       };
     }
 
@@ -8195,12 +8195,12 @@ export default function Day1TraderSimulator() {
       return {
         tone: "warn",
         text: isDay4Stage
-          ? "再检查一下工作手册。客户必须理解收回价、MCE、残值不保证和杠杆风险。"
+          ? "Check the handbook again. The client must understand the call price, MCE, no guaranteed residual value, and leverage risk."
           : isDay3Stage
-            ? "再检查一下工作手册。客户必须理解障碍线、敲出和路径风险。"
+            ? "Check the handbook again. The client must understand the barrier level, knock-out, and path risk."
             : isDay2Stage
-              ? "再检查一下工作手册。客户必须理解期权费风险和模型风险。"
-              : "查看工作手册。客户必须理解期权费可能损失，以及产品不保证盈利。",
+              ? "Check the handbook again. The client must understand premium risk and model risk."
+              : "Check the handbook. The client must understand that the premium can be lost, and that the product doesn't guarantee a profit.",
       };
     }
 
@@ -8208,24 +8208,24 @@ export default function Day1TraderSimulator() {
       return {
         tone: "warn",
         text: isDay4Stage
-          ? "再检查一下工作手册。客户必须理解收回价、MCE、残值不保证和杠杆风险。"
+          ? "Check the handbook again. The client must understand the call price, MCE, no guaranteed residual value, and leverage risk."
           : isDay3Stage
-            ? "再检查一下工作手册。客户必须理解障碍线、敲出和路径风险。"
+            ? "Check the handbook again. The client must understand the barrier level, knock-out, and path risk."
             : isDay2Stage
-              ? "再检查一下工作手册。客户必须理解期权费风险和模型风险。"
-              : "查看工作手册。客户必须理解期权费可能损失，以及产品不保证盈利。",
+              ? "Check the handbook again. The client must understand premium risk and model risk."
+              : "Check the handbook. The client must understand that the premium can be lost, and that the product doesn't guarantee a profit.",
       };
     }
 
     return {
       tone: "good",
       text: isDay4Stage
-        ? "很好。这几项覆盖了收回价、MCE、残值不保证和杠杆风险。"
+        ? "Good. These items cover the call price, MCE, no guaranteed residual value, and leverage risk."
         : isDay3Stage
-          ? "很好。这几项覆盖了路径依赖、敲出、最终价格误区和便宜背后的风险。"
+          ? "Good. These items cover path dependence, knock-out, the final-price misconception, and the risk behind the low price."
           : isDay2Stage
-            ? "很好。这几项覆盖了期权费损失、无保证盈利、模型风险和到期收益规则。"
-            : "很好。这几项覆盖了期权费损失、最大亏损限制，以及不保证盈利。",
+            ? "Good. These items cover premium loss, no guaranteed profit, model risk, and the expiry-payoff rules."
+            : "Good. These items cover premium loss, the maximum-loss cap, and no guaranteed profit.",
     };
   }, [
     correctDisclosureIds,
@@ -8242,27 +8242,27 @@ export default function Day1TraderSimulator() {
     if (currentStage === "day4_judge" && productMessage) return productMessage;
     if (currentStage === "day1_risk_disclosure") return disclosureFeedback.text;
     if (currentStage === "day2_quote_slider") {
-      return `${stageConfig[currentStage].mentor} 当前报价状态：${quoteAnalysis.label}。`;
+      return `${stageConfig[currentStage].mentor} Current quote status: ${quoteAnalysis.label}.`;
     }
     if (currentStage === "day2_risk_disclosure") return disclosureFeedback.text;
     if (currentStage === "day3_risk_disclosure") return disclosureFeedback.text;
     if (currentStage === "day4_client_response" && clientResponse) {
-      return `客户反馈：${clientResponse.status}。先读对客户、选对产品，再以理论价为锚加合理利润。`;
+      return `Client feedback: ${clientResponse.status}. Read the client right, pick the right product, then anchor on the theoretical price and add a reasonable profit.`;
     }
     if (currentStage === "day2_client_response" && clientResponse) {
-      return `客户反馈：${clientResponse.status}。报价不是只看成交，还要看交易台是否得到合理补偿。`;
+      return `Client feedback: ${clientResponse.status}. A quote isn't only about closing the trade — it's also about whether the desk gets reasonable compensation.`;
     }
     if (currentStage === "day3_client_response" && clientResponse) {
-      return `客户反馈：${clientResponse.status}。障碍产品的报价纪律：要比普通 Call 便宜，但也要给交易台留下合理利润。`;
+      return `Client feedback: ${clientResponse.status}. The pricing discipline for a barrier product: cheaper than a vanilla call, but still leaving the desk a reasonable profit.`;
     }
     if (currentStage === "day2_market_run" && marketComplete) {
-      return "市场收在行权价上方一点点。普通 Call 的到期收益 = 到期价 − 行权价；交易台这单赚不赚，看你收的报价能不能盖住这笔赔付。";
+      return "The market closed just above the strike. A vanilla call's expiry payoff = expiry price − strike; whether the desk profits on this trade depends on whether the premium you charged covers that payout.";
     }
     if (currentStage === "day1_market_run" && marketComplete) {
-      return "最终价格高于行权价。普通 Call 的到期收益是最终价格减去行权价，再扣除期权费得到净盈亏。";
+      return "The final price is above the strike. A vanilla call's expiry payoff is the final price minus the strike, then minus the premium to get the net P&L.";
     }
     if (currentStage === "day3_market_run" && marketComplete) {
-      return "这就是障碍期权的重点：最终价格高于行权价，但中途已经跌破障碍线，敲出后产品不能复活。";
+      return "This is the crux of a barrier option: the final price is above the strike, but it already dropped below the barrier level along the way, and after knocking out the product can't revive.";
     }
     if (currentStage === "day1_report" && day1Score) return day1Score.martinComment;
     if (currentStage === "day2_report" && day2Score) return day2Score.martinComment;
@@ -8359,7 +8359,7 @@ export default function Day1TraderSimulator() {
     toProductSelection: () => setCurrentStage("day1_product_selection"),
     toDay2ProductReview: () => setCurrentStage("day2_product_review"),
     toDay3ProductSelection: () => setCurrentStage("day3_product_selection"),
-    // Day4 实战篇队列调度
+    // Day4 live round queue scheduling
     beginDay4Clients,
     toDay4Task,
     submitDay4Quote,
