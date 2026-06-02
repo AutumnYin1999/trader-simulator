@@ -4663,7 +4663,32 @@ function buildBarrierBinomialToolTree(params) {
   };
 }
 
-// Day2 参数检查：与标准值的比较及 Martin 反馈
+// 用定价引擎实算理论价，覆盖 config 里的 hardcoded 占位值
+// Day2 vanilla: S0=21500/K=22000/σ=16%/T=0.08/N=3 → 185.94 ≈ 186
+day2Config.quoteRules.theoreticalPrice = Math.round(
+  buildVanillaBinomialToolTree({ spot: 21500, strike: 22000, rate: 2, sigma: 16, maturity: 0.08, steps: 3 }).vanillaPrice
+);
+// Day3 barrier: S0=21500/K=22000/barrier=21000/σ=30%/T=0.25/N=4 → 934.16 ≈ 934
+day3Config.market.premium = Math.round(
+  buildBarrierBinomialToolTree({ spot: 21500, strike: 22000, barrier: 21000, rate: 2, sigma: 30, maturity: 0.25, steps: 4 }).barrierPrice
+);
+// Day3 vanilla ref: 同参数无障碍 → 1111.73 ≈ 1112
+day3Config.market.vanillaPremium = Math.round(
+  buildVanillaBinomialToolTree({ spot: 21500, strike: 22000, rate: 2, sigma: 30, maturity: 0.25, steps: 4 }).vanillaPrice
+);
+
+// Day4 客户理论价（barrier N=4 / vanilla N=3）
+day4Clients[0].theoretical = Math.round(
+  buildVanillaBinomialToolTree({ spot: 24000, strike: 24500, rate: 2, sigma: 18, maturity: 0.08, steps: 3 }).vanillaPrice
+);
+day4Clients[1].theoretical = Math.round(
+  buildBarrierBinomialToolTree({ spot: 24000, strike: 24500, barrier: 23000, rate: 2, sigma: 28, maturity: 0.25, steps: 4 }).barrierPrice
+);
+day4Clients[2].theoretical = Math.round(
+  buildBarrierBinomialToolTree({ spot: 25000, strike: 25500, barrier: 23500, rate: 2, sigma: 32, maturity: 0.25, steps: 4 }).barrierPrice
+);
+
+// Day2 理论价格 0 守卫：确保 liveTheoretical 只在实算价 >= 1 点时更新
 function checkDay2Params(params) {
   const standard = { spot: 21500, strike: 22000, rate: 2, sigma: 16, maturity: 0.08 };
   const tolerance = { spot: 200, strike: 200, rate: 0.5, sigma: 2, maturity: 0.01 };
@@ -4710,7 +4735,7 @@ function BinomialPricingTool({
 
   // 每次 tree 重算，把最新理论价传给父组件（仅 vanilla 模式的 Day2 报价联动会传 onUpdateTheoretical）
   useEffect(() => {
-    if (onUpdateTheoretical && Number.isFinite(tree.vanillaPrice) && tree.vanillaPrice > 0) {
+    if (onUpdateTheoretical && Math.round(tree.vanillaPrice) >= 1) {
       onUpdateTheoretical(Math.round(tree.vanillaPrice));
     }
   }, [tree.vanillaPrice, onUpdateTheoretical]);
@@ -8460,7 +8485,10 @@ export default function Day1TraderSimulator() {
           selectedQuote={selectedQuote}
           day4ClientIndex={day4ClientIndex}
           actions={actions}
-          disclosureReady={correctDisclosureIds.every((id) => selectedDisclosures.includes(id))}
+          disclosureReady={
+            correctDisclosureIds.every((id) => selectedDisclosures.includes(id)) &&
+            !selectedDisclosures.includes(misleadingDisclosureId)
+          }
         />
       </div>
 
