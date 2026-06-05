@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { supabase, isSupabaseConfigured } from "./supabaseClient";
 
 const day1Config = {
   day: 1,
@@ -2841,6 +2842,182 @@ function StartScreen({ onStart }) {
       <div className="mt-16 font-terminal text-xs tracking-[0.14em] text-[var(--faint)]">
         <span className="text-[var(--accent)]">FIN 7870</span> · Digital Investfair ·{" "}
         <span className="text-[var(--accent)]">HSI Options</span> · HKEX
+      </div>
+    </div>
+  );
+}
+
+// Sign in / create account screen. Only rendered when Supabase is configured and
+// there is no active session. Themed to match StartScreen and the finance tokens.
+function AuthScreen({ authError, setAuthError }) {
+  const [mode, setMode] = useState("signin"); // "signin" | "signup"
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const emailRef = useRef(null);
+
+  const isSignup = mode === "signup";
+
+  // Focus the email field on mount for keyboard-first sign in.
+  useEffect(() => {
+    emailRef.current?.focus();
+  }, []);
+
+  const switchMode = (next) => {
+    if (next === mode) return;
+    setMode(next);
+    setAuthError("");
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (submitting) return;
+    setAuthError("");
+    setSubmitting(true);
+    try {
+      if (isSignup) {
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: { data: { name } },
+        });
+        if (error) {
+          setAuthError(error.message);
+          return;
+        }
+        // On success the auth state listener takes over (or, if email
+        // confirmation is on, the user must confirm before a session appears).
+      } else {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) {
+          setAuthError(error.message);
+          return;
+        }
+      }
+    } catch (err) {
+      setAuthError(err?.message || "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const hasError = Boolean(authError);
+  const inputClass =
+    "w-full rounded-md border border-[var(--border-strong)] bg-[var(--bg-elev)] px-3 py-2.5 text-sm text-[var(--ink)] placeholder:text-[var(--faint)] outline-none transition-colors duration-200 focus:border-[var(--accent)]";
+  const labelClass =
+    "font-terminal mb-1.5 block text-xs uppercase tracking-[0.14em] text-[var(--muted)]";
+
+  return (
+    <div className="scene-enter relative z-10 mx-auto flex min-h-screen max-w-md flex-col items-center justify-center px-6 py-16">
+      <div className="font-terminal mb-3 text-xs uppercase tracking-[0.26em] text-[var(--accent)]">
+        Hong Kong · Central Options Desk
+      </div>
+      <h1 className="text-4xl font-bold tracking-tight text-[var(--ink)]">Central Trader</h1>
+      <p className="mt-3 text-sm text-[var(--muted)]">Sign in to save your progress to the cloud.</p>
+
+      <div className="mt-8 w-full rounded-[12px] border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow)]">
+        {/* Segmented toggle: Sign In / Create Account */}
+        <div className="mb-6 grid grid-cols-2 gap-1 rounded-lg border border-[var(--border)] bg-[var(--bg-elev)] p-1">
+          <button
+            type="button"
+            onClick={() => switchMode("signin")}
+            aria-pressed={!isSignup}
+            className={cn(
+              "rounded-md px-3 py-2 text-xs font-semibold tracking-[0.04em] transition-colors duration-200",
+              !isSignup
+                ? "bg-[var(--accent-strong)] text-white"
+                : "text-[var(--muted)] hover:text-[var(--ink)]",
+            )}
+          >
+            Sign In
+          </button>
+          <button
+            type="button"
+            onClick={() => switchMode("signup")}
+            aria-pressed={isSignup}
+            className={cn(
+              "rounded-md px-3 py-2 text-xs font-semibold tracking-[0.04em] transition-colors duration-200",
+              isSignup
+                ? "bg-[var(--accent-strong)] text-white"
+                : "text-[var(--muted)] hover:text-[var(--ink)]",
+            )}
+          >
+            Create Account
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} noValidate>
+          {isSignup && (
+            <div className="mb-4">
+              <label htmlFor="auth-name" className={labelClass}>
+                Name
+              </label>
+              <input
+                id="auth-name"
+                type="text"
+                autoComplete="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Your name"
+                className={inputClass}
+              />
+            </div>
+          )}
+
+          <div className="mb-4">
+            <label htmlFor="auth-email" className={labelClass}>
+              Email
+            </label>
+            <input
+              id="auth-email"
+              ref={emailRef}
+              type="email"
+              autoComplete="email"
+              inputMode="email"
+              spellCheck={false}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              aria-invalid={hasError}
+              placeholder="you@example.com"
+              className={inputClass}
+            />
+          </div>
+
+          <div className="mb-5">
+            <label htmlFor="auth-password" className={labelClass}>
+              Password
+            </label>
+            <input
+              id="auth-password"
+              type="password"
+              autoComplete={isSignup ? "new-password" : "current-password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              aria-invalid={hasError}
+              placeholder="Your password"
+              className={inputClass}
+            />
+          </div>
+
+          <div aria-live="polite" className="min-h-[1.25rem]">
+            {hasError && <p className="text-sm font-medium text-[var(--neg)]">{authError}</p>}
+          </div>
+
+          <PrimaryButton type="submit" disabled={submitting} className="mt-3 w-full">
+            {submitting
+              ? isSignup
+                ? "Creating account..."
+                : "Signing in..."
+              : isSignup
+                ? "Create Account"
+                : "Sign In"}
+          </PrimaryButton>
+        </form>
+      </div>
+
+      <div className="mt-8 font-terminal text-xs tracking-[0.14em] text-[var(--faint)]">
+        <span className="text-[var(--accent)]">FIN 7870</span> · Digital Investfair · HKEX
       </div>
     </div>
   );
@@ -7626,6 +7803,86 @@ export default function Day1TraderSimulator() {
   const [progress, setProgress] = useState(loadProgress);
   const [stageBeforeDashboard, setStageBeforeDashboard] = useState(null);
 
+  // ===== Supabase auth (graceful fallback) =====
+  // When Supabase is not configured, authChecked starts true and session stays
+  // null so the render path below never shows a gate: the app runs in the same
+  // local guest mode it always has. When configured, we resolve the session and
+  // gate the app behind AuthScreen until the user signs in.
+  const [session, setSession] = useState(null);
+  const [authChecked, setAuthChecked] = useState(!isSupabaseConfigured);
+  const [authError, setAuthError] = useState("");
+
+  // Resolve the current session on mount and keep it in sync. Only runs when
+  // Supabase is configured; otherwise the app stays in local guest mode.
+  useEffect(() => {
+    if (!isSupabaseConfigured) return;
+    let active = true;
+    supabase.auth.getSession().then(({ data }) => {
+      if (!active) return;
+      setSession(data.session ?? null);
+      setAuthChecked(true);
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      setSession(nextSession ?? null);
+    });
+    return () => {
+      active = false;
+      sub?.subscription?.unsubscribe();
+    };
+  }, []);
+
+  // When a session becomes available, load (or create) the user's profile and
+  // pull their saved progress from Supabase into the same shapes the UI uses.
+  useEffect(() => {
+    if (!isSupabaseConfigured || !session?.user) return;
+    let active = true;
+    const user = session.user;
+
+    (async () => {
+      // Profile: read the row; create one on first sign in if missing.
+      const { data: profileRow } = await supabase
+        .from("profiles")
+        .select("name")
+        .eq("id", user.id)
+        .maybeSingle();
+      if (!active) return;
+      if (profileRow) {
+        setProfile({ name: profileRow.name || "Trader" });
+      } else {
+        const fallbackName =
+          user.user_metadata?.name || (user.email ? user.email.split("@")[0] : "Trader");
+        const { error: upsertErr } = await supabase
+          .from("profiles")
+          .upsert({ id: user.id, name: fallbackName });
+        if (upsertErr) console.error("Failed to create profile:", upsertErr.message);
+        if (!active) return;
+        setProfile({ name: fallbackName });
+      }
+
+      // Progress: map cloud rows into { day1, day2, day3, day4 } records.
+      const { data: progressRows } = await supabase
+        .from("progress")
+        .select("day, grade, score, completed_at")
+        .eq("user_id", user.id);
+      if (!active) return;
+      if (progressRows && progressRows.length > 0) {
+        const mapped = { ...EMPTY_PROGRESS };
+        for (const row of progressRows) {
+          mapped["day" + row.day] = {
+            grade: row.grade,
+            score: row.score,
+            completedAt: row.completed_at,
+          };
+        }
+        setProgress(mapped);
+      }
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, [session]);
+
   const isDay2Stage = currentStage.startsWith("day2");
   const isDay3Stage = currentStage.startsWith("day3");
   const isDay4Stage = currentStage.startsWith("day4");
@@ -7704,21 +7961,42 @@ export default function Day1TraderSimulator() {
     setSkipSignal((value) => value + 1);
   };
 
+  // Persist a single day's record. ALWAYS writes local (localStorage + in-memory
+  // state) so the no-keys guest path is unchanged. When Supabase is configured
+  // and a user is signed in, also upsert the row to the cloud (fire and forget;
+  // local is the source of truth for the UI). record = { grade, score, completedAt }.
+  const persistDayProgress = (day, record) => {
+    setProgress((prev) => ({ ...(prev ?? EMPTY_PROGRESS), ["day" + day]: record }));
+    saveDayProgress(day, record);
+    if (isSupabaseConfigured && session?.user) {
+      supabase
+        .from("progress")
+        .upsert({
+          user_id: session.user.id,
+          day,
+          grade: record.grade,
+          score: record.score,
+          completed_at: record.completedAt,
+        })
+        .then(({ error }) => {
+          if (error) console.error("Failed to sync progress to Supabase:", error.message);
+        });
+    }
+  };
+
   // Persist a day's result once it has a final letter grade. Guarded so each
   // completion is written only once (re-runs overwrite the previous record).
   const recordDayProgress = (day, grade) => {
     if (!grade) return;
     const score = gradeToPercent(grade);
-    setProgress((prev) => {
-      const existing = prev?.["day" + day];
-      if (existing && existing.grade === grade && existing.score === score) {
-        return prev; // already recorded this exact result; skip the write
-      }
-      return saveDayProgress(day, {
-        grade,
-        score,
-        completedAt: new Date().toISOString(),
-      });
+    const existing = progress?.["day" + day];
+    if (existing && existing.grade === grade && existing.score === score) {
+      return; // already recorded this exact result; skip the write
+    }
+    persistDayProgress(day, {
+      grade,
+      score,
+      completedAt: new Date().toISOString(),
     });
   };
 
@@ -8548,13 +8826,21 @@ export default function Day1TraderSimulator() {
     setCurrentStage(firstStageName[day] ?? "title_screen");
   };
 
-  const signOut = () => {
-    const guest = { name: "Guest Trader" };
-    setProfile(guest);
-    saveProfile(guest);
+  const signOut = async () => {
     setStageBeforeDashboard(null);
     setHandbookOpen(false);
     setCurrentStage("title_screen");
+    if (isSupabaseConfigured) {
+      // onAuthStateChange clears the session, which drops us to the AuthScreen.
+      setAuthError("");
+      const { error } = await supabase.auth.signOut();
+      if (error) console.error("Sign out failed:", error.message);
+      return;
+    }
+    // Non-configured (guest) path: reset the local profile as before.
+    const guest = { name: "Guest Trader" };
+    setProfile(guest);
+    saveProfile(guest);
   };
 
   const actions = {
@@ -8641,6 +8927,29 @@ export default function Day1TraderSimulator() {
     if (event.target.closest("button, a, input, textarea, select, label")) return;
     setSkipSignal((value) => value + 1);
   };
+
+  // ===== Auth gate (configured mode only) =====
+  // While the session is being resolved, show a minimal themed loader. Once
+  // resolved with no session, require sign in. When Supabase is not configured
+  // authChecked is true and session is null is irrelevant (gate is skipped).
+  if (isSupabaseConfigured && !authChecked) {
+    return (
+      <main className="font-cn relative flex min-h-screen items-center justify-center bg-[var(--bg)] text-[var(--ink)]">
+        <StyleBlock />
+        <div className="font-terminal text-sm tracking-[0.18em] text-[var(--muted)]">Loading...</div>
+      </main>
+    );
+  }
+
+  if (isSupabaseConfigured && authChecked && !session) {
+    return (
+      <main className="font-cn relative min-h-screen overflow-hidden bg-[var(--bg)] text-[var(--ink)]">
+        <StyleBlock />
+        <GlobalAtmosphere />
+        <AuthScreen authError={authError} setAuthError={setAuthError} />
+      </main>
+    );
+  }
 
   if (currentStage === "title_screen") {
     return (
