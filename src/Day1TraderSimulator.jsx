@@ -2855,6 +2855,7 @@ function AuthScreen({ authError, setAuthError }) {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [notice, setNotice] = useState("");
   const emailRef = useRef(null);
 
   const isSignup = mode === "signup";
@@ -2868,16 +2869,18 @@ function AuthScreen({ authError, setAuthError }) {
     if (next === mode) return;
     setMode(next);
     setAuthError("");
+    setNotice("");
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (submitting) return;
     setAuthError("");
+    setNotice("");
     setSubmitting(true);
     try {
       if (isSignup) {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: { data: { name } },
@@ -2886,8 +2889,13 @@ function AuthScreen({ authError, setAuthError }) {
           setAuthError(error.message);
           return;
         }
-        // On success the auth state listener takes over (or, if email
-        // confirmation is on, the user must confirm before a session appears).
+        // If email confirmation is on, no session is returned yet; tell the
+        // user to confirm. Otherwise the auth state listener takes over.
+        if (data?.user && !data?.session) {
+          setNotice("Account created. Check your email to confirm, then sign in.");
+          setMode("signin");
+          setPassword("");
+        }
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) {
@@ -3002,6 +3010,9 @@ function AuthScreen({ authError, setAuthError }) {
 
           <div aria-live="polite" className="min-h-[1.25rem]">
             {hasError && <p className="text-sm font-medium text-[var(--neg)]">{authError}</p>}
+            {!hasError && notice && (
+              <p className="text-sm font-medium text-[var(--pos)]">{notice}</p>
+            )}
           </div>
 
           <PrimaryButton type="submit" disabled={submitting} className="mt-3 w-full">
