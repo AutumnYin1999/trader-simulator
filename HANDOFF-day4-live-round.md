@@ -2,7 +2,7 @@
 
 > Written for the next Claude taking over
 > Date: 2026-06-01 (**the rework was completed that same day, see "✅ Completion record" below**)
-> Project: `trader-simulator` — a gamified options-trading teaching simulator (React single-page app, main file `src/Day1TraderSimulator.jsx`, about 7800 lines, all logic lives in this one file)
+> Project: `trader-simulator`, a gamified options-trading teaching simulator (React single-page app, main file `src/Day1TraderSimulator.jsx`, about 7800 lines, all logic lives in this one file)
 > User: HKBU student, **communicates in Chinese**, wants a conversational, clear, not-too-academic tone. By this day they were quite worn out and explicitly said "CBBC is too hard, I don't have the energy to keep polishing it."
 > Line numbers drift, **always locate by function name / string via Grep, don't trust old line numbers**.
 
@@ -10,7 +10,7 @@
 
 ## ✅ Completion record (done on 2026-06-01, the same day)
 
-**Day4 has been changed from CBBC into a "three-client pricing live round / graduation chapter", the build passes, and Playwright (Edge headless) ran through the success path and the failure path once each — zero blank screens, zero errors.**
+**Day4 has been changed from CBBC into a "three-client pricing live round / graduation chapter", the build passes, and Playwright (Edge headless) ran through the success path and the failure path once each, with zero blank screens and zero errors.**
 
 ### Final three-client setup (theoretical prices all computed with the project's binomial tree, r=2%)
 | | Client | Product | Parameters | Theoretical-price anchor | Task |
@@ -18,7 +18,7 @@
 | ① | Mr. Zhang (institutional, half-hint) | Vanilla Call | S0 24000 / K 24500 / σ18% / T0.08 / N3 | **297** (computed 297.06) | Quote directly |
 | ② | Ms. Li (budget-sensitive, fewer hints) | Barrier Call (down-out) | S0 24000 / K 24500 / barrier 23000 / σ28% / T0.25 / N4 | **981** (computed 980.77, vanilla Call 1167) | Quote directly |
 | ③ | Mr. He (graduation judgment, minimal hints) | Barrier Call (player decides) | S0 25000 / K 25500 / barrier 23500 / σ32% / T0.25 / N4 | **1184** (computed 1184.20, vanilla Call 1411) | **Pick the product first, then quote** |
-- Narrative: a few months after Day3 (the covid crash), the Hang Seng Index has recovered to 24000–25000, so the parameters don't repeat the earlier ones and the player has to recompute.
+- Narrative: a few months after Day3 (the covid crash), the Hang Seng Index has recovered to 24000 to 25000, so the parameters don't repeat the earlier ones and the player has to recompute.
 - Anchor-verification script logic: `u=e^(σ√Δt), d=1/u, p=(e^(rΔt)−d)/(u−d)`, discount `e^(−rΔt)`, barrier node `price<=barrier` zeroed out. Consistent with `BinomialPricingTool`.
 
 ### What code changed (all locatable via Grep)
@@ -27,26 +27,26 @@
 - **Merged quote evaluation**: new `getDay4QuoteAnalysis(quote, client)`, which produces vanilla (+4/+34/+74) or barrier (×1.183/×1.398) copy based on `client.mode`. The original Day2/Day3 functions were untouched.
 - **Generic index-driven panels** (Grep): `Day4BriefingPanel / Day4ClientProfilePanel / Day4PricingPanel / Day4ClientResponsePanel / Day4ScorecardPanel / Day4GraduationPanel`, all consuming `day4Clients[day4ClientIndex]`.
 - **Queue scheduling**: new state `day4ClientIndex / day4Results`; new actions `beginDay4Clients / toDay4Task / submitDay4Quote / nextDay4Client` (Grep). Picking the wrong product (only possible for client ③) → graded D and no deal.
-- **Calculator reuse**: `BinomialPricingTool` got two optional props — `enableParamCheck` (Day4 turns off Day2's "it should be 21500" reminder) and `quoteHint` (quote-box copy customized per client).
+- **Calculator reuse**: `BinomialPricingTool` got two optional props, `enableParamCheck` (Day4 turns off Day2's "it should be 21500" reminder) and `quoteHint` (quote-box copy customized per client).
 - **Chrome copy**: in `SideData` the Day 4 theme changed to "three-client pricing / live-round quoting", the products to "vanilla / barrier"; the day3_complete navigation button changed to "Enter the graduation live round".
 
 ### ⚠️ Must-do before release
 - `actions.startGame` is currently = **`startDay4`** (I changed it to test Day4, so clicking "Enter game" goes straight into Day4). **Change it back to `startDay1` before the official release** (Grep `startGame:`).
 
 ### Still polishable (not required)
-- On the scorecard, client ③'s product name shows the full name "down-and-out call option", while ① and ② show the short names "vanilla Call / barrier Call" — if you want them uniform, change `productName` inside `submitDay4Quote`.
+- On the scorecard, client ③'s product name shows the full name "down-and-out call option", while ① and ② show the short names "vanilla Call / barrier Call". If you want them uniform, change `productName` inside `submitDay4Quote`.
 - If client ③ picks the wrong product they still enter the barrier calculator (because `client.mode` is fixed); the wrong pick already grades D directly, so the impact is minor.
 
 ---
 
 ## 🔧 Next item up for discussion: are the parameter cards "too easy"? (raised by the user before leaving for the day, pick up when back)
 
-**The user's question**: at the top of the quote page `Day4PricingPanel` there's a `Day4ParamCard` that lists S₀/K/barrier/σ/T/r/N in full and even says "fill these into the calculator" — does that turn into copy-pasting with no challenge?
+**The user's question**: at the top of the quote page `Day4PricingPanel` there's a `Day4ParamCard` that lists S₀/K/barrier/σ/T/r/N in full and even says "fill these into the calculator". Does that turn into copy-pasting with no challenge?
 
 **Clarification (let's separate things first)**: the card shows the **input parameters**, not the answer.
 - "The calculator's answer" = the theoretical price (297/981/1184), **which is NOT written on the card**; the player has to fill the parameters into the calculator to get it (only after submitting does the feedback page show the anchor, which is after-the-fact review).
 - The real "quote" being tested = theoretical price + the player's own profit margin; client ③ also has to **judge the product** first. None of that is given.
-- The calculator does the arithmetic for the player — that's the same in Day2/Day3 too, so it's not Day4 that leaks the answer.
+- The calculator does the arithmetic for the player, which is the same in Day2/Day3 too, so it's not Day4 that leaks the answer.
 
 **But the half that's fair**: I did **remove the Day2/Day3 friction of "go to the data dashboard and find the parameters yourself"** and instead listed them as a card + "fill these in", so **the fill-in-parameters step became mechanical**, especially for client ③ which is billed as the hardest yet still has the parameters laid out.
 
@@ -56,7 +56,7 @@
 - **Option B · add distractor parameters**: put extra unused numbers on the card (volume, prior close, etc.), and the player has to pick which ones go into the model. Small change, but a bit of a "nitpick" flavor.
 - **Option C · tighten only on client ③ (recommended)**: keep the parameter card for ① and ② as teaching scaffolding, remove the card for ③, echoing "hints taper off, you go solo at graduation". Smallest change, most coherent with the design intent.
 
-> Handoff tip: the implementation entry points are all in `Day4PricingPanel` / `Day4ParamCard` (Grep). Option C is the easiest — add a `showParamCard` check to `Day4PricingPanel` and just don't render `Day4ParamCard` when `client.taskType === "judge"`.
+> Handoff tip: the implementation entry points are all in `Day4PricingPanel` / `Day4ParamCard` (Grep). Option C is the easiest: add a `showParamCard` check to `Day4PricingPanel` and just don't render `Day4ParamCard` when `client.taskType === "judge"`.
 
 ---
 
@@ -71,7 +71,7 @@
 The user decided: **drop CBBC** (it's not an option, can't use the binomial-tree calculator, would need a separate leverage + MCE model, high polishing cost, the user has no energy for it). Instead, have the player use the **Day2 (vanilla option pricing) + Day3 (barrier option pricing)** skills learned earlier to give live quotes to 3 clients with differing needs.
 
 ### Why change it this way (the design rationale, don't overturn it)
-- **Reuse the entire existing engine**: `BinomialPricingTool` (vanilla + barrier modes), `getQuoteAnalysis` (vanilla, anchor 186), `getDay3QuoteAnalysis` (barrier, anchor 934), `ProductSelectionPanel`, the client-arrival / client-feedback panel patterns — all already exist, far less engineering than continuing to polish CBBC.
+- **Reuse the entire existing engine**: `BinomialPricingTool` (vanilla + barrier modes), `getQuoteAnalysis` (vanilla, anchor 186), `getDay3QuoteAnalysis` (barrier, anchor 934), `ProductSelectionPanel`, the client-arrival / client-feedback panel patterns, all already exist, far less engineering than continuing to polish CBBC.
 - **The learning track is already complete**: option basics (Day1) → pricing (Day2) → barrier + path (Day3) → **live application (Day4)**. Leaving CBBC out is completely fine.
 - **Fills a gap in the old Day4**: the old Day4 dropped the "pricing" skill (CBBC doesn't quote); the new version puts the calculator back on stage.
 
@@ -92,7 +92,7 @@ The user decided: **drop CBBC** (it's not an option, can't use the binomial-tree
 | ② | TBD (e.g. "Ms. Li") | Bullish **but finds the vanilla Call expensive**, explicitly willing to accept "knocked out if it breaks below some line" in exchange for cheaper | Barrier Call (down-and-out) | **Quote** (against the barrier theoretical price) | Day3 barrier + pricing | Fewer |
 | ③ | TBD (combined-judgment client) | Gives needs **but doesn't say outright which product**, the player must first judge whether to go vanilla or barrier (from budget / risk clues) | Player decides | **Pick the product first, then quote** | Day2 + Day3 judgment | Minimal |
 
-- **Client ③ is the essence of graduation**: the first two clients tell you which product they want, the third doesn't — you have to sniff out whether to go vanilla or barrier from "is the budget tight, can they accept a knock-out", then quote.
+- **Client ③ is the essence of graduation**: the first two clients tell you which product they want, the third doesn't, so you have to sniff out whether to go vanilla or barrier from "is the budget tight, can they accept a knock-out", then quote.
 - Each client gets **their own parameters** (S₀/K/σ/T, plus a barrier for the barrier client), so the player actually computes rather than memorizing numbers. Specific numbers to be refined next (see "To-do" below).
 
 ### Each client's mini-flow
@@ -115,9 +115,9 @@ After all clients are handled → **graduation scorecard** (new panel): per-orde
 
 ### B. What can be reused directly (this is where the savings are)
 - **Calculator**: `BinomialPricingTool({ mode, selectedQuote, quoteAnalysis, onUpdateQuote, onUpdateTheoretical })`, `mode="vanilla"`/`"barrier"`. The quote input box is already built in (Grep the "enter your own quote" string in the source).
-- **Quote evaluation**: `getQuoteAnalysis(quote, theoretical, clientName, clientDesc)` (vanilla), `getDay3QuoteAnalysis(quote, theoretical)` (barrier). **Suggest merging the two into one while you're at it** `getQuoteAnalysis(quote, theoretical, { clientName, productType, bands })`, producing vanilla/barrier copy by productType — the three-client scenario will use it repeatedly.
-- **Client feedback (consequence) page**: the `Day3ClientResponsePanel` pattern just built in Day3 (Grep `function Day3ClientResponsePanel`) — avatar + name + accept/reject + lines, copy it directly into a generic `ClientResponsePanel`.
-- **Product-selection page**: `ProductSelectionPanel` (already parameterized with products/title/accent/correctProductId) — used by client ③.
+- **Quote evaluation**: `getQuoteAnalysis(quote, theoretical, clientName, clientDesc)` (vanilla), `getDay3QuoteAnalysis(quote, theoretical)` (barrier). **Suggest merging the two into one while you're at it** `getQuoteAnalysis(quote, theoretical, { clientName, productType, bands })`, producing vanilla/barrier copy by productType, since the three-client scenario will use it repeatedly.
+- **Client feedback (consequence) page**: the `Day3ClientResponsePanel` pattern just built in Day3 (Grep `function Day3ClientResponsePanel`), with avatar + name + accept/reject + lines; copy it directly into a generic `ClientResponsePanel`.
+- **Product-selection page**: `ProductSelectionPanel` (already parameterized with products/title/accent/correctProductId), used by client ③.
 - **Client-profile page**: the `Day3ClientArrivalPanel` pattern (profileRows + dialogue) copied into a generic version, consuming the client scenario data.
 
 ### C. What needs to be newly built (the main effort this time)

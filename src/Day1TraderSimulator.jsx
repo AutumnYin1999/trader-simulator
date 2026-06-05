@@ -13,7 +13,7 @@ const day1Config = {
       label: "08:55 First Day on the Job",
       system: "New Hire Check-in",
       mentor:
-        "Good morning, and welcome to the Central options desk. Today is your first day. Don't be nervous — I'll walk you through reading client needs step by step.",
+        "Good morning, and welcome to the Central options desk. Today is your first day. Don't be nervous, I'll walk you through reading client needs step by step.",
     },
     day1_lesson_basics: {
       label: "09:00 Lesson 1: The Right to Choose",
@@ -37,19 +37,19 @@ const day1Config = {
       label: "09:10 Vanilla Option Rules",
       system: "Expiry Price",
       mentor:
-        "A vanilla option is like a ticket that settles at expiry. No matter how the price swings along the way, it never knocks out — what matters is which side of the strike the price lands on at the final expiry moment.",
+        "A vanilla option is like a ticket that settles at expiry. No matter how the price swings along the way, it never knocks out. What matters is which side of the strike the price lands on at the final expiry moment.",
     },
     day1_handbook_updated: {
       label: "09:12 Handbook Updated",
       system: "Handbook Sync",
       mentor:
-        "Before you meet the client, open the handbook and take a look. It's not a book of all the answers — it's the rulebook available to you at your current stage.",
+        "Before you meet the client, open the handbook and take a look. It's not a book of all the answers; it's the rulebook available to you at your current stage.",
     },
     day1_client_arrival: {
       label: "09:15 First Client",
       system: "Reading Client Needs",
       mentor:
-        "First read the client's direction: she's bullish. Then read her risk needs: she wants limited downside loss. Open the handbook if you need to — a vanilla call may fit this need.",
+        "First read the client's direction: she's bullish. Then read her risk needs: she wants limited downside loss. Open the handbook if you need to; a vanilla call may fit this need.",
     },
     day1_product_selection: {
       label: "09:20 Product Selection",
@@ -67,13 +67,13 @@ const day1Config = {
       label: "09:30 Market Run",
       system: "Market Path Simulation",
       mentor:
-        "Run the fixed market path. On day one we only look at the expiry outcome of a vanilla option — no live market feed, and no complex pricing.",
+        "Run the fixed market path. On day one we only look at the expiry outcome of a vanilla option, with no live market feed and no complex pricing.",
     },
     day1_report: {
       label: "09:45 End-of-Day Report",
       system: "Trade Review",
       mentor:
-        "A good trader doesn't just look at whether the client made money — they also explain whether the product suited the client. The outcome is only half the score.",
+        "A good trader doesn't just look at whether the client made money; they also explain whether the product suited the client. The outcome is only half the score.",
     },
     day1_complete: {
       label: "10:00 Day One Complete",
@@ -143,7 +143,7 @@ const day1Config = {
           bullets: [
             "A vanilla option mainly depends on the final expiry price",
             "A vanilla option does not knock out due to price moves along the way",
-            "We won't discuss pricing models today — just judge whether direction and risk match",
+            "We won't discuss pricing models today; just judge whether direction and risk match",
           ],
         },
       ],
@@ -213,7 +213,7 @@ const day1Config = {
         "No knock-out risk",
       ],
       feedback:
-        "Good. The client is bullish and wants limited downside loss — a vanilla call option fits this need.",
+        "Good. The client is bullish and wants limited downside loss, so a vanilla call option fits this need.",
     },
     {
       id: "vanilla_put",
@@ -310,37 +310,37 @@ const day2Config = {
       label: "09:03 Lesson 1: The Quote Anchor",
       system: "Why We Price",
       mentor:
-        "Remember one thing: a quote can't come from a gut feeling. The theoretical price is like the desk's anchor — it tells you roughly what the product is worth first.",
+        "Remember one thing: a quote can't come from a gut feeling. The theoretical price is like the desk's anchor; it tells you roughly what the product is worth first.",
     },
     day2_lesson_tree_paths: {
       label: "09:06 Lesson 2: Binomial Tree Paths",
       system: "Up and Down Branches",
       mentor:
-        "A binomial tree isn't predicting the market — it's breaking the future into a few possibilities. At each step it asks just two questions: what if it goes up? what if it goes down?",
+        "A binomial tree isn't predicting the market; it's breaking the future into a few possibilities. At each step it asks just two questions: what if it goes up? what if it goes down?",
     },
     day2_lesson_backward_price: {
       label: "09:09 Lesson 3: Working Backward from the Future",
       system: "Payoff and Theoretical Price",
       mentor:
-        "The expiry payoff is computed at the final layer first, then worked backward to today. Today we use a simplified version — just grasp the intuition, no complex formulas to memorize.",
+        "The expiry payoff is computed at the final layer first, then worked backward to today. Today we use a simplified version, so just grasp the intuition; there are no complex formulas to memorize.",
     },
     day2_handbook_updated: {
       label: "09:12 Handbook Updated",
       system: "Binomial Tree Rules Sync",
       mentor:
-        "Before you meet the client, open the handbook and take a look. Today's key rule is simple: the quote should be close to the theoretical price — not too low, and not too high.",
+        "Before you meet the client, open the handbook and take a look. Today's key rule is simple: the quote should be close to the theoretical price, not too low and not too high.",
     },
     day2_research_terminal: {
       label: "09:18 Central Data Desk",
       system: "Pricing Parameter Lookup",
       mentor:
-        "The product structure is confirmed. Before you quote, head to the data desk and gather today's key parameters. Spot, volatility, rate, maturity — these numbers don't come out of thin air; each one has a source. Note them down, you'll plug them into the calculator shortly.",
+        "The product structure is confirmed. Before you quote, head to the data desk and gather today's key parameters. Spot, volatility, rate, maturity: these numbers don't come out of thin air; each one has a source. Note them down, you'll plug them into the calculator shortly.",
     },
     day2_client_arrival: {
       label: "09:14 Client Arrives",
       system: "Institutional Client Needs",
       mentor:
-        "He's already said clearly that he wants a vanilla call option. Today's focus isn't picking the product — it's quoting a reasonable premium.",
+        "He's already said clearly that he wants a vanilla call option. Today's focus isn't picking the product; it's quoting a reasonable premium.",
     },
     day2_product_review: {
       label: "09:16 Product Confirmation",
@@ -370,19 +370,19 @@ const day2Config = {
       label: "09:43 Client Feedback",
       system: "Quote Result",
       mentor:
-        "A professional client will scrutinize the quote. A price too far from theoretical value — whether too low or too high — leaves a problem behind.",
+        "A professional client will scrutinize the quote. A price too far from theoretical value, whether too low or too high, leaves a problem behind.",
     },
     day2_market_run: {
       label: "09:46 Market Settlement",
       system: "Expiry Path Simulation",
       mentor:
-        "Now watch how the market moves. The price jumps step by step — keep your eye on the expiry price. A vanilla call settles purely on which side of the strike the final cell lands.",
+        "Now watch how the market moves. The price jumps step by step, so keep your eye on the expiry price. A vanilla call settles purely on which side of the strike the final cell lands.",
     },
     day2_report: {
       label: "09:50 End-of-Day Report",
       system: "Pricing Review",
       mentor:
-        "Pricing isn't memorizing answers — it's anchoring on the theoretical price first, then judging desk profit and client acceptance.",
+        "Pricing isn't memorizing answers; it's anchoring on the theoretical price first, then judging desk profit and client acceptance.",
     },
     day2_complete: {
       label: "10:00 Day Two Complete",
@@ -447,7 +447,7 @@ const day2Config = {
     dialogue: [
       "I want to buy a 1-month Hang Seng Index call option.",
       "I'm bullish on the market, but I care a lot about the quote.",
-      "Give me a quote you consider fair — I'll compare it against other desks.",
+      "Give me a quote you consider fair, and I'll compare it against other desks.",
     ],
   },
   productSummary: {
@@ -618,13 +618,13 @@ const day3Config = {
       label: "09:00 Morning Meeting",
       system: "Path-Risk Morning Meeting",
       mentor:
-        "Over the past two days you've learned vanilla options and model-based quoting. Today we add a rule that genuinely changes the outcome: the barrier. The price isn't judged only at the final moment — if it hits a certain line along the way, the product can end outright.",
+        "Over the past two days you've learned vanilla options and model-based quoting. Today we add a rule that genuinely changes the outcome: the barrier. The price isn't judged only at the final moment; if it hits a certain line along the way, the product can end outright.",
     },
     day3_lesson_barrier_concept: {
       label: "09:04 Lesson 1: The Barrier Level",
       system: "Barrier Intuition",
       mentor:
-        "Think of the barrier as a red line in the trade contract. A vanilla option only looks at the expiry price; a barrier option also looks at the path — whether it touched that red line along the way.",
+        "Think of the barrier as a red line in the trade contract. A vanilla option only looks at the expiry price; a barrier option also looks at the path, that is, whether it touched that red line along the way.",
     },
     day3_lesson_knock_out: {
       label: "09:08 Lesson 2: Knock-Out",
@@ -654,13 +654,13 @@ const day3Config = {
       label: "09:22 Barrier Data Desk",
       system: "Barrier Parameter Lookup",
       mentor:
-        "Before pricing a barrier product, head to the data desk and gather the parameters. Today there's one extra key number compared with yesterday — the barrier level. You already know spot, volatility, rate, and maturity; focus on that barrier contract card and note the barrier level down.",
+        "Before pricing a barrier product, head to the data desk and gather the parameters. Today there's one extra key number compared with yesterday: the barrier level. You already know spot, volatility, rate, and maturity; focus on that barrier contract card and note the barrier level down.",
     },
     day3_lesson_compare_vanilla: {
       label: "09:26 Pricing Tree",
       system: "Barrier Pricing",
       mentor:
-        "Now use the calculator to compare the theoretical price of the vanilla and the barrier. A barrier option is usually cheaper because the buyer accepts extra risk. Cheap isn't a coupon — it's a lower premium bought with knock-out risk.",
+        "Now use the calculator to compare the theoretical price of the vanilla and the barrier. A barrier option is usually cheaper because the buyer accepts extra risk. Cheap isn't a coupon; it's a lower premium bought with knock-out risk.",
     },
     day3_risk_disclosure: {
       label: "09:38 Risk Disclosure",
@@ -678,7 +678,7 @@ const day3Config = {
       label: "09:46 Market Path",
       system: "Knock-Out Path Simulation",
       mentor:
-        "Now watch a fixed market path. Keep your eye on the barrier level, not only the final price. The path below is a teaching demo — alongside it I've put a real-world reference: during the 2020 COVID crash, the HSI really did fall to around 21,000, and the barrier could be breached at any moment.",
+        "Now watch a fixed market path. Keep your eye on the barrier level, not only the final price. The path below is a teaching demo; alongside it I've put a real-world reference: during the 2020 COVID crash, the HSI really did fall to around 21,000, and the barrier could be breached at any moment.",
     },
     day3_report: {
       label: "09:52 End-of-Day Report",
@@ -829,7 +829,7 @@ const day3Config = {
     },
     {
       id: "day3_same_as_vanilla",
-      text: "A barrier option is just like a vanilla option — you only need to look at the final expiry price.",
+      text: "A barrier option is just like a vanilla option; you only need to look at the final expiry price.",
       correct: false,
     },
   ],
@@ -849,10 +849,10 @@ const day3Config = {
     title: "Real-World Reference · 2020 COVID Crash",
     source: "Data source: HSI daily hsi_2020_covid.csv + VHSI vhsi_history.csv (scraped by the math-engine team in our group)",
     bullets: [
-      "On 2020-03-19 the HSI fell intraday to 21,139 — right in line with this stage's spot of 21,500 and barrier of 21,000",
+      "On 2020-03-19 the HSI fell intraday to 21,139, right in line with this stage's spot of 21,500 and barrier of 21,000",
       "On 2020-03-23 the HSI closed at 21,696, rebounding only after touching this COVID-cycle low zone",
       "Over the same period the VHSI (HSI volatility index) spiked to 60.19 (2020-03-19); market panic made the lower barrier extremely easy to breach",
-      "Real-world lesson: in high-volatility periods, a down-and-out barrier triggers more easily than in calm ones — the price of cheap is path risk",
+      "Real-world lesson: in high-volatility periods, a down-and-out barrier triggers more easily than in calm ones; the price of cheap is path risk",
     ],
   },
   scoringRules: {
@@ -914,7 +914,7 @@ const day4CbbcConfig_ARCHIVED = {
       label: "09:42 Market Path",
       system: "CBBC Comparison Path",
       mentor:
-        "This path shows you the upper barrier: the HSI first spikes up and triggers the bear contract's MCE, only falling later. The right final direction can't rescue an already-redeemed product. That real-world reference beside it is a live textbook — in February 2020 the HSI first spiked to 28,000, only crashing to 21,700 in March; spiking high then crashing is exactly the bear contract's worst nightmare.",
+        "This path shows you the upper barrier: the HSI first spikes up and triggers the bear contract's MCE, only falling later. The right final direction can't rescue an already-redeemed product. That real-world reference beside it is a live textbook: in February 2020 the HSI first spiked to 28,000, only crashing to 21,700 in March; spiking high then crashing is exactly the bear contract's worst nightmare.",
     },
     day4_report: {
       label: "09:52 End-of-Day Report",
@@ -926,7 +926,7 @@ const day4CbbcConfig_ARCHIVED = {
       label: "10:00 Day Four Complete",
       system: "Stage Complete",
       mentor:
-        "You've now seen both a lower barrier and an upper call price. What matters most for a path-dependent product isn't the destination — it's whether it touches a line along the way.",
+        "You've now seen both a lower barrier and an upper call price. What matters most for a path-dependent product isn't the destination; it's whether it touches a line along the way.",
     },
   },
   handbookEntries: [
@@ -941,7 +941,7 @@ const day4CbbcConfig_ARCHIVED = {
             "A bull contract (Bull CBBC) suits a bullish view: a rise in the underlying usually benefits a bull contract",
             "A bear contract (Bear CBBC) suits a bearish view: a fall in the underlying usually benefits a bear contract",
             "A CBBC usually carries leverage, so even a small move in the underlying can cause a noticeable change in the product price",
-            "CBBCs are not vanilla options — they have a mandatory call mechanism",
+            "CBBCs are not vanilla options; they have a mandatory call mechanism",
           ],
         },
         {
@@ -975,7 +975,7 @@ const day4CbbcConfig_ARCHIVED = {
         {
           title: "Price and Leverage (Teaching Simplification)",
           bullets: [
-            "A real CBBC price ≈ |spot − strike| × conversion ratio + financing cost — it is not priced via a premium",
+            "A real CBBC price ≈ |spot − strike| × conversion ratio + financing cost; it is not priced via a premium",
             "This simulation treats a bear contract as a leveraged linear bearish instrument: the invested amount is fixed, P&L = investment × leverage × the underlying's percentage fall",
             "So the “bear-contract cost/P&L” in the simulation is an illustrative leverage figure, not real conversion-ratio pricing",
             "Leverage amplifies gains and losses alike; until knocked out, the maximum loss is still capped at the invested amount",
@@ -1006,7 +1006,7 @@ const day4CbbcConfig_ARCHIVED = {
     dialogue: [
       "I think the Hang Seng Index might pull back in the short term. A vanilla put has simpler risk, but its premium and leverage aren't quite what I want.",
       "A friend mentioned bear contracts, saying they react faster on the way down, but I know it might get mandatorily called.",
-      "Help me decide — if I want to take a bearish trade, is a bear contract suitable?",
+      "Help me decide: if I want to take a bearish trade, is a bear contract suitable?",
     ],
   },
   suitabilityOptions: [
@@ -1042,7 +1042,7 @@ const day4CbbcConfig_ARCHIVED = {
         "Direction is opposite to this client's bearish view",
       ],
       feedback:
-        "The client is bearish, and a bull contract points the opposite way. A bull contract is a bullish instrument — not suitable for this order.",
+        "The client is bearish, and a bull contract points the opposite way. A bull contract is a bullish instrument, not suitable for this order.",
     },
     {
       id: "bear_cbbc",
@@ -1056,7 +1056,7 @@ const day4CbbcConfig_ARCHIVED = {
         "Uses an upper call price as the risk boundary",
       ],
       feedback:
-        "Direction matches. The client is bearish and can take high risk, so a bear contract can be considered — but you must explain the upper call price and the MCE.",
+        "Direction matches. The client is bearish and can take high risk, so a bear contract can be considered, but you must explain the upper call price and the MCE.",
     },
     {
       id: "vanilla_call",
@@ -1134,9 +1134,9 @@ const day4CbbcConfig_ARCHIVED = {
     title: "Real-World Reference · 2020 COVID: Spike First, Then Crash",
     source: "Data source: HSI daily hsi_2020_covid.csv (scraped by the math-engine team in our group)",
     bullets: [
-      "On 2020-02-17 the HSI reached as high as 28,055 — a spike-first move, exactly the “upper call” scenario a bear contract fears most",
+      "On 2020-02-17 the HSI reached as high as 28,055, a spike-first move, exactly the “upper call” scenario a bear contract fears most",
       "Holding a bear contract with a low upper call price at the time, this surge could have triggered a mandatory call (MCE)",
-      "The pandemic then spread, and the HSI fell all the way to 21,696 on 2020-03-23 — the direction was actually right",
+      "The pandemic then spread, and the HSI fell all the way to 21,696 on 2020-03-23, so the direction was actually right",
       "But an already-called bear contract can't revive: this stage's plot of “spike first to trigger an MCE, then crash” is a microcosm of the real market",
     ],
   },
@@ -1155,7 +1155,7 @@ const day4CbbcConfig_ARCHIVED = {
 
 // ===================================================================
 // Day4 Live Round · Three-Client Pricing Live Round (Graduation)
-// Narrative: Several months after Day3 (the 2020 COVID crash), the HSI has recovered from the 21,000 low to 24,000–25,000.
+// Narrative: Several months after Day3 (the 2020 COVID crash), the HSI has recovered from the 21,000 low to 24,000-25,000.
 // The player uses the skills learned in Day2 (vanilla option pricing) + Day3 (barrier option pricing) to give live quotes to 3 clients with differing needs.
 // The three clients increase in difficulty with decreasing hints; client #3 doesn't name a product, so the player must judge whether to go vanilla or barrier.
 // All theoretical-price anchors are computed live by the project's binomial tree (r=2%, vanilla N=3 / barrier N=4), matching the calculator exactly.
@@ -1188,7 +1188,7 @@ const day4Clients = [
     },
     dialogue: [
       "I'm bullish on the HSI and want to buy a one-month call option.",
-      "I want the cleanest kind — loss limited to the premium I pay, no extra conditions attached.",
+      "I want the cleanest kind: loss limited to the premium I pay, no extra conditions attached.",
       "Work out a fair price for me; I'll take it and compare against others.",
     ],
   },
@@ -1238,14 +1238,14 @@ const day4Clients = [
       marketView: "Bullish on the Hang Seng Index",
       riskTolerance: "Moderate-High",
       goal: "Bullish, wants to ride this move, but budget is very tight",
-      productNeed: "Hasn't said which kind — you have to judge it yourself",
+      productNeed: "Hasn't said which kind; you have to judge it yourself",
       budget: "Budget is only a little over a thousand; anything pricier is out of reach",
       experience: "Has bought both vanilla options and barrier options",
     },
     dialogue: [
       "I'm bullish on the HSI and want to ride this move.",
-      "But my budget is very tight — I've only got a little over a thousand points, and I can't bring myself to pay a vanilla-call price.",
-      "I'm not afraid of it dropping along the way — if it really breaches a certain level and gets voided, I can live with that. Use your judgment and set me up with something suitable.",
+      "But my budget is very tight. I've only got a little over a thousand points, and I can't bring myself to pay a vanilla-call price.",
+      "I'm not afraid of it dropping along the way. If it really breaches a certain level and gets voided, I can live with that. Use your judgment and set me up with something suitable.",
     ],
     judgeProducts: [
       {
@@ -1264,7 +1264,7 @@ const day4Clients = [
         status: "Available",
         description: ["Suited to a bullish view", "Premium lower than a vanilla call", "Expires early if it drops below the lower barrier level along the way", "The buyer's maximum loss is usually limited to the premium"],
         feedback:
-          "Correct call. Tight budget + willing to accept a downside knock-out — a barrier call trades a lower premium for path risk, fitting right into his budget. Compute its theoretical price, then quote.",
+          "Correct call. Tight budget plus willingness to accept a downside knock-out: a barrier call trades a lower premium for path risk, fitting right into his budget. Compute its theoretical price, then quote.",
       },
       {
         id: "up_out_call",
@@ -1295,13 +1295,13 @@ const day4Config = {
       label: "09:00 Graduation Morning Meeting",
       system: "Three-Client Pricing Live Round",
       mentor:
-        "No new products to learn today. Over the past three days you learned vanilla options, pricing, and barriers — today is the graduation live round: three clients queued up waiting for your quote. I'll say the principle only once: read the direction first, then risk tolerance and budget, and only then think about the product; always anchor the quote on the model's theoretical price, then add a reasonable profit. I won't tell you what to pick or what to quote.",
+        "No new products to learn today. Over the past three days you learned vanilla options, pricing, and barriers. Today is the graduation live round: three clients queued up waiting for your quote. I'll say the principle only once: read the direction first, then risk tolerance and budget, and only then think about the product; always anchor the quote on the model's theoretical price, then add a reasonable profit. I won't tell you what to pick or what to quote.",
     },
     day4_client_arrival: {
       label: "09:10 Client Arrives",
       system: "Understand Client Needs",
       mentor:
-        "First read the client's profile and dialogue thoroughly. Direction, budget, whether they can accept extra conditions — the clues are all in there. Decide what to do only after you've read them.",
+        "First read the client's profile and dialogue thoroughly. Direction, budget, whether they can accept extra conditions: the clues are all in there. Decide what to do only after you've read them.",
     },
     day4_judge: {
       label: "09:16 Judge the Product",
@@ -1313,7 +1313,7 @@ const day4Config = {
       label: "09:22 Quote via the Calculator",
       system: "Compute the Theoretical Price and Quote",
       mentor:
-        "Plug the parameters from the client card into the calculator, compute the theoretical price, then add a reasonable profit and quote it. The system won't tell you in advance whether you're right — you'll find out only after you submit.",
+        "Plug the parameters from the client card into the calculator, compute the theoretical price, then add a reasonable profit and quote it. The system won't tell you in advance whether you're right; you'll find out only after you submit.",
     },
     day4_client_response: {
       label: "09:30 Client Feedback",
@@ -1331,12 +1331,12 @@ const day4Config = {
       label: "10:00 Graduation",
       system: "Training Complete",
       mentor:
-        "From option basics to pricing, barriers, and today's live quoting — you've now walked through the pricing discipline a new trader should have.",
+        "From option basics to pricing, barriers, and today's live quoting, you've now walked through the pricing discipline a new trader should have.",
     },
   },
 };
 
-// Day4 quote evaluation: merges the two band sets — vanilla (from Day2) and barrier (from Day3) — and produces copy based on client.mode.
+// Day4 quote evaluation: merges the two band sets, vanilla (from Day2) and barrier (from Day3), and produces copy based on client.mode.
 // Vanilla band: theoretical +4 / +34 / +74; barrier band: theoretical ×1.183 (reasonable cap) / ×1.398 (rejection cap).
 function getDay4QuoteAnalysis(quote, client) {
   const theoretical = client.theoretical;
@@ -1369,7 +1369,7 @@ function getDay4QuoteAnalysis(quote, client) {
       accepted: true,
       score: "C",
       customerLine: "Great price, done!",
-      martinComment: `${name} signed with barely any haggling — he knows he got a bargain. The ${productLabel} model fair value is about ${anchor} points, but you only quoted ${Math.round(q)} points, effectively giving the client ${bargain} points for free. Look at the model's theoretical price first, then add profit.`,
+      martinComment: `${name} signed with barely any haggling; he knows he got a bargain. The ${productLabel} model fair value is about ${anchor} points, but you only quoted ${Math.round(q)} points, effectively giving the client ${bargain} points for free. Look at the model's theoretical price first, then add profit.`,
       margin,
       theoretical,
     };
@@ -1385,8 +1385,8 @@ function getDay4QuoteAnalysis(quote, client) {
         status: "Filled, beautifully priced",
         accepted: true,
         score: "A",
-        customerLine: "Cheaper than a vanilla call, and not absurdly cheap either — okay, done.",
-        martinComment: `Beautiful. You anchored on the barrier model value of ${anchor} points and added ${margin} points of profit — the client finds it a better deal than a vanilla call, and the desk gets compensated too. That's the discipline of barrier pricing.`,
+        customerLine: "Cheaper than a vanilla call, and not absurdly cheap either. Okay, done.",
+        martinComment: `Beautiful. You anchored on the barrier model value of ${anchor} points and added ${margin} points of profit, so the client finds it a better deal than a vanilla call, and the desk gets compensated too. That's the discipline of barrier pricing.`,
         margin,
         theoretical,
       };
@@ -1442,7 +1442,7 @@ function getDay4QuoteAnalysis(quote, client) {
       accepted: true,
       score: "A",
       customerLine: "Fair price, done.",
-      martinComment: `Beautiful. You anchored on the model's theoretical price of ${anchor} points and left ${margin} points of profit — the client accepted readily, and the desk made money too. That's pricing discipline.`,
+      martinComment: `Beautiful. You anchored on the model's theoretical price of ${anchor} points and left ${margin} points of profit, so the client accepted readily, and the desk made money too. That's pricing discipline.`,
       margin,
       theoretical,
     };
@@ -1466,7 +1466,7 @@ function getDay4QuoteAnalysis(quote, client) {
     status: "Client refuses and walks away",
     accepted: false,
     score: "D",
-    customerLine: "That price is outrageous — I'll go compare elsewhere.",
+    customerLine: "That price is outrageous. I'll go compare elsewhere.",
     martinComment: `${name} closed the notebook, got up, and left. Quoting this high scared the client off, and the trade is dead. The model is for keeping discipline, not for fleecing clients.`,
     margin,
     theoretical,
@@ -1538,9 +1538,9 @@ function getQuoteAnalysis(
       customerPreview: "The client will grab this cheap price immediately.",
       customerLine: "That's a great price, done.",
       reportText:
-        "Your quote was below the option's fair value, and the client accepted almost immediately — well aware they got a bargain.",
+        "Your quote was below the option's fair value, and the client accepted almost immediately, well aware they got a bargain.",
       martinComment:
-        `${clientName}'s eyes lit up and he signed with barely any haggling. You quoted ${quote} points for an option worth about ${theoretical} points, effectively giving the client ${bargain} points for free. ${clientDesc} is best at snapping up bargains like this. Next time, look at the model's theoretical price first, then add profit — don't let the desk take a silent loss.`,
+        `${clientName}'s eyes lit up and he signed with barely any haggling. You quoted ${quote} points for an option worth about ${theoretical} points, effectively giving the client ${bargain} points for free. ${clientDesc} is best at snapping up bargains like this. Next time, look at the model's theoretical price first, then add profit; don't let the desk take a silent loss.`,
       margin,
       theoretical,
     };
@@ -1576,7 +1576,7 @@ function getQuoteAnalysis(
       customerLine: "Fair price, done.",
       reportText: "You referenced the theoretical price and added a reasonable profit margin; both client and desk are satisfied.",
       martinComment:
-        `Beautiful. You anchored on the model's theoretical price of ${theoretical} points and left ${margin} points of profit — the client accepted readily, and the desk made money too. That's pricing discipline.`,
+        `Beautiful. You anchored on the model's theoretical price of ${theoretical} points and left ${margin} points of profit, so the client accepted readily, and the desk made money too. That's pricing discipline.`,
       margin,
       theoretical,
     };
@@ -1594,7 +1594,7 @@ function getQuoteAnalysis(
       customerLine: "A bit pricey… fine, this time then.",
       reportText: "The quote is above the reasonable range; the client reluctantly accepts but is clearly unhappy.",
       martinComment:
-        `${clientName} signed with a frown. The trade went through, but you quoted on the high side and the client is clearly unhappy. This kind of client experience won't bring back repeat business — ${clientDesc} remembers who overcharged them.`,
+        `${clientName} signed with a frown. The trade went through, but you quoted on the high side and the client is clearly unhappy. This kind of client experience won't bring back repeat business; ${clientDesc} remembers who overcharged them.`,
       margin,
       theoretical,
     };
@@ -1608,10 +1608,10 @@ function getQuoteAnalysis(
     status: "Client refuses and walks away",
     accepted: false,
     customerPreview: "The client will very likely turn and walk.",
-    customerLine: "That price is outrageous — I'll go compare elsewhere.",
+    customerLine: "That price is outrageous. I'll go compare elsewhere.",
     reportText: "The quote was too high; the client refused on the spot and walked away, and the trade fell through.",
     martinComment:
-      `${clientName} closed the notebook, got up, and left. Quoting this high scared the client off, the trade is dead, and the desk made nothing. The model is for keeping discipline, not for fleecing clients — a quote too far from fair value will lose even the best client.`,
+      `${clientName} closed the notebook, got up, and left. Quoting this high scared the client off, the trade is dead, and the desk made nothing. The model is for keeping discipline, not for fleecing clients; a quote too far from fair value will lose even the best client.`,
     margin,
     theoretical,
   };
@@ -1733,7 +1733,7 @@ function getDay3QuoteAnalysis(quote, theoretical = day3Config.market.premium) {
       status: "Filled, but the quote was below the theoretical price and the desk's profit was squeezed",
       accepted: true,
       customerLine: "This is way cheaper than a vanilla call, done!",
-      martinComment: `Ms. Chen signed readily — she got a bargain. The barrier model fair value is ${anchor} points, but you only quoted ${Math.round(q)} points, so the desk took in ${bargain} points less. A discount for the client is fine, but don't take it this far.`,
+      martinComment: `Ms. Chen signed readily; she got a bargain. The barrier model fair value is ${anchor} points, but you only quoted ${Math.round(q)} points, so the desk took in ${bargain} points less. A discount for the client is fine, but don't take it this far.`,
       margin,
       theoretical,
     };
@@ -1745,8 +1745,8 @@ function getDay3QuoteAnalysis(quote, theoretical = day3Config.market.premium) {
       label: "Reasonable Quote",
       status: "Filled, beautifully priced",
       accepted: true,
-      customerLine: "Cheaper than a vanilla call, and not absurdly cheap either — okay, done.",
-      martinComment: `Beautiful. You anchored on the barrier model value of ${anchor} points and added ${margin} points of profit — the client finds it a better deal than a vanilla call, and the desk gets compensated too. That's the discipline of barrier pricing.`,
+      customerLine: "Cheaper than a vanilla call, and not absurdly cheap either. Okay, done.",
+      martinComment: `Beautiful. You anchored on the barrier model value of ${anchor} points and added ${margin} points of profit, so the client finds it a better deal than a vanilla call, and the desk gets compensated too. That's the discipline of barrier pricing.`,
       margin,
       theoretical,
     };
@@ -1771,7 +1771,7 @@ function getDay3QuoteAnalysis(quote, theoretical = day3Config.market.premium) {
     status: "Client refuses and walks away",
     accepted: false,
     customerLine: "If it's this expensive, why would I even buy a barrier? I'd be better off just buying a vanilla call.",
-    martinComment: `Ms. Chen turned and left. A barrier priced higher than a vanilla call contradicts itself — of course the client won't sign. The quote is too far from the barrier fair value of ${anchor} points, and the trade is dead.`,
+    martinComment: `Ms. Chen turned and left. A barrier priced higher than a vanilla call contradicts itself; of course the client won't sign. The quote is too far from the barrier fair value of ${anchor} points, and the trade is dead.`,
     margin,
     theoretical,
   };
@@ -2854,8 +2854,8 @@ function WelcomePanel() {
         <div className="space-y-4">
           {[
             ["Your Role", "A new trader on the options desk, responsible for reading client needs and recommending suitable products."],
-            ["Today's Goal", "Don't touch complex pricing yet — just build up the intuition for vanilla options: Call / Put / Premium."],
-            ["Martin's Rule", "Open the handbook when you're unsure. A real trader doesn't memorize by rote — they look up the rules and ask questions."],
+            ["Today's Goal", "Don't touch complex pricing yet; just build up the intuition for vanilla options: Call / Put / Premium."],
+            ["Martin's Rule", "Open the handbook when you're unsure. A real trader doesn't memorize by rote; they look up the rules and ask questions."],
           ].map(([label, text]) => (
             <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
               <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[#00f0ff]">{label}</div>
@@ -2991,7 +2991,7 @@ function CallPutVisualExample() {
             The call has value, because the client holds the right to “buy at 100”; the higher the market, the more useful that right to buy.
           </div>
           <div className="rounded-md border border-white/10 bg-white/[0.03] p-4">
-            For now, don't worry about how much it's worth — just remember the direction: Put on the left, Call on the right.
+            For now, don't worry about how much it's worth; just remember the direction: Put on the left, Call on the right.
           </div>
         </div>
       </div>
@@ -3011,7 +3011,7 @@ function IntroPanel() {
           CALL / PUT
         </h1>
         <div className="font-terminal mt-3 text-xl tracking-[0.22em] text-[#ffd700]">
-          Bullish and bearish — the first two words a desk hears
+          Bullish and bearish: the first two words a desk hears
         </div>
 
         <div className="mt-8 grid gap-5 md:grid-cols-2">
@@ -3049,7 +3049,7 @@ function IntroPanel() {
         </div>
 
         <div className="mt-6 rounded-md border-l-4 border-[#00f0ff] bg-cyan-400/[0.04] p-4 text-sm leading-7 text-slate-300">
-          Stage one doesn't get into pricing yet — it just builds the desk's most important intuition: a bullish client points to Call, a bearish client points to Put, and the buyer pays a premium for that right.
+          Stage one doesn't get into pricing yet; it just builds the desk's most important intuition: a bullish client points to Call, a bearish client points to Put, and the buyer pays a premium for that right.
         </div>
 
         <CallPutVisualExample />
@@ -3069,7 +3069,7 @@ function PremiumLessonPanel() {
           </div>
           <h2 className="mb-4 text-2xl font-black text-slate-100">Pay Upfront to Buy a Future Choice</h2>
           <p className="text-base leading-8 text-slate-300">
-            When a client buys a vanilla option, they don't get the opportunity for free — they pay a
+            When a client buys a vanilla option, they don't get the opportunity for free; they pay a
             <span className="font-bold text-[#ffd700]">premium</span> first. It's like a movie ticket:
             buy the ticket and you get to go in; whether the movie turns out good or not, there are no refunds.
           </p>
@@ -3168,7 +3168,7 @@ function HandbookUpdatedPanel() {
           Vanilla Option Basics
         </div>
         <p className="mt-8 max-w-2xl text-base leading-8 text-slate-300">
-          The handbook has only unlocked the most basic vanilla-option page for now. As you meet clients and reach risk disclosure later, Martin will keep adding new rules — he won't dump everything on you at once.
+          The handbook has only unlocked the most basic vanilla-option page for now. As you meet clients and reach risk disclosure later, Martin will keep adding new rules; he won't dump everything on you at once.
         </p>
       </div>
     </TerminalCard>
@@ -3628,7 +3628,7 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
           </div>
         ) : (
           <div className="mt-5 rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
-            The market is playing out automatically: the price may dip first, snap back, then break out. Don't be scared by the swings along the way — a vanilla option ultimately depends on the expiry price.
+            The market is playing out automatically: the price may dip first, snap back, then break out. Don't be scared by the swings along the way; a vanilla option ultimately depends on the expiry price.
           </div>
         )}
       </div>
@@ -3779,7 +3779,7 @@ function Day2IntroPanel() {
           <div className="font-terminal text-sm tracking-[0.18em] text-[#00f0ff]">MARTIN'S MORNING MEETING</div>
           <div className="mt-3 text-2xl font-black text-slate-100">“Today we learn pricing discipline.”</div>
           <p className="mt-4 text-sm leading-7 text-slate-400">
-            Day two doesn't test new products — it tests whether you can put model price, client acceptance, and desk profit on the same table.
+            Day two doesn't test new products; it tests whether you can put model price, client acceptance, and desk profit on the same table.
           </p>
         </div>
 
@@ -3978,7 +3978,7 @@ function Day2BackwardPriceLessonPanel() {
         </div>
 
         <div className="rounded-md border-l-4 border-[#00f0ff] bg-cyan-400/[0.06] p-4 text-base leading-8 text-slate-200">
-          Don't rush to digest the full pricing formula today. Just follow the tree: the price can go up or down, each path settles at expiry, then you step it back to now — and you get a quote reference.
+          Don't rush to digest the full pricing formula today. Just follow the tree: the price can go up or down, each path settles at expiry, then you step it back to now, and you get a quote reference.
         </div>
       </div>
     </TerminalCard>
@@ -4017,7 +4017,7 @@ const researchCards = [
       { label: "Underlying", value: "Hang Seng Index (HSI)", note: "" },
       { label: "Spot S₀", value: "21,500 pts", note: "Today's opening reference price" },
       { label: "VHSI Volatility Index σ", value: "≈ 16%", note: "HSI 30-day implied volatility (calm-market reference value)" },
-      { label: "Data Source", value: "vhsi_history.csv", note: "Scraped by the math-engine team in our group, 2003–2026" },
+      { label: "Data Source", value: "vhsi_history.csv", note: "Scraped by the math-engine team in our group, 2003-2026" },
     ],
     hint: "Use the VHSI as σ (volatility) in the calculator. Note: in a crisis the VHSI can spike to 60%+; today we use a calm-market value.",
   },
@@ -4035,9 +4035,9 @@ const researchCards = [
     ],
     hint: "Fill in the strike of 22,000 and the annualized maturity of 0.08 in the calculator.",
     realData: [
-      "HK.HSI260417C21800000 — strike 21,800",
-      "HK.HSI260417C22000000 — strike 22,000 ← client need",
-      "HK.HSI260417C22200000 — strike 22,200",
+      "HK.HSI260417C21800000: strike 21,800",
+      "HK.HSI260417C22000000: strike 22,000 ← client need",
+      "HK.HSI260417C22200000: strike 22,200",
     ],
   },
   {
@@ -4048,7 +4048,7 @@ const researchCards = [
     rows: [
       { label: "HKD Risk-Free Rate r", value: "2%", note: "Per the 1-month HIBOR rate (teaching-simplified value)" },
       { label: "Reference Benchmark", value: "HIBOR 1M", note: "Hong Kong Interbank Offered Rate, published by the Hong Kong Association of Banks" },
-      { label: "Actual HIBOR Range", value: "1.5% – 3%", note: "Depends on market conditions; today we use 2% as the teaching anchor" },
+      { label: "Actual HIBOR Range", value: "1.5% - 3%", note: "Depends on market conditions; today we use 2% as the teaching anchor" },
     ],
     hint: "Enter r = 2 in the calculator's “Risk-Free Rate %” field.",
   },
@@ -4077,9 +4077,9 @@ const day3ResearchCards = [
       { label: "Underlying", value: "Hang Seng Index (HSI)", note: "" },
       { label: "Spot S₀", value: "21,500 pts", note: "Today's opening reference price (same level as yesterday)" },
       { label: "VHSI Volatility Index σ", value: "≈ 30%", note: "Implied volatility as the market turns tense (real-world reference: on 2020-02-28 COVID risk-aversion rose and the VHSI jumped to 32.7)" },
-      { label: "Data Source", value: "vhsi_history.csv", note: "Scraped by the math-engine team in our group, 2003–2026" },
+      { label: "Data Source", value: "vhsi_history.csv", note: "Scraped by the math-engine team in our group, 2003-2026" },
     ],
-    hint: "Use the VHSI as σ in the calculator. Remember: the higher the volatility, the more easily the underlying touches the barrier level and knocks out — that's exactly why a barrier product is especially sensitive to σ.",
+    hint: "Use the VHSI as σ in the calculator. Remember: the higher the volatility, the more easily the underlying touches the barrier level and knocks out; that's exactly why a barrier product is especially sensitive to σ.",
   },
   {
     id: "barrier_contract",
@@ -4098,7 +4098,7 @@ const day3ResearchCards = [
     ],
     hint: "Today has one more parameter than yesterday: the barrier level of 21,000. Enter K=22,000, T=0.25, and barrier=21,000 into the barrier version of the calculator.",
     realData: [
-      "HK.HSI260918C22000000 — strike 22,000, expires 2026-09-18",
+      "HK.HSI260918C22000000: strike 22,000, expires 2026-09-18",
       "  └ With an added down-and-out clause: barrier 21,000 (KO Barrier)",
       "vs. the vanilla call HK.HSI260918C22000000: same strike, no barrier, higher premium",
     ],
@@ -4111,7 +4111,7 @@ const day3ResearchCards = [
     rows: [
       { label: "HKD Risk-Free Rate r", value: "2%", note: "Per the 1-month HIBOR rate (teaching-simplified value)" },
       { label: "Reference Benchmark", value: "HIBOR 1M", note: "Hong Kong Interbank Offered Rate, published by the Hong Kong Association of Banks" },
-      { label: "Actual HIBOR Range", value: "1.5% – 3%", note: "Depends on market conditions; today we use 2% as the teaching anchor" },
+      { label: "Actual HIBOR Range", value: "1.5% - 3%", note: "Depends on market conditions; today we use 2% as the teaching anchor" },
     ],
     hint: "Enter r = 2 in the calculator's “Risk-Free Rate %” field (same as yesterday).",
   },
@@ -4122,12 +4122,12 @@ const day3ResearchCards = [
     accent: "#f87171",
     isNew: true,
     rows: [
-      { label: "Barrier Distance from Spot", value: "About 2.33%", note: "(21,500 − 21,000) ÷ 21,500 — very close" },
+      { label: "Barrier Distance from Spot", value: "About 2.33%", note: "(21,500 − 21,000) ÷ 21,500, very close" },
       { label: "Knock-Out Difficulty", value: "Easy", note: "The closer the barrier is to the spot, the more easily it's breached" },
-      { label: "Real-World Reference", value: "2020-03 HSI ≈ 21,700", note: "Intraday low of 21,139 — a barrier like this would be breached" },
+      { label: "Real-World Reference", value: "2020-03 HSI ≈ 21,700", note: "Intraday low of 21,139; a barrier like this would be breached" },
       { label: "Cost vs Reward", value: "Cheap ↔ easy to knock out", note: "The closer the barrier, the cheaper the premium, but the greater the knock-out risk" },
     ],
-    hint: "Key point: the closer the barrier is set to the spot, the cheaper the premium, but the more easily it knocks out. Today the barrier is only about 2.3% below the spot — a “cheap but fragile” contract.",
+    hint: "Key point: the closer the barrier is set to the spot, the cheaper the premium, but the more easily it knocks out. Today the barrier is only about 2.3% below the spot, a “cheap but fragile” contract.",
     realData: [
       "2020-02-17 HSI high of 28,055 (pre-pandemic)",
       "2020-03-19 intraday low of 21,139 ← already below the 21,000 barrier",
@@ -4139,7 +4139,7 @@ const day3ResearchCards = [
 
 // Dedicated data cards for client #3 (Mr. He · graduation judgment): echoing "decreasing hints", instead of the Day4ParamCard
 // approach of laying out parameters + "fill them in as shown", this uses the Day2/Day3 data-desk style so the player sources them.
-// The barrier level only appears after the player has judged the barrier product and reached the quoting page — it doesn't give the answer away beforehand.
+// The barrier level only appears after the player has judged the barrier product and reached the quoting page; it doesn't give the answer away beforehand.
 const day4HeResearchCards = [
   {
     id: "market_quote_d4he",
@@ -4287,12 +4287,12 @@ function Day2ResearchTerminalPanel() {
       cards={researchCards}
       taskText={
         <>
-          Review the 4 data cards below and decide for yourself which key parameters today's pricing needs —
+          Review the 4 data cards below and decide for yourself which key parameters today's pricing needs:
           <span className="font-black text-slate-100"> S₀ (spot), K (strike), T (annualized maturity), r (risk-free rate), σ (annualized volatility)</span>.
           The cards give you only raw market data, not ready-made answers. Find the relevant numbers, note them down, then manually enter them into the binomial-tree calculator, compute the theoretical price, and go quote.
         </>
       }
-      footerHint="Hint: the four cards above hide all the numbers you need for pricing, but there's no ready-made “cheat sheet.” Which data maps to which input field is for you to judge — this is exactly what traders do every day: sourcing the inputs."
+      footerHint="Hint: the four cards above hide all the numbers you need for pricing, but there's no ready-made “cheat sheet.” Which data maps to which input field is for you to judge; this is exactly what traders do every day: sourcing the inputs."
     />
   );
 }
@@ -4305,7 +4305,7 @@ function Day3ResearchTerminalPanel() {
       cards={day3ResearchCards}
       taskText={
         <>
-          Today's product adds an extra layer: the barrier. On top of yesterday's parameters, you also need to look up one brand-new key number —
+          Today's product adds an extra layer: the barrier. On top of yesterday's parameters, you also need to look up one brand-new key number:
           <span className="font-black text-[#ffd700]"> the barrier level</span>.
           From the 4 cards below, find for yourself
           <span className="font-black text-slate-100"> S₀, K, T, r, σ </span>
@@ -4314,7 +4314,7 @@ function Day3ResearchTerminalPanel() {
           , note them down, then enter them into the barrier version of the calculator. Note: today's maturity is 3 months, longer than yesterday.
         </>
       }
-      footerHint="Hint: the “barrier level” on the barrier contract card is today's new parameter, and the extra row in the calculator today. As with yesterday, there's no cheat sheet — judge for yourself which data maps to which input field."
+      footerHint="Hint: the “barrier level” on the barrier contract card is today's new parameter, and the extra row in the calculator today. As with yesterday, there's no cheat sheet; judge for yourself which data maps to which input field."
     />
   );
 }
@@ -4872,7 +4872,7 @@ function BinomialPricingTool({
             </div>
             {!tree.noArbitrage && (
               <div className="rounded border border-red-500/30 bg-red-500/[0.08] px-2 py-1 text-red-300">
-                Parameters don't satisfy d &lt; e^(rΔt) &lt; u; the risk-neutral probability is outside 0–1.
+                Parameters don't satisfy d &lt; e^(rΔt) &lt; u; the risk-neutral probability is outside 0-1.
               </div>
             )}
             {!isBarrier && (
@@ -5063,7 +5063,7 @@ function BinomialPricingTool({
                 : isBarrier
                   ? "Using the “Down-and-Out Call theoretical price” computed by the calculator above, add a profit margin you consider reasonable, and quote Ms. Chen a premium."
                   : "Using the “Vanilla Call theoretical price” computed by the calculator above, add a profit margin you consider reasonable, and quote Mr. Wang a premium."}
-              <span className="text-slate-300">How much to quote is up to you — the system won't tell you in advance whether you're right; you'll find out only after you submit.</span>
+              <span className="text-slate-300">How much to quote is up to you; the system won't tell you in advance whether you're right; you'll find out only after you submit.</span>
             </p>
           </div>
 
@@ -5105,7 +5105,7 @@ function BinomialFormulaPanel() {
     {
       title: "3. Compute the Risk-Neutral Probability",
       formula: "p = (e^(rΔt) - d) / (u - d)",
-      text: "p is not a subjective probability of an up move — it's the risk-neutral probability that lets the binomial tree be discounted backward under no-arbitrage conditions.",
+      text: "p is not a subjective probability of an up move; it's the risk-neutral probability that lets the binomial tree be discounted backward under no-arbitrage conditions.",
     },
     {
       title: "4. Work Backward from the Future to Today",
@@ -5130,7 +5130,7 @@ function BinomialFormulaPanel() {
         Pricing Mechanism / Understand the Formula First, Then Use the Calculator
       </div>
       <div className="mb-5 text-2xl font-black text-slate-100">
-        A binomial tree doesn't guess the market — it breaks the future into paths, then works backward from the endpoints to today's price
+        A binomial tree doesn't guess the market; it breaks the future into paths, then works backward from the endpoints to today's price
       </div>
       <div className="grid gap-4 lg:grid-cols-2">
         {steps.map((step) => (
@@ -5199,7 +5199,7 @@ function Day2TreeExplainerPanel({ selectedQuote, quoteAnalysis, onUpdateQuote, o
           {[
             "The spot S0 and volatility σ change the future price nodes, making the price tree wider or narrower.",
             "The strike K doesn't change the underlying's price path, but it does change the payoff at each expiry node.",
-            "The more steps N, the finer the tree; today just grasp the intuition — you're not asked to compute every node by hand.",
+            "The more steps N, the finer the tree; today just grasp the intuition, and you're not asked to compute every node by hand.",
           ].map((text, index) => (
             <div key={text} className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-4 text-sm leading-7 text-[#ffd700]">
               <span className="font-terminal mr-2 text-[#00f0ff]">Hint {index + 1}</span>
@@ -5285,7 +5285,7 @@ function Day2QuoteSliderPanel({
           <div className="mt-3 flex justify-between text-xs text-slate-500">
             <span>{rules.sliderMin}</span>
             <span>{liveTheoretical} theoretical</span>
-            <span>{fairLow}–{fairHigh} fair range</span>
+            <span>{fairLow}-{fairHigh} fair range</span>
             <span>{liveTheoretical + 74} rejection line</span>
             <span>{rules.sliderMax}</span>
           </div>
@@ -5585,7 +5585,7 @@ function Day2MarketRunPanel({
           </div>
         ) : (
           <div className="mt-5 rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
-            The market is playing out automatically: the price may dip first, snap back, then break out. Don't be scared by the swings along the way — a vanilla call ultimately depends only on which side of the strike the expiry price lands.
+            The market is playing out automatically: the price may dip first, snap back, then break out. Don't be scared by the swings along the way; a vanilla call ultimately depends only on which side of the strike the expiry price lands.
           </div>
         )}
       </div>
@@ -5655,7 +5655,7 @@ function Day2ReportPanel({ score }) {
         </div>
 
         <div className="rounded-md border border-white/10 bg-white/[0.03] p-4 text-sm leading-7 text-slate-400">
-          Teaching note: a real desk would hedge directional risk (e.g. flattening Delta with futures or offsetting options). What's shown here is the unhedged result of a single trade, used only to understand pricing P&L — it doesn't represent the desk's true risk exposure.
+          Teaching note: a real desk would hedge directional risk (e.g. flattening Delta with futures or offsetting options). What's shown here is the unhedged result of a single trade, used only to understand pricing P&L; it doesn't represent the desk's true risk exposure.
         </div>
       </div>
     </TerminalCard>
@@ -5704,7 +5704,7 @@ function Day3IntroPanel() {
             BARRIER OPTION
           </div>
           <h1 className="text-4xl font-black leading-tight text-slate-100 md:text-5xl">
-            Not just the destination — whether it touches a line along the way
+            Not just the destination, but whether it touches a line along the way
           </h1>
           <p className="mt-5 text-base leading-8 text-slate-300">
             The vanilla options of the past two days were like “settle at the destination.” Day three's barrier option is more like a contract with a red line:
@@ -5744,7 +5744,7 @@ function Day3BarrierConceptPanel() {
             Intuition
           </div>
           <p className="text-lg leading-9 text-slate-300">
-            The barrier isn't a prediction line — it's a
+            The barrier isn't a prediction line; it's a
             <span className="font-bold text-[#ffd700]">contract rule line</span>.
             If the product stipulates “knock out if it falls to 21,000,” then the moment the market touches or drops below 21,000 along the way,
             it must be handled under the knock-out rule even if it later climbs back.
@@ -5842,7 +5842,7 @@ function Day3KnockOutPanel() {
             The Desk's Most Common Misconception
           </div>
           <div className="text-2xl font-black text-slate-100">
-            “It climbed back at the end — why is there still no payoff?”
+            “It climbed back at the end, so why is there still no payoff?”
           </div>
           <p className="mt-4 text-base leading-8 text-slate-300">
             Because a barrier option depends on the path. The moment it knocks out along the way, the contract ends early. A beautiful final price
@@ -5862,7 +5862,7 @@ function Day3KnockOutPanel() {
               ],
               [
                 "To Express a More Refined View",
-                "The client doesn't just say “it'll rise” — they may think “it'll rise, but won't first plunge to a certain line.” A barrier writes that view into the contract.",
+                "The client doesn't just say “it'll rise”; they may think “it'll rise, but won't first plunge to a certain line.” A barrier writes that view into the contract.",
               ],
               [
                 "To Control Desk Risk",
@@ -6370,7 +6370,7 @@ function Day4CbbcIntroPanel_ARCHIVED() {
             CBBC
           </div>
           <h1 className="text-4xl font-black leading-tight text-slate-100 md:text-5xl">
-            A bull contract is bullish, a bear contract bearish — but both have a danger line
+            A bull contract is bullish, a bear contract bearish, but both have a danger line
           </h1>
           <p className="mt-5 text-base leading-8 text-slate-300">
             For now, think of a CBBC as a leveraged barrier product with a mandatory-call mechanism.
@@ -6383,7 +6383,7 @@ function Day4CbbcIntroPanel_ARCHIVED() {
           {[
             ["Bull CBBC", "Suited to a bullish view. A rise in the underlying is usually favorable; but if it first falls to or below the lower call price, it triggers an MCE."],
             ["Bear CBBC", "Suited to a bearish view. A fall in the underlying is usually favorable; but if it first rises to or above the upper call price, it triggers an MCE."],
-            ["Today's Focus", "A bear contract's danger line is on the upside. The market falling in the end isn't enough — spiking up to the call price along the way already knocks you out."],
+            ["Today's Focus", "A bear contract's danger line is on the upside. The market falling in the end isn't enough; spiking up to the call price along the way already knocks you out."],
           ].map(([title, text]) => (
             <div key={title} className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
               <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
@@ -6816,7 +6816,7 @@ function Day4BriefingPanel() {
   const steps = [
     ["① Read the Direction", "Is the client bullish or bearish? This decides the product category."],
     ["② Read Risk and Budget", "Can they accept extra conditions (e.g. voided if it drops below a line)? Is the budget tight? This decides vanilla vs barrier."],
-    ["③ Compute the Theoretical Price, Then Quote", "Enter the parameters into the calculator, compute the theoretical price, and add a reasonable profit — not too low (giving it away), and not too high (scaring them off)."],
+    ["③ Compute the Theoretical Price, Then Quote", "Enter the parameters into the calculator, compute the theoretical price, and add a reasonable profit, not too low (giving it away) and not too high (scaring them off)."],
   ];
   return (
     <TerminalCard className="scene-enter overflow-hidden">
@@ -6827,14 +6827,14 @@ function Day4BriefingPanel() {
             GRADUATION ROUND
           </div>
           <h1 className="text-4xl font-black leading-tight text-slate-100 md:text-5xl">
-            No new products — today tests your pricing judgment
+            No new products: today tests your pricing judgment
           </h1>
           <p className="mt-5 text-base leading-8 text-slate-300">
-            Over the past three days you learned vanilla options, binomial-tree pricing, and barrier options. Today three clients queue up for your quote —
+            Over the past three days you learned vanilla options, binomial-tree pricing, and barrier options. Today three clients queue up for your quote:
             using only the tools you already know: the vanilla call, the barrier call, and that binomial-tree calculator.
           </p>
           <p className="mt-4 text-base leading-8 text-slate-300">
-            Martin gives you only the general principles — <span className="font-black text-[#ffd700]">he won't tell you what to pick or what to quote</span>.
+            Martin gives you only the general principles; <span className="font-black text-[#ffd700]">he won't tell you what to pick or what to quote</span>.
             The client reacts if you pick or quote wrong, but the answer is for you to judge.
           </p>
         </div>
@@ -6944,7 +6944,7 @@ function Day4ClientProfilePanel({ client, index, total }) {
           </div>
           {isJudge && (
             <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
-              Note: he didn't say which product he wants. Next, you have to judge it yourself — sniff out from his budget and his “can accept being voided if it drops below a certain level” whether to go with a vanilla call or a barrier call.
+              Note: he didn't say which product he wants. Next, you have to judge it yourself; sniff out from his budget and his “can accept being voided if it drops below a certain level” whether to go with a vanilla call or a barrier call.
             </div>
           )}
         </div>
@@ -6990,9 +6990,9 @@ function Day4SourcingCards({ cards }) {
     <div className="rounded-lg border border-cyan-400/20 bg-cyan-400/[0.04] p-5">
       <div className="mb-3 rounded-md border border-[#00f0ff]/20 bg-[#00f0ff]/[0.05] p-4 text-sm leading-7 text-slate-300">
         <span className="font-terminal text-[#00f0ff]">Task: </span>
-        Mr. He didn't give you a parameter list. You've already judged the product for him — now gather the numbers you need for pricing from the material below yourself:
+        Mr. He didn't give you a parameter list. You've already judged the product for him; now gather the numbers you need for pricing from the material below yourself:
         <span className="font-black text-slate-100"> S₀, K, σ, T, r</span>
-        , plus this trade's <span className="font-black text-[#ffd700]">barrier level</span>. No cheat sheet, and no one telling you which number goes in which field. You've graduated — rely on yourself.
+        , plus this trade's <span className="font-black text-[#ffd700]">barrier level</span>. No cheat sheet, and no one telling you which number goes in which field. You've graduated; rely on yourself.
       </div>
       <div className="grid gap-4 md:grid-cols-2">
         {cards.map((card) => (
@@ -7032,7 +7032,7 @@ function Day4SourcingCards({ cards }) {
         ))}
       </div>
       <div className="mt-3 text-xs leading-6 text-slate-500">
-        Which data maps to which input field is for you to judge — you've done it many times over the past three days. The calculator defaults are placeholder minimums; fill them in by hand.
+        Which data maps to which input field is for you to judge; you've done it many times over the past three days. The calculator defaults are placeholder minimums; fill them in by hand.
       </div>
     </div>
   );
@@ -7122,14 +7122,14 @@ function Day4ScorecardPanel({ results, clients }) {
   const martinSummary = (() => {
     const parts = [];
     if (correctProductCount === clients.length) {
-      parts.push("Product judgment correct on all three clients — direction, budget, and whether they can accept a knock-out, you read them all right. ");
+      parts.push("Product judgment correct on all three clients: direction, budget, and whether they can accept a knock-out, you read them all right. ");
     } else {
       parts.push(`Product judgment correct on ${correctProductCount}/${clients.length} trades. Pick the wrong product, and no quote, however beautiful, can rescue it. `);
     }
     if (dealCount === clients.length) {
-      parts.push(`All three trades filled — you judged the pricing range well. `);
+      parts.push(`All three trades filled; you judged the pricing range well. `);
     } else if (dealCount === 0) {
-      parts.push(`Not a single trade filled — the quotes were too far from fair value, and every client walked. The model is for keeping discipline. `);
+      parts.push(`Not a single trade filled; the quotes were too far from fair value, and every client walked. The model is for keeping discipline. `);
     } else {
       parts.push(`${dealCount}/${clients.length} trades filled. `);
     }
@@ -7217,10 +7217,10 @@ function Day4ScorecardPanel({ results, clients }) {
 
 function Day4GraduationPanel() {
   const summary = [
-    "Day 1: Understand options — Call is bullish, Put is bearish, the buyer's maximum loss is limited to the premium.",
-    "Day 2: Binomial-tree pricing — the theoretical price is the quote anchor, not too low (giving it away) and not too high (scaring them off).",
-    "Day 3: Barrier options — the discount comes from path risk (knock-out), not an unconditional reduction.",
-    "Day 4: Live quoting — read the client's direction and budget first, then pick vanilla / barrier, then anchor on the theoretical price and add a reasonable profit.",
+    "Day 1: Understand options. Call is bullish, Put is bearish, the buyer's maximum loss is limited to the premium.",
+    "Day 2: Binomial-tree pricing. The theoretical price is the quote anchor, not too low (giving it away) and not too high (scaring them off).",
+    "Day 3: Barrier options. The discount comes from path risk (knock-out), not an unconditional reduction.",
+    "Day 4: Live quoting. Read the client's direction and budget first, then pick vanilla / barrier, then anchor on the theoretical price and add a reasonable profit.",
   ];
   return (
     <TerminalCard className="scene-enter overflow-hidden">
@@ -7230,7 +7230,7 @@ function Day4GraduationPanel() {
           Graduation Complete
         </div>
         <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300">
-          You've walked through the whole process from option basics to live pricing. The pricing discipline a new trader should have — you've practiced it all.
+          You've walked through the whole process from option basics to live pricing. The pricing discipline a new trader should have, you've practiced it all.
         </p>
         <div className="mt-8 grid w-full max-w-2xl gap-3 text-left">
           {summary.map((item) => (
@@ -7417,7 +7417,7 @@ function MainPanel({
         products={day4Client.judgeProducts ?? []}
         correctProductId={day4Client.correctProduct}
         title="Product Judgment Desk"
-        accent="The Client Didn't Say Which — You Decide"
+        accent="The Client Didn't Say Which, You Decide"
       />
     ),
     day4_pricing: (
@@ -7648,7 +7648,7 @@ export default function Day1TraderSimulator() {
         ? (client.judgeProducts?.find((p) => p.id === chosenProductId)?.name ?? "No Product Selected")
         : client.productLabel;
     const productCorrect = chosenProductId === client.correctProduct;
-    // Wrong product: no quote, however beautiful, can rescue it — graded D and not filled.
+    // Wrong product: no quote, however beautiful, can rescue it; graded D and not filled.
     const grade = productCorrect ? analysis.score : "D";
     const accepted = productCorrect ? analysis.accepted : false;
     const result = {
@@ -7672,7 +7672,7 @@ export default function Day1TraderSimulator() {
       : {
           ...analysis,
           accepted: false,
-          customerLine: "This isn't the product I wanted — I'll pass for now.",
+          customerLine: "This isn't the product I wanted. I'll pass for now.",
           status: "Product doesn't match, client leaves",
         };
     setClientResponse(response);
@@ -7898,7 +7898,7 @@ export default function Day1TraderSimulator() {
     }
 
     const productComment = isCorrectProduct
-      ? "You picked the down-and-out call option — direction, budget, and the client's acceptance of extra conditions all match."
+      ? "You picked the down-and-out call option; direction, budget, and the client's acceptance of extra conditions all match."
       : selectedProduct === "vanilla_call"
         ? "A vanilla call has simpler risk, but didn't meet the client's budget need to lower the premium."
         : selectedProduct === "up_out_call"
@@ -8250,7 +8250,7 @@ export default function Day1TraderSimulator() {
       return `Client feedback: ${clientResponse.status}. Read the client right, pick the right product, then anchor on the theoretical price and add a reasonable profit.`;
     }
     if (currentStage === "day2_client_response" && clientResponse) {
-      return `Client feedback: ${clientResponse.status}. A quote isn't only about closing the trade — it's also about whether the desk gets reasonable compensation.`;
+      return `Client feedback: ${clientResponse.status}. A quote isn't only about closing the trade; it's also about whether the desk gets reasonable compensation.`;
     }
     if (currentStage === "day3_client_response" && clientResponse) {
       return `Client feedback: ${clientResponse.status}. The pricing discipline for a barrier product: cheaper than a vanilla call, but still leaving the desk a reasonable profit.`;
