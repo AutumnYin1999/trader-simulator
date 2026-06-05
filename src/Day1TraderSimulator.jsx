@@ -1510,6 +1510,78 @@ function cn(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+// ===== Client-side progress persistence (localStorage) =====
+const CT_PROGRESS_KEY = "ct_progress_v1";
+const CT_PROFILE_KEY = "ct_profile_v1";
+
+const DEFAULT_PROFILE = { name: "Guest Trader" };
+const EMPTY_PROGRESS = { day1: null, day2: null, day3: null, day4: null };
+
+function loadProfile() {
+  try {
+    const raw = window.localStorage.getItem(CT_PROFILE_KEY);
+    if (!raw) return { ...DEFAULT_PROFILE };
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === "object") {
+      return { ...DEFAULT_PROFILE, ...parsed };
+    }
+    return { ...DEFAULT_PROFILE };
+  } catch {
+    return { ...DEFAULT_PROFILE };
+  }
+}
+
+function saveProfile(profile) {
+  try {
+    window.localStorage.setItem(CT_PROFILE_KEY, JSON.stringify(profile ?? DEFAULT_PROFILE));
+  } catch {
+    /* storage unavailable (SSR / private mode); ignore */
+  }
+}
+
+function loadProgress() {
+  try {
+    const raw = window.localStorage.getItem(CT_PROGRESS_KEY);
+    if (!raw) return { ...EMPTY_PROGRESS };
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === "object") {
+      return { ...EMPTY_PROGRESS, ...parsed };
+    }
+    return { ...EMPTY_PROGRESS };
+  } catch {
+    return { ...EMPTY_PROGRESS };
+  }
+}
+
+function saveDayProgress(day, record) {
+  const current = loadProgress();
+  const next = { ...current, ["day" + day]: record };
+  try {
+    window.localStorage.setItem(CT_PROGRESS_KEY, JSON.stringify(next));
+  } catch {
+    /* storage unavailable; still return the merged object for in-memory state */
+  }
+  return next;
+}
+
+// Map a letter grade to a rough percent for display (A=95, B=82, C=68, D=50).
+const GRADE_PERCENT = { A: 95, "A-": 90, B: 82, "B-": 78, C: 68, D: 50 };
+function gradeToPercent(grade) {
+  if (!grade) return 0;
+  return GRADE_PERCENT[grade] ?? 60;
+}
+
+// Derive initials from a display name, e.g. "Guest Trader" -> "GT".
+function initialsFromName(name) {
+  const parts = String(name ?? "")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+  if (parts.length === 0) return "GT";
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
 function formatPoints(value) {
   return value.toLocaleString("en-US");
 }
@@ -2142,9 +2214,34 @@ function TopBar({
   canGoBack,
   onGoBack,
   onOpenHandbook,
+  profile,
+  onOpenDashboard,
+  onSignOut,
 }) {
   const dayConfig = dayConfigs[currentDay] ?? day1Config;
   const stageMeta = stageConfig[stage] ?? { label: "Standby" };
+  const [menuOpen, setMenuOpen] = useState(false);
+  const accountRef = useRef(null);
+  const displayName = profile?.name ?? "Guest Trader";
+  const initials = initialsFromName(displayName);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handlePointer = (event) => {
+      if (accountRef.current && !accountRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+    const handleKey = (event) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    document.addEventListener("mousedown", handlePointer);
+    document.addEventListener("keydown", handleKey);
+    return () => {
+      document.removeEventListener("mousedown", handlePointer);
+      document.removeEventListener("keydown", handleKey);
+    };
+  }, [menuOpen]);
 
   return (
     <div className="mx-auto flex w-full max-w-[1180px] flex-wrap items-center justify-between gap-3 border-b border-white/10 py-4 text-sm md:mt-5">
@@ -2175,6 +2272,67 @@ function TopBar({
         >
           Open Handbook {handbookHasNew ? "/ New" : ""}
         </button>
+
+        <div className="relative" ref={accountRef}>
+          <button
+            type="button"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-haspopup="menu"
+            aria-expanded={menuOpen}
+            aria-label="Account menu"
+            className="flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] py-1 pl-1 pr-2 transition duration-300 hover:border-[var(--border-strong)] hover:bg-[var(--surface-2)]"
+          >
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,#5b8cff,#2e4a8f)] font-terminal text-xs font-black text-[#0b1018]">
+              {initials}
+            </span>
+            <svg
+              viewBox="0 0 20 20"
+              fill="none"
+              aria-hidden="true"
+              className={cn(
+                "h-3.5 w-3.5 text-[var(--muted)] transition-transform duration-200",
+                menuOpen ? "rotate-180" : "",
+              )}
+            >
+              <path d="M5 8l5 5 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+
+          {menuOpen && (
+            <div
+              role="menu"
+              aria-label="Account"
+              className="absolute right-0 z-30 mt-2 w-56 overflow-hidden rounded-lg border border-[var(--border-strong)] bg-[var(--bg-elev)] shadow-[0_18px_44px_rgba(0,0,0,0.55)]"
+            >
+              <div className="border-b border-[var(--border)] px-4 py-3">
+                <div className="font-terminal text-sm font-bold text-[var(--ink)]">{displayName}</div>
+                <div className="mt-0.5 text-[11px] text-[var(--muted)]">Local progress</div>
+              </div>
+              <button
+                type="button"
+                role="menuitem"
+                onClick={() => {
+                  setMenuOpen(false);
+                  onOpenDashboard?.();
+                }}
+                className="font-terminal block w-full px-4 py-2.5 text-left text-xs font-bold tracking-[0.12em] text-[var(--accent)] transition duration-200 hover:bg-[var(--accent-weak)]"
+              >
+                Dashboard
+              </button>
+              <button
+                type="button"
+                role="menuitem"
+                onClick={() => {
+                  setMenuOpen(false);
+                  onSignOut?.();
+                }}
+                className="font-terminal block w-full border-t border-[var(--border)] px-4 py-2.5 text-left text-xs font-bold tracking-[0.12em] text-[var(--neg)] transition duration-200 hover:bg-[var(--neg)]/[0.08]"
+              >
+                Sign out
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -7294,6 +7452,146 @@ function MainPanel({
   return <div className="min-h-[580px]">{panels[stage] ?? null}</div>;
 }
 
+const DASHBOARD_DAYS = [
+  { day: 1, topic: "Vanilla Calls & Puts" },
+  { day: 2, topic: "Binomial Pricing" },
+  { day: 3, topic: "Barrier Options" },
+  { day: 4, topic: "Graduation Round" },
+];
+
+function ProgressDashboard({ profile, progress, onReplayDay, onClose }) {
+  const completedCount = DASHBOARD_DAYS.filter(
+    (d) => progress?.["day" + d.day],
+  ).length;
+  const totalDays = DASHBOARD_DAYS.length;
+  const percent = Math.round((completedCount / totalDays) * 100);
+  const displayName = profile?.name ?? "Guest Trader";
+
+  const formatDate = (iso) => {
+    if (!iso) return "";
+    try {
+      return new Date(iso).toLocaleDateString(undefined, {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
+    } catch {
+      return "";
+    }
+  };
+
+  return (
+    <div className="scene-enter mx-auto w-full max-w-4xl px-4 py-10">
+      <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-black tracking-[0.04em] text-[var(--ink)] md:text-4xl">
+            Your progress
+          </h1>
+          <p className="mt-2 text-sm text-[var(--muted)]">
+            Signed in as{" "}
+            <span className="font-terminal text-[var(--accent)]">{displayName}</span>
+          </p>
+        </div>
+        <PrimaryButton tone="ghost" onClick={onClose} aria-label="Back to the game">
+          Back
+        </PrimaryButton>
+      </div>
+
+      <TerminalCard className="mb-8 overflow-hidden">
+        <TerminalHeader label="OVERALL COMPLETION" accent={`${completedCount} / ${totalDays} days`} />
+        <div className="p-5">
+          <div className="mb-2 flex items-center justify-between">
+            <span className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
+              Training days completed
+            </span>
+            <span className="font-terminal text-xl font-black text-[var(--ink)]">{percent}%</span>
+          </div>
+          <div
+            className="h-3 w-full overflow-hidden rounded-full bg-[var(--surface-2)]"
+            role="progressbar"
+            aria-valuenow={percent}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label="Overall training completion"
+          >
+            <div
+              className="h-full rounded-full bg-[var(--accent)] transition-all duration-500"
+              style={{ width: `${percent}%` }}
+            />
+          </div>
+        </div>
+      </TerminalCard>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        {DASHBOARD_DAYS.map(({ day, topic }) => {
+          const record = progress?.["day" + day];
+          const completed = Boolean(record);
+          return (
+            <TerminalCard key={day} className="overflow-hidden">
+              <div className="flex h-full flex-col p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <div className="font-terminal text-xs tracking-[0.18em] text-[var(--accent)]">
+                      Day {day}
+                    </div>
+                    <div className="mt-1 text-lg font-black text-[var(--ink)]">{topic}</div>
+                  </div>
+                  <span
+                    className={cn(
+                      "font-terminal rounded-full border px-3 py-1 text-[11px] font-bold tracking-[0.12em]",
+                      completed
+                        ? "border-[var(--pos)]/40 bg-[var(--pos)]/[0.10] text-[var(--pos)]"
+                        : "border-[var(--border)] bg-[var(--surface-2)] text-[var(--faint)]",
+                    )}
+                  >
+                    {completed ? "Completed" : "Not started"}
+                  </span>
+                </div>
+
+                {completed ? (
+                  <div className="mt-5 flex items-end justify-between gap-4">
+                    <div>
+                      <div className="font-terminal text-[10px] tracking-[0.16em] text-[var(--faint)]">
+                        GRADE
+                      </div>
+                      <div className="font-terminal text-4xl font-black leading-none text-[var(--ink)]">
+                        {record.grade}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-terminal text-xl font-black text-[var(--accent)]">
+                        {record.score}%
+                      </div>
+                      <div className="mt-1 text-[11px] text-[var(--muted)]">
+                        {formatDate(record.completedAt)}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <p className="mt-5 text-sm leading-6 text-[var(--muted)]">
+                    Finish this day to record a grade here.
+                  </p>
+                )}
+
+                <div className="mt-5 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => onReplayDay(day)}
+                    aria-label={`Replay Day ${day}: ${topic}`}
+                    className="font-terminal w-full rounded-md border border-[var(--border)] bg-[var(--surface-2)] px-4 py-2 text-xs font-bold tracking-[0.16em] text-[var(--accent)] transition duration-300 hover:bg-[var(--accent-weak)] hover:text-[var(--accent-strong)]"
+                  >
+                    {completed ? "Replay" : "Start"}
+                  </button>
+                </div>
+              </div>
+            </TerminalCard>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export default function Day1TraderSimulator() {
   const [currentDay, setCurrentDay] = useState(1);
   const [currentStage, setCurrentStage] = useState("title_screen");
@@ -7320,6 +7618,11 @@ export default function Day1TraderSimulator() {
   const [skipSignal, setSkipSignal] = useState(0);
   const [stageHistory, setStageHistory] = useState([]);
   const stageTrackerRef = useRef({ current: "title_screen", skipNext: false });
+
+  // ===== Progress dashboard + account + persistence =====
+  const [profile, setProfile] = useState(loadProfile);
+  const [progress, setProgress] = useState(loadProgress);
+  const [stageBeforeDashboard, setStageBeforeDashboard] = useState(null);
 
   const isDay2Stage = currentStage.startsWith("day2");
   const isDay3Stage = currentStage.startsWith("day3");
@@ -7398,6 +7701,46 @@ export default function Day1TraderSimulator() {
     setHandbookOpen(false);
     setSkipSignal((value) => value + 1);
   };
+
+  // Persist a day's result once it has a final letter grade. Guarded so each
+  // completion is written only once (re-runs overwrite the previous record).
+  const recordDayProgress = (day, grade) => {
+    if (!grade) return;
+    const score = gradeToPercent(grade);
+    setProgress((prev) => {
+      const existing = prev?.["day" + day];
+      if (existing && existing.grade === grade && existing.score === score) {
+        return prev; // already recorded this exact result; skip the write
+      }
+      return saveDayProgress(day, {
+        grade,
+        score,
+        completedAt: new Date().toISOString(),
+      });
+    });
+  };
+
+  useEffect(() => {
+    if (day1Score?.overall) recordDayProgress(1, day1Score.overall);
+  }, [day1Score]);
+  useEffect(() => {
+    if (day2Score?.overall) recordDayProgress(2, day2Score.overall);
+  }, [day2Score]);
+  useEffect(() => {
+    if (day3Score?.overall) recordDayProgress(3, day3Score.overall);
+  }, [day3Score]);
+  // Day4 has no single score object; derive the overall grade from the
+  // three-client results once the graduation scorecard is reached.
+  useEffect(() => {
+    if (currentStage !== "day4_scorecard" && currentStage !== "day4_complete") return;
+    const completed = day4Results.filter(Boolean);
+    if (completed.length === 0) return;
+    const gradeOrder = { A: 4, B: 3, C: 2, D: 1 };
+    const avg =
+      completed.reduce((sum, r) => sum + (gradeOrder[r.grade] ?? 1), 0) / completed.length;
+    const overall = avg >= 3.5 ? "A" : avg >= 2.5 ? "B" : avg >= 1.6 ? "C" : "D";
+    recordDayProgress(4, overall);
+  }, [currentStage, day4Results]);
 
   const selectProduct = (productId) => {
     const products =
@@ -8170,12 +8513,55 @@ export default function Day1TraderSimulator() {
     setCurrentStage("day1_report");
   };
 
+  // ===== Progress dashboard + account menu navigation =====
+  const openDashboard = () => {
+    setStageBeforeDashboard(currentStage);
+    setHandbookOpen(false);
+    setCurrentStage("dashboard");
+  };
+
+  const closeDashboard = () => {
+    const target = stageBeforeDashboard ?? "title_screen";
+    setStageBeforeDashboard(null);
+    stageTrackerRef.current.skipNext = true;
+    setCurrentStage(target);
+  };
+
+  // Replay a day by reusing that day's existing start routine, which resets
+  // per-day state (selectedProduct / quote / scores) and jumps to its first stage.
+  const dayStarters = { 1: startDay1, 2: startDay2, 3: startDay3, 4: startDay4 };
+  const replayDay = (day) => {
+    setStageBeforeDashboard(null);
+    const starter = dayStarters[day];
+    if (starter) {
+      starter();
+      return;
+    }
+    // Fallback: jump straight to the day's first stage and clear shared state.
+    const firstStageName = { 1: "day1_welcome", 2: "day2_intro", 3: "day3_intro", 4: "day4_intro" };
+    setCurrentDay(day);
+    setSelectedProduct(null);
+    setSelectedQuote(day2Config.quoteRules.defaultQuote);
+    setClientResponse(null);
+    setCurrentStage(firstStageName[day] ?? "title_screen");
+  };
+
+  const signOut = () => {
+    const guest = { name: "Guest Trader" };
+    setProfile(guest);
+    saveProfile(guest);
+    setStageBeforeDashboard(null);
+    setHandbookOpen(false);
+    setCurrentStage("title_screen");
+  };
+
   const actions = {
     startGame: startDay1,
     startDay1,
     startDay2,
     startDay3,
     startDay4,
+    openDashboard,
     startBriefing: () => setCurrentStage("day1_lesson_basics"),
     toCallPutLesson: () => setCurrentStage("day1_intro"),
     toPremiumLesson: () => setCurrentStage("day1_lesson_premium"),
@@ -8267,6 +8653,23 @@ export default function Day1TraderSimulator() {
     );
   }
 
+  if (currentStage === "dashboard") {
+    return (
+      <main className="font-cn relative min-h-screen overflow-x-hidden bg-[var(--bg)] text-[var(--ink)]">
+        <StyleBlock />
+        <GlobalAtmosphere />
+        <div className="relative z-10 min-h-screen">
+          <ProgressDashboard
+            profile={profile}
+            progress={progress}
+            onClose={closeDashboard}
+            onReplayDay={replayDay}
+          />
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main
       className="font-cn relative min-h-screen overflow-x-hidden bg-[#0b1018] text-[#e8edf4]"
@@ -8284,6 +8687,9 @@ export default function Day1TraderSimulator() {
           canGoBack={stageHistory.length > 0}
           onGoBack={goBack}
           onOpenHandbook={openHandbook}
+          profile={profile}
+          onOpenDashboard={openDashboard}
+          onSignOut={signOut}
         />
 
         <div
