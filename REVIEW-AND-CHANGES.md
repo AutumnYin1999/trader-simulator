@@ -1,4 +1,4 @@
-# Central Trader · Trading-Desk Simulator (Day 1–4) Project Review & Change Suggestions
+# Central Trader · Trading-Desk Simulator (Day 1 to 4) Project Review & Change Suggestions
 
 > Review target: `trader-simulator-day1/src/Day1TraderSimulator.jsx`
 > Reference material: `central-trader-en/` (classmate's math engine & visualization booth)
@@ -18,9 +18,9 @@ However, there is **1 financial-structure error that must be fixed (the size rel
 
 ## 1. Financial-knowledge accuracy review (key section)
 
-### 🔴 Critical 1: The "strike vs. call price" size relationship for the Bear CBBC is reversed — ✅ Fixed (2026-05-31)
+### 🔴 Critical 1: The "strike vs. call price" size relationship for the Bear CBBC is reversed, ✅ Fixed (2026-05-31)
 
-**Location**: `day4Config.market` (around lines 1068–1075)
+**Location**: `day4Config.market` (around lines 1068 to 1075)
 
 ```js
 market: {
@@ -44,11 +44,11 @@ market: {
 
 A Bear CBBC requires **call price ≤ strike**. The current config has `strike 21200 < call price 22000`, which is **exactly reversed**, and the strike is also below the spot (21500); in a real market this is not a valid Bear CBBC.
 
-> Note: this is an extension of the symmetric relationship taught in the manual, "the Bull danger line is below, the Bear danger line is above" — the call price's position is correct (22000 is above the spot ✓), but the strike's position is wrong.
+> Note: this is an extension of the symmetric relationship taught in the manual, "the Bull danger line is below, the Bear danger line is above": the call price's position is correct (22000 is above the spot ✓), but the strike's position is wrong.
 
 **Fix actually adopted (decoupling approach, already implemented)**:
 
-It was found that `market.strike` is **shared by two products** on Day 4 — it is both the Bear CBBC strike and the strike of the "vanilla Put comparison product" (the chart labels it "vanilla Put strike", premium 150). If we simply change `strike` to 22000, the CBBC structure is fixed, but the vanilla Put (spot 21500, strike 22000) would have 500 points of intrinsic value while selling for only 150 points, **creating a new arbitrage error**. We therefore adopted decoupling:
+It was found that `market.strike` is **shared by two products** on Day 4: it is both the Bear CBBC strike and the strike of the "vanilla Put comparison product" (the chart labels it "vanilla Put strike", premium 150). If we simply change `strike` to 22000, the CBBC structure is fixed, but the vanilla Put (spot 21500, strike 22000) would have 500 points of intrinsic value while selling for only 150 points, **creating a new arbitrage error**. We therefore adopted decoupling:
 
 ```js
 market: {
@@ -66,15 +66,15 @@ market: {
 
 Ordering verification: spot 21500 ≤ call price 22000 ≤ Bear CBBC strike 22000 ✓ (N-category Bear CBBC); vanilla Put strike 21200 < spot 21500 → out-of-the-money Put, premium 150 is reasonable ✓.
 
-**Knock-on change**: in `getDay4MarketResult()` (around lines 1306–1324), the Bear CBBC not-knocked-out payoff was changed from `Math.max(market.strike - finalPrice, 0)` to `Math.max(market.cbbcStrike - finalPrice, 0)`; the vanilla Put still uses `market.strike`. This path touches 22050 ≥ 22000 partway through → triggers MCE, the Bear CBBC settlement is still `-cbbcEntryCost`, and the storyline is unchanged. Verified via `npm run build`. ✅
+**Knock-on change**: in `getDay4MarketResult()` (around lines 1306 to 1324), the Bear CBBC not-knocked-out payoff was changed from `Math.max(market.strike - finalPrice, 0)` to `Math.max(market.cbbcStrike - finalPrice, 0)`; the vanilla Put still uses `market.strike`. This path touches 22050 ≥ 22000 partway through → triggers MCE, the Bear CBBC settlement is still `-cbbcEntryCost`, and the storyline is unchanged. Verified via `npm run build`. ✅
 
 ---
 
-### 🟠 Medium 2: The "cost / payoff" scale of the CBBC is internally inconsistent — ✅ Fixed (2026-05-31)
+### 🟠 Medium 2: The "cost / payoff" scale of the CBBC is internally inconsistent, ✅ Fixed (2026-05-31)
 
-**Location**: `getDay4MarketResult()` (lines 1306–1324) + `cbbcEntryCost: 80`
+**Location**: `getDay4MarketResult()` (lines 1306 to 1324) + `cbbcEntryCost: 80`
 
-**Problem**: The code directly reuses the Put payoff formula `max(strike - finalPrice, 0)` for the Bear CBBC "not knocked out", but sets the cost to 80 points. If the strike is changed to 22000 per Critical 1, then this Bear CBBC already has about 500 points of "intrinsic value" relative to the spot (21500) at entry (strike − spot = 22000 − 21500), but the cost is labeled only 80 points — this is equivalent to paying 80 points to buy something immediately worth 500 points, **close to risk-free arbitrage**, which is financially inconsistent.
+**Problem**: The code directly reuses the Put payoff formula `max(strike - finalPrice, 0)` for the Bear CBBC "not knocked out", but sets the cost to 80 points. If the strike is changed to 22000 per Critical 1, then this Bear CBBC already has about 500 points of "intrinsic value" relative to the spot (21500) at entry (strike − spot = 22000 − 21500), but the cost is labeled only 80 points. This is equivalent to paying 80 points to buy something immediately worth 500 points, **close to risk-free arbitrage**, which is financially inconsistent.
 
 Root cause: CBBCs are not priced using a "premium"; they are more like a **leveraged linear tracking instrument** (price ≈ |strike − spot| × conversion ratio + financing cost), yet the code shoehorns it into an "option payoff − premium" framework.
 
@@ -99,7 +99,7 @@ Root cause: CBBCs are not priced using a "premium"; they are more like a **lever
 
 ---
 
-### 🟠 Medium 3: The same vanilla call option is priced inconsistently across days — ✅ Fixed (2026-05-31)
+### 🟠 Medium 3: The same vanilla call option is priced inconsistently across days, ✅ Fixed (2026-05-31)
 
 **Problem**: The three locations describe a **completely identical** contract (HSI, spot 21500, strike 22000, 1 month), yet the prices differ:
 
@@ -113,7 +113,7 @@ I verified by hand: the theoretical price computed from Day 2's binomial-tree pa
 
 **Change suggestions (unify parameters, pick one)**:
 
-- **Option A (recommended)**: change the Day 1 and Day 3 vanilla Call price uniformly to **186**, consistent with Day 2's model price; the Day 3 barrier option (down-out call) correspondingly changes to about **110–120** (still clearly below the vanilla Call, reflecting that "the discount comes from knock-out risk").
+- **Option A (recommended)**: change the Day 1 and Day 3 vanilla Call price uniformly to **186**, consistent with Day 2's model price; the Day 3 barrier option (down-out call) correspondingly changes to about **110 to 120** (still clearly below the vanilla Call, reflecting that "the discount comes from knock-out risk").
 - **Option B**: adjust Day 2's binomial-tree parameters (e.g. lower sigma) so the theoretical price lands at 150, then unify all three at 150.
 
 > After unifying, the cross-level narrative becomes more credible: Day 2 teaches "this Call is worth 186", and Day 3 can then naturally say "this same 186 Call is too expensive; the down-and-out knock-out version is only ~115".
@@ -157,7 +157,7 @@ I verified by hand: the theoretical price computed from Day 2's binomial-tree pa
 
 ### ✅ Parts already verified correct (rest assured)
 
-- **The binomial CRR implementation is correct**: `up = e^(σ√dt)`, `down = 1/up`, risk-neutral probability `p = (e^{rΔt} − d)/(u − d)`, layer-by-layer discounted backward induction — standard and correct (starting at line 3667).
+- **The binomial CRR implementation is correct**: `up = e^(σ√dt)`, `down = 1/up`, risk-neutral probability `p = (e^{rΔt} − d)/(u − d)`, layer-by-layer discounted backward induction, standard and correct (starting at line 3667).
 - **Day 2 theoretical price 186** verified by hand ≈ 186.2 ✓, terminal payoffs all correct (1253 / 69 / 0 / 0).
 - **The Down-and-Out Call structure is correct**: barrier 21000 < strike 22000 < …… and below the spot 21500, a standard regular down-and-out; the statements "no revival after knock-out" and "maximum loss is the premium" are accurate.
 - **The risk-disclosure question bank is professionally designed**: each day has one "misleading statement" as a trap (e.g. "as long as it rises you're guaranteed to profit", "it auto-recovers after MCE"), with compliance teaching well in place.
@@ -179,7 +179,7 @@ I verified by hand: the theoretical price computed from Day 2's binomial-tree pa
 ### 2.2 Learning objectives and scope
 
 - The four-day capability curve is very clear; we recommend **explicitly writing out each day's Learning Objective** in the project (currently implicit in the mentor's lines), to make it easier for the teacher to map to the score.
-- Currently only **knock-out** is taught, not **knock-in**; only **down-and-out + upper call** is taught — the narrative is complete but the concept is not. See 4.1.
+- Currently only **knock-out** is taught, not **knock-in**; only **down-and-out + upper call** is taught. The narrative is complete but the concept is not. See 4.1.
 
 ### 2.3 Integration with the classmate's "central-trader math engine" (strongly recommended)
 
@@ -193,7 +193,7 @@ This is the project's **biggest opportunity to gain points**. The two groups are
 
 ### 2.4 Naming and engineering nitpicks (non-financial)
 
-- The filename `Day1TraderSimulator.jsx` already contains all four days of Day 1–4 content; the naming lags behind, so we recommend renaming it to `TraderSimulator.jsx`.
+- The filename `Day1TraderSimulator.jsx` already contains all four days of Day 1 to 4 content; the naming lags behind, so we recommend renaming it to `TraderSimulator.jsx`.
 - The maturity-payoff copy in the Day 1 debrief is **hard-coded** as `max(22,400 - 22,000, 0)` (around line 3113); if you change the config it won't update in sync, so we recommend changing it to dynamically generate from the last value of `market.path` and `market.strike`.
 
 ---
@@ -202,7 +202,7 @@ This is the project's **biggest opportunity to gain points**. The two groups are
 
 ### 3.1 Screen-recording / demo script (matching the ≤12-minute video requirement)
 
-We recommend one 1.5–2 minute segment per day, with a uniform structure: client speaks → read the requirement (direction + risk + budget) → choose the product → risk disclosure → run the path → debrief. Day 3's barrier knock-out and Day 4's Bear CBBC MCE are **the most dramatic shots** (the direction was right yet it went to zero) — focus the editing there.
+We recommend one 1.5 to 2 minute segment per day, with a uniform structure: client speaks → read the requirement (direction + risk + budget) → choose the product → risk disclosure → run the path → debrief. Day 3's barrier knock-out and Day 4's Bear CBBC MCE are **the most dramatic shots** (the direction was right yet it went to zero), so focus the editing there.
 
 ### 3.2 Closing "product comparison table" (recommend adding a new manual page)
 
@@ -250,18 +250,18 @@ We recommend one 1.5–2 minute segment per day, with a uniform structure: clien
 | Priority | Issue | Consequence of not fixing | Change cost |
 |--------|------|------------|----------|
 | 🔴 High | Bear CBBC strike/call price reversed | Real financial-structure error, spotted immediately by the knowledgeable | Very low (change 1 number + verify) |
-| 🟠 Medium | CBBC cost/payoff scale inconsistent | The figures look like arbitrage, professionalism discounted | Low–medium |
-| 🟠 Medium | Same Call priced inconsistently across levels (150 vs 186) | Narrative contradiction, player confusion | Low (change 2–3 numbers) |
+| 🟠 Medium | CBBC cost/payoff scale inconsistent | The figures look like arbitrage, professionalism discounted | Low to medium |
+| 🟠 Medium | Same Call priced inconsistently across levels (150 vs 186) | Narrative contradiction, player confusion | Low (change 2 to 3 numbers) |
 | 🟡 Low | Discrete monitoring / no q / no hedging / hard-coded copy | Detail rigor only, a reasonable simplification | Low |
-| ⭐ Bonus | Integration with the math engine + real data | Misses substantial bonus points on the Application dimension | Medium–high |
+| ⭐ Bonus | Integration with the math engine + real data | Misses substantial bonus points on the Application dimension | Medium to high |
 
 ---
 
 ## 6. Overall verdict
 
-**Financial rigor (before fixes): B** — the core pricing math is correct and the compliance teaching is excellent, but the CBBC structure error + cross-level numerical inconsistencies are hard flaws.
-**Financial rigor (after fixing per the checklist): A-** — enough to withstand classroom questions.
-**Product / teaching design: A** — the design of the narrative, pacing, suitability, and risk disclosure is the biggest highlight of this project.
+**Financial rigor (before fixes): B**. The core pricing math is correct and the compliance teaching is excellent, but the CBBC structure error + cross-level numerical inconsistencies are hard flaws.
+**Financial rigor (after fixing per the checklist): A-**, enough to withstand classroom questions.
+**Product / teaching design: A**. The design of the narrative, pacing, suitability, and risk disclosure is the biggest highlight of this project.
 **Biggest point-gainer**: integration with the classmate's math engine, introducing real HSI/VHSI data, upgrading "teaching parameters" to "real application".
 
 ---

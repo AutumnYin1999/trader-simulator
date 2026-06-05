@@ -2,19 +2,19 @@
 
 > Written for the next Claude who picks this up
 > Date: 2026-06-01
-> Project: `trader-simulator-day1` — gamified options-teaching simulator (React single page, main file `src/Day1TraderSimulator.jsx` ~6600 lines, all logic in this one file)
+> Project: `trader-simulator-day1`, gamified options-teaching simulator (React single page, main file `src/Day1TraderSimulator.jsx` ~6600 lines, all logic in this one file)
 > User: HKBU student, **communicates in Chinese**, conversational, clear, not too academic
-> This file focuses on "this one big task". For overall project background see `HANDOFF.md` and `REVIEW-AND-CHANGES.md` in the same directory — read those two first.
+> This file focuses on "this one big task". For overall project background see `HANDOFF.md` and `REVIEW-AND-CHANGES.md` in the same directory; read those two first.
 
 ---
 
 ## ⭐ Latest status (2026-06-01 continued session, must read, written for the next Claude after switching computers)
 
-> The user is already tired; this section is the **current real progress**. "Sections 1–5" below are the earlier original plan/history — the approach is still worth referencing, but **treat this section as the source of truth for what's done**.
+> The user is already tired; this section is the **current real progress**. "Sections 1 to 5" below are the earlier original plan/history; the approach is still worth referencing, but **treat this section as the source of truth for what's done**.
 
 ### This session finished both the first batch and the second batch, and also did a bunch of Day2 experience rework along the way
 
-**Everything has passed `npm run build`. Day2 has been fully run through by the user in the browser ✅. Day3's code changes are done, but the user hasn't tested it live in the browser yet — next step is to test/tune starting from Day3.**
+**Everything has passed `npm run build`. Day2 has been fully run through by the user in the browser ✅. Day3's code changes are done, but the user hasn't tested it live in the browser yet. The next step is to test/tune starting from Day3.**
 
 Checklist by topic (all in `src/Day1TraderSimulator.jsx`, **line numbers have all drifted, don't trust old line numbers, use Grep to locate by function name**):
 
@@ -41,7 +41,7 @@ Checklist by topic (all in `src/Day1TraderSimulator.jsx`, **line numbers have al
 ### Next steps (continue from here tomorrow after switching computers)
 
 1. **First walk through Day3 fully in the browser** (`npm run dev` → http://127.0.0.1:5173/). Focus on the merged barrier calculator: gold barrier row + 🔓NEW, knock-out red nodes / red-green links, vanilla vs barrier comparison card, N read-only at 6 steps, **no white screen** (a passing build ≠ runtime safe, see the white-screen lesson in Section 1).
-2. Content after Day3 (client, product selection, risk disclosure, market path, report) — adjust as needed — **the user said "from now on adjust everything starting from Day3"**.
+2. Content after Day3 (client, product selection, risk disclosure, market path, report), adjust as needed. **The user said "from now on adjust everything starting from Day3"**.
 3. **Don't touch Day2** (already tested and passing).
 4. Consider adding a "blind quote / consequences" or experience polish to Day3 like Day2's (if the user asks).
 5. After changes, as usual run `npm run build` + have the user test live in the browser.
@@ -55,7 +55,7 @@ Checklist by topic (all in `src/Day1TraderSimulator.jsx`, **line numbers have al
 
 ## 0. Why a new session was started
 
-The last session's context got very large (repeatedly reading the 6600-line large file), causing frequent "tool call could not be parsed" errors (occasional formatting errors when I generate tool instructions, not a network issue). The user chose to "write a good handoff, pick it up in a new session with clean context". So your context is now clean — please work efficiently.
+The last session's context got very large (repeatedly reading the 6600-line large file), causing frequent "tool call could not be parsed" errors (occasional formatting errors when I generate tool instructions, not a network issue). The user chose to "write a good handoff, pick it up in a new session with clean context". So your context is now clean; please work efficiently.
 
 ---
 
@@ -89,7 +89,7 @@ The user's product instinct: **Day3 = Day2 + the barrier layer**. The hope is "t
 | builder | `buildVanillaBinomialToolTree` (~3890) | `buildBarrierBinomialToolTree` (3969), a **superset** of vanilla (additionally computes barrierValue, knocked, links.alive) |
 | tree render | nodes show payoff/optionValue, no coloring | nodes show KO YES/NO + red/green coloring, links colored by alive |
 | bottom | **quote input area** (selectedQuote drives scoring, Day2-specific) | **vanilla vs barrier comparison card** (two theoretical prices side by side) |
-| defaults | already changed to minimum values | still real values (21500 etc.) — to be changed to minimum values |
+| defaults | already changed to minimum values | still real values (21500 etc.), to be changed to minimum values |
 | linkage | has `onUpdateTheoretical` passing the theoretical price back to the parent | none |
 
 ### Design decisions already confirmed with the user
@@ -99,12 +99,12 @@ The user's product instinct: **Day3 = Day2 + the barrier layer**. The hope is "t
    - **The barrier row's "unlock feel"**: when mode=barrier, the parameter column adds a "barrier price" row, highlighted in **gold** + a **"🔓 added today / NEW" badge** (the user-chosen option: highlighted row + NEW badge, no animation).
    - **Tree render branches by mode**: barrier mode shows knock-out red coloring (reuse the existing node render at 4426-4452 + the links coloring at 4412-4423); vanilla mode reuses the existing simple nodes.
    - **Bottom branches by mode**: vanilla mode renders the Day2 quote input area (currently 4255-4312, depends on selectedQuote/quoteAnalysis/onUpdateQuote/marketPreview/pricingPreview, and keeps "teaching anchor / model reference" etc.); barrier mode renders the comparison card (currently 4455-4478).
-   - **builder selection**: mode=barrier uses the barrier builder, vanilla uses the vanilla builder (or unify on the barrier builder — it's a superset — but don't show barrier-related fields in vanilla mode, and be careful that nodes don't misjudge knocked when vanilla has no barrier parameter; the safest is to keep both builders and select by mode).
+   - **builder selection**: mode=barrier uses the barrier builder, vanilla uses the vanilla builder (or unify on the barrier builder, since it's a superset, but don't show barrier-related fields in vanilla mode, and be careful that nodes don't misjudge knocked when vanilla has no barrier parameter; the safest is to keep both builders and select by mode).
    - **steps cap**: vanilla 3 / barrier 6 (keep the difference, put it in the mode check).
    - **`onUpdateTheoretical` linkage**: only needed in vanilla mode (Day2 quote-scoring linkage). barrier mode just doesn't pass it (the effect already null-checks).
 2. **Defaults all set to minimum values** (the player fills them in themselves). The barrier mode's barrier default also uses its minimum value (the barrier min in inputMeta, currently 1000).
 3. **Merge the data desk into a generic component**: change `Day2ResearchTerminalPanel`(3634) into `ResearchTerminalPanel({ title, accent, taskText, cards })`, with Day2 and Day3 passing different data. `researchCards`(3574) is kept for Day2, add `day3ResearchCards`.
-4. **Add a Day3 data desk stage** `day3_research_terminal`, inserted **after `day3_lesson_knock_out` and before `day3_lesson_compare_vanilla` (the calculator)** — so that "look up the barrier parameters → immediately fill the calculator" flows continuously (this is exactly the break point Day2 didn't get right and the user complained about; Day3 nails it in one step).
+4. **Add a Day3 data desk stage** `day3_research_terminal`, inserted **after `day3_lesson_knock_out` and before `day3_lesson_compare_vanilla` (the calculator)**, so that "look up the barrier parameters → immediately fill the calculator" flows continuously (this is exactly the break point Day2 didn't get right and the user complained about; Day3 nails it in one step).
 5. **Maturity**: Day2 = 1 month (T≈0.08), Day3 = 3 months (T=0.25). Write these **real values** on the data cards for the player to look up; the calculator defaults are still minimum-value placeholders.
 6. **Day3 data desk also feeds minimum values into the calculator**, the player looks up the parameters (including barrier) from the Day3 data desk and fills them in themselves.
 

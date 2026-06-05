@@ -2,7 +2,7 @@
 
 > Written for the next Claude taking over
 > Date: 2026-05-31
-> Project: `trader-simulator-day1` — a React single-page app that teaches barrier options through gamification
+> Project: `trader-simulator-day1`, a React single-page app that teaches barrier options through gamification
 > User: HKBU Fin 7870 group assignment, currently under iterative development
 
 ---
@@ -19,10 +19,10 @@ This is a **gamified options teaching simulator**. The player takes on the role 
 
 **The teammate's math-engine materials** (reusable real data):
 `e:\HKBU\Trimester 3\Derivatives\central-trader-en\central-trader-en\`
-- `data/hsi_2020_covid.csv` — real HSI daily bars
-- `data/vhsi_history.csv` — real VHSI volatility index (2003–2026)
-- `data/option_chain_current.csv` — real HSI option chain
-- `data/hsi_full_history.csv` — full HSI history
+- `data/hsi_2020_covid.csv`: real HSI daily bars
+- `data/vhsi_history.csv`: real VHSI volatility index (2003 to 2026)
+- `data/option_chain_current.csv`: real HSI option chain
+- `data/hsi_full_history.csv`: full HSI history
 
 **Review & change log**: `e:\HKBU\Trimester 3\Derivatives\trader-simulator-day1\REVIEW-AND-CHANGES.md`
 (It contains ✅ markers for completed items along with detailed notes; read it first)
@@ -58,7 +58,7 @@ The following has already been fixed and verified via `npm run build`:
 Day 2's binomial tree calculator and the quote box below it **were not actually linked**.
 - After changing calculator parameters, the "model reference" number would change accordingly (e.g. to 349.6)
 - But the scoring function `getQuoteAnalysis()` always judged quote quality using the hard-coded `day2Config.quoteRules.theoreticalPrice = 186`
-- Result: the player changed calculator parameters, saw "model reference 349.6", quoted 260 but was judged "too expensive C" — because the scoring secretly compared 260 vs 186, completely ignoring the calculator
+- Result: the player changed calculator parameters, saw "model reference 349.6", quoted 260 but was judged "too expensive C", because the scoring secretly compared 260 vs 186, completely ignoring the calculator
 
 **Root cause** (code location):
 ```js
@@ -90,7 +90,7 @@ Make the scoring follow the calculator's live theoretical price. This requires:
 - Verified via `npm run build`
 
 **Background**:
-The user proposed a great product idea — before the player fills in the calculator, there should be a "data desk" page where the player **looks up for themselves** the key parameters needed for pricing (interest rate, volatility, spot price, tenor, etc.), instead of being handed pre-filled numbers. Only this way teaches the real trader skill of "sourcing the inputs".
+The user proposed a great product idea: before the player fills in the calculator, there should be a "data desk" page where the player **looks up for themselves** the key parameters needed for pricing (interest rate, volatility, spot price, tenor, etc.), instead of being handed pre-filled numbers. Only this way teaches the real trader skill of "sourcing the inputs".
 
 **Design (MVP version)**:
 Before Day 2's `day2_tree_explainer` stage, add a `day2_research_terminal` stage that shows a simulated "Central Data Desk" page, containing 4 info cards:
@@ -133,7 +133,7 @@ A teaching note was added after the `Day2ReportPanel` "Simulated Market Path" bl
 
 ### 🔵 Task 4 (✅ code done, Day2 tested; Day3 pending live test): Calculator layering + Day3 data desk
 
-**Status (updated in the 2026-06-01 follow-up session)**: batch one (generalizing the data desk + the Day3 data desk stage) and batch two (merging the calculators into `BinomialPricingTool({mode})`) are **both done and pass build**. In addition, a batch of Day2 experience changes was made (stage order adjustment, blind quoting at the quote desk + story-consequence feedback, a new market playback page, the VHSI 24%→16% correction, locking step count N). **Day2 has been fully tested by the user in the browser; the Day3 code has been changed but not yet live-tested — next step is to start testing from Day3.**
+**Status (updated in the 2026-06-01 follow-up session)**: batch one (generalizing the data desk + the Day3 data desk stage) and batch two (merging the calculators into `BinomialPricingTool({mode})`) are **both done and pass build**. In addition, a batch of Day2 experience changes was made (stage order adjustment, blind quoting at the quote desk + story-consequence feedback, a new market playback page, the VHSI 24%→16% correction, locking step count N). **Day2 has been fully tested by the user in the browser; the Day3 code has been changed but not yet live-tested. The next step is to start testing from Day3.**
 For the detailed checklist, wiring points, and next steps, see the standalone doc: **the "⭐ Latest Status" section at the top of `HANDOFF-calculator-and-day3-dashboard.md` (must read)**.
 
 One-line goal: merge Day2/Day3's two highly duplicated binomial tree calculators into a single component switched by `mode`; Day3 "unlocks" the barrier parameters on top of Day2 (highlighted row + NEW badge); and give Day3 a new data desk stage (4 barrier-specific info cards). Tenor Day2 = 1 month, Day3 = 3 months.
@@ -149,8 +149,8 @@ One-line goal: merge Day2/Day3's two highly duplicated binomial tree calculators
 1. **After every change you must run `npm run build`** and confirm compilation passes before reporting
 2. **Also run `getDiagnostics` after changes** to confirm there are no errors
 3. **After completing each task, mark the corresponding entry as ✅ Changed in `REVIEW-AND-CHANGES.md`** and write a one-line note of what was done
-4. **Do not change the teaching-path `path` arrays** (`day1/2/3/4Config.market.path`) — these are carefully tuned story paths; changing them breaks the drama of the knock-out/MCE
-5. **Do not change the structure of the scoring logic** (`scoringRules`) — only change values and linkage, not the scoring framework
+4. **Do not change the teaching-path `path` arrays** (`day1/2/3/4Config.market.path`); these are carefully tuned story paths, and changing them breaks the drama of the knock-out/MCE
+5. **Do not change the structure of the scoring logic** (`scoringRules`); only change values and linkage, not the scoring framework
 6. **Keep the visuals consistent**: all new components should use the existing `TerminalCard`, `TerminalHeader`, `cn()` and other utility functions; do not introduce a new UI library
 
 ---
@@ -177,7 +177,7 @@ npm run build
 2. **Do Task 1 (the linkage bug) first**; it is the problem the user feels most directly, and it is a prerequisite for Task 2
 3. **After finishing Task 1, demo it to the user first** (describe what changed and how the numbers move), confirm the user is satisfied, then do Task 2
 4. **Before doing Task 2, write a short design proposal for the user to confirm** (what the page looks like, what goes on the 4 cards); start writing code only after the user nods
-5. The user is an HKBU student; **communicate in Chinese**. Technical explanations should be clear but not overly academic — keep a conversational tone
+5. The user is an HKBU student; **communicate in Chinese**. Technical explanations should be clear but not overly academic; keep a conversational tone
 
 ---
 
@@ -197,7 +197,7 @@ trader-simulator-day1/
 central-trader-en/central-trader-en/
 ├── data/
 │   ├── hsi_2020_covid.csv        ← real HSI (2019-11 ~ 2020-04)
-│   ├── vhsi_history.csv          ← real VHSI (2003–2026, 5600+ rows)
+│   ├── vhsi_history.csv          ← real VHSI (2003 to 2026, 5600+ rows)
 │   ├── option_chain_current.csv  ← real option chain
 │   └── hsi_full_history.csv      ← full HSI history
 └── analysis_report_step1-7.md    ← the teammate's math-engine analysis report
@@ -205,4 +205,4 @@ central-trader-en/central-trader-en/
 
 ---
 
-Good luck. Whenever something is uncertain, read the code before acting — don't guess.
+Good luck. Whenever something is uncertain, read the code before acting; don't guess.
