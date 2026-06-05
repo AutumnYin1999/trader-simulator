@@ -2235,7 +2235,7 @@ function TopBar({
     const handleKey = (event) => {
       if (event.key === "Escape") setMenuOpen(false);
     };
-    document.addEventListener("mousedown", handlePointer);
+    document.addEventListener("mousedown", handlePointer, { passive: true });
     document.addEventListener("keydown", handleKey);
     return () => {
       document.removeEventListener("mousedown", handlePointer);
