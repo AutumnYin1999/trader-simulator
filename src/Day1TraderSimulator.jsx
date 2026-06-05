@@ -1902,7 +1902,7 @@ function MatrixCanvas() {
       ctx.fillStyle = "rgba(10, 10, 26, 0.12)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.font = `${fontSize}px JetBrains Mono, monospace`;
-      ctx.fillStyle = "rgba(0, 240, 255, 0.55)";
+      ctx.fillStyle = "rgba(91, 140, 255, 0.55)";
 
       drops.forEach((drop, index) => {
         const char = glyphs[Math.floor(Math.random() * glyphs.length)];
@@ -1929,11 +1929,9 @@ function MatrixCanvas() {
 function GlobalAtmosphere() {
   return (
     <>
-      <MatrixCanvas />
-      <div className="pointer-events-none fixed inset-0 z-[1] bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,240,255,0.018)_2px,rgba(0,240,255,0.018)_4px)]" />
-      <div className="top-glow-line pointer-events-none fixed left-0 top-0 z-20 h-[2px] w-full bg-[linear-gradient(90deg,transparent,#00f0ff,transparent)]" />
-      <div className="pointer-events-none fixed inset-0 z-[2] bg-[radial-gradient(circle_at_50%_35%,rgba(0,240,255,0.08),transparent_34%),linear-gradient(to_bottom,rgba(10,10,26,0.1),rgba(10,10,26,0.92))]" />
-      <div className="pulse-dot fixed left-8 top-8 z-10 h-2 w-2 rounded-full bg-[#00f0ff]" />
+      <div className="pointer-events-none fixed inset-0 z-0 bg-[var(--bg)]" />
+      <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(900px_circle_at_50%_-12%,rgba(91,140,255,0.07),transparent_60%)]" />
+      <div className="pointer-events-none fixed inset-0 z-0 bg-[linear-gradient(rgba(255,255,255,0.016)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.016)_1px,transparent_1px)] [background-size:52px_52px]" />
     </>
   );
 }
@@ -1941,158 +1939,66 @@ function GlobalAtmosphere() {
 function StyleBlock() {
   return (
     <style>{`
-      .font-terminal { font-family: 'JetBrains Mono', monospace; }
-      .font-cn { font-family: 'Noto Sans SC', sans-serif; }
-      .top-glow-line { animation: glow-line 3s ease-in-out infinite; }
-      .pulse-dot { animation: pulse 2s ease-in-out infinite; }
-      .scene-enter { animation: fade-in-up 0.45s ease both; }
-      .market-node { animation: node-pop 0.35s ease both; }
-      .market-chart-panel {
-        position: relative;
-        overflow: hidden;
+      :root {
+        --bg: #0b1018;
+        --bg-elev: #0e1521;
+        --surface: #141c2a;
+        --surface-2: #1a2433;
+        --border: rgba(255,255,255,0.08);
+        --border-strong: rgba(255,255,255,0.15);
+        --ink: #e8edf4;
+        --muted: #9aa7b8;
+        --faint: #6b7888;
+        --accent: #5b8cff;
+        --accent-strong: #3f76e6;
+        --accent-weak: rgba(91,140,255,0.12);
+        --pos: #34c77b;
+        --neg: #f1646c;
+        --notice: #e0a64a;
+        --shadow: 0 1px 2px rgba(0,0,0,0.25), 0 12px 30px rgba(0,0,0,0.30);
       }
-      .market-chart-panel::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        background: linear-gradient(90deg, transparent, rgba(0,240,255,0.1), transparent);
-        transform: translateX(-100%);
-        animation: market-scan 1.25s linear infinite;
-        opacity: 0.65;
+      html, body { background: var(--bg); color: var(--ink); }
+      body {
+        font-family: 'IBM Plex Sans', system-ui, -apple-system, Segoe UI, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
       }
-      .live-price-pulse {
-        animation: live-price-pulse 0.7s ease-in-out infinite;
-      }
-      .chart-tension {
-        animation: chart-tension 0.42s ease-in-out infinite alternate;
-      }
-      .opening-curtain {
-        position: fixed;
-        inset: 0;
-        z-index: 8;
-        pointer-events: none;
-        background:
-          linear-gradient(180deg, rgba(0,240,255,0.18), transparent 18%, transparent 82%, rgba(255,215,0,0.12)),
-          repeating-linear-gradient(90deg, rgba(0,240,255,0.08) 0 1px, transparent 1px 18px),
-          #050816;
-        transform: translateY(-105%);
-        animation: curtain-drop 1.05s cubic-bezier(.18,.82,.22,1) forwards,
-          curtain-exit 0.9s cubic-bezier(.75,0,.35,1) 1.25s forwards;
-        box-shadow: 0 24px 70px rgba(0,240,255,0.2);
-      }
-      .opening-curtain::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        height: 2px;
-        width: 100%;
-        background: linear-gradient(90deg, transparent, #00f0ff, #ffd700, transparent);
-        box-shadow: 0 0 24px rgba(0,240,255,0.55);
-      }
-      .title-stage {
-        position: relative;
-        opacity: 0;
-        animation: title-reveal 0.8s ease 1.45s forwards;
-      }
-      .title-stage .title-char {
-        display: inline-block;
-        opacity: 0;
-        transform: translateY(40px);
-        animation: char-rise 0.6s ease forwards;
-      }
-      .title-stage .title-shadow {
-        position: absolute;
-        inset: 0;
-        color: #00f0ff;
-        filter: blur(20px);
-        opacity: 0.3;
-        z-index: -1;
-      }
-      .title-stage .title-glow {
-        background: linear-gradient(90deg, #00f0ff, #ffd700);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      .title-stage .title-glow .title-char {
-        background: linear-gradient(90deg, #00f0ff, #ffd700);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        -webkit-text-fill-color: transparent;
-      }
-      .title-stage .title-shadow .title-char {
-        color: #00f0ff;
-        -webkit-text-fill-color: #00f0ff;
-      }
-      .title-stage.title-ready {
-        opacity: 1;
-      }
-      .title-stage.title-ready .title-char {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .title-location {
-        opacity: 0;
-        animation: fade-in-down 0.8s ease 1.05s forwards;
-      }
-      .title-subtitle {
-        opacity: 0;
-        animation: fade-in 0.8s ease 2.35s forwards;
-      }
-      .title-footer {
-        opacity: 0;
-        animation: fade-in 0.8s ease 4s forwards;
-      }
+      .font-terminal { font-family: 'JetBrains Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+      .font-cn { font-family: 'IBM Plex Sans', system-ui, sans-serif; }
+      .num { font-family: 'JetBrains Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+      .scene-enter { animation: fade-in-up 0.4s ease both; }
+      .market-node { animation: node-pop 0.3s ease both; }
+      .top-glow-line { display: none; }
+      .pulse-dot { display: none; }
+      .opening-curtain { display: none; }
+      .market-chart-panel { position: relative; overflow: hidden; }
+      .market-chart-panel::after { content: none; }
+      .live-price-pulse { animation: none; }
+      .chart-tension { animation: none; }
+      .shine-button { position: relative; overflow: hidden; }
+      .shine-button::before { content: none; }
+      .handbook-new { box-shadow: 0 0 0 1px var(--accent), 0 0 0 4px var(--accent-weak); }
+      .title-stage { position: relative; opacity: 0; animation: fade-in 0.6s ease 0.1s forwards; }
+      .title-stage .title-char { display: inline-block; }
+      .title-stage .title-shadow { display: none; }
+      .title-stage .title-glow { color: var(--ink); }
+      .title-stage.title-ready { opacity: 1; }
+      .title-location { opacity: 0; animation: fade-in-down 0.6s ease 0.05s forwards; }
+      .title-subtitle { opacity: 0; animation: fade-in 0.6s ease 0.3s forwards; }
+      .title-footer { opacity: 0; animation: fade-in 0.6s ease 0.5s forwards; }
       .cursor {
         display: inline-block;
         width: 2px;
-        height: 1.1em;
+        height: 1.05em;
         margin-left: 2px;
-        background: #00f0ff;
+        background: var(--accent);
         vertical-align: text-bottom;
-        animation: blink 0.8s step-end infinite;
+        animation: blink 1s step-end infinite;
       }
-      .shine-button { position: relative; overflow: hidden; }
-      .shine-button::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.34), transparent);
-        transition: left 0.55s ease;
-      }
-      .shine-button:hover::before { left: 100%; }
-      .handbook-new { animation: handbook-pulse 1.2s ease-in-out infinite; }
-      @keyframes glow-line {
-        0%, 100% { opacity: 0.45; }
-        50% { opacity: 1; }
-      }
-      @keyframes pulse {
-        0%, 100% { opacity: 0.35; box-shadow: 0 0 4px #00f0ff; }
-        50% { opacity: 1; box-shadow: 0 0 12px #00f0ff, 0 0 24px rgba(0,240,255,0.35); }
-      }
-      @keyframes curtain-drop {
-        from { transform: translateY(-105%); }
-        to { transform: translateY(0); }
-      }
-      @keyframes curtain-exit {
-        from { transform: translateY(0); }
-        to { transform: translateY(105%); }
-      }
-      @keyframes title-reveal {
-        from { opacity: 0; }
-        to { opacity: 1; }
-      }
-      @keyframes char-rise {
-        to { opacity: 1; transform: translateY(0); }
-      }
+      :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+      ::selection { background: var(--accent-weak); }
       @keyframes fade-in-down {
-        from { opacity: 0; transform: translateY(-18px); }
+        from { opacity: 0; transform: translateY(-12px); }
         to { opacity: 1; transform: translateY(0); }
       }
       @keyframes fade-in {
@@ -2100,32 +2006,23 @@ function StyleBlock() {
         to { opacity: 1; }
       }
       @keyframes fade-in-up {
-        from { opacity: 0; transform: translateY(14px); }
+        from { opacity: 0; transform: translateY(10px); }
         to { opacity: 1; transform: translateY(0); }
       }
       @keyframes node-pop {
-        from { opacity: 0; transform: translateY(8px) scale(0.92); }
+        from { opacity: 0; transform: translateY(6px) scale(0.96); }
         to { opacity: 1; transform: translateY(0) scale(1); }
-      }
-      @keyframes market-scan {
-        from { transform: translateX(-100%); }
-        to { transform: translateX(100%); }
-      }
-      @keyframes live-price-pulse {
-        0%, 100% { text-shadow: 0 0 8px rgba(0,240,255,0.35); }
-        50% { text-shadow: 0 0 18px rgba(0,240,255,0.9), 0 0 32px rgba(0,240,255,0.35); }
-      }
-      @keyframes chart-tension {
-        from { filter: drop-shadow(0 0 5px rgba(0,240,255,0.35)); }
-        to { filter: drop-shadow(0 0 13px rgba(255,215,0,0.35)); }
       }
       @keyframes blink {
         0%, 100% { opacity: 1; }
         50% { opacity: 0; }
       }
-      @keyframes handbook-pulse {
-        0%, 100% { box-shadow: 0 0 12px rgba(255,215,0,0.18); }
-        50% { box-shadow: 0 0 26px rgba(255,215,0,0.45); }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
       }
     `}</style>
   );
@@ -2133,17 +2030,17 @@ function StyleBlock() {
 
 function PrimaryButton({ children, className = "", tone = "cyan", ...props }) {
   const tones = {
-    cyan: "bg-[linear-gradient(135deg,#00f0ff,#00c8ff)] text-[#0a0a1a] hover:shadow-[0_0_28px_rgba(0,240,255,0.4)]",
-    gold: "bg-[linear-gradient(135deg,#ffd700,#ff9f1a)] text-[#0a0a1a] hover:shadow-[0_0_28px_rgba(255,215,0,0.35)]",
-    red: "border border-red-500/50 bg-red-500/10 text-red-300 hover:bg-red-500/16 hover:shadow-[0_0_24px_rgba(239,68,68,0.3)]",
-    ghost: "border border-cyan-400/30 bg-cyan-400/[0.04] text-[#00f0ff] hover:bg-cyan-400/[0.09] hover:shadow-[0_0_22px_rgba(0,240,255,0.18)]",
+    cyan: "bg-[var(--accent-strong)] text-white hover:bg-[var(--accent)]",
+    gold: "border border-[var(--notice)]/45 bg-[var(--notice)]/10 text-[var(--notice)] hover:bg-[var(--notice)]/16",
+    red: "border border-[var(--neg)]/45 bg-[var(--neg)]/10 text-[var(--neg)] hover:bg-[var(--neg)]/16",
+    ghost: "border border-[var(--border-strong)] bg-white/[0.02] text-[var(--ink)] hover:bg-white/[0.06]",
   };
 
   return (
     <button
       type="button"
       className={cn(
-        "shine-button rounded-md px-6 py-3 text-sm font-bold tracking-[0.14em] transition duration-300 hover:-translate-y-0.5 disabled:pointer-events-none disabled:opacity-40",
+        "rounded-md px-6 py-3 text-sm font-semibold tracking-[0.01em] transition-colors duration-200 disabled:pointer-events-none disabled:opacity-40",
         tones[tone],
         className,
       )}
@@ -2158,7 +2055,7 @@ function TerminalCard({ children, className = "" }) {
   return (
     <div
       className={cn(
-        "rounded-lg border border-cyan-400/15 bg-cyan-400/[0.04] shadow-[0_8px_25px_rgba(0,240,255,0.08)]",
+        "rounded-[10px] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]",
         className,
       )}
     >
@@ -2169,9 +2066,9 @@ function TerminalCard({ children, className = "" }) {
 
 function TerminalHeader({ label, accent }) {
   return (
-    <div className="font-terminal flex flex-wrap items-center justify-between gap-2 border-b border-white/10 bg-[#1a1c24] px-4 py-3 text-sm text-slate-400">
+    <div className="font-terminal flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
       <span>{label}</span>
-      {accent && <span className="text-[#00f0ff]">{accent}</span>}
+      {accent && <span className="normal-case text-[var(--accent)]">{accent}</span>}
     </div>
   );
 }
@@ -2210,17 +2107,17 @@ function SideData({ currentDay }) {
     <>
       <div className="font-terminal fixed left-8 top-1/2 z-10 hidden -translate-y-1/2 text-sm leading-8 text-slate-700 lg:block">
         <div className="text-slate-600">HSI</div>
-        <div className="text-[#00f0ff]">21,500.00</div>
+        <div className="text-[#5b8cff]">21,500.00</div>
         <div className="text-green-500">{side.leftStatus}</div>
-        <div className="text-[#ffd700]">{side.dayLabel}</div>
+        <div className="text-[#c9a44c]">{side.dayLabel}</div>
         <br />
         <div className="text-slate-600">Mode</div>
-        <div className="text-[#00f0ff]">{side.mode}</div>
+        <div className="text-[#5b8cff]">{side.mode}</div>
       </div>
 
       <div className="font-terminal fixed right-8 top-1/2 z-10 hidden -translate-y-1/2 text-right text-sm leading-8 text-slate-700 lg:block">
         <div className="text-slate-600">Product</div>
-        <div className="text-[#00f0ff]">
+        <div className="text-[#5b8cff]">
           {currentDay === 4
             ? "Vanilla / Barrier"
             : currentDay === 3
@@ -2229,10 +2126,10 @@ function SideData({ currentDay }) {
         </div>
         <br />
         <div className="text-slate-600">Topic</div>
-        <div className="text-[#00f0ff]">{side.topic}</div>
+        <div className="text-[#5b8cff]">{side.topic}</div>
         <br />
         <div className="text-slate-600">Desk</div>
-        <div className="text-[#00f0ff]">Central</div>
+        <div className="text-[#5b8cff]">Central</div>
       </div>
     </>
   );
@@ -2250,8 +2147,8 @@ function TopBar({
   const stageMeta = stageConfig[stage] ?? { label: "Standby" };
 
   return (
-    <div className="mx-auto flex w-full max-w-[1180px] flex-wrap items-center justify-between gap-3 border-b border-cyan-400/15 py-4 text-sm md:mt-5">
-      <div className="font-terminal tracking-[0.16em] text-[#00f0ff]">
+    <div className="mx-auto flex w-full max-w-[1180px] flex-wrap items-center justify-between gap-3 border-b border-white/10 py-4 text-sm md:mt-5">
+      <div className="font-terminal tracking-[0.16em] text-[#5b8cff]">
         Day {currentDay}: {dayConfig.title}
       </div>
       <div className="font-terminal text-slate-500">
@@ -2262,7 +2159,7 @@ function TopBar({
           type="button"
           onClick={onGoBack}
           disabled={!canGoBack}
-          className="font-terminal rounded-md border border-cyan-400/25 bg-cyan-400/[0.04] px-4 py-2 text-xs font-bold tracking-[0.16em] text-[#00f0ff] transition duration-300 hover:bg-cyan-400/[0.09] disabled:pointer-events-none disabled:opacity-35"
+          className="font-terminal rounded-md border border-white/15 bg-white/[0.03] px-4 py-2 text-xs font-bold tracking-[0.16em] text-[#5b8cff] transition duration-300 hover:bg-white/[0.06] disabled:pointer-events-none disabled:opacity-35"
         >
           Back
         </button>
@@ -2272,8 +2169,8 @@ function TopBar({
           className={cn(
             "font-terminal rounded-md border px-4 py-2 text-xs font-bold tracking-[0.16em] transition duration-300",
             handbookHasNew
-              ? "handbook-new border-[#ffd700]/70 bg-[#ffd700]/15 text-[#ffd700]"
-              : "border-cyan-400/25 bg-cyan-400/[0.04] text-[#00f0ff] hover:bg-cyan-400/[0.09]",
+              ? "handbook-new border-[#c9a44c]/70 bg-[#c9a44c]/15 text-[#c9a44c]"
+              : "border-white/15 bg-white/[0.03] text-[#5b8cff] hover:bg-white/[0.06]",
           )}
         >
           Open Handbook {handbookHasNew ? "/ New" : ""}
@@ -2289,18 +2186,18 @@ function MentorPanel({ text, skipSignal }) {
       <TerminalHeader label="MENTOR PANEL / MARTIN" accent="Online" />
       <div className="p-5">
         <div className="mb-5 flex items-center gap-4">
-          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#00f0ff,#0088aa)] font-terminal text-2xl font-black text-[#0a0a1a] shadow-[0_0_28px_rgba(0,240,255,0.25)]">
+          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#5b8cff,#2e4a8f)] font-terminal text-2xl font-black text-[#0b1018] shadow-[0_0_28px_rgba(91,140,255,0.25)]">
             M
           </div>
           <div>
-            <div className="font-terminal text-sm tracking-[0.18em] text-[#00f0ff]">
+            <div className="font-terminal text-sm tracking-[0.18em] text-[#5b8cff]">
               Mentor MARTIN
             </div>
             <div className="mt-1 text-xs text-slate-500">New Trader Onboarding</div>
           </div>
         </div>
 
-        <div className="min-h-36 rounded-md border-l-4 border-[#00f0ff] bg-cyan-400/[0.04] p-4 text-base leading-8 text-slate-300">
+        <div className="min-h-36 rounded-md border-l-4 border-[#5b8cff] bg-white/[0.03] p-4 text-base leading-8 text-slate-300">
           <TypewriterText text={text} skipSignal={skipSignal} />
         </div>
       </div>
@@ -2680,7 +2577,7 @@ function BottomActionBar({
   };
 
   return (
-    <div className="mx-auto mb-5 flex w-full max-w-[1180px] flex-wrap items-center justify-end gap-3 border-t border-cyan-400/15 pt-4">
+    <div className="mx-auto mb-5 flex w-full max-w-[1180px] flex-wrap items-center justify-end gap-3 border-t border-white/10 pt-4">
       {actionSets[stage]}
     </div>
   );
@@ -2695,10 +2592,10 @@ function HandbookOverlay({ open, unlockedEntries, onClose }) {
 
   return (
     <div className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm">
-      <div className="absolute inset-y-0 right-0 flex w-full max-w-2xl flex-col border-l border-cyan-400/20 bg-[#0a0a1a]/95 shadow-[0_0_45px_rgba(0,240,255,0.18)]">
-        <div className="flex items-center justify-between border-b border-white/10 bg-[#1a1c24] px-5 py-4">
+      <div className="absolute inset-y-0 right-0 flex w-full max-w-2xl flex-col border-l border-white/12 bg-[#0b1018]/95 shadow-[0_0_45px_rgba(91,140,255,0.18)]">
+        <div className="flex items-center justify-between border-b border-white/10 bg-[#1a2433] px-5 py-4">
           <div>
-            <div className="font-terminal text-sm tracking-[0.2em] text-[#00f0ff]">
+            <div className="font-terminal text-sm tracking-[0.2em] text-[#5b8cff]">
               Trader's Handbook
             </div>
             <div className="mt-1 text-xs text-slate-500">Martin's Stage Rulebook</div>
@@ -2722,8 +2619,8 @@ function HandbookOverlay({ open, unlockedEntries, onClose }) {
             <div className="space-y-5">
               {entries.map((entry) => (
                 <div key={entry.id} className="scene-enter">
-                  <div className="mb-4 rounded-md border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
-                    <div className="font-terminal text-xs tracking-[0.18em] text-[#ffd700]">
+                  <div className="mb-4 rounded-md border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-4">
+                    <div className="font-terminal text-xs tracking-[0.18em] text-[#c9a44c]">
                       Unlocked
                     </div>
                     <h2 className="mt-2 text-2xl font-black text-slate-100">{entry.title}</h2>
@@ -2733,15 +2630,15 @@ function HandbookOverlay({ open, unlockedEntries, onClose }) {
                     {entry.sections.map((section) => (
                       <section
                         key={section.title}
-                        className="rounded-lg border border-cyan-400/15 bg-cyan-400/[0.04] p-4"
+                        className="rounded-lg border border-white/10 bg-white/[0.03] p-4"
                       >
-                        <h3 className="font-terminal mb-3 text-sm tracking-[0.16em] text-[#00f0ff]">
+                        <h3 className="font-terminal mb-3 text-sm tracking-[0.16em] text-[#5b8cff]">
                           {section.title}
                         </h3>
                         <ul className="space-y-2 text-sm leading-6 text-slate-300">
                           {section.bullets.map((bullet) => (
                             <li key={bullet} className="flex gap-2">
-                              <span className="text-[#ffd700]">-</span>
+                              <span className="text-[#c9a44c]">-</span>
                               <span>{bullet}</span>
                             </li>
                           ))}
@@ -2759,77 +2656,33 @@ function HandbookOverlay({ open, unlockedEntries, onClose }) {
   );
 }
 
-function StartScreen({ onStart, skipSignal }) {
-  const [introDone, setIntroDone] = useState(false);
-  const [titleReady, setTitleReady] = useState(false);
-  const titleChars = "Central Trader".split("");
+function StartScreen({ onStart }) {
   const introText =
-    "A financial storm is closing in. You're the new options trader at a Central investment bank. On your first day, your mentor Martin will teach you the most basic vanilla options and walk you through meeting your first client.";
-
-  useEffect(() => {
-    const timerId = window.setTimeout(() => setTitleReady(true), 2800);
-    return () => window.clearTimeout(timerId);
-  }, []);
+    "You are a new options trader at a Central investment bank during the 1997 Asian financial crisis. Over four days, your mentor Martin guides you from vanilla calls and puts to binomial pricing and barrier options, with a real client to advise at each step.";
 
   return (
-    <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 text-center">
-      <div className="opening-curtain" />
-      <div className="title-location font-terminal mb-6 text-sm uppercase tracking-[0.32em] text-[#00f0ff]">
+    <div className="scene-enter relative z-10 mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center px-6 py-20 text-center">
+      <div className="font-terminal mb-5 text-xs uppercase tracking-[0.26em] text-[var(--accent)]">
         Hong Kong · Central Options Desk
       </div>
-      <div
-        className={cn(
-          "title-stage text-5xl font-black tracking-[0.12em] md:text-7xl",
-          titleReady && "title-ready",
-        )}
-      >
-        <div className="title-shadow" aria-hidden="true">
-          {titleChars.map((char, index) => (
-            <span
-              key={`shadow-${char}-${index}`}
-              className="title-char"
-              style={{ animationDelay: `${1.65 + index * 0.15}s` }}
-            >
-              {char}
-            </span>
-          ))}
-        </div>
-        <h1 className="title-glow">
-          {titleChars.map((char, index) => (
-            <span
-              key={`glow-${char}-${index}`}
-              className="title-char"
-              style={{ animationDelay: `${1.65 + index * 0.15}s` }}
-            >
-              {char}
-            </span>
-          ))}
-        </h1>
+      <h1 className="text-5xl font-bold tracking-tight text-[var(--ink)] md:text-6xl">
+        Central Trader
+      </h1>
+      <div className="mt-4 text-sm font-medium uppercase tracking-[0.16em] text-[var(--notice)]">
+        Chapter 1 · 1997 Asian Financial Crisis
       </div>
-      <div className="title-subtitle font-terminal mt-5 text-xl tracking-[0.32em] text-[#ffd700]">
-        CHAPTER 1 · 1997 Asian Financial Crisis
-      </div>
-      <p className="mt-10 min-h-24 max-w-2xl text-lg leading-9 text-slate-400">
-        <TypewriterText
-          text={introText}
-          speed={36}
-          startDelay={2800}
-          skipSignal={skipSignal}
-          onDone={() => setIntroDone(true)}
-        />
-      </p>
-      <div
-        className={cn(
-          "mt-10 transition duration-500",
-          introDone ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0",
-        )}
-      >
-        <PrimaryButton onClick={onStart} className="px-14 py-4 text-lg">
-          Enter the Game
+      <p className="mt-8 max-w-xl text-lg leading-8 text-[var(--muted)]">{introText}</p>
+      <div className="mt-10 flex flex-col items-center gap-3">
+        <PrimaryButton onClick={onStart} className="px-12 py-3.5 text-base">
+          Start the Simulator
         </PrimaryButton>
+        <span className="text-xs text-[var(--faint)]">
+          A four-day options course, from vanilla calls to barrier options. No finance background required.
+        </span>
       </div>
-      <div className="title-footer font-terminal fixed bottom-8 z-10 text-xs tracking-[0.2em] text-slate-700">
-        <span className="text-[#00f0ff]">FIN 7870</span> · Digital Investfair · <span className="text-[#00f0ff]">HSI OPTIONS</span> · HKEX
+      <div className="mt-16 font-terminal text-xs tracking-[0.14em] text-[var(--faint)]">
+        <span className="text-[var(--accent)]">FIN 7870</span> · Digital Investfair ·{" "}
+        <span className="text-[var(--accent)]">HSI Options</span> · HKEX
       </div>
     </div>
   );
@@ -2840,11 +2693,11 @@ function WelcomePanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="New Hire Check-in / Desk" accent="First Day on the Job" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="flex flex-col items-center justify-center rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-6 text-center">
-          <div className="mb-5 flex h-28 w-28 items-center justify-center rounded-full bg-[linear-gradient(135deg,#00f0ff,#0088aa)] font-terminal text-5xl font-black text-[#0a0a1a] shadow-[0_0_38px_rgba(0,240,255,0.25)]">
+        <div className="flex flex-col items-center justify-center rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-6 text-center">
+          <div className="mb-5 flex h-28 w-28 items-center justify-center rounded-full bg-[linear-gradient(135deg,#5b8cff,#2e4a8f)] font-terminal text-5xl font-black text-[#0b1018] shadow-[0_0_38px_rgba(91,140,255,0.25)]">
             M
           </div>
-          <div className="font-terminal text-sm tracking-[0.18em] text-[#00f0ff]">MENTOR MARTIN</div>
+          <div className="font-terminal text-sm tracking-[0.18em] text-[#5b8cff]">MENTOR MARTIN</div>
           <div className="mt-3 text-2xl font-black text-slate-100">“Welcome aboard, rookie.”</div>
           <p className="mt-4 text-sm leading-7 text-slate-400">
             You don't need to understand the financial markets right away. Today you only learn three things: direction, premium, and suitability.
@@ -2857,8 +2710,8 @@ function WelcomePanel() {
             ["Today's Goal", "Don't touch complex pricing yet; just build up the intuition for vanilla options: Call / Put / Premium."],
             ["Martin's Rule", "Open the handbook when you're unsure. A real trader doesn't memorize by rote; they look up the rules and ask questions."],
           ].map(([label, text]) => (
-            <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
-              <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[#00f0ff]">{label}</div>
+            <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-5">
+              <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[#5b8cff]">{label}</div>
               <div className="text-base leading-8 text-slate-300">{text}</div>
             </div>
           ))}
@@ -2873,13 +2726,13 @@ function BasicsLessonPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Lesson 1 / What Is an Option" accent="Intuition First, No Formulas" />
       <div className="space-y-5 p-6">
-        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
-          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+        <div className="rounded-lg border border-white/10 bg-black/30 p-5">
+          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#5b8cff]">
             Core Analogy: A Future-Choice Voucher
           </div>
           <p className="text-lg leading-9 text-slate-300">
             An option isn't a stock, nor a “guess up or down” button. Think of it as a
-            <span className="font-bold text-[#ffd700]">future-choice voucher</span>:
+            <span className="font-bold text-[#c9a44c]">future-choice voucher</span>:
             you pay a small sum today, and if things turn out in your favor, you use the voucher; if they don't, you can choose not to.
           </p>
         </div>
@@ -2890,14 +2743,14 @@ function BasicsLessonPanel() {
             ["Seller", "Collects money upfront, but may have to honor a commitment later. Today you mainly view it from the buyer's side."],
             ["Premium", "The entry-ticket price the buyer pays. If they're wrong, this money may be lost entirely."],
           ].map(([title, body]) => (
-            <div key={title} className="rounded-lg border border-cyan-400/15 bg-cyan-400/[0.04] p-5">
-              <div className="mb-3 text-xl font-black text-[#00f0ff]">{title}</div>
+            <div key={title} className="rounded-lg border border-white/10 bg-white/[0.03] p-5">
+              <div className="mb-3 text-xl font-black text-[#5b8cff]">{title}</div>
               <div className="text-sm leading-7 text-slate-300">{body}</div>
             </div>
           ))}
         </div>
 
-        <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
+        <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-sm leading-7 text-[#c9a44c]">
           Martin's mnemonic: an option buyer is buying a “right,” not a “guarantee of profit.” Keep this in mind and your later client decisions won't go astray.
         </div>
       </div>
@@ -2909,26 +2762,26 @@ function CallPutVisualExample() {
   const points = [80, 90, 100, 110, 120];
 
   return (
-    <div className="mt-6 rounded-lg border border-cyan-400/15 bg-black/30 p-5">
-      <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+    <div className="mt-6 rounded-lg border border-white/10 bg-black/30 p-5">
+      <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#5b8cff]">
         Chart Example / How the Expiry Price Affects Direction
       </div>
       <div className="grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="rounded-md border border-white/10 bg-[#080d19]/80 p-4">
+        <div className="rounded-md border border-white/10 bg-[#0e1521]/80 p-4">
           <svg viewBox="0 0 620 230" className="h-auto w-full" role="img" aria-label="Call and Put expiry-direction chart">
             <defs>
               <linearGradient id="callZone" x1="0" x2="1">
-                <stop offset="0%" stopColor="rgba(255,215,0,0)" />
-                <stop offset="100%" stopColor="rgba(255,215,0,0.2)" />
+                <stop offset="0%" stopColor="rgba(201,164,76,0)" />
+                <stop offset="100%" stopColor="rgba(201,164,76,0.2)" />
               </linearGradient>
               <linearGradient id="putZone" x1="1" x2="0">
-                <stop offset="0%" stopColor="rgba(0,240,255,0)" />
-                <stop offset="100%" stopColor="rgba(0,240,255,0.2)" />
+                <stop offset="0%" stopColor="rgba(91,140,255,0)" />
+                <stop offset="100%" stopColor="rgba(91,140,255,0.2)" />
               </linearGradient>
             </defs>
 
-            <rect x="35" y="36" width="260" height="118" rx="8" fill="url(#putZone)" stroke="rgba(0,240,255,0.22)" />
-            <rect x="325" y="36" width="260" height="118" rx="8" fill="url(#callZone)" stroke="rgba(255,215,0,0.22)" />
+            <rect x="35" y="36" width="260" height="118" rx="8" fill="url(#putZone)" stroke="rgba(91,140,255,0.22)" />
+            <rect x="325" y="36" width="260" height="118" rx="8" fill="url(#callZone)" stroke="rgba(201,164,76,0.22)" />
 
             <line x1="55" y1="132" x2="565" y2="132" stroke="rgba(226,232,240,0.45)" strokeWidth="2" />
             <line x1="310" y1="55" x2="310" y2="174" stroke="#ffffff" strokeDasharray="5 7" />
@@ -2951,7 +2804,7 @@ function CallPutVisualExample() {
             <path
               d="M 55 87 L 310 132 L 565 132"
               fill="none"
-              stroke="#00f0ff"
+              stroke="#5b8cff"
               strokeWidth="4"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -2959,16 +2812,16 @@ function CallPutVisualExample() {
             <path
               d="M 55 132 L 310 132 L 565 87"
               fill="none"
-              stroke="#ffd700"
+              stroke="#c9a44c"
               strokeWidth="4"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
 
-            <text x="118" y="74" className="fill-[#00f0ff] text-[16px] font-bold">
+            <text x="118" y="74" className="fill-[#5b8cff] text-[16px] font-bold">
               Put Wins
             </text>
-            <text x="420" y="74" className="fill-[#ffd700] text-[16px] font-bold">
+            <text x="420" y="74" className="fill-[#c9a44c] text-[16px] font-bold">
               Call Wins
             </text>
             <text x="310" y="204" textAnchor="middle" className="fill-slate-400 text-[13px]">
@@ -2978,14 +2831,14 @@ function CallPutVisualExample() {
         </div>
 
         <div className="grid gap-3 text-sm leading-7 text-slate-300">
-          <div className="rounded-md border border-cyan-400/20 bg-cyan-400/[0.05] p-4">
-            <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[#00f0ff]">
+          <div className="rounded-md border border-white/12 bg-white/[0.04] p-4">
+            <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[#5b8cff]">
               If the Expiry Price Is Below 100
             </div>
             The put has value, because the client holds the right to “sell at 100”; the lower the market, the more useful that right to sell.
           </div>
-          <div className="rounded-md border border-[#ffd700]/20 bg-[#ffd700]/[0.06] p-4">
-            <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[#ffd700]">
+          <div className="rounded-md border border-[#c9a44c]/20 bg-[#c9a44c]/[0.06] p-4">
+            <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[#c9a44c]">
               If the Expiry Price Is Above 100
             </div>
             The call has value, because the client holds the right to “buy at 100”; the higher the market, the more useful that right to buy.
@@ -3004,13 +2857,13 @@ function IntroPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Lesson 1 / Call and Put" accent="Reading Direction" />
       <div className="p-6">
-        <div className="font-terminal mb-4 text-xs tracking-[0.32em] text-[#00f0ff]">
+        <div className="font-terminal mb-4 text-xs tracking-[0.32em] text-[#5b8cff]">
           Read the Client's Direction First, Then Talk Product
         </div>
-        <h1 className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-4xl font-black tracking-[0.08em] text-transparent md:text-6xl">
+        <h1 className="bg-[linear-gradient(90deg,#5b8cff,#c9a44c)] bg-clip-text text-4xl font-black tracking-[0.08em] text-transparent md:text-6xl">
           CALL / PUT
         </h1>
-        <div className="font-terminal mt-3 text-xl tracking-[0.22em] text-[#ffd700]">
+        <div className="font-terminal mt-3 text-xl tracking-[0.22em] text-[#c9a44c]">
           Bullish and bearish: the first two words a desk hears
         </div>
 
@@ -3019,16 +2872,16 @@ function IntroPanel() {
             <div
               key={card.id}
               className={cn(
-                "rounded-lg border p-5 shadow-[0_0_24px_rgba(0,240,255,0.06)]",
+                "rounded-lg border p-5 shadow-[0_0_24px_rgba(91,140,255,0.06)]",
                 card.tone === "gold"
-                  ? "border-[#ffd700]/30 bg-[#ffd700]/[0.06]"
-                  : "border-cyan-400/25 bg-cyan-400/[0.05]",
+                  ? "border-[#c9a44c]/30 bg-[#c9a44c]/[0.06]"
+                  : "border-white/15 bg-white/[0.04]",
               )}
             >
               <div
                 className={cn(
                   "font-terminal mb-3 text-xs tracking-[0.18em]",
-                  card.tone === "gold" ? "text-[#ffd700]" : "text-[#00f0ff]",
+                  card.tone === "gold" ? "text-[#c9a44c]" : "text-[#5b8cff]",
                 )}
               >
                 {card.code}
@@ -3037,7 +2890,7 @@ function IntroPanel() {
               <ul className="space-y-3 text-sm leading-7 text-slate-300">
                 {card.bullets.map((bullet) => (
                   <li key={bullet} className="flex gap-2">
-                    <span className={card.tone === "gold" ? "text-[#ffd700]" : "text-[#00f0ff]"}>
+                    <span className={card.tone === "gold" ? "text-[#c9a44c]" : "text-[#5b8cff]"}>
                       -
                     </span>
                     <span>{bullet}</span>
@@ -3048,7 +2901,7 @@ function IntroPanel() {
           ))}
         </div>
 
-        <div className="mt-6 rounded-md border-l-4 border-[#00f0ff] bg-cyan-400/[0.04] p-4 text-sm leading-7 text-slate-300">
+        <div className="mt-6 rounded-md border-l-4 border-[#5b8cff] bg-white/[0.03] p-4 text-sm leading-7 text-slate-300">
           Stage one doesn't get into pricing yet; it just builds the desk's most important intuition: a bullish client points to Call, a bearish client points to Put, and the buyer pays a premium for that right.
         </div>
 
@@ -3063,14 +2916,14 @@ function PremiumLessonPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Lesson 2 / Premium" accent="The Buyer's Biggest Mental Account" />
       <div className="grid gap-5 p-6 lg:grid-cols-[1fr_1fr]">
-        <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-5">
-          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#ffd700]">
+        <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-5">
+          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#c9a44c]">
             PREMIUM
           </div>
           <h2 className="mb-4 text-2xl font-black text-slate-100">Pay Upfront to Buy a Future Choice</h2>
           <p className="text-base leading-8 text-slate-300">
             When a client buys a vanilla option, they don't get the opportunity for free; they pay a
-            <span className="font-bold text-[#ffd700]">premium</span> first. It's like a movie ticket:
+            <span className="font-bold text-[#c9a44c]">premium</span> first. It's like a movie ticket:
             buy the ticket and you get to go in; whether the movie turns out good or not, there are no refunds.
           </p>
         </div>
@@ -3081,8 +2934,8 @@ function PremiumLessonPanel() {
             ["Market Direction Wrong", "The option may expire worthless, and the client loses the premium paid."],
             ["Max-Loss Intuition", "A vanilla option buyer usually won't lose more than the premium, but that doesn't make the product a sure win."],
           ].map(([title, body]) => (
-            <div key={title} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
-              <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[#00f0ff]">
+            <div key={title} className="rounded-lg border border-white/10 bg-black/30 p-4">
+              <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[#5b8cff]">
                 {title}
               </div>
               <div className="text-sm leading-7 text-slate-300">{body}</div>
@@ -3090,18 +2943,18 @@ function PremiumLessonPanel() {
           ))}
         </div>
 
-        <div className="lg:col-span-2 rounded-lg border border-cyan-400/15 bg-black/30 p-5">
-          <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#00f0ff]">
+        <div className="lg:col-span-2 rounded-lg border border-white/10 bg-black/30 p-5">
+          <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#5b8cff]">
             A Small Example
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             <div className="rounded-md border border-white/10 bg-white/[0.03] p-4">
               <div className="text-sm text-slate-500">Client Pays</div>
-              <div className="mt-2 text-2xl font-black text-[#ffd700]">186-point premium</div>
+              <div className="mt-2 text-2xl font-black text-[#c9a44c]">186-point premium</div>
             </div>
             <div className="rounded-md border border-white/10 bg-white/[0.03] p-4">
               <div className="text-sm text-slate-500">In Return For</div>
-              <div className="mt-2 text-2xl font-black text-[#00f0ff]">Future upside opportunity</div>
+              <div className="mt-2 text-2xl font-black text-[#5b8cff]">Future upside opportunity</div>
             </div>
             <div className="rounded-md border border-red-500/20 bg-red-500/[0.05] p-4">
               <div className="text-sm text-slate-500">Worst Case</div>
@@ -3125,30 +2978,30 @@ function VanillaRulePanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Lesson 3 / Vanilla Option Rules" accent="Focus on the Expiry Price" />
       <div className="space-y-5 p-6">
-        <div className="rounded-lg border border-cyan-400/15 bg-cyan-400/[0.04] p-5">
-          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+        <div className="rounded-lg border border-white/10 bg-white/[0.03] p-5">
+          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#5b8cff]">
             VANILLA OPTION
           </div>
           <p className="text-lg leading-9 text-slate-300">
             The word “vanilla” matters. A vanilla option depends mainly on the
-            <span className="font-bold text-[#ffd700]">final expiry price</span>.
+            <span className="font-bold text-[#c9a44c]">final expiry price</span>.
             Market swings along the way don't make it disappear. Whether the client profits in the end depends on whether the expiry payoff covers the premium.
           </p>
         </div>
 
         <div className="grid gap-4 md:grid-cols-3">
           {examples.map(([title, path, note]) => (
-            <div key={title} className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
-              <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[#00f0ff]">
+            <div key={title} className="rounded-lg border border-white/10 bg-black/30 p-5">
+              <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[#5b8cff]">
                 {title}
               </div>
-              <div className="mb-3 text-lg font-black text-[#ffd700]">{path}</div>
+              <div className="mb-3 text-lg font-black text-[#c9a44c]">{path}</div>
               <div className="text-sm leading-7 text-slate-300">{note}</div>
             </div>
           ))}
         </div>
 
-        <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
+        <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-sm leading-7 text-[#c9a44c]">
           Don't touch barrier options, knock-outs, binomial trees, or complex pricing today. You just need to read the client's direction and know that a vanilla option buyer's maximum loss is usually the premium.
         </div>
       </div>
@@ -3161,10 +3014,10 @@ function HandbookUpdatedPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="System Message" accent="New Handbook Page Added" />
       <div className="flex min-h-[430px] flex-col items-center justify-center p-6 text-center">
-        <div className="font-terminal mb-4 text-sm tracking-[0.32em] text-[#00f0ff]">
+        <div className="font-terminal mb-4 text-sm tracking-[0.32em] text-[#5b8cff]">
           Handbook Updated
         </div>
-        <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-4xl font-black tracking-[0.1em] text-transparent md:text-5xl">
+        <div className="bg-[linear-gradient(90deg,#5b8cff,#c9a44c)] bg-clip-text text-4xl font-black tracking-[0.1em] text-transparent md:text-5xl">
           Vanilla Option Basics
         </div>
         <p className="mt-8 max-w-2xl text-base leading-8 text-slate-300">
@@ -3192,10 +3045,10 @@ function ClientArrivalPanel() {
       <TerminalCard className="overflow-hidden">
         <TerminalHeader label="Client Profile" accent="Retail Order Flow" />
         <div className="p-5">
-          <div className="mx-auto mb-5 flex h-24 w-24 items-center justify-center rounded-full bg-[linear-gradient(135deg,#ffd700,#ff8c00)] font-terminal text-3xl font-black text-[#0a0a1a] shadow-[0_0_36px_rgba(255,215,0,0.24)]">
+          <div className="mx-auto mb-5 flex h-24 w-24 items-center justify-center rounded-full bg-[linear-gradient(135deg,#c9a44c,#b9863a)] font-terminal text-3xl font-black text-[#0b1018] shadow-[0_0_36px_rgba(201,164,76,0.24)]">
             L
           </div>
-          <div className="mb-5 text-center text-2xl font-bold text-[#ffd700]">{client.name}</div>
+          <div className="mb-5 text-center text-2xl font-bold text-[#c9a44c]">{client.name}</div>
           <div className="space-y-3">
             {profileRows.map(([label, value]) => (
               <div
@@ -3218,9 +3071,9 @@ function ClientArrivalPanel() {
           {client.dialogue.map((line) => (
             <div
               key={line}
-              className="rounded-lg border border-cyan-400/15 bg-black/30 p-4 text-lg leading-8 text-slate-200"
+              className="rounded-lg border border-white/10 bg-black/30 p-4 text-lg leading-8 text-slate-200"
             >
-              <span className="font-terminal mr-2 text-xs text-[#ffd700]">Ms. Li</span>
+              <span className="font-terminal mr-2 text-xs text-[#c9a44c]">Ms. Li</span>
               “{line}”
             </div>
           ))}
@@ -3254,8 +3107,8 @@ function ProductSelectionPanel({
                 className={cn(
                   "rounded-lg border p-5 text-left transition duration-300",
                   selected
-                    ? "border-[#ffd700]/70 bg-[#ffd700]/[0.08] shadow-[0_0_26px_rgba(255,215,0,0.18)]"
-                    : "border-cyan-400/15 bg-black/25 hover:border-cyan-400/45 hover:bg-cyan-400/[0.06]",
+                    ? "border-[#c9a44c]/70 bg-[#c9a44c]/[0.08] shadow-[0_0_26px_rgba(201,164,76,0.18)]"
+                    : "border-white/10 bg-black/25 hover:border-[#5b8cff]/45 hover:bg-white/[0.05]",
                   product.locked && "border-slate-700 bg-slate-900/35 opacity-70",
                 )}
               >
@@ -3270,8 +3123,8 @@ function ProductSelectionPanel({
                         product.locked
                           ? "text-slate-500"
                           : selected
-                            ? "text-[#ffd700]"
-                            : "text-[#00f0ff]",
+                            ? "text-[#c9a44c]"
+                            : "text-[#5b8cff]",
                       )}
                     >
                       {product.name}
@@ -3279,7 +3132,7 @@ function ProductSelectionPanel({
                     <div className="font-terminal mt-1 text-xs text-slate-500">{product.term}</div>
                   </div>
                   {selected && (
-                    <div className="font-terminal rounded border border-[#ffd700]/40 px-2 py-1 text-xs text-[#ffd700]">
+                    <div className="font-terminal rounded border border-[#c9a44c]/40 px-2 py-1 text-xs text-[#c9a44c]">
                       Selected
                     </div>
                   )}
@@ -3288,7 +3141,7 @@ function ProductSelectionPanel({
                 <ul className="mt-4 space-y-2 text-sm leading-6 text-slate-300">
                   {product.description.map((item) => (
                     <li key={item} className="flex gap-2">
-                      <span className="text-[#ffd700]">-</span>
+                      <span className="text-[#c9a44c]">-</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -3310,7 +3163,7 @@ function ProductSelectionPanel({
               "mt-5 rounded-md border-l-4 p-4 text-sm leading-7",
               selectedProduct === correctProductId
                 ? "border-green-400 bg-green-400/[0.06] text-green-300"
-                : "border-[#ffd700] bg-[#ffd700]/[0.06] text-[#ffd700]",
+                : "border-[#c9a44c] bg-[#c9a44c]/[0.06] text-[#c9a44c]",
             )}
           >
             {productMessage}
@@ -3346,15 +3199,15 @@ function RiskDisclosurePanel({
                 className={cn(
                   "flex cursor-pointer items-start gap-4 rounded-lg border p-4 transition duration-300",
                   checked
-                    ? "border-[#00f0ff]/60 bg-cyan-400/[0.08]"
-                    : "border-cyan-400/15 bg-black/25 hover:border-cyan-400/35",
+                    ? "border-[#5b8cff]/60 bg-white/[0.06]"
+                    : "border-white/10 bg-black/25 hover:border-[#5b8cff]/35",
                 )}
               >
                 <input
                   type="checkbox"
                   checked={checked}
                   onChange={() => onToggleDisclosure(item.id)}
-                  className="mt-1 h-4 w-4 accent-cyan-400"
+                  className="mt-1 h-4 w-4 accent-[#5b8cff]"
                 />
                 <div>
                   <div className="font-terminal mb-1 text-xs tracking-[0.16em] text-slate-500">
@@ -3375,7 +3228,7 @@ function RiskDisclosurePanel({
                 ? "border-green-400 bg-green-400/[0.06] text-green-300"
                 : disclosureFeedback.tone === "danger"
                   ? "border-red-500 bg-red-500/[0.06] text-red-300"
-                  : "border-[#ffd700] bg-[#ffd700]/[0.06] text-[#ffd700]",
+                  : "border-[#c9a44c] bg-[#c9a44c]/[0.06] text-[#c9a44c]",
             )}
           >
             {disclosureFeedback.text}
@@ -3454,7 +3307,7 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
             ["Premium", `${market.premium} pts`],
             ["Maturity", market.maturity],
           ].map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
                 {label}
               </div>
@@ -3464,16 +3317,16 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
         </div>
 
         <div className="mt-5 grid gap-4 lg:grid-cols-[0.85fr_1.15fr]">
-          <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-4">
-            <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">
+          <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-4">
+            <div className="font-terminal text-xs tracking-[0.16em] text-[#c9a44c]">
               Selected Product
             </div>
             <div className="mt-2 text-xl font-black text-slate-100">{selectedProductName}</div>
           </div>
           <div className="grid gap-3 sm:grid-cols-3">
-            <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div className="rounded-lg border border-white/10 bg-black/30 p-4">
               <div className="font-terminal text-xs text-slate-500">Live Price</div>
-              <div className="live-price-pulse mt-2 text-3xl font-black text-[#00f0ff]">
+              <div className="live-price-pulse mt-2 text-3xl font-black text-[#5b8cff]">
                 {formatPoints(latestPrice)}
               </div>
             </div>
@@ -3504,10 +3357,10 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
           </div>
         </div>
 
-        <div className="market-chart-panel mt-6 rounded-lg border border-cyan-400/15 bg-[#070d19]/85 p-4">
+        <div className="market-chart-panel mt-6 rounded-lg border border-white/10 bg-[#0e1521]/85 p-4">
           <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
             <div>
-              <div className="font-terminal text-sm tracking-[0.18em] text-[#00f0ff]">
+              <div className="font-terminal text-sm tracking-[0.18em] text-[#5b8cff]">
                 LIVE HSI PATH
               </div>
               <div className="mt-1 text-xs text-slate-500">
@@ -3519,7 +3372,7 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
                 "font-terminal rounded border px-3 py-1 text-xs tracking-[0.16em]",
                 finalShown
                   ? "border-green-400/35 bg-green-400/[0.08] text-green-300"
-                  : "border-[#ffd700]/35 bg-[#ffd700]/[0.08] text-[#ffd700]",
+                  : "border-[#c9a44c]/35 bg-[#c9a44c]/[0.08] text-[#c9a44c]",
               )}
             >
               {finalShown ? "MARKET CLOSED" : "VOLATILITY LIVE"}
@@ -3529,11 +3382,11 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
           <svg viewBox={`0 0 ${chart.width} ${chart.height}`} className="relative z-10 w-full">
             <defs>
               <linearGradient id="marketArea" x1="0" x2="0" y1="0" y2="1">
-                <stop offset="0%" stopColor="rgba(0,240,255,0.28)" />
-                <stop offset="100%" stopColor="rgba(0,240,255,0)" />
+                <stop offset="0%" stopColor="rgba(91,140,255,0.28)" />
+                <stop offset="100%" stopColor="rgba(91,140,255,0)" />
               </linearGradient>
               <filter id="marketGlow" x="-30%" y="-30%" width="160%" height="160%">
-                <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#00f0ff" />
+                <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#5b8cff" />
               </filter>
             </defs>
             <rect width={chart.width} height={chart.height} rx="10" fill="rgba(5,10,24,0.65)" />
@@ -3545,14 +3398,14 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
                   x2={chart.xScale(chartPath.length - 1)}
                   y1={chart.yScale(tick)}
                   y2={chart.yScale(tick)}
-                  stroke={tick === market.strike ? "#ffd700" : "rgba(148,163,184,0.14)"}
+                  stroke={tick === market.strike ? "#c9a44c" : "rgba(148,163,184,0.14)"}
                   strokeDasharray={tick === market.strike ? "6 6" : "2 8"}
                 />
                 <text
                   x="44"
                   y={chart.yScale(tick) + 4}
                   textAnchor="end"
-                  className={tick === market.strike ? "fill-[#ffd700] text-[12px]" : "fill-slate-500 text-[12px]"}
+                  className={tick === market.strike ? "fill-[#c9a44c] text-[12px]" : "fill-slate-500 text-[12px]"}
                 >
                   {formatPoints(tick)}
                 </text>
@@ -3572,7 +3425,7 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
               <polyline
                 points={activeLine}
                 fill="none"
-                stroke="#00f0ff"
+                stroke="#5b8cff"
                 strokeWidth="4"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -3587,16 +3440,16 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
                 cx={chart.xScale(index)}
                 cy={chart.yScale(price)}
                 r={index === activePrices.length - 1 ? 5 : 3}
-                fill={price >= market.strike ? "#ffd700" : "#00f0ff"}
+                fill={price >= market.strike ? "#c9a44c" : "#5b8cff"}
                 opacity={index === activePrices.length - 1 ? 1 : 0.65}
               />
             ))}
 
-            <circle cx={latestX} cy={latestY} r="13" fill="none" stroke="#00f0ff" strokeWidth="2" opacity="0.35">
+            <circle cx={latestX} cy={latestY} r="13" fill="none" stroke="#5b8cff" strokeWidth="2" opacity="0.35">
               <animate attributeName="r" values="9;18;9" dur="0.9s" repeatCount="indefinite" />
               <animate attributeName="opacity" values="0.75;0.1;0.75" dur="0.9s" repeatCount="indefinite" />
             </circle>
-            <text x={latestX + 12} y={latestY - 12} className="fill-[#00f0ff] text-[13px] font-bold">
+            <text x={latestX + 12} y={latestY - 12} className="fill-[#5b8cff] text-[13px] font-bold">
               {formatPoints(latestPrice)}
             </text>
             <text x={chart.xScale(chartPath.length - 1)} y={chart.height - 12} textAnchor="end" className="fill-slate-500 text-[12px]">
@@ -3607,16 +3460,16 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
 
         {finalShown ? (
           <div className="scene-enter mt-6 grid gap-4 md:grid-cols-3">
-            <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div className="rounded-lg border border-white/10 bg-black/30 p-4">
               <div className="font-terminal text-xs text-slate-500">Final Price</div>
-              <div className="mt-2 text-3xl font-black text-[#00f0ff]">
+              <div className="mt-2 text-3xl font-black text-[#5b8cff]">
                 {formatPoints(finalPrice)}
               </div>
             </div>
-            <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div className="rounded-lg border border-white/10 bg-black/30 p-4">
               <div className="font-terminal text-xs text-slate-500">Call Expiry Payoff</div>
               <div className="mt-2 text-lg font-bold text-slate-100">
-                max(22,400 - 22,000, 0) = <span className="text-[#00f0ff]">{payoff}</span>
+                max(22,400 - 22,000, 0) = <span className="text-[#5b8cff]">{payoff}</span>
               </div>
             </div>
             <div className="rounded-lg border border-green-400/20 bg-green-400/[0.05] p-4">
@@ -3627,7 +3480,7 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
             </div>
           </div>
         ) : (
-          <div className="mt-5 rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
+          <div className="mt-5 rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-sm leading-7 text-[#c9a44c]">
             The market is playing out automatically: the price may dip first, snap back, then break out. Don't be scared by the swings along the way; a vanilla option ultimately depends on the expiry price.
           </div>
         )}
@@ -3641,7 +3494,7 @@ function ScoreBadge({ score }) {
     score === "A"
       ? "border-green-400/40 bg-green-400/[0.08] text-green-300"
       : score === "B" || score === "B-"
-        ? "border-[#ffd700]/40 bg-[#ffd700]/[0.08] text-[#ffd700]"
+        ? "border-[#c9a44c]/40 bg-[#c9a44c]/[0.08] text-[#c9a44c]"
         : score === "C"
           ? "border-orange-400/40 bg-orange-400/[0.08] text-orange-300"
           : "border-red-500/40 bg-red-500/[0.08] text-red-300";
@@ -3674,13 +3527,13 @@ function ReportPanel({ score }) {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+          <div className="rounded-lg border border-white/10 bg-black/30 p-4">
             <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
               Product
             </div>
-            <div className="mt-2 text-2xl font-black text-[#00f0ff]">{score.productName}</div>
+            <div className="mt-2 text-2xl font-black text-[#5b8cff]">{score.productName}</div>
           </div>
-          <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+          <div className="rounded-lg border border-white/10 bg-black/30 p-4">
             <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
               Outcome
             </div>
@@ -3694,7 +3547,7 @@ function ReportPanel({ score }) {
             ["Premium", score.premium],
             ["Client P&L", score.clientPnl],
           ].map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
                 {label}
               </div>
@@ -3720,7 +3573,7 @@ function ReportPanel({ score }) {
           ))}
         </div>
 
-        <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
+        <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-base leading-8 text-[#c9a44c]">
           {score.martinComment}
         </div>
       </div>
@@ -3741,16 +3594,16 @@ function CompletePanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Day One Complete" accent="Training Record Saved" />
       <div className="flex min-h-[520px] flex-col items-center justify-center p-6 text-center">
-        <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-5xl font-black tracking-[0.12em] text-transparent md:text-6xl">
+        <div className="bg-[linear-gradient(90deg,#5b8cff,#c9a44c)] bg-clip-text text-5xl font-black tracking-[0.12em] text-transparent md:text-6xl">
           Day One Complete
         </div>
         <div className="mt-8 grid w-full max-w-2xl gap-3 text-left">
           {summary.map((item) => (
             <div
               key={item}
-              className="rounded-md border border-cyan-400/15 bg-black/30 px-4 py-3 text-sm leading-7 text-slate-300"
+              className="rounded-md border border-white/10 bg-black/30 px-4 py-3 text-sm leading-7 text-slate-300"
             >
-              <span className="font-terminal mr-2 text-[#00f0ff]">Rule</span>
+              <span className="font-terminal mr-2 text-[#5b8cff]">Rule</span>
               {item}
             </div>
           ))}
@@ -3772,11 +3625,11 @@ function Day2IntroPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Day Two / Pricing Desk" accent="A Quote Isn't a Gut Call" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="flex flex-col items-center justify-center rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-6 text-center">
-          <div className="mb-5 flex h-28 w-28 items-center justify-center rounded-full bg-[linear-gradient(135deg,#ffd700,#00f0ff)] font-terminal text-5xl font-black text-[#0a0a1a] shadow-[0_0_38px_rgba(255,215,0,0.2)]">
+        <div className="flex flex-col items-center justify-center rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-6 text-center">
+          <div className="mb-5 flex h-28 w-28 items-center justify-center rounded-full bg-[linear-gradient(135deg,#c9a44c,#5b8cff)] font-terminal text-5xl font-black text-[#0b1018] shadow-[0_0_38px_rgba(201,164,76,0.2)]">
             M
           </div>
-          <div className="font-terminal text-sm tracking-[0.18em] text-[#00f0ff]">MARTIN'S MORNING MEETING</div>
+          <div className="font-terminal text-sm tracking-[0.18em] text-[#5b8cff]">MARTIN'S MORNING MEETING</div>
           <div className="mt-3 text-2xl font-black text-slate-100">“Today we learn pricing discipline.”</div>
           <p className="mt-4 text-sm leading-7 text-slate-400">
             Day two doesn't test new products; it tests whether you can put model price, client acceptance, and desk profit on the same table.
@@ -3785,8 +3638,8 @@ function Day2IntroPanel() {
 
         <div className="space-y-3">
           {lines.map((line, index) => (
-            <div key={line} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
-              <div className="font-terminal mb-2 text-xs tracking-[0.18em] text-[#00f0ff]">
+            <div key={line} className="rounded-lg border border-white/10 bg-black/30 p-4">
+              <div className="font-terminal mb-2 text-xs tracking-[0.18em] text-[#5b8cff]">
                 MARTIN / {index + 1}
               </div>
               <div className="text-base leading-8 text-slate-300">{line}</div>
@@ -3825,8 +3678,8 @@ function Day2PricingAnchorPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Lesson 1 / Why We Price" accent="The Theoretical Price Is the Quote Anchor" />
       <div className="space-y-6 p-6">
-        <div className="rounded-lg border border-cyan-400/15 bg-cyan-400/[0.04] p-5">
-          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+        <div className="rounded-lg border border-white/10 bg-white/[0.03] p-5">
+          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#5b8cff]">
             Desk Intuition
           </div>
           <h2 className="text-3xl font-black text-slate-100">A Premium Isn't Just a Number You Pull Out of Thin Air</h2>
@@ -3846,7 +3699,7 @@ function Day2PricingAnchorPanel() {
                   ? "border-green-400/30 bg-green-400/[0.07]"
                   : item.tone === "danger"
                     ? "border-red-500/30 bg-red-500/[0.07]"
-                    : "border-[#ffd700]/30 bg-[#ffd700]/[0.07]",
+                    : "border-[#c9a44c]/30 bg-[#c9a44c]/[0.07]",
               )}
             >
               <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
@@ -3858,7 +3711,7 @@ function Day2PricingAnchorPanel() {
           ))}
         </div>
 
-        <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
+        <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-base leading-8 text-[#c9a44c]">
           For now, treat {theoreticalPrice} points as the theoretical price the model computed. Your job isn't to memorize this number, but to understand: the quote should be adjusted up or down around it.
         </div>
       </div>
@@ -3879,14 +3732,14 @@ function Day2TreePathsLessonPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Lesson 2 / Binomial Tree Paths" accent="Break the Future into Branches" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.95fr_1.05fr]">
-        <div className="rounded-lg border border-cyan-400/15 bg-[#070d19]/80 p-5">
-          <div className="font-terminal mb-5 text-xs tracking-[0.18em] text-[#00f0ff]">
+        <div className="rounded-lg border border-white/10 bg-[#0e1521]/80 p-5">
+          <div className="font-terminal mb-5 text-xs tracking-[0.18em] text-[#5b8cff]">
             Path Diagram
           </div>
           <div className="space-y-4">
-            <div className="mx-auto w-44 rounded-lg border border-[#00f0ff]/50 bg-cyan-400/[0.08] p-4 text-center">
+            <div className="mx-auto w-44 rounded-lg border border-[#5b8cff]/50 bg-white/[0.06] p-4 text-center">
               <div className="font-terminal text-xs text-slate-500">Today</div>
-              <div className="text-2xl font-black text-[#00f0ff]">21,500</div>
+              <div className="text-2xl font-black text-[#5b8cff]">21,500</div>
             </div>
             <div className="grid grid-cols-2 gap-5">
               <div className="rounded-lg border border-green-400/35 bg-green-400/[0.08] p-4 text-center">
@@ -3913,7 +3766,7 @@ function Day2TreePathsLessonPanel() {
                   className={cn(
                     "rounded-md border p-3",
                     index < 2
-                      ? "border-[#ffd700]/35 bg-[#ffd700]/[0.08]"
+                      ? "border-[#c9a44c]/35 bg-[#c9a44c]/[0.08]"
                       : "border-white/10 bg-black/35",
                   )}
                 >
@@ -3926,16 +3779,16 @@ function Day2TreePathsLessonPanel() {
         </div>
 
         <div className="space-y-4">
-          <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-5">
+          <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-5">
             <h2 className="text-2xl font-black text-slate-100">A Binomial Tree Is Not a Crystal Ball</h2>
             <p className="mt-4 text-base leading-8 text-slate-300">
               It doesn't say “the market will definitely rise” or “the market will definitely fall.” It just maps out the possible future routes, so the trader can check, route by route, what the option might be worth.
             </p>
           </div>
           {steps.map(([label, value, note]) => (
-            <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
-              <div className="font-terminal text-xs tracking-[0.16em] text-[#00f0ff]">{label}</div>
-              <div className="mt-2 text-2xl font-black text-[#ffd700]">{value}</div>
+            <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
+              <div className="font-terminal text-xs tracking-[0.16em] text-[#5b8cff]">{label}</div>
+              <div className="mt-2 text-2xl font-black text-[#c9a44c]">{value}</div>
               <div className="mt-2 text-sm leading-7 text-slate-300">{note}</div>
             </div>
           ))}
@@ -3950,8 +3803,8 @@ function Day2BackwardPriceLessonPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Lesson 3 / Payoff and Backward Induction" accent="Compute the Future First, Then Return to Today" />
       <div className="space-y-6 p-6">
-        <div className="rounded-lg border border-cyan-400/15 bg-cyan-400/[0.04] p-5">
-          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+        <div className="rounded-lg border border-white/10 bg-white/[0.03] p-5">
+          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#5b8cff]">
             Vanilla Call Formula
           </div>
           <div className="text-3xl font-black text-slate-100">
@@ -3970,14 +3823,14 @@ function Day2BackwardPriceLessonPanel() {
             ["Work Backward", "Discount the possible future payoffs back to the previous layer, then keep stepping back toward today."],
             ["Today's Price", `After the teaching simplification, the model gives today's theoretical price: ${day2Config.quoteRules.theoreticalPrice} points.`],
           ].map(([title, text]) => (
-            <div key={title} className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-4">
-              <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">{title}</div>
+            <div key={title} className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-4">
+              <div className="font-terminal text-xs tracking-[0.16em] text-[#c9a44c]">{title}</div>
               <p className="mt-3 text-sm leading-7 text-slate-300">{text}</p>
             </div>
           ))}
         </div>
 
-        <div className="rounded-md border-l-4 border-[#00f0ff] bg-cyan-400/[0.06] p-4 text-base leading-8 text-slate-200">
+        <div className="rounded-md border-l-4 border-[#5b8cff] bg-white/[0.05] p-4 text-base leading-8 text-slate-200">
           Don't rush to digest the full pricing formula today. Just follow the tree: the price can go up or down, each path settles at expiry, then you step it back to now, and you get a quote reference.
         </div>
       </div>
@@ -3990,10 +3843,10 @@ function Day2HandbookUpdatedPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="System Notice" accent="New Handbook Page Added" />
       <div className="flex min-h-[430px] flex-col items-center justify-center p-6 text-center">
-        <div className="font-terminal mb-4 text-sm tracking-[0.32em] text-[#00f0ff]">
+        <div className="font-terminal mb-4 text-sm tracking-[0.32em] text-[#5b8cff]">
           Handbook Updated
         </div>
-        <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-4xl font-black tracking-[0.08em] text-transparent md:text-5xl">
+        <div className="bg-[linear-gradient(90deg,#5b8cff,#c9a44c)] bg-clip-text text-4xl font-black tracking-[0.08em] text-transparent md:text-5xl">
           Binomial Tree Pricing
         </div>
         <p className="mt-8 max-w-2xl text-base leading-8 text-slate-300">
@@ -4012,7 +3865,7 @@ const researchCards = [
     id: "market_quote",
     icon: "📈",
     title: "Market Terminal · Market Data",
-    accent: "#00f0ff",
+    accent: "#5b8cff",
     rows: [
       { label: "Underlying", value: "Hang Seng Index (HSI)", note: "" },
       { label: "Spot S₀", value: "21,500 pts", note: "Today's opening reference price" },
@@ -4025,7 +3878,7 @@ const researchCards = [
     id: "contract_spec",
     icon: "📋",
     title: "Contract Spec",
-    accent: "#ffd700",
+    accent: "#c9a44c",
     rows: [
       { label: "Product", value: "HSI European Call Option", note: "European Call, cash-settled" },
       { label: "Strike K", value: "22,000 pts", note: "Client-specified (OTM call)" },
@@ -4044,7 +3897,7 @@ const researchCards = [
     id: "rate_board",
     icon: "🏦",
     title: "Rate Board",
-    accent: "#a78bfa",
+    accent: "#5b8cff",
     rows: [
       { label: "HKD Risk-Free Rate r", value: "2%", note: "Per the 1-month HIBOR rate (teaching-simplified value)" },
       { label: "Reference Benchmark", value: "HIBOR 1M", note: "Hong Kong Interbank Offered Rate, published by the Hong Kong Association of Banks" },
@@ -4056,7 +3909,7 @@ const researchCards = [
     id: "index_profile",
     icon: "📊",
     title: "Index Profile",
-    accent: "#4ade80",
+    accent: "#34c77b",
     rows: [
       { label: "Index", value: "Hang Seng Index (HSI)", note: "HKEX's flagship index, 50 constituent stocks" },
       { label: "Annualized Dividend Yield q", value: "≈ 3.5%", note: "HSI historical average dividend yield (must be deducted for dividend-adjusted pricing)" },
@@ -4072,7 +3925,7 @@ const day3ResearchCards = [
     id: "market_quote_d3",
     icon: "📈",
     title: "Market Terminal · Market Data",
-    accent: "#00f0ff",
+    accent: "#5b8cff",
     rows: [
       { label: "Underlying", value: "Hang Seng Index (HSI)", note: "" },
       { label: "Spot S₀", value: "21,500 pts", note: "Today's opening reference price (same level as yesterday)" },
@@ -4085,7 +3938,7 @@ const day3ResearchCards = [
     id: "barrier_contract",
     icon: "🚧",
     title: "Barrier Contract Card · Barrier Spec",
-    accent: "#ffd700",
+    accent: "#c9a44c",
     isNew: true,
     rows: [
       { label: "Product", value: "Down-and-Out Call Option", note: "Down-and-Out Call, cash-settled" },
@@ -4107,7 +3960,7 @@ const day3ResearchCards = [
     id: "rate_board_d3",
     icon: "🏦",
     title: "Rate Board",
-    accent: "#a78bfa",
+    accent: "#5b8cff",
     rows: [
       { label: "HKD Risk-Free Rate r", value: "2%", note: "Per the 1-month HIBOR rate (teaching-simplified value)" },
       { label: "Reference Benchmark", value: "HIBOR 1M", note: "Hong Kong Interbank Offered Rate, published by the Hong Kong Association of Banks" },
@@ -4145,7 +3998,7 @@ const day4HeResearchCards = [
     id: "market_quote_d4he",
     icon: "📈",
     title: "Market Terminal · Market Data",
-    accent: "#00f0ff",
+    accent: "#5b8cff",
     rows: [
       { label: "Underlying", value: "Hang Seng Index (HSI)", note: "" },
       { label: "Spot S₀", value: "25,000 pts", note: "Months after the COVID crash, the HSI has recovered from its low" },
@@ -4157,7 +4010,7 @@ const day4HeResearchCards = [
     id: "he_order",
     icon: "🚧",
     title: "Mr. He's Order · Client Order",
-    accent: "#ffd700",
+    accent: "#c9a44c",
     rows: [
       { label: "Strike K", value: "25,500 pts", note: "Mr. He wants to exercise at this level" },
       { label: "Acceptable Knock-Out Line", value: "23,500 pts", note: "He said “if it really breaches a certain level and gets voided, I can live with that”" },
@@ -4169,7 +4022,7 @@ const day4HeResearchCards = [
     id: "rate_board_d4he",
     icon: "🏦",
     title: "Rate Board",
-    accent: "#a78bfa",
+    accent: "#5b8cff",
     rows: [
       { label: "HKD Risk-Free Rate r", value: "2%", note: "The same teaching anchor as the previous days" },
     ],
@@ -4192,8 +4045,8 @@ function ResearchTerminalPanel({
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label={title} accent={accent} />
       <div className="space-y-5 p-5">
-        <div className="rounded-md border border-[#00f0ff]/20 bg-[#00f0ff]/[0.04] p-4 text-sm leading-7 text-slate-300">
-          <span className="font-terminal text-[#00f0ff]">Task: </span>
+        <div className="rounded-md border border-[#5b8cff]/20 bg-[#5b8cff]/[0.04] p-4 text-sm leading-7 text-slate-300">
+          <span className="font-terminal text-[#5b8cff]">Task: </span>
           {taskText}
         </div>
 
@@ -4306,11 +4159,11 @@ function Day3ResearchTerminalPanel() {
       taskText={
         <>
           Today's product adds an extra layer: the barrier. On top of yesterday's parameters, you also need to look up one brand-new key number:
-          <span className="font-black text-[#ffd700]"> the barrier level</span>.
+          <span className="font-black text-[#c9a44c]"> the barrier level</span>.
           From the 4 cards below, find for yourself
           <span className="font-black text-slate-100"> S₀, K, T, r, σ </span>
           as well as the
-          <span className="font-black text-[#ffd700]">barrier level</span>
+          <span className="font-black text-[#c9a44c]">barrier level</span>
           , note them down, then enter them into the barrier version of the calculator. Note: today's maturity is 3 months, longer than yesterday.
         </>
       }
@@ -4336,13 +4189,13 @@ function Day2ClientArrivalPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Client Profile" accent="Institutional Client Order" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.85fr_1.15fr]">
-        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
+        <div className="rounded-lg border border-white/10 bg-black/30 p-5">
           <div className="mb-5 flex items-center gap-4">
-            <div className="flex h-20 w-20 items-center justify-center rounded-md border border-[#ffd700]/30 bg-[#ffd700]/[0.08] font-terminal text-4xl font-black text-[#ffd700]">
+            <div className="flex h-20 w-20 items-center justify-center rounded-md border border-[#c9a44c]/30 bg-[#c9a44c]/[0.08] font-terminal text-4xl font-black text-[#c9a44c]">
               W
             </div>
             <div>
-              <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#5b8cff]">
                 Professional Client
               </div>
               <div className="mt-2 text-2xl font-black text-slate-100">{client.name}</div>
@@ -4360,8 +4213,8 @@ function Day2ClientArrivalPanel() {
           </div>
         </div>
 
-        <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-5">
-          <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#ffd700]">
+        <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
+          <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#c9a44c]">
             Client Dialogue
           </div>
           <div className="space-y-4">
@@ -4392,8 +4245,8 @@ function Day2ProductReviewPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Product Confirmation" accent="Client Has Specified a Vanilla Call" />
       <div className="space-y-5 p-6">
-        <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-5">
-          <div className="font-terminal mb-2 text-xs tracking-[0.18em] text-[#ffd700]">
+        <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-5">
+          <div className="font-terminal mb-2 text-xs tracking-[0.18em] text-[#c9a44c]">
             VANILLA CALL
           </div>
           <div className="text-3xl font-black text-slate-100">{product.product}</div>
@@ -4404,7 +4257,7 @@ function Day2ProductReviewPanel() {
 
         <div className="grid gap-4 md:grid-cols-3">
           {rows.map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
                 {label}
               </div>
@@ -4422,7 +4275,7 @@ function BinomialTreeVisual() {
   const nodeMap = Object.fromEntries(tree.nodes.map((node) => [node.id, node]));
 
   return (
-    <div className="rounded-lg border border-cyan-400/15 bg-[#070d19]/80 p-4">
+    <div className="rounded-lg border border-white/10 bg-[#0e1521]/80 p-4">
       <div className="relative h-[980px] w-full min-w-0">
         <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
           {tree.links.map(([fromId, toId]) => {
@@ -4436,7 +4289,7 @@ function BinomialTreeVisual() {
                 y1={from.y}
                 x2={to.x}
                 y2={to.y}
-                stroke={hot ? "rgba(255,215,0,0.48)" : "rgba(0,240,255,0.28)"}
+                stroke={hot ? "rgba(201,164,76,0.48)" : "rgba(91,140,255,0.28)"}
                 strokeWidth={hot ? 0.34 : 0.28}
                 strokeDasharray={hot ? "1.4 1.4" : "1 1.2"}
               />
@@ -4448,20 +4301,20 @@ function BinomialTreeVisual() {
           <div
             key={node.id}
             className={cn(
-              "absolute -translate-x-1/2 -translate-y-1/2 rounded-lg border p-3 shadow-[0_0_24px_rgba(0,240,255,0.08)]",
+              "absolute -translate-x-1/2 -translate-y-1/2 rounded-lg border p-3 shadow-[0_0_24px_rgba(91,140,255,0.08)]",
               node.terminal ? "w-64" : "w-44",
               node.hot
-                ? "border-[#ffd700]/70 bg-[#ffd700]/[0.12]"
+                ? "border-[#c9a44c]/70 bg-[#c9a44c]/[0.12]"
                 : node.terminal
                   ? "border-slate-700 bg-black/35 opacity-75"
-                  : "border-cyan-400/30 bg-cyan-400/[0.06]",
+                  : "border-white/15 bg-white/[0.05]",
             )}
             style={{ left: `${node.x}%`, top: `${node.y}%` }}
           >
             <div className="font-terminal text-[10px] tracking-[0.14em] text-slate-500">
               {node.step}
             </div>
-            <div className={cn("mt-1 text-xs", node.hot ? "text-[#ffd700]" : "text-[#00f0ff]")}>
+            <div className={cn("mt-1 text-xs", node.hot ? "text-[#c9a44c]" : "text-[#5b8cff]")}>
               {node.label}
             </div>
             <div className="mt-1 text-xl font-black text-slate-100">{formatPoints(node.price)}</div>
@@ -4472,7 +4325,7 @@ function BinomialTreeVisual() {
                     {node.formula}
                   </div>
                 )}
-                <div className={cn("rounded border px-2 py-1 text-xs font-black", node.hot ? "border-[#ffd700]/40 text-[#ffd700]" : "border-white/10 text-slate-500")}>
+                <div className={cn("rounded border px-2 py-1 text-xs font-black", node.hot ? "border-[#c9a44c]/40 text-[#c9a44c]" : "border-white/10 text-slate-500")}>
                   Payoff: {formatPoints(node.payoff)}
                 </div>
               </div>
@@ -4772,10 +4625,10 @@ function BinomialPricingTool({
       ];
 
   return (
-    <div className="rounded-lg border border-cyan-400/15 bg-[#070d19]/85 p-5">
+    <div className="rounded-lg border border-white/10 bg-[#0e1521]/85 p-5">
       <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
         <div>
-          <div className="font-terminal text-xs tracking-[0.2em] text-[#00f0ff]">
+          <div className="font-terminal text-xs tracking-[0.2em] text-[#5b8cff]">
             {isBarrier ? "Barrier Option Binomial Tree Calculator" : "Vanilla Option Binomial Tree Calculator"}
           </div>
           <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-400">
@@ -4788,8 +4641,8 @@ function BinomialPricingTool({
           className={cn(
             "rounded-md border px-4 py-2 font-terminal text-xs",
             isBarrier
-              ? "border-[#ffd700]/30 bg-[#ffd700]/[0.07] text-[#ffd700]"
-              : "border-[#00f0ff]/30 bg-cyan-400/[0.07] text-[#00f0ff]",
+              ? "border-[#c9a44c]/30 bg-[#c9a44c]/[0.07] text-[#c9a44c]"
+              : "border-[#5b8cff]/30 bg-white/[0.05] text-[#5b8cff]",
           )}
         >
           {isBarrier ? "BARRIER MODE" : "VANILLA MODE"}
@@ -4804,8 +4657,8 @@ function BinomialPricingTool({
             : "xl:grid-cols-[300px_minmax(0,1fr)]",
         )}
       >
-        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
-          <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#00f0ff]">
+        <div className="rounded-lg border border-white/10 bg-black/30 p-4">
+          <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#5b8cff]">
             Parameter Input
           </div>
           <div className="grid gap-3">
@@ -4816,12 +4669,12 @@ function BinomialPricingTool({
                   <span
                     className={cn(
                       "font-terminal flex items-center gap-2 text-[11px] tracking-[0.12em]",
-                      isBarrierRow ? "text-[#ffd700]" : "text-slate-500",
+                      isBarrierRow ? "text-[#c9a44c]" : "text-slate-500",
                     )}
                   >
                     {label}
                     {isBarrierRow && (
-                      <span className="rounded-full border border-[#ffd700]/50 bg-[#ffd700]/[0.12] px-2 py-0.5 text-[9px] font-black tracking-[0.18em] text-[#ffd700]">
+                      <span className="rounded-full border border-[#c9a44c]/50 bg-[#c9a44c]/[0.12] px-2 py-0.5 text-[9px] font-black tracking-[0.18em] text-[#c9a44c]">
                         🔓 NEW
                       </span>
                     )}
@@ -4834,10 +4687,10 @@ function BinomialPricingTool({
                     value={params[key]}
                     onChange={(event) => updateParam(key, Number(event.target.value))}
                     className={cn(
-                      "rounded-md border bg-[#07101d] px-3 py-2 font-terminal text-sm text-slate-100 outline-none transition",
+                      "rounded-md border bg-[#0e1521] px-3 py-2 font-terminal text-sm text-slate-100 outline-none transition",
                       isBarrierRow
-                        ? "border-[#ffd700]/45 focus:border-[#ffd700]"
-                        : "border-cyan-400/20 focus:border-[#00f0ff]",
+                        ? "border-[#c9a44c]/45 focus:border-[#c9a44c]"
+                        : "border-white/12 focus:border-[#5b8cff]",
                     )}
                   />
                 </label>
@@ -4860,15 +4713,15 @@ function BinomialPricingTool({
           <div className="mt-4 grid gap-3 rounded-md border border-white/10 bg-white/[0.03] p-3 text-xs leading-6 text-slate-400">
             <div>
               Up factor u:
-              <span className="font-terminal text-[#00f0ff]"> {tree.up.toFixed(4)}</span>
+              <span className="font-terminal text-[#5b8cff]"> {tree.up.toFixed(4)}</span>
             </div>
             <div>
               Down factor d:
-              <span className="font-terminal text-[#00f0ff]"> {tree.down.toFixed(4)}</span>
+              <span className="font-terminal text-[#5b8cff]"> {tree.down.toFixed(4)}</span>
             </div>
             <div>
               Risk-neutral probability p:
-              <span className="font-terminal text-[#ffd700]"> {tree.probability.toFixed(4)}</span>
+              <span className="font-terminal text-[#c9a44c]"> {tree.probability.toFixed(4)}</span>
             </div>
             {!tree.noArbitrage && (
               <div className="rounded border border-red-500/30 bg-red-500/[0.08] px-2 py-1 text-red-300">
@@ -4899,10 +4752,10 @@ function BinomialPricingTool({
           )}
         </div>
 
-        <div className="rounded-lg border border-cyan-400/15 bg-black/25 p-4">
+        <div className="rounded-lg border border-white/10 bg-black/25 p-4">
           <div
             className={cn(
-              "relative min-w-0 overflow-hidden rounded-md border border-white/10 bg-[#050b14]",
+              "relative min-w-0 overflow-hidden rounded-md border border-white/10 bg-[#0b1018]",
               isBarrier ? "h-[640px]" : "h-[560px]",
             )}
           >
@@ -4926,7 +4779,7 @@ function BinomialPricingTool({
                     y1={link.from.y}
                     x2={link.to.x}
                     y2={link.to.y}
-                    stroke="rgba(0,240,255,0.34)"
+                    stroke="rgba(91,140,255,0.34)"
                     strokeWidth={0.25}
                     strokeDasharray="1.2 1.1"
                   />
@@ -4940,7 +4793,7 @@ function BinomialPricingTool({
                   <div
                     key={node.id}
                     className={cn(
-                      "absolute w-32 -translate-x-1/2 -translate-y-1/2 rounded-lg border p-2 shadow-[0_0_18px_rgba(0,240,255,0.08)]",
+                      "absolute w-32 -translate-x-1/2 -translate-y-1/2 rounded-lg border p-2 shadow-[0_0_18px_rgba(91,140,255,0.08)]",
                       node.knocked
                         ? "border-red-500/60 bg-red-500/[0.12]"
                         : "border-green-400/45 bg-green-400/[0.08]",
@@ -4969,10 +4822,10 @@ function BinomialPricingTool({
                 <div
                   key={node.id}
                   className={cn(
-                    "absolute w-32 -translate-x-1/2 -translate-y-1/2 rounded-lg border p-2 shadow-[0_0_18px_rgba(0,240,255,0.08)]",
+                    "absolute w-32 -translate-x-1/2 -translate-y-1/2 rounded-lg border p-2 shadow-[0_0_18px_rgba(91,140,255,0.08)]",
                     isTerminal && node.inTheMoney
-                      ? "border-[#ffd700]/65 bg-[#ffd700]/[0.1]"
-                      : "border-cyan-400/35 bg-cyan-400/[0.06]",
+                      ? "border-[#c9a44c]/65 bg-[#c9a44c]/[0.1]"
+                      : "border-[#5b8cff]/35 bg-white/[0.05]",
                   )}
                   style={{ left: `${node.x}%`, top: `${node.y}%` }}
                 >
@@ -4986,7 +4839,7 @@ function BinomialPricingTool({
                     V: {node.optionValue.toFixed(1)}
                   </div>
                   {isTerminal && (
-                    <div className={cn("mt-1 rounded border px-2 py-1 text-[10px] font-black", node.inTheMoney ? "border-[#ffd700]/35 text-[#ffd700]" : "border-white/10 text-slate-500")}>
+                    <div className={cn("mt-1 rounded border px-2 py-1 text-[10px] font-black", node.inTheMoney ? "border-[#c9a44c]/35 text-[#c9a44c]" : "border-white/10 text-slate-500")}>
                       Payoff: {node.payoff.toFixed(0)}
                     </div>
                   )}
@@ -4997,8 +4850,8 @@ function BinomialPricingTool({
 
           {isBarrier ? (
             <div className="mt-4 grid gap-3 md:grid-cols-2">
-              <div className="rounded-lg border border-cyan-400/20 bg-cyan-400/[0.05] p-4">
-                <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+              <div className="rounded-lg border border-white/12 bg-white/[0.04] p-4">
+                <div className="font-terminal text-xs tracking-[0.18em] text-[#5b8cff]">
                   Vanilla Call Theoretical Price
                 </div>
                 <div className="mt-2 text-3xl font-black text-slate-100">
@@ -5008,11 +4861,11 @@ function BinomialPricingTool({
                   Ignores the barrier; worked backward purely from the expiry payoff max(S - K, 0).
                 </p>
               </div>
-              <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
-                <div className="font-terminal text-xs tracking-[0.18em] text-[#ffd700]">
+              <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-4">
+                <div className="font-terminal text-xs tracking-[0.18em] text-[#c9a44c]">
                   Down-and-Out Call Theoretical Price
                 </div>
-                <div className="mt-2 text-3xl font-black text-[#ffd700]">
+                <div className="mt-2 text-3xl font-black text-[#c9a44c]">
                   {tree.barrierPrice.toFixed(2)}
                 </div>
                 <p className="mt-2 text-xs leading-6 text-slate-400">
@@ -5022,16 +4875,16 @@ function BinomialPricingTool({
             </div>
           ) : (
             <div className="mt-4 grid gap-3 md:grid-cols-3">
-              <div className="rounded-lg border border-cyan-400/20 bg-cyan-400/[0.05] p-4">
-                <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+              <div className="rounded-lg border border-white/12 bg-white/[0.04] p-4">
+                <div className="font-terminal text-xs tracking-[0.18em] text-[#5b8cff]">
                   Price Tree
                 </div>
                 <p className="mt-2 text-xs leading-6 text-slate-400">
                   The spot and volatility change the future node prices.
                 </p>
               </div>
-              <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
-                <div className="font-terminal text-xs tracking-[0.18em] text-[#ffd700]">
+              <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-4">
+                <div className="font-terminal text-xs tracking-[0.18em] text-[#c9a44c]">
                   Expiry Payoff
                 </div>
                 <p className="mt-2 text-xs leading-6 text-slate-400">
@@ -5052,9 +4905,9 @@ function BinomialPricingTool({
       </div>
 
       {selectedQuote !== undefined && (
-        <div className="mt-5 rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.05] p-5">
+        <div className="mt-5 rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.05] p-5">
           <div className="mb-4">
-            <div className="font-terminal text-xs tracking-[0.2em] text-[#ffd700]">
+            <div className="font-terminal text-xs tracking-[0.2em] text-[#c9a44c]">
               Quote Input / Premium Quote
             </div>
             <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-400">
@@ -5081,7 +4934,7 @@ function BinomialPricingTool({
               onChange={(event) =>
                 onUpdateQuote(event.target.value === "" ? "" : Number(event.target.value))
               }
-              className="rounded-md border border-[#ffd700]/35 bg-[#07101d] px-4 py-3 font-terminal text-2xl font-black text-[#00f0ff] outline-none transition focus:border-[#ffd700]"
+              className="rounded-md border border-[#c9a44c]/35 bg-[#0e1521] px-4 py-3 font-terminal text-2xl font-black text-[#5b8cff] outline-none transition focus:border-[#c9a44c]"
             />
           </label>
         </div>
@@ -5125,8 +4978,8 @@ function BinomialFormulaPanel() {
   ];
 
   return (
-    <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.05] p-5">
-      <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[#ffd700]">
+    <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.05] p-5">
+      <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[#c9a44c]">
         Pricing Mechanism / Understand the Formula First, Then Use the Calculator
       </div>
       <div className="mb-5 text-2xl font-black text-slate-100">
@@ -5135,30 +4988,30 @@ function BinomialFormulaPanel() {
       <div className="grid gap-4 lg:grid-cols-2">
         {steps.map((step) => (
           <div key={step.title} className="rounded-lg border border-white/10 bg-black/25 p-4">
-            <div className="font-terminal text-xs tracking-[0.16em] text-[#00f0ff]">
+            <div className="font-terminal text-xs tracking-[0.16em] text-[#5b8cff]">
               {step.title}
             </div>
-            <div className="mt-3 rounded-md border border-cyan-400/15 bg-cyan-400/[0.04] px-3 py-2 font-terminal text-sm text-[#ffd700]">
+            <div className="mt-3 rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 font-terminal text-sm text-[#c9a44c]">
               {step.formula}
             </div>
             <p className="mt-3 text-sm leading-7 text-slate-300">{step.text}</p>
           </div>
         ))}
       </div>
-      <div className="mt-5 rounded-lg border border-cyan-400/15 bg-black/25 p-4">
-        <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+      <div className="mt-5 rounded-lg border border-white/10 bg-black/25 p-4">
+        <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#5b8cff]">
           Symbol Glossary / No Need to Memorize, Just Know What They Mean
         </div>
         <div className="grid gap-3 md:grid-cols-3">
           {symbols.map(([symbol, meaning]) => (
             <div key={symbol} className="rounded-md border border-white/10 bg-white/[0.03] p-3">
-              <div className="font-terminal text-sm font-black text-[#ffd700]">{symbol}</div>
+              <div className="font-terminal text-sm font-black text-[#c9a44c]">{symbol}</div>
               <div className="mt-2 text-xs leading-6 text-slate-300">{meaning}</div>
             </div>
           ))}
         </div>
       </div>
-      <div className="mt-4 rounded-md border-l-4 border-[#00f0ff] bg-cyan-400/[0.06] p-4 text-sm leading-7 text-slate-200">
+      <div className="mt-4 rounded-md border-l-4 border-[#5b8cff] bg-white/[0.05] p-4 text-sm leading-7 text-slate-200">
         When using the calculator, focus on three things: how the price tree unfolds, how the strike affects the expiry payoff, and how the terminal payoffs are worked backward into today's theoretical price.
       </div>
     </div>
@@ -5184,7 +5037,7 @@ function Day2TreeExplainerPanel({ selectedQuote, quoteAnalysis, onUpdateQuote, o
       <div className="space-y-5 p-6">
         <div className="grid gap-3 md:grid-cols-4">
           {params.map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-3">
+            <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-3">
               <div className="font-terminal text-[11px] tracking-[0.14em] text-slate-500">
                 {label}
               </div>
@@ -5201,8 +5054,8 @@ function Day2TreeExplainerPanel({ selectedQuote, quoteAnalysis, onUpdateQuote, o
             "The strike K doesn't change the underlying's price path, but it does change the payoff at each expiry node.",
             "The more steps N, the finer the tree; today just grasp the intuition, and you're not asked to compute every node by hand.",
           ].map((text, index) => (
-            <div key={text} className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-4 text-sm leading-7 text-[#ffd700]">
-              <span className="font-terminal mr-2 text-[#00f0ff]">Hint {index + 1}</span>
+            <div key={text} className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-4 text-sm leading-7 text-[#c9a44c]">
+              <span className="font-terminal mr-2 text-[#5b8cff]">Hint {index + 1}</span>
               {text}
             </div>
           ))}
@@ -5236,7 +5089,7 @@ function Day2QuoteSliderPanel({
       ? "border-green-400/30 bg-green-400/[0.08] text-green-300"
       : quoteAnalysis.tone === "danger"
         ? "border-red-500/35 bg-red-500/[0.08] text-red-300"
-        : "border-[#ffd700]/35 bg-[#ffd700]/[0.08] text-[#ffd700]";
+        : "border-[#c9a44c]/35 bg-[#c9a44c]/[0.08] text-[#c9a44c]";
 
   const content = (
     <>
@@ -5244,12 +5097,12 @@ function Day2QuoteSliderPanel({
       <div className="space-y-6 p-6">
         <div className="grid gap-4 md:grid-cols-4">
           {[
-            ["Your Quote", `${selectedQuote} pts`, "#00f0ff"],
-            ["Model Theoretical Price", `${liveTheoretical} pts`, "#ffd700"],
-            ["Desk Profit", `${profit >= 0 ? "+" : ""}${profit} pts`, profit >= 0 ? "#4ade80" : "#f87171"],
+            ["Your Quote", `${selectedQuote} pts`, "#5b8cff"],
+            ["Model Theoretical Price", `${liveTheoretical} pts`, "#c9a44c"],
+            ["Desk Profit", `${profit >= 0 ? "+" : ""}${profit} pts`, profit >= 0 ? "#34c77b" : "#f87171"],
             ["Suggested Range", `${fairLow} - ${fairHigh} pts`, "#e2e8f0"],
           ].map(([label, value, color]) => (
-            <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
                 {label}
               </div>
@@ -5260,10 +5113,10 @@ function Day2QuoteSliderPanel({
           ))}
         </div>
 
-        <div className="rounded-lg border border-cyan-400/15 bg-[#070d19]/80 p-5">
+        <div className="rounded-lg border border-white/10 bg-[#0e1521]/80 p-5">
           <div className="mb-4 flex items-center justify-between gap-4">
             <div>
-              <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#5b8cff]">
                 Quote Slider
               </div>
               <div className="mt-1 text-sm text-slate-500">Range: {rules.sliderMin} - {rules.sliderMax} pts</div>
@@ -5280,7 +5133,7 @@ function Day2QuoteSliderPanel({
             step="5"
             value={selectedQuote}
             onChange={(event) => onUpdateQuote(Number(event.target.value))}
-            className="w-full accent-cyan-400"
+            className="w-full accent-[#5b8cff]"
           />
           <div className="mt-3 flex justify-between text-xs text-slate-500">
             <span>{rules.sliderMin}</span>
@@ -5300,7 +5153,7 @@ function Day2QuoteSliderPanel({
 
   if (embedded) {
     return (
-      <div className="overflow-hidden rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.04] shadow-[0_0_28px_rgba(255,215,0,0.08)]">
+      <div className="overflow-hidden rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.04] shadow-[0_0_28px_rgba(201,164,76,0.08)]">
         {content}
       </div>
     );
@@ -5321,23 +5174,23 @@ function Day2ClientResponsePanel({ selectedQuote, clientResponse, liveTheoretica
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Client Feedback" accent="Quote Receipt" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
-          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+        <div className="rounded-lg border border-white/10 bg-black/30 p-5">
+          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#5b8cff]">
             Quote Record
           </div>
-          <div className="text-5xl font-black text-[#00f0ff]">{selectedQuote} pts</div>
+          <div className="text-5xl font-black text-[#5b8cff]">{selectedQuote} pts</div>
           <div className="mt-4 text-sm leading-7 text-slate-400">
             The quote has been sent; awaiting market settlement.
           </div>
         </div>
 
-        <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-5">
+        <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
           <div className="mb-4 flex items-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-md border border-[#ffd700]/30 bg-black/40 font-terminal text-3xl font-black text-[#ffd700]">
+            <div className="flex h-16 w-16 items-center justify-center rounded-md border border-[#c9a44c]/30 bg-black/40 font-terminal text-3xl font-black text-[#c9a44c]">
               W
             </div>
             <div>
-              <div className="font-terminal text-xs tracking-[0.18em] text-[#ffd700]">
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#c9a44c]">
                 Mr. Wang
               </div>
               <div className="mt-1 text-sm text-slate-500">{acceptedText}</div>
@@ -5418,7 +5271,7 @@ function Day2MarketRunPanel({
             ["Your Quote", `${quote} pts`],
             ["Maturity", "1 month"],
           ].map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
                 {label}
               </div>
@@ -5428,9 +5281,9 @@ function Day2MarketRunPanel({
         </div>
 
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
-          <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+          <div className="rounded-lg border border-white/10 bg-black/30 p-4">
             <div className="font-terminal text-xs text-slate-500">Live Price</div>
-            <div className="live-price-pulse mt-2 text-3xl font-black text-[#00f0ff]">
+            <div className="live-price-pulse mt-2 text-3xl font-black text-[#5b8cff]">
               {formatPoints(latestPrice)}
             </div>
           </div>
@@ -5460,10 +5313,10 @@ function Day2MarketRunPanel({
           </div>
         </div>
 
-        <div className="market-chart-panel mt-6 rounded-lg border border-cyan-400/15 bg-[#070d19]/85 p-4">
+        <div className="market-chart-panel mt-6 rounded-lg border border-white/10 bg-[#0e1521]/85 p-4">
           <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
             <div>
-              <div className="font-terminal text-sm tracking-[0.18em] text-[#00f0ff]">
+              <div className="font-terminal text-sm tracking-[0.18em] text-[#5b8cff]">
                 LIVE HSI PATH
               </div>
               <div className="mt-1 text-xs text-slate-500">
@@ -5475,7 +5328,7 @@ function Day2MarketRunPanel({
                 "font-terminal rounded border px-3 py-1 text-xs tracking-[0.16em]",
                 finalShown
                   ? "border-green-400/35 bg-green-400/[0.08] text-green-300"
-                  : "border-[#ffd700]/35 bg-[#ffd700]/[0.08] text-[#ffd700]",
+                  : "border-[#c9a44c]/35 bg-[#c9a44c]/[0.08] text-[#c9a44c]",
               )}
             >
               {finalShown ? "MARKET CLOSED" : "VOLATILITY LIVE"}
@@ -5485,11 +5338,11 @@ function Day2MarketRunPanel({
           <svg viewBox={`0 0 ${chart.width} ${chart.height}`} className="relative z-10 w-full">
             <defs>
               <linearGradient id="day2MarketArea" x1="0" x2="0" y1="0" y2="1">
-                <stop offset="0%" stopColor="rgba(0,240,255,0.28)" />
-                <stop offset="100%" stopColor="rgba(0,240,255,0)" />
+                <stop offset="0%" stopColor="rgba(91,140,255,0.28)" />
+                <stop offset="100%" stopColor="rgba(91,140,255,0)" />
               </linearGradient>
               <filter id="day2MarketGlow" x="-30%" y="-30%" width="160%" height="160%">
-                <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#00f0ff" />
+                <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#5b8cff" />
               </filter>
             </defs>
             <rect width={chart.width} height={chart.height} rx="10" fill="rgba(5,10,24,0.65)" />
@@ -5501,14 +5354,14 @@ function Day2MarketRunPanel({
                   x2={chart.xScale(path.length - 1)}
                   y1={chart.yScale(tick)}
                   y2={chart.yScale(tick)}
-                  stroke={tick === market.strike ? "#ffd700" : "rgba(148,163,184,0.14)"}
+                  stroke={tick === market.strike ? "#c9a44c" : "rgba(148,163,184,0.14)"}
                   strokeDasharray={tick === market.strike ? "6 6" : "2 8"}
                 />
                 <text
                   x="44"
                   y={chart.yScale(tick) + 4}
                   textAnchor="end"
-                  className={tick === market.strike ? "fill-[#ffd700] text-[12px]" : "fill-slate-500 text-[12px]"}
+                  className={tick === market.strike ? "fill-[#c9a44c] text-[12px]" : "fill-slate-500 text-[12px]"}
                 >
                   {formatPoints(tick)}
                 </text>
@@ -5520,7 +5373,7 @@ function Day2MarketRunPanel({
               <polyline
                 points={activeLine}
                 fill="none"
-                stroke="#00f0ff"
+                stroke="#5b8cff"
                 strokeWidth="4"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -5535,16 +5388,16 @@ function Day2MarketRunPanel({
                 cx={chart.xScale(index)}
                 cy={chart.yScale(price)}
                 r={index === activePrices.length - 1 ? 5 : 3}
-                fill={price >= market.strike ? "#ffd700" : "#00f0ff"}
+                fill={price >= market.strike ? "#c9a44c" : "#5b8cff"}
                 opacity={index === activePrices.length - 1 ? 1 : 0.65}
               />
             ))}
 
-            <circle cx={latestX} cy={latestY} r="13" fill="none" stroke="#00f0ff" strokeWidth="2" opacity="0.35">
+            <circle cx={latestX} cy={latestY} r="13" fill="none" stroke="#5b8cff" strokeWidth="2" opacity="0.35">
               <animate attributeName="r" values="9;18;9" dur="0.9s" repeatCount="indefinite" />
               <animate attributeName="opacity" values="0.75;0.1;0.75" dur="0.9s" repeatCount="indefinite" />
             </circle>
-            <text x={latestX + 12} y={latestY - 12} className="fill-[#00f0ff] text-[13px] font-bold">
+            <text x={latestX + 12} y={latestY - 12} className="fill-[#5b8cff] text-[13px] font-bold">
               {formatPoints(latestPrice)}
             </text>
             <text x={chart.xScale(path.length - 1)} y={chart.height - 12} textAnchor="end" className="fill-slate-500 text-[12px]">
@@ -5555,27 +5408,27 @@ function Day2MarketRunPanel({
 
         {finalShown ? (
           <div className="scene-enter mt-6 grid gap-4 md:grid-cols-4">
-            <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div className="rounded-lg border border-white/10 bg-black/30 p-4">
               <div className="font-terminal text-xs text-slate-500">Final Price</div>
-              <div className="mt-2 text-3xl font-black text-[#00f0ff]">
+              <div className="mt-2 text-3xl font-black text-[#5b8cff]">
                 {formatPoints(finalPrice)}
               </div>
             </div>
-            <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div className="rounded-lg border border-white/10 bg-black/30 p-4">
               <div className="font-terminal text-xs text-slate-500">Call Expiry Payoff</div>
               <div className="mt-2 text-lg font-bold text-slate-100">
                 max({formatPoints(finalPrice)} - {formatPoints(market.strike)}, 0) ={" "}
-                <span className="text-[#00f0ff]">{payoff}</span>
+                <span className="text-[#5b8cff]">{payoff}</span>
               </div>
             </div>
-            <div className={cn("rounded-lg border p-4", accepted && (payoff - quote) >= 0 ? "border-green-400/20 bg-green-400/[0.05]" : "border-cyan-400/15 bg-black/30")}>
+            <div className={cn("rounded-lg border p-4", accepted && (payoff - quote) >= 0 ? "border-green-400/20 bg-green-400/[0.05]" : "border-white/10 bg-black/30")}>
               <div className="font-terminal text-xs text-slate-500">Client Net P&L</div>
               <div className={cn("mt-2 text-2xl font-black", accepted ? ((payoff - quote) >= 0 ? "text-green-400" : "text-red-400") : "text-slate-500")}>
                 {accepted ? `${(payoff - quote) >= 0 ? "+" : ""}${payoff - quote}` : "No Deal · 0"}
               </div>
               {accepted && <p className="mt-2 text-xs leading-5 text-slate-500">Expiry payoff minus the premium paid.</p>}
             </div>
-            <div className={cn("rounded-lg border p-4", accepted ? (deskPnl >= 0 ? "border-green-400/20 bg-green-400/[0.05]" : "border-red-500/25 bg-red-500/[0.06]") : "border-cyan-400/15 bg-black/30")}>
+            <div className={cn("rounded-lg border p-4", accepted ? (deskPnl >= 0 ? "border-green-400/20 bg-green-400/[0.05]" : "border-red-500/25 bg-red-500/[0.06]") : "border-white/10 bg-black/30")}>
               <div className="font-terminal text-xs text-slate-500">Desk Settlement</div>
               <div className={cn("mt-2 text-2xl font-black", accepted ? (deskPnl >= 0 ? "text-green-400" : "text-red-400") : "text-slate-500")}>
                 {accepted ? `${deskPnl >= 0 ? "+" : ""}${deskPnl}` : "No Deal · 0"}
@@ -5584,7 +5437,7 @@ function Day2MarketRunPanel({
             </div>
           </div>
         ) : (
-          <div className="mt-5 rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
+          <div className="mt-5 rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-sm leading-7 text-[#c9a44c]">
             The market is playing out automatically: the price may dip first, snap back, then break out. Don't be scared by the swings along the way; a vanilla call ultimately depends only on which side of the strike the expiry price lands.
           </div>
         )}
@@ -5620,7 +5473,7 @@ function Day2ReportPanel({ score }) {
       <div className="space-y-5 p-6">
         <div className="grid gap-4 md:grid-cols-3">
           {rows.map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
                 {label}
               </div>
@@ -5645,11 +5498,11 @@ function Day2ReportPanel({ score }) {
           ))}
         </div>
 
-        <div className="rounded-md border-l-4 border-[#00f0ff] bg-cyan-400/[0.06] p-4 text-base leading-8 text-slate-200">
+        <div className="rounded-md border-l-4 border-[#5b8cff] bg-white/[0.05] p-4 text-base leading-8 text-slate-200">
           Pricing assessment: {score.pricingComment}
         </div>
 
-        <div className="rounded-md border border-cyan-400/15 bg-black/30 p-4 text-sm leading-7 text-slate-300">
+        <div className="rounded-md border border-white/10 bg-black/30 p-4 text-sm leading-7 text-slate-300">
           Simulated market path: {score.marketPath.map((price) => formatPoints(price)).join(" → ")}.
           The client's expiry payoff is {score.marketPayoff} points, and the client's net P&L is {score.clientPnl >= 0 ? "+" : ""}{score.clientPnl} points.
         </div>
@@ -5675,16 +5528,16 @@ function Day2CompletePanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Day Two Complete" accent="Pricing Training Complete" />
       <div className="flex min-h-[520px] flex-col items-center justify-center p-6 text-center">
-        <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-5xl font-black tracking-[0.12em] text-transparent md:text-6xl">
+        <div className="bg-[linear-gradient(90deg,#5b8cff,#c9a44c)] bg-clip-text text-5xl font-black tracking-[0.12em] text-transparent md:text-6xl">
           Day Two Complete
         </div>
         <div className="mt-8 grid w-full max-w-2xl gap-3 text-left">
           {summary.map((item) => (
             <div
               key={item}
-              className="rounded-md border border-cyan-400/15 bg-black/30 px-4 py-3 text-sm leading-7 text-slate-300"
+              className="rounded-md border border-white/10 bg-black/30 px-4 py-3 text-sm leading-7 text-slate-300"
             >
-              <span className="font-terminal mr-2 text-[#00f0ff]">Rule</span>
+              <span className="font-terminal mr-2 text-[#5b8cff]">Rule</span>
               {item}
             </div>
           ))}
@@ -5699,8 +5552,8 @@ function Day3IntroPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Day Three Morning Meeting" accent="Path-Dependent Products" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-6">
-          <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[#ffd700]">
+        <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-6">
+          <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[#c9a44c]">
             BARRIER OPTION
           </div>
           <h1 className="text-4xl font-black leading-tight text-slate-100 md:text-5xl">
@@ -5718,8 +5571,8 @@ function Day3IntroPanel() {
             ["Barrier Option", "Additionally observes a barrier level. Touch the barrier along the way and the product may knock in or knock out."],
             ["Today's Focus", "An intro to knock-out only: touch the barrier level and the product expires early."],
           ].map(([title, text]) => (
-            <div key={title} className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
-              <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+            <div key={title} className="rounded-lg border border-white/10 bg-black/30 p-5">
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#5b8cff]">
                 {title}
               </div>
               <div className="mt-3 text-sm leading-7 text-slate-300">{text}</div>
@@ -5739,24 +5592,24 @@ function Day3BarrierConceptPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Lesson 1 / The Barrier Level" accent="The Barrier Is the Contract's Red Line" />
       <div className="space-y-5 p-6">
-        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
-          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+        <div className="rounded-lg border border-white/10 bg-black/30 p-5">
+          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#5b8cff]">
             Intuition
           </div>
           <p className="text-lg leading-9 text-slate-300">
             The barrier isn't a prediction line; it's a
-            <span className="font-bold text-[#ffd700]">contract rule line</span>.
+            <span className="font-bold text-[#c9a44c]">contract rule line</span>.
             If the product stipulates “knock out if it falls to 21,000,” then the moment the market touches or drops below 21,000 along the way,
             it must be handled under the knock-out rule even if it later climbs back.
           </p>
         </div>
 
-        <div className="rounded-lg border border-cyan-400/15 bg-[#070d19]/85 p-5">
+        <div className="rounded-lg border border-white/10 bg-[#0e1521]/85 p-5">
           <svg viewBox="0 0 760 260" className="h-auto w-full" role="img" aria-label="Barrier level diagram">
             <defs>
               <linearGradient id="day3PathGlow" x1="0" x2="1">
-                <stop offset="0%" stopColor="#00f0ff" />
-                <stop offset="100%" stopColor="#ffd700" />
+                <stop offset="0%" stopColor="#5b8cff" />
+                <stop offset="100%" stopColor="#c9a44c" />
               </linearGradient>
             </defs>
             {[0, 1, 2, 3].map((tick) => (
@@ -5797,8 +5650,8 @@ function Day3BarrierConceptPanel() {
                     cx={x}
                     cy={y}
                     r={danger ? 9 : 6}
-                    fill={danger ? "#ef4444" : "#00f0ff"}
-                    stroke={danger ? "#fecaca" : "#cffafe"}
+                    fill={danger ? "#ef4444" : "#5b8cff"}
+                    stroke={danger ? "#fecaca" : "#cdd9f5"}
                     strokeWidth="2"
                   />
                   <text x={x} y={y - 14} textAnchor="middle" className={danger ? "fill-red-300 text-[12px] font-bold" : "fill-slate-300 text-[12px]"}>
@@ -5828,8 +5681,8 @@ function Day3KnockOutPanel() {
             ["2. Observe the Whole Path", "Not just the close or expiry. The moment the path touches the barrier, the rule triggers."],
             ["3. Goes to Zero After Knock-Out", "The product expires early. Even if it climbs back at the end, a knocked-out option can't be called back."],
           ].map(([title, text]) => (
-            <div key={title} className="rounded-lg border border-cyan-400/15 bg-cyan-400/[0.04] p-5">
-              <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+            <div key={title} className="rounded-lg border border-white/10 bg-white/[0.03] p-5">
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#5b8cff]">
                 {title}
               </div>
               <p className="mt-3 text-sm leading-7 text-slate-300">{text}</p>
@@ -5850,8 +5703,8 @@ function Day3KnockOutPanel() {
           </p>
         </div>
 
-        <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-5">
-          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#ffd700]">
+        <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-5">
+          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#c9a44c]">
             Why Set a Barrier?
           </div>
           <div className="grid gap-4 md:grid-cols-3">
@@ -5870,14 +5723,14 @@ function Day3KnockOutPanel() {
               ],
             ].map(([title, text]) => (
               <div key={title} className="rounded-md border border-white/10 bg-black/25 p-4">
-                <div className="font-terminal text-xs tracking-[0.16em] text-[#00f0ff]">
+                <div className="font-terminal text-xs tracking-[0.16em] text-[#5b8cff]">
                   {title}
                 </div>
                 <p className="mt-3 text-sm leading-7 text-slate-300">{text}</p>
               </div>
             ))}
           </div>
-          <div className="mt-4 rounded-md border-l-4 border-[#ffd700] bg-black/25 p-4 text-sm leading-7 text-[#ffd700]">
+          <div className="mt-4 rounded-md border-l-4 border-[#c9a44c] bg-black/25 p-4 text-sm leading-7 text-[#c9a44c]">
             Martin's takeaway: a barrier isn't a free restriction. It makes the product cheaper and better-fitted to a particular market view, but the cost is that the client must take on path risk.
           </div>
         </div>
@@ -5892,8 +5745,8 @@ function Day3CompareVanillaPanel({ selectedQuote, quoteAnalysis, onUpdateQuote, 
       <TerminalHeader label="Pricing Tree" accent="Barrier Pricing" />
       <div className="space-y-5 p-6">
         <div className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-lg border border-cyan-400/25 bg-cyan-400/[0.05] p-5">
-            <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+          <div className="rounded-lg border border-white/15 bg-white/[0.04] p-5">
+            <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#5b8cff]">
               Vanilla Call Option
             </div>
             <div className="text-2xl font-black text-slate-100">Depends Only on the Final Price</div>
@@ -5903,12 +5756,12 @@ function Day3CompareVanillaPanel({ selectedQuote, quoteAnalysis, onUpdateQuote, 
               <li>- Produces an expiry payoff if the final price is above the strike</li>
             </ul>
             <div className="mt-5 rounded-md border border-white/10 bg-black/30 p-4">
-              Example premium: <span className="font-black text-[#00f0ff]">{day3Config.market.vanillaPremium} pts</span>
+              Example premium: <span className="font-black text-[#5b8cff]">{day3Config.market.vanillaPremium} pts</span>
             </div>
           </div>
 
-          <div className="rounded-lg border border-[#ffd700]/30 bg-[#ffd700]/[0.06] p-5">
-            <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#ffd700]">
+          <div className="rounded-lg border border-[#c9a44c]/30 bg-[#c9a44c]/[0.06] p-5">
+            <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#c9a44c]">
               Down-and-Out Call Option
             </div>
             <div className="text-2xl font-black text-slate-100">Cheaper, but Watches the Path</div>
@@ -5918,12 +5771,12 @@ function Day3CompareVanillaPanel({ selectedQuote, quoteAnalysis, onUpdateQuote, 
               <li>- Expires early if it touches the barrier along the way</li>
             </ul>
             <div className="mt-5 rounded-md border border-white/10 bg-black/30 p-4">
-              Example premium: <span className="font-black text-[#ffd700]">{day3Config.market.premium} pts</span>
+              Example premium: <span className="font-black text-[#c9a44c]">{day3Config.market.premium} pts</span>
             </div>
           </div>
         </div>
 
-        <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
+        <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-base leading-8 text-[#c9a44c]">
           Martin's mnemonic: a barrier option isn't a “discounted vanilla option.” It's cheap because the client takes on part of the path risk.
         </div>
 
@@ -5944,10 +5797,10 @@ function Day3HandbookUpdatedPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="System Notice" accent="New Handbook Page Added" />
       <div className="flex min-h-[430px] flex-col items-center justify-center p-6 text-center">
-        <div className="font-terminal mb-4 text-sm tracking-[0.32em] text-[#00f0ff]">
+        <div className="font-terminal mb-4 text-sm tracking-[0.32em] text-[#5b8cff]">
           Handbook Updated
         </div>
-        <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-4xl font-black tracking-[0.08em] text-transparent md:text-5xl">
+        <div className="bg-[linear-gradient(90deg,#5b8cff,#c9a44c)] bg-clip-text text-4xl font-black tracking-[0.08em] text-transparent md:text-5xl">
           Barrier Options
         </div>
         <p className="mt-8 max-w-2xl text-base leading-8 text-slate-300">
@@ -5975,13 +5828,13 @@ function Day3ClientArrivalPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Client Profile" accent="Budget-Sensitive Order" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.85fr_1.15fr]">
-        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
+        <div className="rounded-lg border border-white/10 bg-black/30 p-5">
           <div className="mb-5 flex items-center gap-4">
-            <div className="flex h-20 w-20 items-center justify-center rounded-md border border-[#ffd700]/30 bg-[#ffd700]/[0.08] font-terminal text-4xl font-black text-[#ffd700]">
+            <div className="flex h-20 w-20 items-center justify-center rounded-md border border-[#c9a44c]/30 bg-[#c9a44c]/[0.08] font-terminal text-4xl font-black text-[#c9a44c]">
               C
             </div>
             <div>
-              <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#5b8cff]">
                 Budget-Sensitive Retail Investor
               </div>
               <div className="mt-2 text-2xl font-black text-slate-100">{client.name}</div>
@@ -5999,8 +5852,8 @@ function Day3ClientArrivalPanel() {
           </div>
         </div>
 
-        <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-5">
-          <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#ffd700]">
+        <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
+          <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#c9a44c]">
             Client Dialogue
           </div>
           <div className="space-y-4">
@@ -6048,23 +5901,23 @@ function Day3ClientResponsePanel({ selectedQuote, clientResponse }) {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Client Feedback" accent="Barrier Quote Receipt" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
-          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+        <div className="rounded-lg border border-white/10 bg-black/30 p-5">
+          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#5b8cff]">
             Quote Record
           </div>
-          <div className="text-5xl font-black text-[#00f0ff]">{selectedQuote} pts</div>
+          <div className="text-5xl font-black text-[#5b8cff]">{selectedQuote} pts</div>
           <div className="mt-4 text-sm leading-7 text-slate-400">
             The barrier quote has been sent; awaiting market settlement.
           </div>
         </div>
 
-        <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-5">
+        <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
           <div className="mb-4 flex items-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-md border border-[#ffd700]/30 bg-black/40 font-terminal text-3xl font-black text-[#ffd700]">
+            <div className="flex h-16 w-16 items-center justify-center rounded-md border border-[#c9a44c]/30 bg-black/40 font-terminal text-3xl font-black text-[#c9a44c]">
               C
             </div>
             <div>
-              <div className="font-terminal text-xs tracking-[0.18em] text-[#ffd700]">
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#c9a44c]">
                 Ms. Chen
               </div>
               <div className="mt-1 text-sm text-slate-500">{acceptedText}</div>
@@ -6125,7 +5978,7 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
             ["Reference Theoretical Price", `${market.premium} pts`],
             ["Maturity", market.maturity],
           ].map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
                 {label}
               </div>
@@ -6137,14 +5990,14 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
         <RealDataContextCard context={market.marketContext} />
 
         <div className="grid gap-4 lg:grid-cols-[0.75fr_1.25fr]">
-          <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-4">
-            <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">
+          <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-4">
+            <div className="font-terminal text-xs tracking-[0.16em] text-[#c9a44c]">
               Selected Product
             </div>
             <div className="mt-2 text-xl font-black text-slate-100">{selectedProductName}</div>
             <div className="mt-4 rounded-md border border-white/10 bg-black/30 p-3 text-sm leading-7 text-slate-300">
               Current price:
-              <span className={cn("font-terminal ml-1 text-2xl font-black", knockedNow ? "text-red-300" : "text-[#00f0ff]")}>
+              <span className={cn("font-terminal ml-1 text-2xl font-black", knockedNow ? "text-red-300" : "text-[#5b8cff]")}>
                 {formatPoints(latestPrice)}
               </span>
             </div>
@@ -6160,7 +6013,7 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
             </div>
           </div>
 
-          <div className="market-chart-panel rounded-lg border border-cyan-400/15 bg-[#070d19]/85 p-4">
+          <div className="market-chart-panel rounded-lg border border-white/10 bg-[#0e1521]/85 p-4">
             <svg viewBox={`0 0 ${chart.width} ${chart.height}`} className="h-auto w-full" role="img" aria-label="Day 3 barrier option market path">
               {chart.yTicks.map((tick) => (
                 <g key={tick}>
@@ -6174,14 +6027,14 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
               <text x="625" y={barrierY - 10} className="fill-red-300 text-[13px] font-bold">
                 Knock-Out Barrier {formatPoints(market.barrier)}
               </text>
-              <line x1="58" x2="780" y1={strikeY} y2={strikeY} stroke="#ffd700" strokeWidth="2" strokeDasharray="6 7" />
-              <text x="625" y={strikeY - 10} className="fill-[#ffd700] text-[13px] font-bold">
+              <line x1="58" x2="780" y1={strikeY} y2={strikeY} stroke="#c9a44c" strokeWidth="2" strokeDasharray="6 7" />
+              <text x="625" y={strikeY - 10} className="fill-[#c9a44c] text-[13px] font-bold">
                 Strike {formatPoints(market.strike)}
               </text>
               <polyline
                 points={activeLine}
                 fill="none"
-                stroke={knockedNow ? "#ef4444" : "#00f0ff"}
+                stroke={knockedNow ? "#ef4444" : "#5b8cff"}
                 strokeWidth="4"
                 strokeLinejoin="round"
                 strokeLinecap="round"
@@ -6195,8 +6048,8 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
                       cx={chart.xScale(index)}
                       cy={chart.yScale(price)}
                       r={danger ? 9 : 6}
-                      fill={danger ? "#ef4444" : "#00f0ff"}
-                      stroke={danger ? "#fecaca" : "#cffafe"}
+                      fill={danger ? "#ef4444" : "#5b8cff"}
+                      stroke={danger ? "#fecaca" : "#cdd9f5"}
                       strokeWidth="2"
                     />
                     <text
@@ -6224,16 +6077,16 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
                 {result.knockedOut ? `Price point #${result.knockedOutIndex + 1} touched the barrier` : "Not Knocked Out"}
               </div>
             </div>
-            <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div className="rounded-lg border border-white/10 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
                 Final Price
               </div>
-              <div className="mt-2 text-2xl font-black text-[#00f0ff]">
+              <div className="mt-2 text-2xl font-black text-[#5b8cff]">
                 {formatPoints(result.finalPrice)}
               </div>
             </div>
-            <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
-              <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">
+            <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-4">
+              <div className="font-terminal text-xs tracking-[0.16em] text-[#c9a44c]">
                 Client Net P&L
               </div>
               <div className={cn("mt-2 text-2xl font-black", clientPnl >= 0 ? "text-green-400" : "text-red-300")}>
@@ -6241,7 +6094,7 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
                 {clientPnl} pts
               </div>
             </div>
-            <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div className="rounded-lg border border-white/10 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">Desk Settlement</div>
               <div className={cn("mt-2 text-2xl font-black", -clientPnl >= 0 ? "text-green-400" : "text-red-300")}>
                 {-clientPnl >= 0 ? "+" : ""}{-clientPnl} pts
@@ -6287,7 +6140,7 @@ function Day3ReportPanel({ score }) {
       <div className="space-y-5 p-6">
         <div className="grid gap-4 md:grid-cols-3">
           {rows.map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
                 {label}
               </div>
@@ -6318,7 +6171,7 @@ function Day3ReportPanel({ score }) {
           Although the final price returned to {formatPoints(score.finalPrice)} points, the knocked-out product had already expired early.
         </div>
 
-        <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
+        <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-base leading-8 text-[#c9a44c]">
           Martin's review: {score.martinComment}
         </div>
       </div>
@@ -6339,16 +6192,16 @@ function Day3CompletePanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Day Three Complete" accent="Barrier Training Complete" />
       <div className="flex min-h-[520px] flex-col items-center justify-center p-6 text-center">
-        <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-5xl font-black tracking-[0.12em] text-transparent md:text-6xl">
+        <div className="bg-[linear-gradient(90deg,#5b8cff,#c9a44c)] bg-clip-text text-5xl font-black tracking-[0.12em] text-transparent md:text-6xl">
           Day Three Complete
         </div>
         <div className="mt-8 grid w-full max-w-2xl gap-3 text-left">
           {summary.map((item) => (
             <div
               key={item}
-              className="rounded-md border border-cyan-400/15 bg-black/30 px-4 py-3 text-sm leading-7 text-slate-300"
+              className="rounded-md border border-white/10 bg-black/30 px-4 py-3 text-sm leading-7 text-slate-300"
             >
-              <span className="font-terminal mr-2 text-[#00f0ff]">Rule</span>
+              <span className="font-terminal mr-2 text-[#5b8cff]">Rule</span>
               {item}
             </div>
           ))}
@@ -6365,8 +6218,8 @@ function Day4CbbcIntroPanel_ARCHIVED() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Day Four Morning Meeting" accent="Bull, Bear, and the Upper Call Price" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-6">
-          <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[#ffd700]">
+        <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-6">
+          <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[#c9a44c]">
             CBBC
           </div>
           <h1 className="text-4xl font-black leading-tight text-slate-100 md:text-5xl">
@@ -6385,8 +6238,8 @@ function Day4CbbcIntroPanel_ARCHIVED() {
             ["Bear CBBC", "Suited to a bearish view. A fall in the underlying is usually favorable; but if it first rises to or above the upper call price, it triggers an MCE."],
             ["Today's Focus", "A bear contract's danger line is on the upside. The market falling in the end isn't enough; spiking up to the call price along the way already knocks you out."],
           ].map(([title, text]) => (
-            <div key={title} className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
-              <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+            <div key={title} className="rounded-lg border border-white/10 bg-black/30 p-5">
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#5b8cff]">
                 {title}
               </div>
               <div className="mt-3 text-sm leading-7 text-slate-300">{text}</div>
@@ -6403,10 +6256,10 @@ function Day4CbbcHandbookUpdatedPanel_ARCHIVED() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="System Notice" accent="New Handbook Page Added" />
       <div className="flex min-h-[430px] flex-col items-center justify-center p-6 text-center">
-        <div className="font-terminal mb-4 text-sm tracking-[0.32em] text-[#00f0ff]">
+        <div className="font-terminal mb-4 text-sm tracking-[0.32em] text-[#5b8cff]">
           Handbook Updated
         </div>
-        <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-4xl font-black tracking-[0.08em] text-transparent md:text-5xl">
+        <div className="bg-[linear-gradient(90deg,#5b8cff,#c9a44c)] bg-clip-text text-4xl font-black tracking-[0.08em] text-transparent md:text-5xl">
           CBBC
         </div>
         <p className="mt-8 max-w-2xl text-base leading-8 text-slate-300">
@@ -6434,13 +6287,13 @@ function Day4CbbcClientArrivalPanel_ARCHIVED() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Client Profile" accent="CBBC Consultation Order" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.85fr_1.15fr]">
-        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
+        <div className="rounded-lg border border-white/10 bg-black/30 p-5">
           <div className="mb-5 flex items-center gap-4">
-            <div className="flex h-20 w-20 items-center justify-center rounded-md border border-[#ffd700]/30 bg-[#ffd700]/[0.08] font-terminal text-4xl font-black text-[#ffd700]">
+            <div className="flex h-20 w-20 items-center justify-center rounded-md border border-[#c9a44c]/30 bg-[#c9a44c]/[0.08] font-terminal text-4xl font-black text-[#c9a44c]">
               Z
             </div>
             <div>
-              <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#5b8cff]">
                 Active Retail Client
               </div>
               <div className="mt-2 text-2xl font-black text-slate-100">{client.name}</div>
@@ -6458,8 +6311,8 @@ function Day4CbbcClientArrivalPanel_ARCHIVED() {
           </div>
         </div>
 
-        <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-5">
-          <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#ffd700]">
+        <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
+          <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#c9a44c]">
             Client Dialogue
           </div>
           <div className="space-y-4">
@@ -6480,8 +6333,8 @@ function Day4CbbcSuitabilityPanel_ARCHIVED({ selectedSuitability, suitabilityMes
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Suitability Assessment" accent="Judge the Client First, Then the Product" />
       <div className="space-y-5 p-6">
-        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
-          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+        <div className="rounded-lg border border-white/10 bg-black/30 p-5">
+          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#5b8cff]">
             Question
           </div>
           <div className="text-2xl font-black text-slate-100">
@@ -6503,8 +6356,8 @@ function Day4CbbcSuitabilityPanel_ARCHIVED({ selectedSuitability, suitabilityMes
                 className={cn(
                   "rounded-lg border p-5 text-left transition duration-300",
                   selected
-                    ? "border-[#ffd700]/70 bg-[#ffd700]/[0.08] shadow-[0_0_26px_rgba(255,215,0,0.18)]"
-                    : "border-cyan-400/15 bg-black/25 hover:border-cyan-400/45 hover:bg-cyan-400/[0.06]",
+                    ? "border-[#c9a44c]/70 bg-[#c9a44c]/[0.08] shadow-[0_0_26px_rgba(201,164,76,0.18)]"
+                    : "border-white/10 bg-black/25 hover:border-[#5b8cff]/45 hover:bg-white/[0.05]",
                 )}
               >
                 <div className="flex items-start justify-between gap-3">
@@ -6512,12 +6365,12 @@ function Day4CbbcSuitabilityPanel_ARCHIVED({ selectedSuitability, suitabilityMes
                     <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
                       {option.tag}
                     </div>
-                    <div className={cn("mt-2 text-xl font-black", selected ? "text-[#ffd700]" : "text-[#00f0ff]")}>
+                    <div className={cn("mt-2 text-xl font-black", selected ? "text-[#c9a44c]" : "text-[#5b8cff]")}>
                       {option.title}
                     </div>
                   </div>
                   {selected && (
-                    <div className="font-terminal rounded border border-[#ffd700]/40 px-2 py-1 text-xs text-[#ffd700]">
+                    <div className="font-terminal rounded border border-[#c9a44c]/40 px-2 py-1 text-xs text-[#c9a44c]">
                       Selected
                     </div>
                   )}
@@ -6534,7 +6387,7 @@ function Day4CbbcSuitabilityPanel_ARCHIVED({ selectedSuitability, suitabilityMes
               "rounded-md border-l-4 p-4 text-sm leading-7",
               selectedSuitability === day4CbbcConfig_ARCHIVED.scoringRules.correctSuitability
                 ? "border-green-400 bg-green-400/[0.06] text-green-300"
-                : "border-[#ffd700] bg-[#ffd700]/[0.06] text-[#ffd700]",
+                : "border-[#c9a44c] bg-[#c9a44c]/[0.06] text-[#c9a44c]",
             )}
           >
             {suitabilityMessage}
@@ -6590,7 +6443,7 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
             ["Bear Contract Cost", `${market.cbbcEntryCost} pts (about ${market.cbbcLeverage}× leverage, illustrative)`],
             ["Vanilla Put Premium", `${market.vanillaPremium} pts`],
           ].map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
                 {label}
               </div>
@@ -6602,14 +6455,14 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
         <RealDataContextCard context={market.marketContext} />
 
         <div className="grid gap-4 lg:grid-cols-[0.75fr_1.25fr]">
-          <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-4">
-            <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">
+          <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-4">
+            <div className="font-terminal text-xs tracking-[0.16em] text-[#c9a44c]">
               Player's Recommendation
             </div>
             <div className="mt-2 text-xl font-black text-slate-100">{selectedProductName}</div>
             <div className="mt-4 rounded-md border border-white/10 bg-black/30 p-3 text-sm leading-7 text-slate-300">
               Live HSI:
-              <span className={cn("font-terminal ml-1 text-2xl font-black", mceNow ? "text-red-300" : "text-[#00f0ff]")}>
+              <span className={cn("font-terminal ml-1 text-2xl font-black", mceNow ? "text-red-300" : "text-[#5b8cff]")}>
                 {formatPoints(latestPrice)}
               </span>
             </div>
@@ -6625,7 +6478,7 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
             </div>
           </div>
 
-          <div className="market-chart-panel rounded-lg border border-cyan-400/15 bg-[#070d19]/85 p-4">
+          <div className="market-chart-panel rounded-lg border border-white/10 bg-[#0e1521]/85 p-4">
             <svg viewBox={`0 0 ${chart.width} ${chart.height}`} className="h-auto w-full" role="img" aria-label="Day 4 CBBC market path">
               {chart.yTicks.map((tick) => (
                 <g key={tick}>
@@ -6639,14 +6492,14 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
               <text x="612" y={callPriceY - 10} className="fill-red-300 text-[13px] font-bold">
                 Bear Contract Upper Call Price {formatPoints(market.cbbcCallPrice)}
               </text>
-              <line x1="58" x2="780" y1={strikeY} y2={strikeY} stroke="#ffd700" strokeWidth="2" strokeDasharray="6 7" />
-              <text x="612" y={strikeY - 10} className="fill-[#ffd700] text-[13px] font-bold">
+              <line x1="58" x2="780" y1={strikeY} y2={strikeY} stroke="#c9a44c" strokeWidth="2" strokeDasharray="6 7" />
+              <text x="612" y={strikeY - 10} className="fill-[#c9a44c] text-[13px] font-bold">
                 Vanilla Put Strike {formatPoints(market.strike)}
               </text>
               <polyline
                 points={activeLine}
                 fill="none"
-                stroke={mceNow ? "#ef4444" : "#00f0ff"}
+                stroke={mceNow ? "#ef4444" : "#5b8cff"}
                 strokeWidth="4"
                 strokeLinejoin="round"
                 strokeLinecap="round"
@@ -6660,8 +6513,8 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
                       cx={chart.xScale(index)}
                       cy={chart.yScale(price)}
                       r={danger ? 9 : 6}
-                      fill={danger ? "#ef4444" : "#00f0ff"}
-                      stroke={danger ? "#fecaca" : "#cffafe"}
+                      fill={danger ? "#ef4444" : "#5b8cff"}
+                      stroke={danger ? "#fecaca" : "#cdd9f5"}
                       strokeWidth="2"
                     />
                     <text
@@ -6689,7 +6542,7 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
                 {result.mceTriggered ? `Price point #${result.mceIndex + 1} triggered the MCE` : "MCE Not Triggered"}
               </div>
             </div>
-            <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div className="rounded-lg border border-white/10 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
                 Vanilla Put Net P&L
               </div>
@@ -6698,11 +6551,11 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
                 {result.vanillaPnl} pts
               </div>
             </div>
-            <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
-              <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">
+            <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-4">
+              <div className="font-terminal text-xs tracking-[0.16em] text-[#c9a44c]">
                 Teaching Conclusion
               </div>
-              <div className="mt-2 text-base font-black leading-7 text-[#ffd700]">
+              <div className="mt-2 text-base font-black leading-7 text-[#c9a44c]">
                 Falling back at the end doesn't mean a bear contract can revive after an MCE.
               </div>
             </div>
@@ -6737,7 +6590,7 @@ function Day4CbbcReportPanel_ARCHIVED({ score }) {
       <div className="space-y-5 p-6">
         <div className="grid gap-4 md:grid-cols-3">
           {rows.map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+            <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
                 {label}
               </div>
@@ -6768,7 +6621,7 @@ function Day4CbbcReportPanel_ARCHIVED({ score }) {
           triggering an MCE. Even though it later fell to {formatPoints(score.finalPrice)} points, the bear contract won't automatically recover.
         </div>
 
-        <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
+        <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-base leading-8 text-[#c9a44c]">
           Martin's review: {score.martinComment}
         </div>
       </div>
@@ -6790,16 +6643,16 @@ function Day4CbbcCompletePanel_ARCHIVED() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Day Four Complete" accent="CBBC Suitability Training Complete" />
       <div className="flex min-h-[520px] flex-col items-center justify-center p-6 text-center">
-        <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-5xl font-black tracking-[0.12em] text-transparent md:text-6xl">
+        <div className="bg-[linear-gradient(90deg,#5b8cff,#c9a44c)] bg-clip-text text-5xl font-black tracking-[0.12em] text-transparent md:text-6xl">
           Day Four Complete
         </div>
         <div className="mt-8 grid w-full max-w-2xl gap-3 text-left">
           {summary.map((item) => (
             <div
               key={item}
-              className="rounded-md border border-cyan-400/15 bg-black/30 px-4 py-3 text-sm leading-7 text-slate-300"
+              className="rounded-md border border-white/10 bg-black/30 px-4 py-3 text-sm leading-7 text-slate-300"
             >
-              <span className="font-terminal mr-2 text-[#00f0ff]">Rule</span>
+              <span className="font-terminal mr-2 text-[#5b8cff]">Rule</span>
               {item}
             </div>
           ))}
@@ -6822,8 +6675,8 @@ function Day4BriefingPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Graduation Morning Meeting" accent="Three-Client Pricing Live Round" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.95fr_1.05fr]">
-        <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-6">
-          <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[#ffd700]">
+        <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-6">
+          <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[#c9a44c]">
             GRADUATION ROUND
           </div>
           <h1 className="text-4xl font-black leading-tight text-slate-100 md:text-5xl">
@@ -6834,22 +6687,22 @@ function Day4BriefingPanel() {
             using only the tools you already know: the vanilla call, the barrier call, and that binomial-tree calculator.
           </p>
           <p className="mt-4 text-base leading-8 text-slate-300">
-            Martin gives you only the general principles; <span className="font-black text-[#ffd700]">he won't tell you what to pick or what to quote</span>.
+            Martin gives you only the general principles; <span className="font-black text-[#c9a44c]">he won't tell you what to pick or what to quote</span>.
             The client reacts if you pick or quote wrong, but the answer is for you to judge.
           </p>
         </div>
 
         <div className="grid gap-4">
-          <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+          <div className="font-terminal text-xs tracking-[0.18em] text-[#5b8cff]">
             Martin's General Principles
           </div>
           {steps.map(([title, text]) => (
-            <div key={title} className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
-              <div className="text-lg font-black text-[#00f0ff]">{title}</div>
+            <div key={title} className="rounded-lg border border-white/10 bg-black/30 p-5">
+              <div className="text-lg font-black text-[#5b8cff]">{title}</div>
               <div className="mt-2 text-sm leading-7 text-slate-300">{text}</div>
             </div>
           ))}
-          <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
+          <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-sm leading-7 text-[#c9a44c]">
             Today's clients: 3, increasing in difficulty with decreasing hints. The last one won't tell you which product they want.
           </div>
         </div>
@@ -6867,7 +6720,7 @@ function Day4ClientQueueBadge({ index, total }) {
           className={cn(
             "flex h-6 w-6 items-center justify-center rounded-full border",
             i === index
-              ? "border-[#ffd700]/70 bg-[#ffd700]/[0.12] text-[#ffd700]"
+              ? "border-[#c9a44c]/70 bg-[#c9a44c]/[0.12] text-[#c9a44c]"
               : i < index
                 ? "border-green-400/40 bg-green-400/[0.06] text-green-300"
                 : "border-white/10 bg-black/30 text-slate-600",
@@ -6902,13 +6755,13 @@ function Day4ClientProfilePanel({ client, index, total }) {
         <Day4ClientQueueBadge index={index} total={total} />
       </div>
       <div className="grid gap-6 p-6 lg:grid-cols-[0.85fr_1.15fr]">
-        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
+        <div className="rounded-lg border border-white/10 bg-black/30 p-5">
           <div className="mb-5 flex items-center gap-4">
-            <div className="flex h-20 w-20 items-center justify-center rounded-md border border-[#ffd700]/30 bg-[#ffd700]/[0.08] font-terminal text-4xl font-black text-[#ffd700]">
+            <div className="flex h-20 w-20 items-center justify-center rounded-md border border-[#c9a44c]/30 bg-[#c9a44c]/[0.08] font-terminal text-4xl font-black text-[#c9a44c]">
               {client.avatar}
             </div>
             <div>
-              <div className="font-terminal text-xs tracking-[0.18em] text-[#00f0ff]">
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#5b8cff]">
                 {client.typeLabel}
               </div>
               <div className="mt-2 text-2xl font-black text-slate-100">{profile.name}</div>
@@ -6927,8 +6780,8 @@ function Day4ClientProfilePanel({ client, index, total }) {
         </div>
 
         <div className="space-y-4">
-          <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-5">
-            <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#ffd700]">
+          <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
+            <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[#c9a44c]">
               Client Dialogue
             </div>
             <div className="space-y-4">
@@ -6943,7 +6796,7 @@ function Day4ClientProfilePanel({ client, index, total }) {
             </div>
           </div>
           {isJudge && (
-            <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-sm leading-7 text-[#ffd700]">
+            <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-sm leading-7 text-[#c9a44c]">
               Note: he didn't say which product he wants. Next, you have to judge it yourself; sniff out from his budget and his “can accept being voided if it drops below a certain level” whether to go with a vanilla call or a barrier call.
             </div>
           )}
@@ -6965,8 +6818,8 @@ function Day4ParamCard({ client }) {
     ["N Steps", `${params.steps} steps (fixed)`],
   ];
   return (
-    <div className="rounded-lg border border-cyan-400/20 bg-cyan-400/[0.04] p-5">
-      <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+    <div className="rounded-lg border border-white/12 bg-white/[0.03] p-5">
+      <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#5b8cff]">
         {client.profile.name}'s Trade Parameters (fill them into the calculator as shown)
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -6987,12 +6840,12 @@ function Day4ParamCard({ client }) {
 // Graduation data cards (no outer card shell, embedded above the calculator on the quoting page): reuse the Day2/Day3 data-desk "source it yourself" style.
 function Day4SourcingCards({ cards }) {
   return (
-    <div className="rounded-lg border border-cyan-400/20 bg-cyan-400/[0.04] p-5">
-      <div className="mb-3 rounded-md border border-[#00f0ff]/20 bg-[#00f0ff]/[0.05] p-4 text-sm leading-7 text-slate-300">
-        <span className="font-terminal text-[#00f0ff]">Task: </span>
+    <div className="rounded-lg border border-white/12 bg-white/[0.03] p-5">
+      <div className="mb-3 rounded-md border border-[#5b8cff]/20 bg-[#5b8cff]/[0.05] p-4 text-sm leading-7 text-slate-300">
+        <span className="font-terminal text-[#5b8cff]">Task: </span>
         Mr. He didn't give you a parameter list. You've already judged the product for him; now gather the numbers you need for pricing from the material below yourself:
         <span className="font-black text-slate-100"> S₀, K, σ, T, r</span>
-        , plus this trade's <span className="font-black text-[#ffd700]">barrier level</span>. No cheat sheet, and no one telling you which number goes in which field. You've graduated; rely on yourself.
+        , plus this trade's <span className="font-black text-[#c9a44c]">barrier level</span>. No cheat sheet, and no one telling you which number goes in which field. You've graduated; rely on yourself.
       </div>
       <div className="grid gap-4 md:grid-cols-2">
         {cards.map((card) => (
@@ -7075,11 +6928,11 @@ function Day4ClientResponsePanel({ client, selectedQuote, clientResponse }) {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Client Feedback" accent="Quote Receipt" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-5">
-          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#00f0ff]">
+        <div className="rounded-lg border border-white/10 bg-black/30 p-5">
+          <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[#5b8cff]">
             Quote Record
           </div>
-          <div className="text-5xl font-black text-[#00f0ff]">{selectedQuote} pts</div>
+          <div className="text-5xl font-black text-[#5b8cff]">{selectedQuote} pts</div>
           <div className="mt-4 rounded-md border border-white/10 bg-white/[0.03] p-3 text-sm leading-7 text-slate-400">
             Theoretical price anchor ≈ <span className="font-black text-slate-200">{response.theoretical} pts</span>
             , your profit {response.margin >= 0 ? "+" : ""}
@@ -7087,13 +6940,13 @@ function Day4ClientResponsePanel({ client, selectedQuote, clientResponse }) {
           </div>
         </div>
 
-        <div className="rounded-lg border border-[#ffd700]/20 bg-[#ffd700]/[0.05] p-5">
+        <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
           <div className="mb-4 flex items-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-md border border-[#ffd700]/30 bg-black/40 font-terminal text-3xl font-black text-[#ffd700]">
+            <div className="flex h-16 w-16 items-center justify-center rounded-md border border-[#c9a44c]/30 bg-black/40 font-terminal text-3xl font-black text-[#c9a44c]">
               {client.avatar}
             </div>
             <div>
-              <div className="font-terminal text-xs tracking-[0.18em] text-[#ffd700]">
+              <div className="font-terminal text-xs tracking-[0.18em] text-[#c9a44c]">
                 {client.profile.name}
               </div>
               <div className="mt-1 text-sm text-slate-500">{acceptedText}</div>
@@ -7142,13 +6995,13 @@ function Day4ScorecardPanel({ results, clients }) {
       <TerminalHeader label="Graduation Scorecard" accent="Three-Client Pricing Review" />
       <div className="space-y-5 p-6">
         <div className="grid gap-4 md:grid-cols-3">
-          <div className="rounded-lg border border-[#ffd700]/25 bg-[#ffd700]/[0.06] p-4">
-            <div className="font-terminal text-xs tracking-[0.16em] text-[#ffd700]">Filled</div>
+          <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-4">
+            <div className="font-terminal text-xs tracking-[0.16em] text-[#c9a44c]">Filled</div>
             <div className="mt-2 text-3xl font-black text-slate-100">
               {dealCount} / {clients.length} trades
             </div>
           </div>
-          <div className="rounded-lg border border-cyan-400/15 bg-black/30 p-4">
+          <div className="rounded-lg border border-white/10 bg-black/30 p-4">
             <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">Product Judgment</div>
             <div className="mt-2 text-3xl font-black text-slate-100">
               {correctProductCount} / {clients.length} correct
@@ -7160,7 +7013,7 @@ function Day4ScorecardPanel({ results, clients }) {
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-lg border border-cyan-400/15">
+        <div className="overflow-hidden rounded-lg border border-white/10">
           <div className="grid grid-cols-[1.1fr_1fr_0.9fr_0.7fr_0.5fr] gap-2 border-b border-white/10 bg-black/40 px-4 py-3 font-terminal text-[11px] tracking-[0.12em] text-slate-500">
             <span>Client</span>
             <span>Product</span>
@@ -7207,7 +7060,7 @@ function Day4ScorecardPanel({ results, clients }) {
           })}
         </div>
 
-        <div className="rounded-md border-l-4 border-[#ffd700] bg-[#ffd700]/[0.06] p-4 text-base leading-8 text-[#ffd700]">
+        <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-base leading-8 text-[#c9a44c]">
           Martin's overall: {martinSummary}
         </div>
       </div>
@@ -7226,7 +7079,7 @@ function Day4GraduationPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Graduation" accent="New-Trader Pricing Training Complete" />
       <div className="flex min-h-[520px] flex-col items-center justify-center p-6 text-center">
-        <div className="bg-[linear-gradient(90deg,#00f0ff,#ffd700)] bg-clip-text text-5xl font-black tracking-[0.12em] text-transparent md:text-6xl">
+        <div className="bg-[linear-gradient(90deg,#5b8cff,#c9a44c)] bg-clip-text text-5xl font-black tracking-[0.12em] text-transparent md:text-6xl">
           Graduation Complete
         </div>
         <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300">
@@ -7236,9 +7089,9 @@ function Day4GraduationPanel() {
           {summary.map((item) => (
             <div
               key={item}
-              className="rounded-md border border-cyan-400/15 bg-black/30 px-4 py-3 text-sm leading-7 text-slate-300"
+              className="rounded-md border border-white/10 bg-black/30 px-4 py-3 text-sm leading-7 text-slate-300"
             >
-              <span className="font-terminal mr-2 text-[#00f0ff]">Recap</span>
+              <span className="font-terminal mr-2 text-[#5b8cff]">Recap</span>
               {item}
             </div>
           ))}
@@ -8404,7 +8257,7 @@ export default function Day1TraderSimulator() {
   if (currentStage === "title_screen") {
     return (
       <main
-        className="font-cn relative min-h-screen overflow-hidden bg-[#0a0a1a] text-[#e0e0e0]"
+        className="font-cn relative min-h-screen overflow-hidden bg-[#0b1018] text-[#e8edf4]"
         onClick={skipCurrentTypewriter}
       >
         <StyleBlock />
@@ -8416,7 +8269,7 @@ export default function Day1TraderSimulator() {
 
   return (
     <main
-      className="font-cn relative min-h-screen overflow-x-hidden bg-[#0a0a1a] text-[#e0e0e0]"
+      className="font-cn relative min-h-screen overflow-x-hidden bg-[#0b1018] text-[#e8edf4]"
       onClick={skipCurrentTypewriter}
     >
       <StyleBlock />
