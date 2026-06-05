@@ -2177,18 +2177,18 @@ function SideData({ currentDay }) {
 
   return (
     <>
-      <div className="font-terminal fixed left-8 top-1/2 z-10 hidden -translate-y-1/2 text-sm leading-8 text-slate-700 lg:block">
-        <div className="text-slate-600">HSI</div>
+      <div className="font-terminal fixed left-8 top-1/2 z-10 hidden -translate-y-1/2 text-sm leading-8 text-[var(--faint)] lg:block">
+        <div className="text-[var(--muted)]">HSI</div>
         <div className="text-[#5b8cff]">21,500.00</div>
         <div className="text-green-500">{side.leftStatus}</div>
         <div className="text-[#c9a44c]">{side.dayLabel}</div>
         <br />
-        <div className="text-slate-600">Mode</div>
+        <div className="text-[var(--muted)]">Mode</div>
         <div className="text-[#5b8cff]">{side.mode}</div>
       </div>
 
-      <div className="font-terminal fixed right-8 top-1/2 z-10 hidden -translate-y-1/2 text-right text-sm leading-8 text-slate-700 lg:block">
-        <div className="text-slate-600">Product</div>
+      <div className="font-terminal fixed right-8 top-1/2 z-10 hidden -translate-y-1/2 text-right text-sm leading-8 text-[var(--faint)] lg:block">
+        <div className="text-[var(--muted)]">Product</div>
         <div className="text-[#5b8cff]">
           {currentDay === 4
             ? "Vanilla / Barrier"
@@ -2197,10 +2197,10 @@ function SideData({ currentDay }) {
               : "Vanilla Option"}
         </div>
         <br />
-        <div className="text-slate-600">Topic</div>
+        <div className="text-[var(--muted)]">Topic</div>
         <div className="text-[#5b8cff]">{side.topic}</div>
         <br />
-        <div className="text-slate-600">Desk</div>
+        <div className="text-[var(--muted)]">Desk</div>
         <div className="text-[#5b8cff]">Central</div>
       </div>
     </>
@@ -2248,7 +2248,7 @@ function TopBar({
       <div className="font-terminal tracking-[0.16em] text-[#5b8cff]">
         Day {currentDay}: {dayConfig.title}
       </div>
-      <div className="font-terminal text-slate-500">
+      <div className="font-terminal text-[var(--muted)]">
         Time: <span className="text-slate-300">{stageMeta.label}</span>
       </div>
       <div className="flex flex-wrap items-center gap-2">
@@ -2328,7 +2328,7 @@ function TopBar({
                 }}
                 className="font-terminal block w-full border-t border-[var(--border)] px-4 py-2.5 text-left text-xs font-bold tracking-[0.12em] text-[var(--neg)] transition duration-200 hover:bg-[var(--neg)]/[0.08]"
               >
-                Sign out
+                Sign Out
               </button>
             </div>
           )}
@@ -2344,14 +2344,14 @@ function MentorPanel({ text, skipSignal }) {
       <TerminalHeader label="MENTOR PANEL / MARTIN" accent="Online" />
       <div className="p-5">
         <div className="mb-5 flex items-center gap-4">
-          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#5b8cff,#2e4a8f)] font-terminal text-2xl font-black text-[#0b1018] shadow-[0_0_28px_rgba(91,140,255,0.25)]">
+          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#5b8cff,#2e4a8f)] font-terminal text-2xl font-black text-[#0b1018] shadow-[var(--shadow)]">
             M
           </div>
           <div>
             <div className="font-terminal text-sm tracking-[0.18em] text-[#5b8cff]">
               Mentor MARTIN
             </div>
-            <div className="mt-1 text-xs text-slate-500">New Trader Onboarding</div>
+            <div className="mt-1 text-xs text-[var(--muted)]">New Trader Onboarding</div>
           </div>
         </div>
 
@@ -2750,13 +2750,13 @@ function HandbookOverlay({ open, unlockedEntries, onClose }) {
 
   return (
     <div className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm">
-      <div className="absolute inset-y-0 right-0 flex w-full max-w-2xl flex-col border-l border-white/12 bg-[#0b1018]/95 shadow-[0_0_45px_rgba(91,140,255,0.18)]">
+      <div className="absolute inset-y-0 right-0 flex w-full max-w-2xl flex-col border-l border-white/12 bg-[#0b1018]/95 shadow-[var(--shadow)]">
         <div className="flex items-center justify-between border-b border-white/10 bg-[#1a2433] px-5 py-4">
           <div>
             <div className="font-terminal text-sm tracking-[0.2em] text-[#5b8cff]">
               Trader's Handbook
             </div>
-            <div className="mt-1 text-xs text-slate-500">Martin's Stage Rulebook</div>
+            <div className="mt-1 text-xs text-[var(--muted)]">Martin's Stage Rulebook</div>
           </div>
           <PrimaryButton tone="ghost" onClick={onClose} className="px-4 py-2 text-xs">
             Close Handbook
@@ -2766,10 +2766,10 @@ function HandbookOverlay({ open, unlockedEntries, onClose }) {
         <div className="flex-1 overflow-y-auto p-5">
           {entries.length === 0 ? (
             <div className="flex min-h-96 flex-col items-center justify-center text-center">
-              <div className="font-terminal mb-4 text-3xl font-black tracking-[0.18em] text-slate-700">
+              <div className="font-terminal mb-4 text-3xl font-black tracking-[0.18em] text-[var(--faint)]">
                 Empty
               </div>
-              <p className="max-w-md text-sm leading-7 text-slate-500">
+              <p className="max-w-md text-sm leading-7 text-[var(--muted)]">
                 No handbook content unlocked yet. First sit through Martin's morning-meeting lesson.
               </p>
             </div>
@@ -2852,7 +2852,7 @@ function WelcomePanel() {
       <TerminalHeader label="New Hire Check-in / Desk" accent="First Day on the Job" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="flex flex-col items-center justify-center rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-6 text-center">
-          <div className="mb-5 flex h-28 w-28 items-center justify-center rounded-full bg-[linear-gradient(135deg,#5b8cff,#2e4a8f)] font-terminal text-5xl font-black text-[#0b1018] shadow-[0_0_38px_rgba(91,140,255,0.25)]">
+          <div className="mb-5 flex h-28 w-28 items-center justify-center rounded-full bg-[linear-gradient(135deg,#5b8cff,#2e4a8f)] font-terminal text-5xl font-black text-[#0b1018] shadow-[var(--shadow)]">
             M
           </div>
           <div className="font-terminal text-sm tracking-[0.18em] text-[#5b8cff]">MENTOR MARTIN</div>
@@ -3030,7 +3030,7 @@ function IntroPanel() {
             <div
               key={card.id}
               className={cn(
-                "rounded-lg border p-5 shadow-[0_0_24px_rgba(91,140,255,0.06)]",
+                "rounded-lg border p-5 shadow-[var(--shadow)]",
                 card.tone === "gold"
                   ? "border-[#c9a44c]/30 bg-[#c9a44c]/[0.06]"
                   : "border-white/15 bg-white/[0.04]",
@@ -3107,15 +3107,15 @@ function PremiumLessonPanel() {
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             <div className="rounded-md border border-white/10 bg-white/[0.03] p-4">
-              <div className="text-sm text-slate-500">Client Pays</div>
+              <div className="text-sm text-[var(--muted)]">Client Pays</div>
               <div className="mt-2 text-2xl font-black text-[#c9a44c]">186-point premium</div>
             </div>
             <div className="rounded-md border border-white/10 bg-white/[0.03] p-4">
-              <div className="text-sm text-slate-500">In Return For</div>
+              <div className="text-sm text-[var(--muted)]">In Return For</div>
               <div className="mt-2 text-2xl font-black text-[#5b8cff]">Future upside opportunity</div>
             </div>
             <div className="rounded-md border border-red-500/20 bg-red-500/[0.05] p-4">
-              <div className="text-sm text-slate-500">Worst Case</div>
+              <div className="text-sm text-[var(--muted)]">Worst Case</div>
               <div className="mt-2 text-2xl font-black text-red-300">Lose 186 points</div>
             </div>
           </div>
@@ -3203,7 +3203,7 @@ function ClientArrivalPanel() {
       <TerminalCard className="overflow-hidden">
         <TerminalHeader label="Client Profile" accent="Retail Order Flow" />
         <div className="p-5">
-          <div className="mx-auto mb-5 flex h-24 w-24 items-center justify-center rounded-full bg-[linear-gradient(135deg,#c9a44c,#b9863a)] font-terminal text-3xl font-black text-[#0b1018] shadow-[0_0_36px_rgba(201,164,76,0.24)]">
+          <div className="mx-auto mb-5 flex h-24 w-24 items-center justify-center rounded-full bg-[linear-gradient(135deg,#c9a44c,#b9863a)] font-terminal text-3xl font-black text-[#0b1018] shadow-[var(--shadow)]">
             L
           </div>
           <div className="mb-5 text-center text-2xl font-bold text-[#c9a44c]">{client.name}</div>
@@ -3213,7 +3213,7 @@ function ClientArrivalPanel() {
                 key={label}
                 className="grid gap-2 border-b border-white/10 pb-2 text-sm md:grid-cols-[140px_1fr]"
               >
-                <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
+                <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                   {label}
                 </div>
                 <div className="text-slate-300">{value}</div>
@@ -3265,21 +3265,21 @@ function ProductSelectionPanel({
                 className={cn(
                   "rounded-lg border p-5 text-left transition duration-300",
                   selected
-                    ? "border-[#c9a44c]/70 bg-[#c9a44c]/[0.08] shadow-[0_0_26px_rgba(201,164,76,0.18)]"
+                    ? "border-[#c9a44c]/70 bg-[#c9a44c]/[0.08] shadow-[var(--shadow)]"
                     : "border-white/10 bg-black/25 hover:border-[#5b8cff]/45 hover:bg-white/[0.05]",
                   product.locked && "border-slate-700 bg-slate-900/35 opacity-70",
                 )}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
+                    <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
                       {product.status}
                     </div>
                     <div
                       className={cn(
                         "mt-2 text-xl font-black",
                         product.locked
-                          ? "text-slate-500"
+                          ? "text-[var(--muted)]"
                           : selected
                             ? "text-[#c9a44c]"
                             : "text-[#5b8cff]",
@@ -3287,7 +3287,7 @@ function ProductSelectionPanel({
                     >
                       {product.name}
                     </div>
-                    <div className="font-terminal mt-1 text-xs text-slate-500">{product.term}</div>
+                    <div className="font-terminal mt-1 text-xs text-[var(--muted)]">{product.term}</div>
                   </div>
                   {selected && (
                     <div className="font-terminal rounded border border-[#c9a44c]/40 px-2 py-1 text-xs text-[#c9a44c]">
@@ -3368,7 +3368,7 @@ function RiskDisclosurePanel({
                   className="mt-1 h-4 w-4 accent-[#5b8cff]"
                 />
                 <div>
-                  <div className="font-terminal mb-1 text-xs tracking-[0.16em] text-slate-500">
+                  <div className="font-terminal mb-1 text-xs tracking-[0.16em] text-[var(--muted)]">
                     Disclosure {index + 1}
                   </div>
                   <div className="text-sm leading-7 text-slate-200">{item.text}</div>
@@ -3466,7 +3466,7 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
             ["Maturity", market.maturity],
           ].map(([label, value]) => (
             <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
+              <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                 {label}
               </div>
               <div className="mt-2 text-lg font-bold text-slate-100">{value}</div>
@@ -3483,13 +3483,13 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
           </div>
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs text-slate-500">Live Price</div>
+              <div className="font-terminal text-xs text-[var(--muted)]">Live Price</div>
               <div className="live-price-pulse mt-2 text-3xl font-black text-[#5b8cff]">
                 {formatPoints(latestPrice)}
               </div>
             </div>
             <div className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs text-slate-500">Tick Change</div>
+              <div className="font-terminal text-xs text-[var(--muted)]">Tick Change</div>
               <div
                 className={cn(
                   "mt-2 text-2xl font-black",
@@ -3501,7 +3501,7 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
               </div>
             </div>
             <div className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs text-slate-500">Call Live Net</div>
+              <div className="font-terminal text-xs text-[var(--muted)]">Call Live Net</div>
               <div
                 className={cn(
                   "mt-2 text-2xl font-black",
@@ -3521,7 +3521,7 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
               <div className="font-terminal text-sm tracking-[0.18em] text-[#5b8cff]">
                 LIVE HSI PATH
               </div>
-              <div className="mt-1 text-xs text-slate-500">
+              <div className="mt-1 text-xs text-[var(--muted)]">
                 The price ticks automatically; the endpoint is used for vanilla-option expiry settlement
               </div>
             </div>
@@ -3619,19 +3619,19 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
         {finalShown ? (
           <div className="scene-enter mt-6 grid gap-4 md:grid-cols-3">
             <div className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs text-slate-500">Final Price</div>
+              <div className="font-terminal text-xs text-[var(--muted)]">Final Price</div>
               <div className="mt-2 text-3xl font-black text-[#5b8cff]">
                 {formatPoints(finalPrice)}
               </div>
             </div>
             <div className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs text-slate-500">Call Expiry Payoff</div>
+              <div className="font-terminal text-xs text-[var(--muted)]">Call Expiry Payoff</div>
               <div className="mt-2 text-lg font-bold text-slate-100">
                 max(22,400 - 22,000, 0) = <span className="text-[#5b8cff]">{payoff}</span>
               </div>
             </div>
             <div className="rounded-lg border border-green-400/20 bg-green-400/[0.05] p-4">
-              <div className="font-terminal text-xs text-slate-500">Net P&L</div>
+              <div className="font-terminal text-xs text-[var(--muted)]">Net P&L</div>
               <div className="mt-2 text-2xl font-black text-green-400">
                 {payoff} - {market.premium} = +{netPnl}
               </div>
@@ -3686,13 +3686,13 @@ function ReportPanel({ score }) {
 
         <div className="grid gap-4 md:grid-cols-2">
           <div className="rounded-lg border border-white/10 bg-black/30 p-4">
-            <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
+            <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
               Product
             </div>
             <div className="mt-2 text-2xl font-black text-[#5b8cff]">{score.productName}</div>
           </div>
           <div className="rounded-lg border border-white/10 bg-black/30 p-4">
-            <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
+            <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
               Outcome
             </div>
             <div className="mt-2 text-base leading-7 text-slate-200">{score.outcome}</div>
@@ -3706,7 +3706,7 @@ function ReportPanel({ score }) {
             ["Client P&L", score.clientPnl],
           ].map(([label, value]) => (
             <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
+              <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
                 {label}
               </div>
               <div className="mt-2 text-xl font-black text-slate-100">{value}</div>
@@ -3725,7 +3725,7 @@ function ReportPanel({ score }) {
               key={label}
               className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.03] p-4"
             >
-              <span className="font-terminal text-xs text-slate-500">{label}</span>
+              <span className="font-terminal text-xs text-[var(--muted)]">{label}</span>
               <ScoreBadge score={value} />
             </div>
           ))}
@@ -3784,7 +3784,7 @@ function Day2IntroPanel() {
       <TerminalHeader label="Day Two / Pricing Desk" accent="A Quote Isn't a Gut Call" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="flex flex-col items-center justify-center rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-6 text-center">
-          <div className="mb-5 flex h-28 w-28 items-center justify-center rounded-full bg-[linear-gradient(135deg,#c9a44c,#5b8cff)] font-terminal text-5xl font-black text-[#0b1018] shadow-[0_0_38px_rgba(201,164,76,0.2)]">
+          <div className="mb-5 flex h-28 w-28 items-center justify-center rounded-full bg-[linear-gradient(135deg,#c9a44c,#5b8cff)] font-terminal text-5xl font-black text-[#0b1018] shadow-[var(--shadow)]">
             M
           </div>
           <div className="font-terminal text-sm tracking-[0.18em] text-[#5b8cff]">MARTIN'S MORNING MEETING</div>
@@ -3860,7 +3860,7 @@ function Day2PricingAnchorPanel() {
                     : "border-[#c9a44c]/30 bg-[#c9a44c]/[0.07]",
               )}
             >
-              <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
+              <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
                 {item.label}
               </div>
               <div className="mt-3 text-3xl font-black text-slate-100">{item.quote}</div>
@@ -3896,7 +3896,7 @@ function Day2TreePathsLessonPanel() {
           </div>
           <div className="space-y-4">
             <div className="mx-auto w-44 rounded-lg border border-[#5b8cff]/50 bg-white/[0.06] p-4 text-center">
-              <div className="font-terminal text-xs text-slate-500">Today</div>
+              <div className="font-terminal text-xs text-[var(--muted)]">Today</div>
               <div className="text-2xl font-black text-[#5b8cff]">21,500</div>
             </div>
             <div className="grid grid-cols-2 gap-5">
@@ -3912,7 +3912,7 @@ function Day2TreePathsLessonPanel() {
             <div className="grid grid-cols-3 gap-3 text-center">
               {["22,653", "21,500", "20,405"].map((price, index) => (
                 <div key={`${price}-${index}`} className="rounded-md border border-white/10 bg-black/35 p-3">
-                  <div className="font-terminal text-[10px] text-slate-500">Step 2</div>
+                  <div className="font-terminal text-[10px] text-[var(--muted)]">Step 2</div>
                   <div className="mt-1 text-lg font-black text-slate-100">{price}</div>
                 </div>
               ))}
@@ -3928,7 +3928,7 @@ function Day2TreePathsLessonPanel() {
                       : "border-white/10 bg-black/35",
                   )}
                 >
-                  <div className="font-terminal text-[10px] text-slate-500">Expiry</div>
+                  <div className="font-terminal text-[10px] text-[var(--muted)]">Expiry</div>
                   <div className="mt-1 text-lg font-black text-slate-100">{price}</div>
                 </div>
               ))}
@@ -4243,13 +4243,13 @@ function ResearchTerminalPanel({
                     key={row.label}
                     className="flex items-start justify-between gap-3 rounded border border-white/5 bg-white/[0.02] px-3 py-2"
                   >
-                    <span className="font-terminal text-[11px] tracking-[0.1em] text-slate-500 shrink-0">
+                    <span className="font-terminal text-[11px] tracking-[0.1em] text-[var(--muted)] shrink-0">
                       {row.label}
                     </span>
                     <div className="text-right">
                       <span className="font-black text-slate-100 text-sm">{row.value}</span>
                       {row.note && (
-                        <div className="mt-0.5 text-[11px] text-slate-500">{row.note}</div>
+                        <div className="mt-0.5 text-[11px] text-[var(--muted)]">{row.note}</div>
                       )}
                     </div>
                   </div>
@@ -4260,7 +4260,7 @@ function ResearchTerminalPanel({
                 <div className="mt-3">
                   <button
                     onClick={() => toggle(card.id)}
-                    className="font-terminal text-[11px] tracking-[0.12em] text-slate-500 hover:text-slate-300 transition-colors"
+                    className="font-terminal text-[11px] tracking-[0.12em] text-[var(--muted)] hover:text-slate-300 transition-colors"
                   >
                     {revealed[card.id] ? "▲ Collapse Real Option Chain" : "▼ View Real Option Chain (our group's data)"}
                   </button>
@@ -4271,7 +4271,7 @@ function ResearchTerminalPanel({
                           {line}
                         </div>
                       ))}
-                      <div className="mt-2 font-terminal text-[10px] text-slate-600">
+                      <div className="mt-2 font-terminal text-[10px] text-[var(--muted)]">
                         Source: option_chain_current.csv (scraped by the math-engine team in our group, real HKEX data)
                       </div>
                     </div>
@@ -4282,7 +4282,7 @@ function ResearchTerminalPanel({
           ))}
         </div>
 
-        <div className="rounded-md border border-white/10 bg-white/[0.03] p-4 text-xs leading-6 text-slate-500">
+        <div className="rounded-md border border-white/10 bg-white/[0.03] p-4 text-xs leading-6 text-[var(--muted)]">
           {footerHint}
         </div>
       </div>
@@ -4362,7 +4362,7 @@ function Day2ClientArrivalPanel() {
           <div className="grid gap-3">
             {profileRows.map(([label, value]) => (
               <div key={label} className="rounded-md border border-white/10 bg-white/[0.03] p-3">
-                <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
+                <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                   {label}
                 </div>
                 <div className="mt-1 text-sm leading-6 text-slate-200">{value}</div>
@@ -4416,7 +4416,7 @@ function Day2ProductReviewPanel() {
         <div className="grid gap-4 md:grid-cols-3">
           {rows.map(([label, value]) => (
             <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
+              <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                 {label}
               </div>
               <div className="mt-2 text-xl font-black text-slate-100">{value}</div>
@@ -4459,7 +4459,7 @@ function BinomialTreeVisual() {
           <div
             key={node.id}
             className={cn(
-              "absolute -translate-x-1/2 -translate-y-1/2 rounded-lg border p-3 shadow-[0_0_24px_rgba(91,140,255,0.08)]",
+              "absolute -translate-x-1/2 -translate-y-1/2 rounded-lg border p-3 shadow-[var(--shadow)]",
               node.terminal ? "w-64" : "w-44",
               node.hot
                 ? "border-[#c9a44c]/70 bg-[#c9a44c]/[0.12]"
@@ -4469,7 +4469,7 @@ function BinomialTreeVisual() {
             )}
             style={{ left: `${node.x}%`, top: `${node.y}%` }}
           >
-            <div className="font-terminal text-[10px] tracking-[0.14em] text-slate-500">
+            <div className="font-terminal text-[10px] tracking-[0.14em] text-[var(--muted)]">
               {node.step}
             </div>
             <div className={cn("mt-1 text-xs", node.hot ? "text-[#c9a44c]" : "text-[#5b8cff]")}>
@@ -4483,7 +4483,7 @@ function BinomialTreeVisual() {
                     {node.formula}
                   </div>
                 )}
-                <div className={cn("rounded border px-2 py-1 text-xs font-black", node.hot ? "border-[#c9a44c]/40 text-[#c9a44c]" : "border-white/10 text-slate-500")}>
+                <div className={cn("rounded border px-2 py-1 text-xs font-black", node.hot ? "border-[#c9a44c]/40 text-[#c9a44c]" : "border-white/10 text-[var(--muted)]")}>
                   Payoff: {formatPoints(node.payoff)}
                 </div>
               </div>
@@ -4827,7 +4827,7 @@ function BinomialPricingTool({
                   <span
                     className={cn(
                       "font-terminal flex items-center gap-2 text-[11px] tracking-[0.12em]",
-                      isBarrierRow ? "text-[#c9a44c]" : "text-slate-500",
+                      isBarrierRow ? "text-[#c9a44c]" : "text-[var(--muted)]",
                     )}
                   >
                     {label}
@@ -4856,9 +4856,9 @@ function BinomialPricingTool({
             })}
 
             <label className="grid gap-2">
-              <span className="font-terminal flex items-center gap-2 text-[11px] tracking-[0.12em] text-slate-500">
+              <span className="font-terminal flex items-center gap-2 text-[11px] tracking-[0.12em] text-[var(--muted)]">
                 N Steps
-                <span className="rounded-full border border-white/15 bg-white/[0.04] px-2 py-0.5 text-[9px] font-black tracking-[0.18em] text-slate-500">
+                <span className="rounded-full border border-white/15 bg-white/[0.04] px-2 py-0.5 text-[9px] font-black tracking-[0.18em] text-[var(--muted)]">
                   🔒 Fixed
                 </span>
               </span>
@@ -4951,14 +4951,14 @@ function BinomialPricingTool({
                   <div
                     key={node.id}
                     className={cn(
-                      "absolute w-32 -translate-x-1/2 -translate-y-1/2 rounded-lg border p-2 shadow-[0_0_18px_rgba(91,140,255,0.08)]",
+                      "absolute w-32 -translate-x-1/2 -translate-y-1/2 rounded-lg border p-2 shadow-[var(--shadow)]",
                       node.knocked
                         ? "border-red-500/60 bg-red-500/[0.12]"
                         : "border-green-400/45 bg-green-400/[0.08]",
                     )}
                     style={{ left: `${node.x}%`, top: `${node.y}%` }}
                   >
-                    <div className="font-terminal text-[10px] tracking-[0.12em] text-slate-500">
+                    <div className="font-terminal text-[10px] tracking-[0.12em] text-[var(--muted)]">
                       t{node.step} / u{node.upMoves}
                     </div>
                     <div
@@ -4980,14 +4980,14 @@ function BinomialPricingTool({
                 <div
                   key={node.id}
                   className={cn(
-                    "absolute w-32 -translate-x-1/2 -translate-y-1/2 rounded-lg border p-2 shadow-[0_0_18px_rgba(91,140,255,0.08)]",
+                    "absolute w-32 -translate-x-1/2 -translate-y-1/2 rounded-lg border p-2 shadow-[var(--shadow)]",
                     isTerminal && node.inTheMoney
                       ? "border-[#c9a44c]/65 bg-[#c9a44c]/[0.1]"
                       : "border-[#5b8cff]/35 bg-white/[0.05]",
                   )}
                   style={{ left: `${node.x}%`, top: `${node.y}%` }}
                 >
-                  <div className="font-terminal text-[10px] tracking-[0.12em] text-slate-500">
+                  <div className="font-terminal text-[10px] tracking-[0.12em] text-[var(--muted)]">
                     t{node.step} / u{node.upMoves}
                   </div>
                   <div className="mt-1 text-lg font-black text-slate-100">
@@ -4997,7 +4997,7 @@ function BinomialPricingTool({
                     V: {node.optionValue.toFixed(1)}
                   </div>
                   {isTerminal && (
-                    <div className={cn("mt-1 rounded border px-2 py-1 text-[10px] font-black", node.inTheMoney ? "border-[#c9a44c]/35 text-[#c9a44c]" : "border-white/10 text-slate-500")}>
+                    <div className={cn("mt-1 rounded border px-2 py-1 text-[10px] font-black", node.inTheMoney ? "border-[#c9a44c]/35 text-[#c9a44c]" : "border-white/10 text-[var(--muted)]")}>
                       Payoff: {node.payoff.toFixed(0)}
                     </div>
                   )}
@@ -5079,7 +5079,7 @@ function BinomialPricingTool({
           </div>
 
           <label className="grid max-w-xs gap-2">
-            <span className="font-terminal text-[11px] tracking-[0.14em] text-slate-500">
+            <span className="font-terminal text-[11px] tracking-[0.14em] text-[var(--muted)]">
               Your Quote (points)
             </span>
             <input
@@ -5196,7 +5196,7 @@ function Day2TreeExplainerPanel({ selectedQuote, quoteAnalysis, onUpdateQuote, o
         <div className="grid gap-3 md:grid-cols-4">
           {params.map(([label, value]) => (
             <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-3">
-              <div className="font-terminal text-[11px] tracking-[0.14em] text-slate-500">
+              <div className="font-terminal text-[11px] tracking-[0.14em] text-[var(--muted)]">
                 {label}
               </div>
               <div className="mt-2 text-lg font-black text-slate-100">{value}</div>
@@ -5261,7 +5261,7 @@ function Day2QuoteSliderPanel({
             ["Suggested Range", `${fairLow} - ${fairHigh} pts`, "#e2e8f0"],
           ].map(([label, value, color]) => (
             <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
+              <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                 {label}
               </div>
               <div className="mt-2 text-2xl font-black" style={{ color }}>
@@ -5277,7 +5277,7 @@ function Day2QuoteSliderPanel({
               <div className="font-terminal text-xs tracking-[0.18em] text-[#5b8cff]">
                 Quote Slider
               </div>
-              <div className="mt-1 text-sm text-slate-500">Range: {rules.sliderMin} - {rules.sliderMax} pts</div>
+              <div className="mt-1 text-sm text-[var(--muted)]">Range: {rules.sliderMin} - {rules.sliderMax} pts</div>
             </div>
             <div className={cn("rounded-md border px-4 py-2 font-terminal text-xs tracking-[0.14em]", toneClass)}>
               {quoteAnalysis.label}
@@ -5291,9 +5291,11 @@ function Day2QuoteSliderPanel({
             step="5"
             value={selectedQuote}
             onChange={(event) => onUpdateQuote(Number(event.target.value))}
-            className="w-full accent-[#5b8cff]"
+            aria-label="Your quote in points"
+            aria-valuetext={`${selectedQuote} points`}
+            className="w-full touch-manipulation accent-[#5b8cff]"
           />
-          <div className="mt-3 flex justify-between text-xs text-slate-500">
+          <div className="mt-3 flex justify-between text-xs text-[var(--muted)]">
             <span>{rules.sliderMin}</span>
             <span>{liveTheoretical} theoretical</span>
             <span>{fairLow}-{fairHigh} fair range</span>
@@ -5311,7 +5313,7 @@ function Day2QuoteSliderPanel({
 
   if (embedded) {
     return (
-      <div className="overflow-hidden rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.04] shadow-[0_0_28px_rgba(201,164,76,0.08)]">
+      <div className="overflow-hidden rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.04] shadow-[var(--shadow)]">
         {content}
       </div>
     );
@@ -5351,7 +5353,7 @@ function Day2ClientResponsePanel({ selectedQuote, clientResponse, liveTheoretica
               <div className="font-terminal text-xs tracking-[0.18em] text-[#c9a44c]">
                 Mr. Wang
               </div>
-              <div className="mt-1 text-sm text-slate-500">{acceptedText}</div>
+              <div className="mt-1 text-sm text-[var(--muted)]">{acceptedText}</div>
             </div>
           </div>
           <div className="rounded-md border border-white/10 bg-black/30 p-5 text-xl font-black leading-9 text-slate-100">
@@ -5430,7 +5432,7 @@ function Day2MarketRunPanel({
             ["Maturity", "1 month"],
           ].map(([label, value]) => (
             <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
+              <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                 {label}
               </div>
               <div className="mt-2 text-lg font-bold text-slate-100">{value}</div>
@@ -5440,13 +5442,13 @@ function Day2MarketRunPanel({
 
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
           <div className="rounded-lg border border-white/10 bg-black/30 p-4">
-            <div className="font-terminal text-xs text-slate-500">Live Price</div>
+            <div className="font-terminal text-xs text-[var(--muted)]">Live Price</div>
             <div className="live-price-pulse mt-2 text-3xl font-black text-[#5b8cff]">
               {formatPoints(latestPrice)}
             </div>
           </div>
           <div className="rounded-lg border border-white/10 bg-black/30 p-4">
-            <div className="font-terminal text-xs text-slate-500">Tick Change</div>
+            <div className="font-terminal text-xs text-[var(--muted)]">Tick Change</div>
             <div
               className={cn(
                 "mt-2 text-2xl font-black",
@@ -5458,7 +5460,7 @@ function Day2MarketRunPanel({
             </div>
           </div>
           <div className="rounded-lg border border-white/10 bg-black/30 p-4">
-            <div className="font-terminal text-xs text-slate-500">
+            <div className="font-terminal text-xs text-[var(--muted)]">
               {accepted ? "Desk Live Net" : "Trade Status"}
             </div>
             {accepted ? (
@@ -5477,7 +5479,7 @@ function Day2MarketRunPanel({
               <div className="font-terminal text-sm tracking-[0.18em] text-[#5b8cff]">
                 LIVE HSI PATH
               </div>
-              <div className="mt-1 text-xs text-slate-500">
+              <div className="mt-1 text-xs text-[var(--muted)]">
                 The price ticks automatically; the endpoint is used for the vanilla call's expiry settlement
               </div>
             </div>
@@ -5567,31 +5569,31 @@ function Day2MarketRunPanel({
         {finalShown ? (
           <div className="scene-enter mt-6 grid gap-4 md:grid-cols-4">
             <div className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs text-slate-500">Final Price</div>
+              <div className="font-terminal text-xs text-[var(--muted)]">Final Price</div>
               <div className="mt-2 text-3xl font-black text-[#5b8cff]">
                 {formatPoints(finalPrice)}
               </div>
             </div>
             <div className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs text-slate-500">Call Expiry Payoff</div>
+              <div className="font-terminal text-xs text-[var(--muted)]">Call Expiry Payoff</div>
               <div className="mt-2 text-lg font-bold text-slate-100">
                 max({formatPoints(finalPrice)} - {formatPoints(market.strike)}, 0) ={" "}
                 <span className="text-[#5b8cff]">{payoff}</span>
               </div>
             </div>
             <div className={cn("rounded-lg border p-4", accepted && (payoff - quote) >= 0 ? "border-green-400/20 bg-green-400/[0.05]" : "border-white/10 bg-black/30")}>
-              <div className="font-terminal text-xs text-slate-500">Client Net P&L</div>
-              <div className={cn("mt-2 text-2xl font-black", accepted ? ((payoff - quote) >= 0 ? "text-green-400" : "text-red-400") : "text-slate-500")}>
+              <div className="font-terminal text-xs text-[var(--muted)]">Client Net P&L</div>
+              <div className={cn("mt-2 text-2xl font-black", accepted ? ((payoff - quote) >= 0 ? "text-green-400" : "text-red-400") : "text-[var(--muted)]")}>
                 {accepted ? `${(payoff - quote) >= 0 ? "+" : ""}${payoff - quote}` : "No Deal · 0"}
               </div>
-              {accepted && <p className="mt-2 text-xs leading-5 text-slate-500">Expiry payoff minus the premium paid.</p>}
+              {accepted && <p className="mt-2 text-xs leading-5 text-[var(--muted)]">Expiry payoff minus the premium paid.</p>}
             </div>
             <div className={cn("rounded-lg border p-4", accepted ? (deskPnl >= 0 ? "border-green-400/20 bg-green-400/[0.05]" : "border-red-500/25 bg-red-500/[0.06]") : "border-white/10 bg-black/30")}>
-              <div className="font-terminal text-xs text-slate-500">Desk Settlement</div>
-              <div className={cn("mt-2 text-2xl font-black", accepted ? (deskPnl >= 0 ? "text-green-400" : "text-red-400") : "text-slate-500")}>
+              <div className="font-terminal text-xs text-[var(--muted)]">Desk Settlement</div>
+              <div className={cn("mt-2 text-2xl font-black", accepted ? (deskPnl >= 0 ? "text-green-400" : "text-red-400") : "text-[var(--muted)]")}>
                 {accepted ? `${deskPnl >= 0 ? "+" : ""}${deskPnl}` : "No Deal · 0"}
               </div>
-              {accepted && <p className="mt-2 text-xs leading-5 text-slate-500">The premium you collected minus the expiry payoff you owe.</p>}
+              {accepted && <p className="mt-2 text-xs leading-5 text-[var(--muted)]">The premium you collected minus the expiry payoff you owe.</p>}
             </div>
           </div>
         ) : (
@@ -5632,7 +5634,7 @@ function Day2ReportPanel({ score }) {
         <div className="grid gap-4 md:grid-cols-3">
           {rows.map(([label, value]) => (
             <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
+              <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
                 {label}
               </div>
               <div className="mt-2 text-xl font-black text-slate-100">{value}</div>
@@ -5650,7 +5652,7 @@ function Day2ReportPanel({ score }) {
               key={label}
               className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.03] p-4"
             >
-              <span className="font-terminal text-xs text-slate-500">{label}</span>
+              <span className="font-terminal text-xs text-[var(--muted)]">{label}</span>
               <ScoreBadge score={value} />
             </div>
           ))}
@@ -6001,7 +6003,7 @@ function Day3ClientArrivalPanel() {
           <div className="grid gap-3">
             {profileRows.map(([label, value]) => (
               <div key={label} className="rounded-md border border-white/10 bg-white/[0.03] p-3">
-                <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
+                <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                   {label}
                 </div>
                 <div className="mt-1 text-sm leading-6 text-slate-200">{value}</div>
@@ -6044,7 +6046,7 @@ function RealDataContextCard({ context }) {
           </li>
         ))}
       </ul>
-      <div className="mt-3 border-t border-white/10 pt-2 font-terminal text-[11px] leading-5 text-slate-500">
+      <div className="mt-3 border-t border-white/10 pt-2 font-terminal text-[11px] leading-5 text-[var(--muted)]">
         {context.source}
       </div>
     </div>
@@ -6078,7 +6080,7 @@ function Day3ClientResponsePanel({ selectedQuote, clientResponse }) {
               <div className="font-terminal text-xs tracking-[0.18em] text-[#c9a44c]">
                 Ms. Chen
               </div>
-              <div className="mt-1 text-sm text-slate-500">{acceptedText}</div>
+              <div className="mt-1 text-sm text-[var(--muted)]">{acceptedText}</div>
             </div>
           </div>
           <div className="rounded-md border border-white/10 bg-black/30 p-5 text-xl font-black leading-9 text-slate-100">
@@ -6137,7 +6139,7 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
             ["Maturity", market.maturity],
           ].map(([label, value]) => (
             <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
+              <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                 {label}
               </div>
               <div className="mt-2 text-lg font-bold text-slate-100">{value}</div>
@@ -6236,7 +6238,7 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
               </div>
             </div>
             <div className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
+              <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
                 Final Price
               </div>
               <div className="mt-2 text-2xl font-black text-[#5b8cff]">
@@ -6253,7 +6255,7 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
               </div>
             </div>
             <div className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">Desk Settlement</div>
+              <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">Desk Settlement</div>
               <div className={cn("mt-2 text-2xl font-black", -clientPnl >= 0 ? "text-green-400" : "text-red-300")}>
                 {-clientPnl >= 0 ? "+" : ""}{-clientPnl} pts
               </div>
@@ -6299,7 +6301,7 @@ function Day3ReportPanel({ score }) {
         <div className="grid gap-4 md:grid-cols-3">
           {rows.map(([label, value]) => (
             <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
+              <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
                 {label}
               </div>
               <div className="mt-2 text-xl font-black text-slate-100">{value}</div>
@@ -6318,7 +6320,7 @@ function Day3ReportPanel({ score }) {
               key={label}
               className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.03] p-4"
             >
-              <span className="font-terminal text-xs text-slate-500">{label}</span>
+              <span className="font-terminal text-xs text-[var(--muted)]">{label}</span>
               <ScoreBadge score={value} />
             </div>
           ))}
@@ -6460,7 +6462,7 @@ function Day4CbbcClientArrivalPanel_ARCHIVED() {
           <div className="grid gap-3">
             {profileRows.map(([label, value]) => (
               <div key={label} className="rounded-md border border-white/10 bg-white/[0.03] p-3">
-                <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
+                <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                   {label}
                 </div>
                 <div className="mt-1 text-sm leading-6 text-slate-200">{value}</div>
@@ -6514,13 +6516,13 @@ function Day4CbbcSuitabilityPanel_ARCHIVED({ selectedSuitability, suitabilityMes
                 className={cn(
                   "rounded-lg border p-5 text-left transition duration-300",
                   selected
-                    ? "border-[#c9a44c]/70 bg-[#c9a44c]/[0.08] shadow-[0_0_26px_rgba(201,164,76,0.18)]"
+                    ? "border-[#c9a44c]/70 bg-[#c9a44c]/[0.08] shadow-[var(--shadow)]"
                     : "border-white/10 bg-black/25 hover:border-[#5b8cff]/45 hover:bg-white/[0.05]",
                 )}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
+                    <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
                       {option.tag}
                     </div>
                     <div className={cn("mt-2 text-xl font-black", selected ? "text-[#c9a44c]" : "text-[#5b8cff]")}>
@@ -6602,7 +6604,7 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
             ["Vanilla Put Premium", `${market.vanillaPremium} pts`],
           ].map(([label, value]) => (
             <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
+              <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                 {label}
               </div>
               <div className="mt-2 text-lg font-bold text-slate-100">{value}</div>
@@ -6701,7 +6703,7 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
               </div>
             </div>
             <div className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
+              <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
                 Vanilla Put Net P&L
               </div>
               <div className={cn("mt-2 text-2xl font-black", result.vanillaPnl >= 0 ? "text-green-400" : "text-red-300")}>
@@ -6749,7 +6751,7 @@ function Day4CbbcReportPanel_ARCHIVED({ score }) {
         <div className="grid gap-4 md:grid-cols-3">
           {rows.map(([label, value]) => (
             <div key={label} className="rounded-lg border border-white/10 bg-black/30 p-4">
-              <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">
+              <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
                 {label}
               </div>
               <div className="mt-2 text-xl font-black text-slate-100">{value}</div>
@@ -6768,7 +6770,7 @@ function Day4CbbcReportPanel_ARCHIVED({ score }) {
               key={label}
               className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.03] p-4"
             >
-              <span className="font-terminal text-xs text-slate-500">{label}</span>
+              <span className="font-terminal text-xs text-[var(--muted)]">{label}</span>
               <ScoreBadge score={value} />
             </div>
           ))}
@@ -6871,7 +6873,7 @@ function Day4BriefingPanel() {
 
 function Day4ClientQueueBadge({ index, total }) {
   return (
-    <div className="font-terminal flex items-center gap-2 text-xs tracking-[0.14em] text-slate-500">
+    <div className="font-terminal flex items-center gap-2 text-xs tracking-[0.14em] text-[var(--muted)]">
       {Array.from({ length: total }).map((_, i) => (
         <span
           key={i}
@@ -6881,7 +6883,7 @@ function Day4ClientQueueBadge({ index, total }) {
               ? "border-[#c9a44c]/70 bg-[#c9a44c]/[0.12] text-[#c9a44c]"
               : i < index
                 ? "border-green-400/40 bg-green-400/[0.06] text-green-300"
-                : "border-white/10 bg-black/30 text-slate-600",
+                : "border-white/10 bg-black/30 text-[var(--muted)]",
           )}
         >
           {i + 1}
@@ -6928,7 +6930,7 @@ function Day4ClientProfilePanel({ client, index, total }) {
           <div className="grid gap-3">
             {profileRows.map(([label, value]) => (
               <div key={label} className="rounded-md border border-white/10 bg-white/[0.03] p-3">
-                <div className="font-terminal text-xs tracking-[0.14em] text-slate-500">
+                <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                   {label}
                 </div>
                 <div className="mt-1 text-sm leading-6 text-slate-200">{value}</div>
@@ -6983,12 +6985,12 @@ function Day4ParamCard({ client }) {
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {rows.map(([label, value]) => (
           <div key={label} className="rounded-md border border-white/10 bg-black/30 p-3">
-            <div className="font-terminal text-[11px] tracking-[0.12em] text-slate-500">{label}</div>
+            <div className="font-terminal text-[11px] tracking-[0.12em] text-[var(--muted)]">{label}</div>
             <div className="mt-1 text-lg font-black text-slate-100">{value}</div>
           </div>
         ))}
       </div>
-      <div className="mt-3 text-xs leading-6 text-slate-500">
+      <div className="mt-3 text-xs leading-6 text-[var(--muted)]">
         The calculator defaults are placeholder minimums; you need to enter these parameters above by hand to compute the theoretical price for {client.profile.name}'s trade.
       </div>
     </div>
@@ -7027,13 +7029,13 @@ function Day4SourcingCards({ cards }) {
                   key={row.label}
                   className="flex items-start justify-between gap-3 rounded border border-white/5 bg-white/[0.02] px-3 py-2"
                 >
-                  <span className="font-terminal text-[11px] tracking-[0.1em] text-slate-500 shrink-0">
+                  <span className="font-terminal text-[11px] tracking-[0.1em] text-[var(--muted)] shrink-0">
                     {row.label}
                   </span>
                   <div className="text-right">
                     <span className="font-black text-slate-100 text-sm">{row.value}</span>
                     {row.note && (
-                      <div className="mt-0.5 text-[11px] text-slate-500">{row.note}</div>
+                      <div className="mt-0.5 text-[11px] text-[var(--muted)]">{row.note}</div>
                     )}
                   </div>
                 </div>
@@ -7042,7 +7044,7 @@ function Day4SourcingCards({ cards }) {
           </div>
         ))}
       </div>
-      <div className="mt-3 text-xs leading-6 text-slate-500">
+      <div className="mt-3 text-xs leading-6 text-[var(--muted)]">
         Which data maps to which input field is for you to judge; you've done it many times over the past three days. The calculator defaults are placeholder minimums; fill them in by hand.
       </div>
     </div>
@@ -7107,7 +7109,7 @@ function Day4ClientResponsePanel({ client, selectedQuote, clientResponse }) {
               <div className="font-terminal text-xs tracking-[0.18em] text-[#c9a44c]">
                 {client.profile.name}
               </div>
-              <div className="mt-1 text-sm text-slate-500">{acceptedText}</div>
+              <div className="mt-1 text-sm text-[var(--muted)]">{acceptedText}</div>
             </div>
           </div>
           <div className="rounded-md border border-white/10 bg-black/30 p-5 text-xl font-black leading-9 text-slate-100">
@@ -7160,19 +7162,19 @@ function Day4ScorecardPanel({ results, clients }) {
             </div>
           </div>
           <div className="rounded-lg border border-white/10 bg-black/30 p-4">
-            <div className="font-terminal text-xs tracking-[0.16em] text-slate-500">Product Judgment</div>
+            <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">Product Judgment</div>
             <div className="mt-2 text-3xl font-black text-slate-100">
               {correctProductCount} / {clients.length} correct
             </div>
           </div>
           <div className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.03] p-4">
-            <span className="font-terminal text-xs text-slate-500">Overall Score</span>
+            <span className="font-terminal text-xs text-[var(--muted)]">Overall Score</span>
             <ScoreBadge score={overall} />
           </div>
         </div>
 
         <div className="overflow-hidden rounded-lg border border-white/10">
-          <div className="grid grid-cols-[1.1fr_1fr_0.9fr_0.7fr_0.5fr] gap-2 border-b border-white/10 bg-black/40 px-4 py-3 font-terminal text-[11px] tracking-[0.12em] text-slate-500">
+          <div className="grid grid-cols-[1.1fr_1fr_0.9fr_0.7fr_0.5fr] gap-2 border-b border-white/10 bg-black/40 px-4 py-3 font-terminal text-[11px] tracking-[0.12em] text-[var(--muted)]">
             <span>Client</span>
             <span>Product</span>
             <span>Quote / Theoretical</span>
@@ -7185,7 +7187,7 @@ function Day4ScorecardPanel({ results, clients }) {
               return (
                 <div
                   key={client.id}
-                  className="grid grid-cols-[1.1fr_1fr_0.9fr_0.7fr_0.5fr] gap-2 border-b border-white/5 px-4 py-3 text-sm text-slate-600"
+                  className="grid grid-cols-[1.1fr_1fr_0.9fr_0.7fr_0.5fr] gap-2 border-b border-white/5 px-4 py-3 text-sm text-[var(--muted)]"
                 >
                   <span>{client.profile.name}</span>
                   <span className="col-span-4">Not Served</span>
@@ -7204,7 +7206,7 @@ function Day4ScorecardPanel({ results, clients }) {
                 </span>
                 <span className="text-slate-300">
                   {r.quote} / {r.theoretical}
-                  <span className={cn("ml-1", r.margin >= 0 ? "text-slate-500" : "text-red-300")}>
+                  <span className={cn("ml-1", r.margin >= 0 ? "text-[var(--muted)]" : "text-red-300")}>
                     ({r.margin >= 0 ? "+" : ""}
                     {r.margin})
                   </span>
