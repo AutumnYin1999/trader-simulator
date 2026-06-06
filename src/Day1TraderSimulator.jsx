@@ -4122,6 +4122,7 @@ function Day2TreePathsLessonPanel() {
     ["Step 2 Recombine", "Three middle nodes", "Up-then-down and down-then-up return to the same price, so they can be merged in the display."],
     ["Step 3 Expiry", "Four terminal nodes", "The final layer is the expiry price; we'll compute the option payoff directly at these nodes."],
   ];
+  const [open, setOpen] = useState(0);
 
   return (
     <TerminalCard className="scene-enter overflow-hidden">
@@ -4180,13 +4181,41 @@ function Day2TreePathsLessonPanel() {
               It doesn't say “the market will definitely rise” or “the market will definitely fall.” It just maps out the possible future routes, so the trader can check, route by route, what the option might be worth.
             </p>
           </div>
-          {steps.map(([label, value, note]) => (
-            <div key={label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
-              <div className="font-terminal text-xs tracking-[0.16em] text-[var(--accent)]">{label}</div>
-              <div className="mt-2 text-2xl font-black text-[var(--notice)]">{value}</div>
-              <div className="mt-2 text-sm leading-7 text-[var(--ink)]">{note}</div>
+          <div className="space-y-2">
+            <div className="font-terminal text-[11px] uppercase tracking-[0.16em] text-[var(--muted)]">
+              Walk the path (tap to expand)
             </div>
-          ))}
+            {steps.map(([label, value, note], i) => {
+              const isOpen = open === i;
+              return (
+                <div
+                  key={label}
+                  className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpen(isOpen ? -1 : i)}
+                    aria-expanded={isOpen}
+                    className="flex w-full items-center justify-between gap-3 p-3.5 text-left transition hover:bg-[var(--surface)]"
+                  >
+                    <span className="font-terminal text-xs tracking-[0.16em] text-[var(--accent)]">{label}</span>
+                    <span className="flex items-center gap-3">
+                      <span className="text-lg font-black text-[var(--notice)]">{value}</span>
+                      <svg
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        aria-hidden="true"
+                        className={cn("h-4 w-4 shrink-0 text-[var(--muted)] transition-transform", isOpen && "rotate-180")}
+                      >
+                        <path d="M5 8l5 5 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                  </button>
+                  {isOpen && <div className="px-3.5 pb-3.5 text-sm leading-7 text-[var(--ink)]">{note}</div>}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </TerminalCard>
