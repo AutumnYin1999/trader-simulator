@@ -2733,9 +2733,13 @@ function BottomActionBar({
     ),
   };
 
+  if (!actionSets[stage]) return null;
+
   return (
-    <div className="mx-auto mb-5 flex w-full max-w-[1180px] flex-wrap items-center justify-end gap-3 border-t border-[var(--border)] pt-4">
-      {actionSets[stage]}
+    <div className="fixed inset-x-0 bottom-0 z-30 border-t border-[var(--border)] bg-[var(--bg)]/90 px-4 backdrop-blur-md">
+      <div className="mx-auto flex w-full max-w-[1320px] flex-wrap items-center justify-end gap-3 py-3.5">
+        {actionSets[stage]}
+      </div>
     </div>
   );
 }
@@ -9146,7 +9150,7 @@ export default function Day1TraderSimulator() {
       <StyleBlock />
       <GlobalAtmosphere />
 
-      <div className="relative z-10 flex min-h-screen flex-col px-4">
+      <div className="relative z-10 flex min-h-screen flex-col px-4 pb-24">
         <TopBar
           currentDay={currentDay}
           stage={currentStage}
