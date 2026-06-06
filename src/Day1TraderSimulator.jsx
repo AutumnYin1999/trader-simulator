@@ -2160,35 +2160,27 @@ function SideData({ currentDay }) {
             topic: "CALL / PUT",
           };
 
+  const product =
+    currentDay === 4 ? "Vanilla / Barrier" : currentDay === 3 ? "Barrier Option" : "Vanilla Option";
+  const facts = [
+    ["HSI", "21,500"],
+    ["Mode", side.mode],
+    ["Product", product],
+    ["Topic", side.topic],
+    ["Desk", "Central"],
+  ];
   return (
-    <>
-      <div className="font-terminal fixed left-8 top-1/2 z-10 hidden -translate-y-1/2 text-sm leading-8 text-[var(--faint)] lg:block">
-        <div className="text-[var(--muted)]">HSI</div>
-        <div className="text-[var(--accent)]">21,500.00</div>
-        <div className="text-[var(--pos)]">{side.leftStatus}</div>
-        <div className="text-[var(--notice)]">{side.dayLabel}</div>
-        <br />
-        <div className="text-[var(--muted)]">Mode</div>
-        <div className="text-[var(--accent)]">{side.mode}</div>
-      </div>
-
-      <div className="font-terminal fixed right-8 top-1/2 z-10 hidden -translate-y-1/2 text-right text-sm leading-8 text-[var(--faint)] lg:block">
-        <div className="text-[var(--muted)]">Product</div>
-        <div className="text-[var(--accent)]">
-          {currentDay === 4
-            ? "Vanilla / Barrier"
-            : currentDay === 3
-              ? "Barrier Option"
-              : "Vanilla Option"}
-        </div>
-        <br />
-        <div className="text-[var(--muted)]">Topic</div>
-        <div className="text-[var(--accent)]">{side.topic}</div>
-        <br />
-        <div className="text-[var(--muted)]">Desk</div>
-        <div className="text-[var(--accent)]">Central</div>
-      </div>
-    </>
+    <div className="mx-auto flex w-full max-w-[1320px] flex-wrap items-center gap-2 pt-3 font-terminal text-[11px]">
+      {facts.map(([k, v]) => (
+        <span
+          key={k}
+          className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-[var(--surface-2)] px-3 py-1"
+        >
+          <span className="text-[var(--muted)]">{k}</span>
+          <span className="font-bold text-[var(--ink)]">{v}</span>
+        </span>
+      ))}
+    </div>
   );
 }
 
@@ -2201,6 +2193,7 @@ function TopBar({
   onOpenHandbook,
   profile,
   onOpenDashboard,
+  onOpenAbout,
   onSignOut,
 }) {
   const dayConfig = dayConfigs[currentDay] ?? day1Config;
@@ -2228,37 +2221,57 @@ function TopBar({
     };
   }, [menuOpen]);
 
-  return (
-    <div className="mx-auto flex w-full max-w-[1180px] flex-wrap items-center justify-between gap-3 border-b border-[var(--border)] py-4 text-sm md:mt-5">
-      <div className="font-terminal tracking-[0.16em] text-[var(--accent)]">
-        Day {currentDay}: {dayConfig.title}
-      </div>
-      <div className="font-terminal text-[var(--muted)]">
-        Time: <span className="text-[var(--ink)]">{stageMeta.label}</span>
-      </div>
-      <div className="flex flex-wrap items-center gap-2">
-        <button
-          type="button"
-          onClick={onGoBack}
-          disabled={!canGoBack}
-          className="font-terminal rounded-xl border border-[var(--border-strong)] bg-[var(--surface-2)] px-4 py-2 text-xs font-bold tracking-[0.16em] text-[var(--accent)] transition duration-300 hover:bg-[var(--surface-2)] disabled:pointer-events-none disabled:opacity-35"
-        >
-          Back
-        </button>
-        <button
-          type="button"
-          onClick={onOpenHandbook}
-          className={cn(
-            "font-terminal rounded-xl border px-4 py-2 text-xs font-bold tracking-[0.16em] transition duration-300",
-            handbookHasNew
-              ? "handbook-new border-[#fbbf24]/70 bg-[#fbbf24]/15 text-[var(--notice)]"
-              : "border-[var(--border-strong)] bg-[var(--surface-2)] text-[var(--accent)] hover:bg-[var(--surface-2)]",
-          )}
-        >
-          Open Handbook {handbookHasNew ? "/ New" : ""}
-        </button>
+  const navBtn =
+    "rounded-full px-3 py-2 text-xs font-bold tracking-[0.06em] text-[var(--muted)] transition hover:bg-[var(--surface-2)] hover:text-[var(--ink)]";
 
-        <div className="relative" ref={accountRef}>
+  return (
+    <header className="sticky top-0 z-30 -mx-4 border-b border-[var(--border)] bg-[var(--bg)]/80 px-4 backdrop-blur-md">
+      <div className="mx-auto flex w-full max-w-[1320px] items-center justify-between gap-4 py-3">
+        <div className="flex min-w-0 items-center gap-3">
+          <button
+            type="button"
+            onClick={onGoBack}
+            disabled={!canGoBack}
+            aria-label="Go back"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--border-strong)] bg-[var(--surface-2)] text-[var(--ink)] transition hover:bg-[var(--surface)] disabled:pointer-events-none disabled:opacity-30"
+          >
+            <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" aria-hidden="true">
+              <path d="M12 5l-5 5 5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <div className="flex items-center gap-2">
+            <span className="h-6 w-6 rounded-lg bg-[linear-gradient(135deg,var(--accent),#fbbf24)]" />
+            <span className="text-base font-extrabold tracking-tight text-[var(--ink)]">Central Trader</span>
+          </div>
+          <span className="hidden font-terminal rounded-full border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-1 text-[11px] text-[var(--muted)] md:inline">
+            Day {currentDay} · {dayConfig.title}
+          </span>
+        </div>
+
+        <nav className="flex items-center gap-1">
+          <button type="button" onClick={onOpenDashboard} className={navBtn}>
+            Dashboard
+          </button>
+          <button type="button" onClick={onOpenAbout} className={navBtn}>
+            About
+          </button>
+          <button
+            type="button"
+            onClick={onOpenHandbook}
+            className={cn(
+              "relative rounded-full px-3 py-2 text-xs font-bold tracking-[0.06em] transition",
+              handbookHasNew
+                ? "text-[var(--notice)]"
+                : "text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--ink)]",
+            )}
+          >
+            Handbook
+            {handbookHasNew && (
+              <span className="absolute right-1 top-1.5 h-1.5 w-1.5 rounded-full bg-[var(--notice)]" />
+            )}
+          </button>
+
+          <div className="relative ml-1" ref={accountRef}>
           <button
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
@@ -2318,8 +2331,9 @@ function TopBar({
             </div>
           )}
         </div>
+        </nav>
       </div>
-    </div>
+    </header>
   );
 }
 
@@ -3061,9 +3075,9 @@ function BasicsLessonPanel() {
             Core Analogy: A Future-Choice Voucher
           </div>
           <p className="text-lg leading-9 text-[var(--ink)]">
-            An option isn't a stock, nor a “guess up or down” button. Think of it as a
-            <span className="font-bold text-[var(--notice)]">future-choice voucher</span>:
-            you pay a small sum today, and if things turn out in your favor, you use the voucher; if they don't, you can choose not to.
+            An option isn't a stock, nor a “guess up or down” button. Think of it as a{" "}
+            <span className="font-bold text-[var(--notice)]">future-choice voucher</span>: you
+            pay a small sum today, and if things turn out in your favor, you use the voucher; if they don't, you can choose not to.
           </p>
         </div>
 
@@ -3252,7 +3266,7 @@ function PremiumLessonPanel() {
           </div>
           <h2 className="mb-4 text-2xl font-black text-[var(--ink)]">Pay Upfront to Buy a Future Choice</h2>
           <p className="text-base leading-8 text-[var(--ink)]">
-            When a client buys a vanilla option, they don't get the opportunity for free; they pay a
+            When a client buys a vanilla option, they don't get the opportunity for free; they pay a{" "}
             <span className="font-bold text-[var(--notice)]">premium</span> first. It's like a movie ticket:
             buy the ticket and you get to go in; whether the movie turns out good or not, there are no refunds.
           </p>
@@ -3313,7 +3327,7 @@ function VanillaRulePanel() {
             VANILLA OPTION
           </div>
           <p className="text-lg leading-9 text-[var(--ink)]">
-            The word “vanilla” matters. A vanilla option depends mainly on the
+            The word “vanilla” matters. A vanilla option depends mainly on the{" "}
             <span className="font-bold text-[var(--notice)]">final expiry price</span>.
             Market swings along the way don't make it disappear. Whether the client profits in the end depends on whether the expiry payoff covers the premium.
           </p>
@@ -4541,9 +4555,9 @@ function Day3ResearchTerminalPanel() {
         <>
           Today's product adds an extra layer: the barrier. On top of yesterday's parameters, you also need to look up one brand-new key number:
           <span className="font-black text-[var(--notice)]"> the barrier level</span>.
-          From the 4 cards below, find for yourself
-          <span className="font-black text-[var(--ink)]"> S₀, K, T, r, σ </span>
-          as well as the
+          From the 4 cards below, find for yourself{" "}
+          <span className="font-black text-[var(--ink)]"> S₀, K, T, r, σ </span>{" "}
+          as well as the{" "}
           <span className="font-black text-[var(--notice)]">barrier level</span>
           , note them down, then enter them into the barrier version of the calculator. Note: today's maturity is 3 months, longer than yesterday.
         </>
@@ -5080,7 +5094,7 @@ function BinomialPricingTool({
 
             <label className="grid gap-2">
               <span className="font-terminal flex items-center gap-2 text-[11px] tracking-[0.12em] text-[var(--muted)]">
-                N Steps
+                N Steps{" "}
                 <span className="rounded-full border border-[var(--border-strong)] bg-[var(--surface-2)] px-2 py-0.5 text-[9px] font-black tracking-[0.18em] text-[var(--muted)]">
                   🔒 Fixed
                 </span>
@@ -5980,7 +5994,7 @@ function Day3BarrierConceptPanel() {
             Intuition
           </div>
           <p className="text-lg leading-9 text-[var(--ink)]">
-            The barrier isn't a prediction line; it's a
+            The barrier isn't a prediction line; it's a{" "}
             <span className="font-bold text-[var(--notice)]">contract rule line</span>.
             If the product stipulates “knock out if it falls to 21,000,” then the moment the market touches or drops below 21,000 along the way,
             it must be handled under the knock-out rule even if it later climbs back.
@@ -7225,7 +7239,7 @@ function Day4SourcingCards({ cards }) {
   return (
     <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
       <div className="mb-3 rounded-xl border border-[#ff7a4d]/20 bg-[#ff7a4d]/[0.05] p-4 text-sm leading-7 text-[var(--ink)]">
-        <span className="font-terminal text-[var(--accent)]">Task: </span>
+        <span className="font-terminal text-[var(--accent)]">Task: </span>{" "}
         Mr. He didn't give you a parameter list. You've already judged the product for him; now gather the numbers you need for pricing from the material below yourself:
         <span className="font-black text-[var(--ink)]"> S₀, K, σ, T, r</span>
         , plus this trade's <span className="font-black text-[var(--notice)]">barrier level</span>. No cheat sheet, and no one telling you which number goes in which field. You've graduated; rely on yourself.
@@ -7683,6 +7697,53 @@ const DASHBOARD_DAYS = [
   { day: 3, topic: "Barrier Options" },
   { day: 4, topic: "Graduation Round" },
 ];
+
+function AboutPanel({ onClose, onOpenDashboard }) {
+  const days = [
+    ["Day 1", "Vanilla Calls & Puts", "Direction, premium, and suitability."],
+    ["Day 2", "Binomial Pricing", "Build a fair price from an up/down tree."],
+    ["Day 3", "Barrier Options", "Cheaper protection that can knock out."],
+    ["Day 4", "Graduation Round", "Advise three live clients on your own."],
+  ];
+  return (
+    <div className="scene-enter mx-auto max-w-3xl px-6 py-12">
+      <div className="mb-8 flex items-center justify-between gap-4">
+        <div>
+          <div className="font-terminal text-xs uppercase tracking-[0.22em] text-[var(--accent)]">About</div>
+          <h1 className="mt-1 text-3xl font-extrabold tracking-tight text-[var(--ink)]">Central Trader</h1>
+        </div>
+        <PrimaryButton tone="ghost" onClick={onClose}>
+          Back
+        </PrimaryButton>
+      </div>
+      <p className="text-lg leading-8 text-[var(--muted)]">
+        A hands-on options course set on a 1997 Hong Kong trading desk. In four short days you go from
+        "what is a call" to pricing barrier options and advising real clients. No finance background needed.
+      </p>
+      <div className="mt-8 grid gap-3 sm:grid-cols-2">
+        {days.map(([d, t, s]) => (
+          <div
+            key={d}
+            className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow)] transition hover:-translate-y-0.5 hover:border-[var(--accent)]/40"
+          >
+            <div className="font-terminal text-xs tracking-[0.16em] text-[var(--accent)]">{d}</div>
+            <div className="mt-1 text-lg font-bold text-[var(--ink)]">{t}</div>
+            <div className="mt-1 text-sm leading-6 text-[var(--muted)]">{s}</div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-8 flex flex-wrap gap-3">
+        <PrimaryButton onClick={onClose}>Back to the desk</PrimaryButton>
+        <PrimaryButton tone="ghost" onClick={onOpenDashboard}>
+          View progress
+        </PrimaryButton>
+      </div>
+      <div className="mt-10 font-terminal text-xs text-[var(--faint)]">
+        Built with React and Vite. Your progress saves to your account.
+      </div>
+    </div>
+  );
+}
 
 function ProgressDashboard({ profile, progress, onReplayDay, onClose }) {
   const completedCount = DASHBOARD_DAYS.filter(
@@ -8846,6 +8907,14 @@ export default function Day1TraderSimulator() {
     setCurrentStage("dashboard");
   };
 
+  const openAbout = () => {
+    if (currentStage !== "about" && currentStage !== "dashboard") {
+      setStageBeforeDashboard(currentStage);
+    }
+    setHandbookOpen(false);
+    setCurrentStage("about");
+  };
+
   const closeDashboard = () => {
     const target = stageBeforeDashboard ?? "title_screen";
     setStageBeforeDashboard(null);
@@ -8896,6 +8965,7 @@ export default function Day1TraderSimulator() {
     startDay3,
     startDay4,
     openDashboard,
+    openAbout,
     startBriefing: () => setCurrentStage("day1_lesson_basics"),
     toCallPutLesson: () => setCurrentStage("day1_intro"),
     toPremiumLesson: () => setCurrentStage("day1_lesson_premium"),
@@ -9027,6 +9097,18 @@ export default function Day1TraderSimulator() {
     );
   }
 
+  if (currentStage === "about") {
+    return (
+      <main className="font-cn relative min-h-screen overflow-x-hidden bg-[var(--bg)] text-[var(--ink)]">
+        <StyleBlock />
+        <GlobalAtmosphere />
+        <div className="relative z-10 min-h-screen">
+          <AboutPanel onClose={closeDashboard} onOpenDashboard={openDashboard} />
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main
       className="font-cn relative min-h-screen overflow-x-hidden bg-[var(--bg)] text-[var(--ink)]"
@@ -9034,7 +9116,6 @@ export default function Day1TraderSimulator() {
     >
       <StyleBlock />
       <GlobalAtmosphere />
-      <SideData currentDay={currentDay} />
 
       <div className="relative z-10 flex min-h-screen flex-col px-4">
         <TopBar
@@ -9046,8 +9127,11 @@ export default function Day1TraderSimulator() {
           onOpenHandbook={openHandbook}
           profile={profile}
           onOpenDashboard={openDashboard}
+          onOpenAbout={openAbout}
           onSignOut={signOut}
         />
+
+        <SideData currentDay={currentDay} stage={currentStage} />
 
         <div
           className={cn(
@@ -9057,6 +9141,7 @@ export default function Day1TraderSimulator() {
               : "max-w-[1180px] lg:grid-cols-[minmax(0,1fr)_330px]",
           )}
         >
+          <div className="relative rounded-2xl shadow-[0_22px_75px_-36px_rgba(255,122,77,0.55)]">
           <MainPanel
             stage={currentStage}
             selectedProduct={selectedProduct}
@@ -9078,6 +9163,7 @@ export default function Day1TraderSimulator() {
             day4Results={day4Results}
             actions={actions}
           />
+          </div>
           {!isFullWidthStage && <MentorPanel text={mentorText} skipSignal={skipSignal} />}
         </div>
 
