@@ -207,12 +207,7 @@ const day1Config = {
       name: "Vanilla Call Option",
       term: "Vanilla Call",
       status: "Available",
-      description: [
-        "Suited to a bullish view",
-        "The buyer pays a premium upfront",
-        "The buyer's maximum loss is usually limited to the premium",
-        "No knock-out risk",
-      ],
+      description: ["Bullish view", "Loss capped at the premium", "No knock-out risk"],
       feedback:
         "Good. The client is bullish and wants limited downside loss, so a vanilla call option fits this need.",
     },
@@ -221,12 +216,7 @@ const day1Config = {
       name: "Vanilla Put Option",
       term: "Vanilla Put",
       status: "Available",
-      description: [
-        "Suited to a bearish view",
-        "The buyer pays a premium upfront",
-        "The buyer's maximum loss is usually limited to the premium",
-        "No knock-out risk",
-      ],
+      description: ["Bearish view", "Loss capped at the premium", "No knock-out risk"],
       feedback: "This product suits a bearish view, but the client is currently bullish on the Hang Seng Index.",
     },
     {
@@ -234,11 +224,7 @@ const day1Config = {
       name: "Buy the Index Directly",
       term: "Direct Index Purchase",
       status: "Available",
-      description: [
-        "Full participation in the upside",
-        "Also full exposure to the downside",
-        "Loss is not limited to a premium",
-      ],
+      description: ["Full upside and full downside", "Loss is not capped"],
       feedback:
         "Buying the index directly does give upside exposure, but the downside loss is not limited to a premium.",
     },
@@ -248,10 +234,7 @@ const day1Config = {
       term: "Barrier Option",
       status: "Locked",
       locked: true,
-      description: [
-        "May be cheaper, but carries knock-out risk",
-        "Not covered in today's training yet",
-      ],
+      description: ["Cheaper, but can knock out", "Not taught yet"],
       feedback: "Not unlocked on day one. Martin hasn't taught this product yet.",
     },
   ],
@@ -3430,6 +3413,55 @@ function ClientArrivalPanel() {
   );
 }
 
+function kindFromProduct(product) {
+  const s = `${product.id} ${product.term} ${product.name}`.toLowerCase();
+  if (s.includes("barrier") || s.includes("cbbc")) return "barrier";
+  if (s.includes("put") || s.includes("bear")) return "put";
+  if (s.includes("index") || s.includes("direct")) return "index";
+  return "call";
+}
+
+// Small payoff-at-expiry diagram: x = underlying price, y = profit/loss.
+function PayoffDiagram({ kind = "call" }) {
+  const color =
+    kind === "put"
+      ? "var(--accent)"
+      : kind === "index"
+        ? "var(--muted)"
+        : kind === "barrier"
+          ? "var(--notice)"
+          : "var(--pos)";
+  const paths = {
+    call: "M14,58 L100,58 L186,16",
+    put: "M14,16 L100,58 L186,58",
+    index: "M14,74 L186,8",
+    barrier: "M14,58 L100,58 L186,16",
+  };
+  return (
+    <svg
+      viewBox="0 0 200 86"
+      className="mt-3 h-20 w-full"
+      role="img"
+      aria-label={`${kind} payoff at expiry`}
+    >
+      <line x1="14" y1="58" x2="186" y2="58" stroke="var(--border-strong)" strokeWidth="1.5" strokeDasharray="3 4" />
+      <line x1="100" y1="12" x2="100" y2="66" stroke="var(--border-strong)" strokeWidth="1" />
+      <text x="100" y="80" textAnchor="middle" className="fill-[var(--faint)]" style={{ fontSize: "9px" }}>
+        strike
+      </text>
+      {kind === "barrier" && (
+        <>
+          <line x1="50" y1="12" x2="50" y2="66" stroke="var(--neg)" strokeWidth="1.2" strokeDasharray="2 3" />
+          <text x="50" y="80" textAnchor="middle" className="fill-[var(--neg)]" style={{ fontSize: "9px" }}>
+            knock-out
+          </text>
+        </>
+      )}
+      <path d={paths[kind]} fill="none" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function ProductSelectionPanel({
   selectedProduct,
   productMessage,
@@ -3485,10 +3517,12 @@ function ProductSelectionPanel({
                   )}
                 </div>
 
-                <ul className="mt-4 space-y-2 text-sm leading-6 text-[var(--ink)]">
+                {!product.locked && <PayoffDiagram kind={kindFromProduct(product)} />}
+
+                <ul className="mt-3 space-y-2 text-[15px] leading-6 text-[var(--ink)]">
                   {product.description.map((item) => (
-                    <li key={item} className="flex gap-2">
-                      <span className="text-[var(--notice)]">-</span>
+                    <li key={item} className="flex items-start gap-2.5">
+                      <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" />
                       <span>{item}</span>
                     </li>
                   ))}
