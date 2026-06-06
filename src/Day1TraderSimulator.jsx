@@ -2003,7 +2003,7 @@ function GlobalAtmosphere() {
   return (
     <>
       <div className="pointer-events-none fixed inset-0 z-0 bg-[var(--bg)]" />
-      <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(1100px_circle_at_50%_-15%,rgba(47,100,216,0.05),transparent_60%)]" />
+      <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(680px_circle_at_8%_-6%,rgba(99,102,241,0.12),transparent_55%),radial-gradient(640px_circle_at_100%_2%,rgba(6,182,212,0.10),transparent_55%)]" />
     </>
   );
 }
@@ -2012,31 +2012,33 @@ function StyleBlock() {
   return (
     <style>{`
       :root {
-        --bg: #f6f7f9;
+        --bg: #f7f8fc;
         --bg-elev: #ffffff;
         --surface: #ffffff;
-        --surface-2: #f1f3f7;
-        --border: #e4e8ef;
-        --border-strong: #cfd6e1;
-        --ink: #0f172a;
-        --muted: #56627a;
-        --faint: #8b95a7;
-        --accent: #2f64d8;
-        --accent-strong: #2454c4;
-        --accent-weak: rgba(47,100,216,0.10);
-        --pos: #1a7f4b;
-        --neg: #c5303a;
-        --notice: #9a6a17;
-        --shadow: 0 1px 2px rgba(16,24,40,0.06), 0 10px 24px rgba(16,24,40,0.08);
+        --surface-2: #f1f3fb;
+        --border: #e8eaf4;
+        --border-strong: #d6dbec;
+        --ink: #15171f;
+        --muted: #5a6478;
+        --faint: #98a0b3;
+        --accent: #6366f1;
+        --accent-strong: #4f46e5;
+        --accent-weak: rgba(99,102,241,0.10);
+        --accent-2: #06b6d4;
+        --pos: #10b981;
+        --neg: #ef4444;
+        --notice: #f59e0b;
+        --shadow: 0 1px 2px rgba(20,22,45,0.04), 0 10px 30px rgba(20,22,45,0.07);
+        --shadow-pop: 0 6px 18px rgba(99,102,241,0.24);
       }
       html, body { background: var(--bg); color: var(--ink); }
       body {
-        font-family: 'IBM Plex Sans', system-ui, -apple-system, Segoe UI, sans-serif;
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, Segoe UI, sans-serif;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
       }
       .font-terminal { font-family: 'JetBrains Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
-      .font-cn { font-family: 'IBM Plex Sans', system-ui, sans-serif; }
+      .font-cn { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
       .num { font-family: 'JetBrains Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
       .scene-enter { animation: fade-in-up 0.4s ease both; }
       .market-node { animation: node-pop 0.3s ease both; }
@@ -2102,17 +2104,17 @@ function StyleBlock() {
 
 function PrimaryButton({ children, className = "", tone = "cyan", ...props }) {
   const tones = {
-    cyan: "bg-[var(--accent-strong)] text-white hover:bg-[var(--accent)]",
-    gold: "border border-[var(--notice)]/45 bg-[var(--notice)]/10 text-[var(--notice)] hover:bg-[var(--notice)]/16",
-    red: "border border-[var(--neg)]/45 bg-[var(--neg)]/10 text-[var(--neg)] hover:bg-[var(--neg)]/16",
-    ghost: "border border-[var(--border-strong)] bg-[var(--surface-2)] text-[var(--ink)] hover:bg-[var(--surface-2)]",
+    cyan: "bg-[var(--accent-strong)] text-white shadow-[var(--shadow-pop)] hover:bg-[var(--accent)] hover:-translate-y-0.5",
+    gold: "border border-[var(--notice)]/40 bg-[var(--notice)]/10 text-[var(--notice)] hover:bg-[var(--notice)]/16",
+    red: "border border-[var(--neg)]/40 bg-[var(--neg)]/10 text-[var(--neg)] hover:bg-[var(--neg)]/16",
+    ghost: "border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--ink)] hover:bg-[var(--surface-2)]",
   };
 
   return (
     <button
       type="button"
       className={cn(
-        "rounded-md px-6 py-3 text-sm font-semibold tracking-[0.01em] transition-colors duration-200 disabled:pointer-events-none disabled:opacity-40",
+        "rounded-xl px-6 py-3 text-sm font-bold tracking-[0.01em] transition duration-200 disabled:pointer-events-none disabled:opacity-40",
         tones[tone],
         className,
       )}
@@ -2127,7 +2129,7 @@ function TerminalCard({ children, className = "" }) {
   return (
     <div
       className={cn(
-        "rounded-[10px] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]",
+        "rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]",
         className,
       )}
     >
@@ -2256,7 +2258,7 @@ function TopBar({
           type="button"
           onClick={onGoBack}
           disabled={!canGoBack}
-          className="font-terminal rounded-md border border-[var(--border-strong)] bg-[var(--surface-2)] px-4 py-2 text-xs font-bold tracking-[0.16em] text-[var(--accent)] transition duration-300 hover:bg-[var(--surface-2)] disabled:pointer-events-none disabled:opacity-35"
+          className="font-terminal rounded-xl border border-[var(--border-strong)] bg-[var(--surface-2)] px-4 py-2 text-xs font-bold tracking-[0.16em] text-[var(--accent)] transition duration-300 hover:bg-[var(--surface-2)] disabled:pointer-events-none disabled:opacity-35"
         >
           Back
         </button>
@@ -2264,7 +2266,7 @@ function TopBar({
           type="button"
           onClick={onOpenHandbook}
           className={cn(
-            "font-terminal rounded-md border px-4 py-2 text-xs font-bold tracking-[0.16em] transition duration-300",
+            "font-terminal rounded-xl border px-4 py-2 text-xs font-bold tracking-[0.16em] transition duration-300",
             handbookHasNew
               ? "handbook-new border-[#c9a44c]/70 bg-[#c9a44c]/15 text-[var(--notice)]"
               : "border-[var(--border-strong)] bg-[var(--surface-2)] text-[var(--accent)] hover:bg-[var(--surface-2)]",
@@ -2302,7 +2304,7 @@ function TopBar({
             <div
               role="menu"
               aria-label="Account"
-              className="absolute right-0 z-30 mt-2 w-56 overflow-hidden rounded-lg border border-[var(--border-strong)] bg-[var(--bg-elev)] shadow-[0_18px_44px_rgba(0,0,0,0.55)]"
+              className="absolute right-0 z-30 mt-2 w-56 overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[var(--bg-elev)] shadow-[0_18px_44px_rgba(0,0,0,0.55)]"
             >
               <div className="border-b border-[var(--border)] px-4 py-3">
                 <div className="font-terminal text-sm font-bold text-[var(--ink)]">{displayName}</div>
@@ -2355,7 +2357,7 @@ function MentorPanel({ text, skipSignal }) {
           </div>
         </div>
 
-        <div className="min-h-36 rounded-md border-l-4 border-[#5b8cff] bg-[var(--surface-2)] p-4 text-base leading-8 text-[var(--ink)]">
+        <div className="min-h-36 rounded-xl border-l-4 border-[#5b8cff] bg-[var(--surface-2)] p-4 text-base leading-8 text-[var(--ink)]">
           <TypewriterText text={text} skipSignal={skipSignal} />
         </div>
       </div>
@@ -2777,7 +2779,7 @@ function HandbookOverlay({ open, unlockedEntries, onClose }) {
             <div className="space-y-5">
               {entries.map((entry) => (
                 <div key={entry.id} className="scene-enter">
-                  <div className="mb-4 rounded-md border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-4">
+                  <div className="mb-4 rounded-xl border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-4">
                     <div className="font-terminal text-xs tracking-[0.18em] text-[var(--notice)]">
                       Unlocked
                     </div>
@@ -2788,7 +2790,7 @@ function HandbookOverlay({ open, unlockedEntries, onClose }) {
                     {entry.sections.map((section) => (
                       <section
                         key={section.title}
-                        className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4"
+                        className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4"
                       >
                         <h3 className="font-terminal mb-3 text-sm tracking-[0.16em] text-[var(--accent)]">
                           {section.title}
@@ -2911,7 +2913,7 @@ function AuthScreen({ authError, setAuthError }) {
 
   const hasError = Boolean(authError);
   const inputClass =
-    "w-full rounded-md border border-[var(--border-strong)] bg-[var(--bg-elev)] px-3 py-2.5 text-sm text-[var(--ink)] placeholder:text-[var(--faint)] outline-none transition-colors duration-200 focus:border-[var(--accent)]";
+    "w-full rounded-xl border border-[var(--border-strong)] bg-[var(--bg-elev)] px-3 py-2.5 text-sm text-[var(--ink)] placeholder:text-[var(--faint)] outline-none transition-colors duration-200 focus:border-[var(--accent)]";
   const labelClass =
     "font-terminal mb-1.5 block text-xs uppercase tracking-[0.14em] text-[var(--muted)]";
 
@@ -2923,15 +2925,15 @@ function AuthScreen({ authError, setAuthError }) {
       <h1 className="text-4xl font-bold tracking-tight text-[var(--ink)]">Central Trader</h1>
       <p className="mt-3 text-sm text-[var(--muted)]">Sign in to save your progress to the cloud.</p>
 
-      <div className="mt-8 w-full rounded-[12px] border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow)]">
+      <div className="mt-8 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow)]">
         {/* Segmented toggle: Sign In / Create Account */}
-        <div className="mb-6 grid grid-cols-2 gap-1 rounded-lg border border-[var(--border)] bg-[var(--bg-elev)] p-1">
+        <div className="mb-6 grid grid-cols-2 gap-1 rounded-2xl border border-[var(--border)] bg-[var(--bg-elev)] p-1">
           <button
             type="button"
             onClick={() => switchMode("signin")}
             aria-pressed={!isSignup}
             className={cn(
-              "rounded-md px-3 py-2 text-xs font-semibold tracking-[0.04em] transition-colors duration-200",
+              "rounded-xl px-3 py-2 text-xs font-semibold tracking-[0.04em] transition-colors duration-200",
               !isSignup
                 ? "bg-[var(--accent-strong)] text-white"
                 : "text-[var(--muted)] hover:text-[var(--ink)]",
@@ -2944,7 +2946,7 @@ function AuthScreen({ authError, setAuthError }) {
             onClick={() => switchMode("signup")}
             aria-pressed={isSignup}
             className={cn(
-              "rounded-md px-3 py-2 text-xs font-semibold tracking-[0.04em] transition-colors duration-200",
+              "rounded-xl px-3 py-2 text-xs font-semibold tracking-[0.04em] transition-colors duration-200",
               isSignup
                 ? "bg-[var(--accent-strong)] text-white"
                 : "text-[var(--muted)] hover:text-[var(--ink)]",
@@ -3038,7 +3040,7 @@ function WelcomePanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="New Hire Check-in / Desk" accent="First Day on the Job" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="flex flex-col items-center justify-center rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-6 text-center">
+        <div className="flex flex-col items-center justify-center rounded-2xl border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-6 text-center">
           <div className="mb-5 flex h-28 w-28 items-center justify-center rounded-full bg-[linear-gradient(135deg,#5b8cff,#2e4a8f)] font-terminal text-5xl font-black text-[#0b1018] shadow-[var(--shadow)]">
             M
           </div>
@@ -3055,7 +3057,7 @@ function WelcomePanel() {
             ["Today's Goal", "Don't touch complex pricing yet; just build up the intuition for vanilla options: Call / Put / Premium."],
             ["Martin's Rule", "Open the handbook when you're unsure. A real trader doesn't memorize by rote; they look up the rules and ask questions."],
           ].map(([label, text]) => (
-            <div key={label} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+            <div key={label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
               <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[var(--accent)]">{label}</div>
               <div className="text-base leading-8 text-[var(--ink)]">{text}</div>
             </div>
@@ -3071,7 +3073,7 @@ function BasicsLessonPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Lesson 1 / What Is an Option" accent="Intuition First, No Formulas" />
       <div className="space-y-5 p-6">
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[var(--accent)]">
             Core Analogy: A Future-Choice Voucher
           </div>
@@ -3088,14 +3090,14 @@ function BasicsLessonPanel() {
             ["Seller", "Collects money upfront, but may have to honor a commitment later. Today you mainly view it from the buyer's side."],
             ["Premium", "The entry-ticket price the buyer pays. If they're wrong, this money may be lost entirely."],
           ].map(([title, body]) => (
-            <div key={title} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+            <div key={title} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
               <div className="mb-3 text-xl font-black text-[var(--accent)]">{title}</div>
               <div className="text-sm leading-7 text-[var(--ink)]">{body}</div>
             </div>
           ))}
         </div>
 
-        <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-sm leading-7 text-[var(--notice)]">
+        <div className="rounded-xl border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-sm leading-7 text-[var(--notice)]">
           Martin's mnemonic: an option buyer is buying a “right,” not a “guarantee of profit.” Keep this in mind and your later client decisions won't go astray.
         </div>
       </div>
@@ -3107,12 +3109,12 @@ function CallPutVisualExample() {
   const points = [80, 90, 100, 110, 120];
 
   return (
-    <div className="mt-6 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+    <div className="mt-6 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
       <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[var(--accent)]">
         Chart Example / How the Expiry Price Affects Direction
       </div>
       <div className="grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-4">
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
           <svg viewBox="0 0 620 230" className="h-auto w-full" role="img" aria-label="Call and Put expiry-direction chart">
             <defs>
               <linearGradient id="callZone" x1="0" x2="1">
@@ -3176,19 +3178,19 @@ function CallPutVisualExample() {
         </div>
 
         <div className="grid gap-3 text-sm leading-7 text-[var(--ink)]">
-          <div className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-4">
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
             <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[var(--accent)]">
               If the Expiry Price Is Below 100
             </div>
             The put has value, because the client holds the right to “sell at 100”; the lower the market, the more useful that right to sell.
           </div>
-          <div className="rounded-md border border-[#c9a44c]/20 bg-[#c9a44c]/[0.06] p-4">
+          <div className="rounded-xl border border-[#c9a44c]/20 bg-[#c9a44c]/[0.06] p-4">
             <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[var(--notice)]">
               If the Expiry Price Is Above 100
             </div>
             The call has value, because the client holds the right to “buy at 100”; the higher the market, the more useful that right to buy.
           </div>
-          <div className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-4">
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
             For now, don't worry about how much it's worth; just remember the direction: Put on the left, Call on the right.
           </div>
         </div>
@@ -3217,7 +3219,7 @@ function IntroPanel() {
             <div
               key={card.id}
               className={cn(
-                "rounded-lg border p-5 shadow-[var(--shadow)]",
+                "rounded-2xl border p-5 shadow-[var(--shadow)]",
                 card.tone === "gold"
                   ? "border-[#c9a44c]/30 bg-[#c9a44c]/[0.06]"
                   : "border-[var(--border-strong)] bg-[var(--surface-2)]",
@@ -3246,7 +3248,7 @@ function IntroPanel() {
           ))}
         </div>
 
-        <div className="mt-6 rounded-md border-l-4 border-[#5b8cff] bg-[var(--surface-2)] p-4 text-sm leading-7 text-[var(--ink)]">
+        <div className="mt-6 rounded-xl border-l-4 border-[#5b8cff] bg-[var(--surface-2)] p-4 text-sm leading-7 text-[var(--ink)]">
           Stage one doesn't get into pricing yet; it just builds the desk's most important intuition: a bullish client points to Call, a bearish client points to Put, and the buyer pays a premium for that right.
         </div>
 
@@ -3261,7 +3263,7 @@ function PremiumLessonPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Lesson 2 / Premium" accent="The Buyer's Biggest Mental Account" />
       <div className="grid gap-5 p-6 lg:grid-cols-[1fr_1fr]">
-        <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-5">
+        <div className="rounded-2xl border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[var(--notice)]">
             PREMIUM
           </div>
@@ -3279,7 +3281,7 @@ function PremiumLessonPanel() {
             ["Market Direction Wrong", "The option may expire worthless, and the client loses the premium paid."],
             ["Max-Loss Intuition", "A vanilla option buyer usually won't lose more than the premium, but that doesn't make the product a sure win."],
           ].map(([title, body]) => (
-            <div key={title} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div key={title} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[var(--accent)]">
                 {title}
               </div>
@@ -3288,20 +3290,20 @@ function PremiumLessonPanel() {
           ))}
         </div>
 
-        <div className="lg:col-span-2 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+        <div className="lg:col-span-2 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
           <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[var(--accent)]">
             A Small Example
           </div>
           <div className="grid gap-4 md:grid-cols-3">
-            <div className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="text-sm text-[var(--muted)]">Client Pays</div>
               <div className="mt-2 text-2xl font-black text-[var(--notice)]">186-point premium</div>
             </div>
-            <div className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="text-sm text-[var(--muted)]">In Return For</div>
               <div className="mt-2 text-2xl font-black text-[var(--accent)]">Future upside opportunity</div>
             </div>
-            <div className="rounded-md border border-red-500/20 bg-red-500/[0.05] p-4">
+            <div className="rounded-xl border border-red-500/20 bg-red-500/[0.05] p-4">
               <div className="text-sm text-[var(--muted)]">Worst Case</div>
               <div className="mt-2 text-2xl font-black text-[var(--neg)]">Lose 186 points</div>
             </div>
@@ -3323,7 +3325,7 @@ function VanillaRulePanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Lesson 3 / Vanilla Option Rules" accent="Focus on the Expiry Price" />
       <div className="space-y-5 p-6">
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[var(--accent)]">
             VANILLA OPTION
           </div>
@@ -3336,7 +3338,7 @@ function VanillaRulePanel() {
 
         <div className="grid gap-4 md:grid-cols-3">
           {examples.map(([title, path, note]) => (
-            <div key={title} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+            <div key={title} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
               <div className="font-terminal mb-2 text-xs tracking-[0.16em] text-[var(--accent)]">
                 {title}
               </div>
@@ -3346,7 +3348,7 @@ function VanillaRulePanel() {
           ))}
         </div>
 
-        <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-sm leading-7 text-[var(--notice)]">
+        <div className="rounded-xl border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-sm leading-7 text-[var(--notice)]">
           Don't touch barrier options, knock-outs, binomial trees, or complex pricing today. You just need to read the client's direction and know that a vanilla option buyer's maximum loss is usually the premium.
         </div>
       </div>
@@ -3416,7 +3418,7 @@ function ClientArrivalPanel() {
           {client.dialogue.map((line) => (
             <div
               key={line}
-              className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4 text-lg leading-8 text-[var(--ink)]"
+              className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4 text-lg leading-8 text-[var(--ink)]"
             >
               <span className="font-terminal mr-2 text-xs text-[var(--notice)]">Ms. Li</span>
               “{line}”
@@ -3450,7 +3452,7 @@ function ProductSelectionPanel({
                 type="button"
                 onClick={() => onSelectProduct(product.id)}
                 className={cn(
-                  "rounded-lg border p-5 text-left transition duration-300",
+                  "rounded-2xl border p-5 text-left transition duration-300",
                   selected
                     ? "border-[#c9a44c]/70 bg-[#c9a44c]/[0.08] shadow-[var(--shadow)]"
                     : "border-[var(--border)] bg-[var(--surface-2)] hover:border-[#5b8cff]/45 hover:bg-[var(--surface-2)]",
@@ -3505,7 +3507,7 @@ function ProductSelectionPanel({
         {productMessage && (
           <div
             className={cn(
-              "mt-5 rounded-md border-l-4 p-4 text-sm leading-7",
+              "mt-5 rounded-xl border-l-4 p-4 text-sm leading-7",
               selectedProduct === correctProductId
                 ? "border-green-400 bg-green-400/[0.06] text-[var(--pos)]"
                 : "border-[#c9a44c] bg-[#c9a44c]/[0.06] text-[var(--notice)]",
@@ -3542,7 +3544,7 @@ function RiskDisclosurePanel({
               <label
                 key={item.id}
                 className={cn(
-                  "flex cursor-pointer items-start gap-4 rounded-lg border p-4 transition duration-300",
+                  "flex cursor-pointer items-start gap-4 rounded-2xl border p-4 transition duration-300",
                   checked
                     ? "border-[#5b8cff]/60 bg-[var(--surface-2)]"
                     : "border-[var(--border)] bg-[var(--surface-2)] hover:border-[#5b8cff]/35",
@@ -3568,7 +3570,7 @@ function RiskDisclosurePanel({
         {disclosureFeedback && (
           <div
             className={cn(
-              "mt-5 rounded-md border-l-4 p-4 text-sm leading-7",
+              "mt-5 rounded-xl border-l-4 p-4 text-sm leading-7",
               disclosureFeedback.tone === "good"
                 ? "border-green-400 bg-green-400/[0.06] text-[var(--pos)]"
                 : disclosureFeedback.tone === "danger"
@@ -3652,7 +3654,7 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
             ["Premium", `${market.premium} pts`],
             ["Maturity", market.maturity],
           ].map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div key={label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                 {label}
               </div>
@@ -3662,20 +3664,20 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
         </div>
 
         <div className="mt-5 grid gap-4 lg:grid-cols-[0.85fr_1.15fr]">
-          <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-4">
+          <div className="rounded-2xl border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-4">
             <div className="font-terminal text-xs tracking-[0.16em] text-[var(--notice)]">
               Selected Product
             </div>
             <div className="mt-2 text-xl font-black text-[var(--ink)]">{selectedProductName}</div>
           </div>
           <div className="grid gap-3 sm:grid-cols-3">
-            <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs text-[var(--muted)]">Live Price</div>
               <div className="live-price-pulse mt-2 text-3xl font-black text-[var(--accent)]">
                 {formatPoints(latestPrice)}
               </div>
             </div>
-            <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs text-[var(--muted)]">Tick Change</div>
               <div
                 className={cn(
@@ -3687,7 +3689,7 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
                 {tickChange}
               </div>
             </div>
-            <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs text-[var(--muted)]">Call Live Net</div>
               <div
                 className={cn(
@@ -3702,7 +3704,7 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
           </div>
         </div>
 
-        <div className="market-chart-panel mt-6 rounded-lg border border-[var(--border)] bg-[var(--surface-2)]/85 p-4">
+        <div className="market-chart-panel mt-6 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/85 p-4">
           <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
             <div>
               <div className="font-terminal text-sm tracking-[0.18em] text-[var(--accent)]">
@@ -3805,19 +3807,19 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
 
         {finalShown ? (
           <div className="scene-enter mt-6 grid gap-4 md:grid-cols-3">
-            <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs text-[var(--muted)]">Final Price</div>
               <div className="mt-2 text-3xl font-black text-[var(--accent)]">
                 {formatPoints(finalPrice)}
               </div>
             </div>
-            <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs text-[var(--muted)]">Call Expiry Payoff</div>
               <div className="mt-2 text-lg font-bold text-[var(--ink)]">
                 max(22,400 - 22,000, 0) = <span className="text-[var(--accent)]">{payoff}</span>
               </div>
             </div>
-            <div className="rounded-lg border border-green-400/20 bg-green-400/[0.05] p-4">
+            <div className="rounded-2xl border border-green-400/20 bg-green-400/[0.05] p-4">
               <div className="font-terminal text-xs text-[var(--muted)]">Net P&L</div>
               <div className="mt-2 text-2xl font-black text-[var(--pos)]">
                 {payoff} - {market.premium} = +{netPnl}
@@ -3825,7 +3827,7 @@ function MarketRunPanel({ selectedProduct, marketHasRun, visibleMarketSteps }) {
             </div>
           </div>
         ) : (
-          <div className="mt-5 rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-sm leading-7 text-[var(--notice)]">
+          <div className="mt-5 rounded-xl border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-sm leading-7 text-[var(--notice)]">
             The market is playing out automatically: the price may dip first, snap back, then break out. Don't be scared by the swings along the way; a vanilla option ultimately depends on the expiry price.
           </div>
         )}
@@ -3872,13 +3874,13 @@ function ReportPanel({ score }) {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
             <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
               Product
             </div>
             <div className="mt-2 text-2xl font-black text-[var(--accent)]">{score.productName}</div>
           </div>
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
             <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
               Outcome
             </div>
@@ -3892,7 +3894,7 @@ function ReportPanel({ score }) {
             ["Premium", score.premium],
             ["Client P&L", score.clientPnl],
           ].map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div key={label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
                 {label}
               </div>
@@ -3910,7 +3912,7 @@ function ReportPanel({ score }) {
           ].map(([label, value]) => (
             <div
               key={label}
-              className="flex items-center justify-between rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4"
+              className="flex items-center justify-between rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4"
             >
               <span className="font-terminal text-xs text-[var(--muted)]">{label}</span>
               <ScoreBadge score={value} />
@@ -3918,7 +3920,7 @@ function ReportPanel({ score }) {
           ))}
         </div>
 
-        <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-base leading-8 text-[var(--notice)]">
+        <div className="rounded-xl border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-base leading-8 text-[var(--notice)]">
           {score.martinComment}
         </div>
       </div>
@@ -3946,7 +3948,7 @@ function CompletePanel() {
           {summary.map((item) => (
             <div
               key={item}
-              className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm leading-7 text-[var(--ink)]"
+              className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm leading-7 text-[var(--ink)]"
             >
               <span className="font-terminal mr-2 text-[var(--accent)]">Rule</span>
               {item}
@@ -3970,7 +3972,7 @@ function Day2IntroPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Day Two / Pricing Desk" accent="A Quote Isn't a Gut Call" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="flex flex-col items-center justify-center rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-6 text-center">
+        <div className="flex flex-col items-center justify-center rounded-2xl border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-6 text-center">
           <div className="mb-5 flex h-28 w-28 items-center justify-center rounded-full bg-[linear-gradient(135deg,#c9a44c,#5b8cff)] font-terminal text-5xl font-black text-[#0b1018] shadow-[var(--shadow)]">
             M
           </div>
@@ -3983,7 +3985,7 @@ function Day2IntroPanel() {
 
         <div className="space-y-3">
           {lines.map((line, index) => (
-            <div key={line} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div key={line} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal mb-2 text-xs tracking-[0.18em] text-[var(--accent)]">
                 MARTIN / {index + 1}
               </div>
@@ -4023,7 +4025,7 @@ function Day2PricingAnchorPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Lesson 1 / Why We Price" accent="The Theoretical Price Is the Quote Anchor" />
       <div className="space-y-6 p-6">
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[var(--accent)]">
             Desk Intuition
           </div>
@@ -4039,7 +4041,7 @@ function Day2PricingAnchorPanel() {
             <div
               key={item.label}
               className={cn(
-                "rounded-lg border p-5",
+                "rounded-2xl border p-5",
                 item.tone === "good"
                   ? "border-green-400/30 bg-green-400/[0.07]"
                   : item.tone === "danger"
@@ -4056,7 +4058,7 @@ function Day2PricingAnchorPanel() {
           ))}
         </div>
 
-        <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-base leading-8 text-[var(--notice)]">
+        <div className="rounded-xl border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-base leading-8 text-[var(--notice)]">
           For now, treat {theoreticalPrice} points as the theoretical price the model computed. Your job isn't to memorize this number, but to understand: the quote should be adjusted up or down around it.
         </div>
       </div>
@@ -4077,28 +4079,28 @@ function Day2TreePathsLessonPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Lesson 2 / Binomial Tree Paths" accent="Break the Future into Branches" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.95fr_1.05fr]">
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
           <div className="font-terminal mb-5 text-xs tracking-[0.18em] text-[var(--accent)]">
             Path Diagram
           </div>
           <div className="space-y-4">
-            <div className="mx-auto w-44 rounded-lg border border-[#5b8cff]/50 bg-[var(--surface-2)] p-4 text-center">
+            <div className="mx-auto w-44 rounded-2xl border border-[#5b8cff]/50 bg-[var(--surface-2)] p-4 text-center">
               <div className="font-terminal text-xs text-[var(--muted)]">Today</div>
               <div className="text-2xl font-black text-[var(--accent)]">21,500</div>
             </div>
             <div className="grid grid-cols-2 gap-5">
-              <div className="rounded-lg border border-green-400/35 bg-green-400/[0.08] p-4 text-center">
+              <div className="rounded-2xl border border-green-400/35 bg-green-400/[0.08] p-4 text-center">
                 <div className="font-terminal text-xs text-[var(--pos)]">Up 2.65%</div>
                 <div className="mt-2 text-2xl font-black text-[var(--ink)]">22,069</div>
               </div>
-              <div className="rounded-lg border border-red-500/35 bg-red-500/[0.08] p-4 text-center">
+              <div className="rounded-2xl border border-red-500/35 bg-red-500/[0.08] p-4 text-center">
                 <div className="font-terminal text-xs text-[var(--neg)]">Down 2.58%</div>
                 <div className="mt-2 text-2xl font-black text-[var(--ink)]">20,946</div>
               </div>
             </div>
             <div className="grid grid-cols-3 gap-3 text-center">
               {["22,653", "21,500", "20,405"].map((price, index) => (
-                <div key={`${price}-${index}`} className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-3">
+                <div key={`${price}-${index}`} className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-3">
                   <div className="font-terminal text-[10px] text-[var(--muted)]">Step 2</div>
                   <div className="mt-1 text-lg font-black text-[var(--ink)]">{price}</div>
                 </div>
@@ -4109,7 +4111,7 @@ function Day2TreePathsLessonPanel() {
                 <div
                   key={`${price}-${index}`}
                   className={cn(
-                    "rounded-md border p-3",
+                    "rounded-xl border p-3",
                     index < 2
                       ? "border-[#c9a44c]/35 bg-[#c9a44c]/[0.08]"
                       : "border-[var(--border)] bg-[var(--surface-2)]",
@@ -4124,14 +4126,14 @@ function Day2TreePathsLessonPanel() {
         </div>
 
         <div className="space-y-4">
-          <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-5">
+          <div className="rounded-2xl border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-5">
             <h2 className="text-2xl font-black text-[var(--ink)]">A Binomial Tree Is Not a Crystal Ball</h2>
             <p className="mt-4 text-base leading-8 text-[var(--ink)]">
               It doesn't say “the market will definitely rise” or “the market will definitely fall.” It just maps out the possible future routes, so the trader can check, route by route, what the option might be worth.
             </p>
           </div>
           {steps.map(([label, value, note]) => (
-            <div key={label} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div key={label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-[var(--accent)]">{label}</div>
               <div className="mt-2 text-2xl font-black text-[var(--notice)]">{value}</div>
               <div className="mt-2 text-sm leading-7 text-[var(--ink)]">{note}</div>
@@ -4148,7 +4150,7 @@ function Day2BackwardPriceLessonPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Lesson 3 / Payoff and Backward Induction" accent="Compute the Future First, Then Return to Today" />
       <div className="space-y-6 p-6">
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[var(--accent)]">
             Vanilla Call Formula
           </div>
@@ -4168,14 +4170,14 @@ function Day2BackwardPriceLessonPanel() {
             ["Work Backward", "Discount the possible future payoffs back to the previous layer, then keep stepping back toward today."],
             ["Today's Price", `After the teaching simplification, the model gives today's theoretical price: ${day2Config.quoteRules.theoreticalPrice} points.`],
           ].map(([title, text]) => (
-            <div key={title} className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-4">
+            <div key={title} className="rounded-2xl border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-[var(--notice)]">{title}</div>
               <p className="mt-3 text-sm leading-7 text-[var(--ink)]">{text}</p>
             </div>
           ))}
         </div>
 
-        <div className="rounded-md border-l-4 border-[#5b8cff] bg-[var(--surface-2)] p-4 text-base leading-8 text-[var(--ink)]">
+        <div className="rounded-xl border-l-4 border-[#5b8cff] bg-[var(--surface-2)] p-4 text-base leading-8 text-[var(--ink)]">
           Don't rush to digest the full pricing formula today. Just follow the tree: the price can go up or down, each path settles at expiry, then you step it back to now, and you get a quote reference.
         </div>
       </div>
@@ -4390,7 +4392,7 @@ function ResearchTerminalPanel({
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label={title} accent={accent} />
       <div className="space-y-5 p-5">
-        <div className="rounded-md border border-[#5b8cff]/20 bg-[#5b8cff]/[0.04] p-4 text-sm leading-7 text-[var(--ink)]">
+        <div className="rounded-xl border border-[#5b8cff]/20 bg-[#5b8cff]/[0.04] p-4 text-sm leading-7 text-[var(--ink)]">
           <span className="font-terminal text-[var(--accent)]">Task: </span>
           {taskText}
         </div>
@@ -4399,7 +4401,7 @@ function ResearchTerminalPanel({
           {cards.map((card) => (
             <div
               key={card.id}
-              className="rounded-lg border bg-[var(--surface-2)] p-4"
+              className="rounded-2xl border bg-[var(--surface-2)] p-4"
               style={{ borderColor: `${card.accent}30` }}
             >
               <div className="mb-3 flex items-center gap-2">
@@ -4469,7 +4471,7 @@ function ResearchTerminalPanel({
           ))}
         </div>
 
-        <div className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-4 text-xs leading-6 text-[var(--muted)]">
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4 text-xs leading-6 text-[var(--muted)]">
           {footerHint}
         </div>
       </div>
@@ -4534,9 +4536,9 @@ function Day2ClientArrivalPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Client Profile" accent="Institutional Client Order" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.85fr_1.15fr]">
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
           <div className="mb-5 flex items-center gap-4">
-            <div className="flex h-20 w-20 items-center justify-center rounded-md border border-[#c9a44c]/30 bg-[#c9a44c]/[0.08] font-terminal text-4xl font-black text-[var(--notice)]">
+            <div className="flex h-20 w-20 items-center justify-center rounded-xl border border-[#c9a44c]/30 bg-[#c9a44c]/[0.08] font-terminal text-4xl font-black text-[var(--notice)]">
               W
             </div>
             <div>
@@ -4548,7 +4550,7 @@ function Day2ClientArrivalPanel() {
           </div>
           <div className="grid gap-3">
             {profileRows.map(([label, value]) => (
-              <div key={label} className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-3">
+              <div key={label} className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-3">
                 <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                   {label}
                 </div>
@@ -4558,13 +4560,13 @@ function Day2ClientArrivalPanel() {
           </div>
         </div>
 
-        <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
+        <div className="rounded-2xl border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
           <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[var(--notice)]">
             Client Dialogue
           </div>
           <div className="space-y-4">
             {client.dialogue.map((line) => (
-              <div key={line} className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-4 text-base leading-8 text-[var(--ink)]">
+              <div key={line} className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4 text-base leading-8 text-[var(--ink)]">
                 Mr. Wang: “{line}”
               </div>
             ))}
@@ -4590,7 +4592,7 @@ function Day2ProductReviewPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Product Confirmation" accent="Client Has Specified a Vanilla Call" />
       <div className="space-y-5 p-6">
-        <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-5">
+        <div className="rounded-2xl border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-5">
           <div className="font-terminal mb-2 text-xs tracking-[0.18em] text-[var(--notice)]">
             VANILLA CALL
           </div>
@@ -4602,7 +4604,7 @@ function Day2ProductReviewPanel() {
 
         <div className="grid gap-4 md:grid-cols-3">
           {rows.map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div key={label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                 {label}
               </div>
@@ -4620,7 +4622,7 @@ function BinomialTreeVisual() {
   const nodeMap = Object.fromEntries(tree.nodes.map((node) => [node.id, node]));
 
   return (
-    <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+    <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
       <div className="relative h-[980px] w-full min-w-0">
         <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
           {tree.links.map(([fromId, toId]) => {
@@ -4646,7 +4648,7 @@ function BinomialTreeVisual() {
           <div
             key={node.id}
             className={cn(
-              "absolute -translate-x-1/2 -translate-y-1/2 rounded-lg border p-3 shadow-[var(--shadow)]",
+              "absolute -translate-x-1/2 -translate-y-1/2 rounded-2xl border p-3 shadow-[var(--shadow)]",
               node.terminal ? "w-64" : "w-44",
               node.hot
                 ? "border-[#c9a44c]/70 bg-[#c9a44c]/[0.12]"
@@ -4970,7 +4972,7 @@ function BinomialPricingTool({
       ];
 
   return (
-    <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)]/85 p-5">
+    <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/85 p-5">
       <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
         <div>
           <div className="font-terminal text-xs tracking-[0.2em] text-[var(--accent)]">
@@ -4984,7 +4986,7 @@ function BinomialPricingTool({
         </div>
         <div
           className={cn(
-            "rounded-md border px-4 py-2 font-terminal text-xs",
+            "rounded-xl border px-4 py-2 font-terminal text-xs",
             isBarrier
               ? "border-[#c9a44c]/30 bg-[#c9a44c]/[0.07] text-[var(--notice)]"
               : "border-[#5b8cff]/30 bg-[var(--surface-2)] text-[var(--accent)]",
@@ -5002,7 +5004,7 @@ function BinomialPricingTool({
             : "xl:grid-cols-[300px_minmax(0,1fr)]",
         )}
       >
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
           <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[var(--accent)]">
             Parameter Input
           </div>
@@ -5032,7 +5034,7 @@ function BinomialPricingTool({
                     value={params[key]}
                     onChange={(event) => updateParam(key, Number(event.target.value))}
                     className={cn(
-                      "rounded-md border bg-[var(--surface-2)] px-3 py-2 font-terminal text-sm text-[var(--ink)] outline-none transition",
+                      "rounded-xl border bg-[var(--surface-2)] px-3 py-2 font-terminal text-sm text-[var(--ink)] outline-none transition",
                       isBarrierRow
                         ? "border-[#c9a44c]/45 focus:border-[#c9a44c]"
                         : "border-[var(--border)] focus:border-[#5b8cff]",
@@ -5049,13 +5051,13 @@ function BinomialPricingTool({
                   🔒 Fixed
                 </span>
               </span>
-              <div className="rounded-md border border-[var(--border)] bg-black/40 px-3 py-2 font-terminal text-sm text-[var(--muted)]">
+              <div className="rounded-xl border border-[var(--border)] bg-black/40 px-3 py-2 font-terminal text-sm text-[var(--muted)]">
                 {params.steps} steps (modeling choice, no need to look up)
               </div>
             </label>
           </div>
 
-          <div className="mt-4 grid gap-3 rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-3 text-xs leading-6 text-[var(--muted)]">
+          <div className="mt-4 grid gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-3 text-xs leading-6 text-[var(--muted)]">
             <div>
               Up factor u:
               <span className="font-terminal text-[var(--accent)]"> {tree.up.toFixed(4)}</span>
@@ -5082,7 +5084,7 @@ function BinomialPricingTool({
           </div>
 
           {!isBarrier && day2ParamIssues.length > 0 && (
-            <div className="mt-4 rounded-md border border-orange-500/40 bg-orange-500/[0.08] p-3 text-xs leading-5 text-orange-300">
+            <div className="mt-4 rounded-xl border border-orange-500/40 bg-orange-500/[0.08] p-3 text-xs leading-5 text-orange-300">
               <div className="font-terminal mb-2 tracking-[0.12em]">⚠️ Martin's Reminder</div>
               {day2ParamIssues.map(({ key, value, stdValue }) => (
                 <div key={key} className="mb-1">
@@ -5097,10 +5099,10 @@ function BinomialPricingTool({
           )}
         </div>
 
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
           <div
             className={cn(
-              "relative min-w-0 overflow-hidden rounded-md border border-[var(--border)] bg-[var(--bg)]",
+              "relative min-w-0 overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg)]",
               isBarrier ? "h-[640px]" : "h-[560px]",
             )}
           >
@@ -5138,7 +5140,7 @@ function BinomialPricingTool({
                   <div
                     key={node.id}
                     className={cn(
-                      "absolute w-32 -translate-x-1/2 -translate-y-1/2 rounded-lg border p-2 shadow-[var(--shadow)]",
+                      "absolute w-32 -translate-x-1/2 -translate-y-1/2 rounded-2xl border p-2 shadow-[var(--shadow)]",
                       node.knocked
                         ? "border-red-500/60 bg-red-500/[0.12]"
                         : "border-green-400/45 bg-green-400/[0.08]",
@@ -5167,7 +5169,7 @@ function BinomialPricingTool({
                 <div
                   key={node.id}
                   className={cn(
-                    "absolute w-32 -translate-x-1/2 -translate-y-1/2 rounded-lg border p-2 shadow-[var(--shadow)]",
+                    "absolute w-32 -translate-x-1/2 -translate-y-1/2 rounded-2xl border p-2 shadow-[var(--shadow)]",
                     isTerminal && node.inTheMoney
                       ? "border-[#c9a44c]/65 bg-[#c9a44c]/[0.1]"
                       : "border-[#5b8cff]/35 bg-[var(--surface-2)]",
@@ -5195,7 +5197,7 @@ function BinomialPricingTool({
 
           {isBarrier ? (
             <div className="mt-4 grid gap-3 md:grid-cols-2">
-              <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
                 <div className="font-terminal text-xs tracking-[0.18em] text-[var(--accent)]">
                   Vanilla Call Theoretical Price
                 </div>
@@ -5206,7 +5208,7 @@ function BinomialPricingTool({
                   Ignores the barrier; worked backward purely from the expiry payoff max(S - K, 0).
                 </p>
               </div>
-              <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-4">
+              <div className="rounded-2xl border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-4">
                 <div className="font-terminal text-xs tracking-[0.18em] text-[var(--notice)]">
                   Down-and-Out Call Theoretical Price
                 </div>
@@ -5220,7 +5222,7 @@ function BinomialPricingTool({
             </div>
           ) : (
             <div className="mt-4 grid gap-3 md:grid-cols-3">
-              <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
                 <div className="font-terminal text-xs tracking-[0.18em] text-[var(--accent)]">
                   Price Tree
                 </div>
@@ -5228,7 +5230,7 @@ function BinomialPricingTool({
                   The spot and volatility change the future node prices.
                 </p>
               </div>
-              <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-4">
+              <div className="rounded-2xl border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-4">
                 <div className="font-terminal text-xs tracking-[0.18em] text-[var(--notice)]">
                   Expiry Payoff
                 </div>
@@ -5236,7 +5238,7 @@ function BinomialPricingTool({
                   The strike K doesn't change the price tree, but it does change the terminal payoff.
                 </p>
               </div>
-              <div className="rounded-lg border border-green-400/20 bg-green-400/[0.06] p-4">
+              <div className="rounded-2xl border border-green-400/20 bg-green-400/[0.06] p-4">
                 <div className="font-terminal text-xs tracking-[0.18em] text-[var(--pos)]">
                   Backward-Induced Price
                 </div>
@@ -5250,7 +5252,7 @@ function BinomialPricingTool({
       </div>
 
       {selectedQuote !== undefined && (
-        <div className="mt-5 rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.05] p-5">
+        <div className="mt-5 rounded-2xl border border-[#c9a44c]/25 bg-[#c9a44c]/[0.05] p-5">
           <div className="mb-4">
             <div className="font-terminal text-xs tracking-[0.2em] text-[var(--notice)]">
               Quote Input / Premium Quote
@@ -5279,7 +5281,7 @@ function BinomialPricingTool({
               onChange={(event) =>
                 onUpdateQuote(event.target.value === "" ? "" : Number(event.target.value))
               }
-              className="rounded-md border border-[#c9a44c]/35 bg-[var(--surface-2)] px-4 py-3 font-terminal text-2xl font-black text-[var(--accent)] outline-none transition focus:border-[#c9a44c]"
+              className="rounded-xl border border-[#c9a44c]/35 bg-[var(--surface-2)] px-4 py-3 font-terminal text-2xl font-black text-[var(--accent)] outline-none transition focus:border-[#c9a44c]"
             />
           </label>
         </div>
@@ -5323,7 +5325,7 @@ function BinomialFormulaPanel() {
   ];
 
   return (
-    <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.05] p-5">
+    <div className="rounded-2xl border border-[#c9a44c]/25 bg-[#c9a44c]/[0.05] p-5">
       <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[var(--notice)]">
         Pricing Mechanism / Understand the Formula First, Then Use the Calculator
       </div>
@@ -5332,31 +5334,31 @@ function BinomialFormulaPanel() {
       </div>
       <div className="grid gap-4 lg:grid-cols-2">
         {steps.map((step) => (
-          <div key={step.title} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+          <div key={step.title} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
             <div className="font-terminal text-xs tracking-[0.16em] text-[var(--accent)]">
               {step.title}
             </div>
-            <div className="mt-3 rounded-md border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 font-terminal text-sm text-[var(--notice)]">
+            <div className="mt-3 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 font-terminal text-sm text-[var(--notice)]">
               {step.formula}
             </div>
             <p className="mt-3 text-sm leading-7 text-[var(--ink)]">{step.text}</p>
           </div>
         ))}
       </div>
-      <div className="mt-5 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+      <div className="mt-5 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
         <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[var(--accent)]">
           Symbol Glossary / No Need to Memorize, Just Know What They Mean
         </div>
         <div className="grid gap-3 md:grid-cols-3">
           {symbols.map(([symbol, meaning]) => (
-            <div key={symbol} className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-3">
+            <div key={symbol} className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-3">
               <div className="font-terminal text-sm font-black text-[var(--notice)]">{symbol}</div>
               <div className="mt-2 text-xs leading-6 text-[var(--ink)]">{meaning}</div>
             </div>
           ))}
         </div>
       </div>
-      <div className="mt-4 rounded-md border-l-4 border-[#5b8cff] bg-[var(--surface-2)] p-4 text-sm leading-7 text-[var(--ink)]">
+      <div className="mt-4 rounded-xl border-l-4 border-[#5b8cff] bg-[var(--surface-2)] p-4 text-sm leading-7 text-[var(--ink)]">
         When using the calculator, focus on three things: how the price tree unfolds, how the strike affects the expiry payoff, and how the terminal payoffs are worked backward into today's theoretical price.
       </div>
     </div>
@@ -5382,7 +5384,7 @@ function Day2TreeExplainerPanel({ selectedQuote, quoteAnalysis, onUpdateQuote, o
       <div className="space-y-5 p-6">
         <div className="grid gap-3 md:grid-cols-4">
           {params.map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-3">
+            <div key={label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-3">
               <div className="font-terminal text-[11px] tracking-[0.14em] text-[var(--muted)]">
                 {label}
               </div>
@@ -5399,7 +5401,7 @@ function Day2TreeExplainerPanel({ selectedQuote, quoteAnalysis, onUpdateQuote, o
             "The strike K doesn't change the underlying's price path, but it does change the payoff at each expiry node.",
             "The more steps N, the finer the tree; today just grasp the intuition, and you're not asked to compute every node by hand.",
           ].map((text, index) => (
-            <div key={text} className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-4 text-sm leading-7 text-[var(--notice)]">
+            <div key={text} className="rounded-2xl border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-4 text-sm leading-7 text-[var(--notice)]">
               <span className="font-terminal mr-2 text-[var(--accent)]">Hint {index + 1}</span>
               {text}
             </div>
@@ -5447,7 +5449,7 @@ function Day2QuoteSliderPanel({
             ["Desk Profit", `${profit >= 0 ? "+" : ""}${profit} pts`, profit >= 0 ? "#34c77b" : "#f87171"],
             ["Suggested Range", `${fairLow} - ${fairHigh} pts`, "#e2e8f0"],
           ].map(([label, value, color]) => (
-            <div key={label} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div key={label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                 {label}
               </div>
@@ -5458,7 +5460,7 @@ function Day2QuoteSliderPanel({
           ))}
         </div>
 
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
           <div className="mb-4 flex items-center justify-between gap-4">
             <div>
               <div className="font-terminal text-xs tracking-[0.18em] text-[var(--accent)]">
@@ -5466,7 +5468,7 @@ function Day2QuoteSliderPanel({
               </div>
               <div className="mt-1 text-sm text-[var(--muted)]">Range: {rules.sliderMin} - {rules.sliderMax} pts</div>
             </div>
-            <div className={cn("rounded-md border px-4 py-2 font-terminal text-xs tracking-[0.14em]", toneClass)}>
+            <div className={cn("rounded-xl border px-4 py-2 font-terminal text-xs tracking-[0.14em]", toneClass)}>
               {quoteAnalysis.label}
             </div>
           </div>
@@ -5491,7 +5493,7 @@ function Day2QuoteSliderPanel({
           </div>
         </div>
 
-        <div className={cn("rounded-md border-l-4 p-4 text-base leading-8", toneClass)}>
+        <div className={cn("rounded-xl border-l-4 p-4 text-base leading-8", toneClass)}>
           Client reaction preview: {quoteAnalysis.customerPreview}
         </div>
       </div>
@@ -5500,7 +5502,7 @@ function Day2QuoteSliderPanel({
 
   if (embedded) {
     return (
-      <div className="overflow-hidden rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.04] shadow-[var(--shadow)]">
+      <div className="overflow-hidden rounded-2xl border border-[#c9a44c]/25 bg-[#c9a44c]/[0.04] shadow-[var(--shadow)]">
         {content}
       </div>
     );
@@ -5521,7 +5523,7 @@ function Day2ClientResponsePanel({ selectedQuote, clientResponse, liveTheoretica
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Client Feedback" accent="Quote Receipt" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[var(--accent)]">
             Quote Record
           </div>
@@ -5531,9 +5533,9 @@ function Day2ClientResponsePanel({ selectedQuote, clientResponse, liveTheoretica
           </div>
         </div>
 
-        <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
+        <div className="rounded-2xl border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
           <div className="mb-4 flex items-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-md border border-[#c9a44c]/30 bg-black/40 font-terminal text-3xl font-black text-[var(--notice)]">
+            <div className="flex h-16 w-16 items-center justify-center rounded-xl border border-[#c9a44c]/30 bg-black/40 font-terminal text-3xl font-black text-[var(--notice)]">
               W
             </div>
             <div>
@@ -5543,7 +5545,7 @@ function Day2ClientResponsePanel({ selectedQuote, clientResponse, liveTheoretica
               <div className="mt-1 text-sm text-[var(--muted)]">{acceptedText}</div>
             </div>
           </div>
-          <div className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-5 text-xl font-black leading-9 text-[var(--ink)]">
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-5 text-xl font-black leading-9 text-[var(--ink)]">
             “{response.customerLine}”
           </div>
         </div>
@@ -5618,7 +5620,7 @@ function Day2MarketRunPanel({
             ["Your Quote", `${quote} pts`],
             ["Maturity", "1 month"],
           ].map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div key={label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                 {label}
               </div>
@@ -5628,13 +5630,13 @@ function Day2MarketRunPanel({
         </div>
 
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
             <div className="font-terminal text-xs text-[var(--muted)]">Live Price</div>
             <div className="live-price-pulse mt-2 text-3xl font-black text-[var(--accent)]">
               {formatPoints(latestPrice)}
             </div>
           </div>
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
             <div className="font-terminal text-xs text-[var(--muted)]">Tick Change</div>
             <div
               className={cn(
@@ -5646,7 +5648,7 @@ function Day2MarketRunPanel({
               {tickChange}
             </div>
           </div>
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
             <div className="font-terminal text-xs text-[var(--muted)]">
               {accepted ? "Desk Live Net" : "Trade Status"}
             </div>
@@ -5660,7 +5662,7 @@ function Day2MarketRunPanel({
           </div>
         </div>
 
-        <div className="market-chart-panel mt-6 rounded-lg border border-[var(--border)] bg-[var(--surface-2)]/85 p-4">
+        <div className="market-chart-panel mt-6 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/85 p-4">
           <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
             <div>
               <div className="font-terminal text-sm tracking-[0.18em] text-[var(--accent)]">
@@ -5755,27 +5757,27 @@ function Day2MarketRunPanel({
 
         {finalShown ? (
           <div className="scene-enter mt-6 grid gap-4 md:grid-cols-4">
-            <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs text-[var(--muted)]">Final Price</div>
               <div className="mt-2 text-3xl font-black text-[var(--accent)]">
                 {formatPoints(finalPrice)}
               </div>
             </div>
-            <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs text-[var(--muted)]">Call Expiry Payoff</div>
               <div className="mt-2 text-lg font-bold text-[var(--ink)]">
                 max({formatPoints(finalPrice)} - {formatPoints(market.strike)}, 0) ={" "}
                 <span className="text-[var(--accent)]">{payoff}</span>
               </div>
             </div>
-            <div className={cn("rounded-lg border p-4", accepted && (payoff - quote) >= 0 ? "border-green-400/20 bg-green-400/[0.05]" : "border-[var(--border)] bg-[var(--surface-2)]")}>
+            <div className={cn("rounded-2xl border p-4", accepted && (payoff - quote) >= 0 ? "border-green-400/20 bg-green-400/[0.05]" : "border-[var(--border)] bg-[var(--surface-2)]")}>
               <div className="font-terminal text-xs text-[var(--muted)]">Client Net P&L</div>
               <div className={cn("mt-2 text-2xl font-black", accepted ? ((payoff - quote) >= 0 ? "text-[var(--pos)]" : "text-[var(--neg)]") : "text-[var(--muted)]")}>
                 {accepted ? `${(payoff - quote) >= 0 ? "+" : ""}${payoff - quote}` : "No Deal · 0"}
               </div>
               {accepted && <p className="mt-2 text-xs leading-5 text-[var(--muted)]">Expiry payoff minus the premium paid.</p>}
             </div>
-            <div className={cn("rounded-lg border p-4", accepted ? (deskPnl >= 0 ? "border-green-400/20 bg-green-400/[0.05]" : "border-red-500/25 bg-red-500/[0.06]") : "border-[var(--border)] bg-[var(--surface-2)]")}>
+            <div className={cn("rounded-2xl border p-4", accepted ? (deskPnl >= 0 ? "border-green-400/20 bg-green-400/[0.05]" : "border-red-500/25 bg-red-500/[0.06]") : "border-[var(--border)] bg-[var(--surface-2)]")}>
               <div className="font-terminal text-xs text-[var(--muted)]">Desk Settlement</div>
               <div className={cn("mt-2 text-2xl font-black", accepted ? (deskPnl >= 0 ? "text-[var(--pos)]" : "text-[var(--neg)]") : "text-[var(--muted)]")}>
                 {accepted ? `${deskPnl >= 0 ? "+" : ""}${deskPnl}` : "No Deal · 0"}
@@ -5784,7 +5786,7 @@ function Day2MarketRunPanel({
             </div>
           </div>
         ) : (
-          <div className="mt-5 rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-sm leading-7 text-[var(--notice)]">
+          <div className="mt-5 rounded-xl border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-sm leading-7 text-[var(--notice)]">
             The market is playing out automatically: the price may dip first, snap back, then break out. Don't be scared by the swings along the way; a vanilla call ultimately depends only on which side of the strike the expiry price lands.
           </div>
         )}
@@ -5820,7 +5822,7 @@ function Day2ReportPanel({ score }) {
       <div className="space-y-5 p-6">
         <div className="grid gap-4 md:grid-cols-3">
           {rows.map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div key={label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
                 {label}
               </div>
@@ -5837,7 +5839,7 @@ function Day2ReportPanel({ score }) {
           ].map(([label, value]) => (
             <div
               key={label}
-              className="flex items-center justify-between rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4"
+              className="flex items-center justify-between rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4"
             >
               <span className="font-terminal text-xs text-[var(--muted)]">{label}</span>
               <ScoreBadge score={value} />
@@ -5845,16 +5847,16 @@ function Day2ReportPanel({ score }) {
           ))}
         </div>
 
-        <div className="rounded-md border-l-4 border-[#5b8cff] bg-[var(--surface-2)] p-4 text-base leading-8 text-[var(--ink)]">
+        <div className="rounded-xl border-l-4 border-[#5b8cff] bg-[var(--surface-2)] p-4 text-base leading-8 text-[var(--ink)]">
           Pricing assessment: {score.pricingComment}
         </div>
 
-        <div className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-4 text-sm leading-7 text-[var(--ink)]">
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4 text-sm leading-7 text-[var(--ink)]">
           Simulated market path: {score.marketPath.map((price) => formatPoints(price)).join(" → ")}.
           The client's expiry payoff is {score.marketPayoff} points, and the client's net P&L is {score.clientPnl >= 0 ? "+" : ""}{score.clientPnl} points.
         </div>
 
-        <div className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-4 text-sm leading-7 text-[var(--muted)]">
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4 text-sm leading-7 text-[var(--muted)]">
           Teaching note: a real desk would hedge directional risk (e.g. flattening Delta with futures or offsetting options). What's shown here is the unhedged result of a single trade, used only to understand pricing P&L; it doesn't represent the desk's true risk exposure.
         </div>
       </div>
@@ -5882,7 +5884,7 @@ function Day2CompletePanel() {
           {summary.map((item) => (
             <div
               key={item}
-              className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm leading-7 text-[var(--ink)]"
+              className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm leading-7 text-[var(--ink)]"
             >
               <span className="font-terminal mr-2 text-[var(--accent)]">Rule</span>
               {item}
@@ -5899,7 +5901,7 @@ function Day3IntroPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Day Three Morning Meeting" accent="Path-Dependent Products" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-6">
+        <div className="rounded-2xl border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-6">
           <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[var(--notice)]">
             BARRIER OPTION
           </div>
@@ -5918,7 +5920,7 @@ function Day3IntroPanel() {
             ["Barrier Option", "Additionally observes a barrier level. Touch the barrier along the way and the product may knock in or knock out."],
             ["Today's Focus", "An intro to knock-out only: touch the barrier level and the product expires early."],
           ].map(([title, text]) => (
-            <div key={title} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+            <div key={title} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
               <div className="font-terminal text-xs tracking-[0.18em] text-[var(--accent)]">
                 {title}
               </div>
@@ -5939,7 +5941,7 @@ function Day3BarrierConceptPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Lesson 1 / The Barrier Level" accent="The Barrier Is the Contract's Red Line" />
       <div className="space-y-5 p-6">
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[var(--accent)]">
             Intuition
           </div>
@@ -5951,7 +5953,7 @@ function Day3BarrierConceptPanel() {
           </p>
         </div>
 
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)]/85 p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/85 p-5">
           <svg viewBox="0 0 760 260" className="h-auto w-full" role="img" aria-label="Barrier level diagram">
             <defs>
               <linearGradient id="day3PathGlow" x1="0" x2="1">
@@ -6028,7 +6030,7 @@ function Day3KnockOutPanel() {
             ["2. Observe the Whole Path", "Not just the close or expiry. The moment the path touches the barrier, the rule triggers."],
             ["3. Goes to Zero After Knock-Out", "The product expires early. Even if it climbs back at the end, a knocked-out option can't be called back."],
           ].map(([title, text]) => (
-            <div key={title} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+            <div key={title} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
               <div className="font-terminal text-xs tracking-[0.18em] text-[var(--accent)]">
                 {title}
               </div>
@@ -6037,7 +6039,7 @@ function Day3KnockOutPanel() {
           ))}
         </div>
 
-        <div className="rounded-lg border border-red-500/25 bg-red-500/[0.06] p-5">
+        <div className="rounded-2xl border border-red-500/25 bg-red-500/[0.06] p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[var(--neg)]">
             The Desk's Most Common Misconception
           </div>
@@ -6050,7 +6052,7 @@ function Day3KnockOutPanel() {
           </p>
         </div>
 
-        <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-5">
+        <div className="rounded-2xl border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[var(--notice)]">
             Why Set a Barrier?
           </div>
@@ -6069,7 +6071,7 @@ function Day3KnockOutPanel() {
                 "When the seller collects a lower premium, they need a rule to cap extreme path risk. The barrier level is that risk boundary.",
               ],
             ].map(([title, text]) => (
-              <div key={title} className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-4">
+              <div key={title} className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
                 <div className="font-terminal text-xs tracking-[0.16em] text-[var(--accent)]">
                   {title}
                 </div>
@@ -6077,7 +6079,7 @@ function Day3KnockOutPanel() {
               </div>
             ))}
           </div>
-          <div className="mt-4 rounded-md border-l-4 border-[#c9a44c] bg-[var(--surface-2)] p-4 text-sm leading-7 text-[var(--notice)]">
+          <div className="mt-4 rounded-xl border-l-4 border-[#c9a44c] bg-[var(--surface-2)] p-4 text-sm leading-7 text-[var(--notice)]">
             Martin's takeaway: a barrier isn't a free restriction. It makes the product cheaper and better-fitted to a particular market view, but the cost is that the client must take on path risk.
           </div>
         </div>
@@ -6092,7 +6094,7 @@ function Day3CompareVanillaPanel({ selectedQuote, quoteAnalysis, onUpdateQuote, 
       <TerminalHeader label="Pricing Tree" accent="Barrier Pricing" />
       <div className="space-y-5 p-6">
         <div className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-lg border border-[var(--border-strong)] bg-[var(--surface-2)] p-5">
+          <div className="rounded-2xl border border-[var(--border-strong)] bg-[var(--surface-2)] p-5">
             <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[var(--accent)]">
               Vanilla Call Option
             </div>
@@ -6102,12 +6104,12 @@ function Day3CompareVanillaPanel({ selectedQuote, quoteAnalysis, onUpdateQuote, 
               <li>- Premium is usually more expensive</li>
               <li>- Produces an expiry payoff if the final price is above the strike</li>
             </ul>
-            <div className="mt-5 rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div className="mt-5 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               Example premium: <span className="font-black text-[var(--accent)]">{day3Config.market.vanillaPremium} pts</span>
             </div>
           </div>
 
-          <div className="rounded-lg border border-[#c9a44c]/30 bg-[#c9a44c]/[0.06] p-5">
+          <div className="rounded-2xl border border-[#c9a44c]/30 bg-[#c9a44c]/[0.06] p-5">
             <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[var(--notice)]">
               Down-and-Out Call Option
             </div>
@@ -6117,13 +6119,13 @@ function Day3CompareVanillaPanel({ selectedQuote, quoteAnalysis, onUpdateQuote, 
               <li>- Lower premium</li>
               <li>- Expires early if it touches the barrier along the way</li>
             </ul>
-            <div className="mt-5 rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div className="mt-5 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               Example premium: <span className="font-black text-[var(--notice)]">{day3Config.market.premium} pts</span>
             </div>
           </div>
         </div>
 
-        <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-base leading-8 text-[var(--notice)]">
+        <div className="rounded-xl border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-base leading-8 text-[var(--notice)]">
           Martin's mnemonic: a barrier option isn't a “discounted vanilla option.” It's cheap because the client takes on part of the path risk.
         </div>
 
@@ -6175,9 +6177,9 @@ function Day3ClientArrivalPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Client Profile" accent="Budget-Sensitive Order" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.85fr_1.15fr]">
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
           <div className="mb-5 flex items-center gap-4">
-            <div className="flex h-20 w-20 items-center justify-center rounded-md border border-[#c9a44c]/30 bg-[#c9a44c]/[0.08] font-terminal text-4xl font-black text-[var(--notice)]">
+            <div className="flex h-20 w-20 items-center justify-center rounded-xl border border-[#c9a44c]/30 bg-[#c9a44c]/[0.08] font-terminal text-4xl font-black text-[var(--notice)]">
               C
             </div>
             <div>
@@ -6189,7 +6191,7 @@ function Day3ClientArrivalPanel() {
           </div>
           <div className="grid gap-3">
             {profileRows.map(([label, value]) => (
-              <div key={label} className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-3">
+              <div key={label} className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-3">
                 <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                   {label}
                 </div>
@@ -6199,13 +6201,13 @@ function Day3ClientArrivalPanel() {
           </div>
         </div>
 
-        <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
+        <div className="rounded-2xl border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
           <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[var(--notice)]">
             Client Dialogue
           </div>
           <div className="space-y-4">
             {client.dialogue.map((line) => (
-              <div key={line} className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-4 text-base leading-8 text-[var(--ink)]">
+              <div key={line} className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4 text-base leading-8 text-[var(--ink)]">
                 Ms. Chen: “{line}”
               </div>
             ))}
@@ -6219,7 +6221,7 @@ function Day3ClientArrivalPanel() {
 function RealDataContextCard({ context }) {
   if (!context) return null;
   return (
-    <div className="rounded-lg border border-emerald-400/25 bg-emerald-400/[0.05] p-4">
+    <div className="rounded-2xl border border-emerald-400/25 bg-emerald-400/[0.05] p-4">
       <div className="flex items-center gap-2">
         <span className="font-terminal text-xs tracking-[0.16em] text-[var(--pos)]">
           📡 {context.title}
@@ -6248,7 +6250,7 @@ function Day3ClientResponsePanel({ selectedQuote, clientResponse }) {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Client Feedback" accent="Barrier Quote Receipt" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[var(--accent)]">
             Quote Record
           </div>
@@ -6258,9 +6260,9 @@ function Day3ClientResponsePanel({ selectedQuote, clientResponse }) {
           </div>
         </div>
 
-        <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
+        <div className="rounded-2xl border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
           <div className="mb-4 flex items-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-md border border-[#c9a44c]/30 bg-black/40 font-terminal text-3xl font-black text-[var(--notice)]">
+            <div className="flex h-16 w-16 items-center justify-center rounded-xl border border-[#c9a44c]/30 bg-black/40 font-terminal text-3xl font-black text-[var(--notice)]">
               C
             </div>
             <div>
@@ -6270,7 +6272,7 @@ function Day3ClientResponsePanel({ selectedQuote, clientResponse }) {
               <div className="mt-1 text-sm text-[var(--muted)]">{acceptedText}</div>
             </div>
           </div>
-          <div className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-5 text-xl font-black leading-9 text-[var(--ink)]">
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-5 text-xl font-black leading-9 text-[var(--ink)]">
             “{response.customerLine}”
           </div>
         </div>
@@ -6325,7 +6327,7 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
             ["Reference Theoretical Price", `${market.premium} pts`],
             ["Maturity", market.maturity],
           ].map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div key={label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                 {label}
               </div>
@@ -6337,12 +6339,12 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
         <RealDataContextCard context={market.marketContext} />
 
         <div className="grid gap-4 lg:grid-cols-[0.75fr_1.25fr]">
-          <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-4">
+          <div className="rounded-2xl border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-4">
             <div className="font-terminal text-xs tracking-[0.16em] text-[var(--notice)]">
               Selected Product
             </div>
             <div className="mt-2 text-xl font-black text-[var(--ink)]">{selectedProductName}</div>
-            <div className="mt-4 rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-3 text-sm leading-7 text-[var(--ink)]">
+            <div className="mt-4 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-3 text-sm leading-7 text-[var(--ink)]">
               Current price:
               <span className={cn("font-terminal ml-1 text-2xl font-black", knockedNow ? "text-[var(--neg)]" : "text-[var(--accent)]")}>
                 {formatPoints(latestPrice)}
@@ -6350,7 +6352,7 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
             </div>
             <div
               className={cn(
-                "mt-3 rounded-md border px-3 py-2 font-terminal text-xs tracking-[0.14em]",
+                "mt-3 rounded-xl border px-3 py-2 font-terminal text-xs tracking-[0.14em]",
                 knockedNow
                   ? "border-red-500/40 bg-red-500/[0.08] text-[var(--neg)]"
                   : "border-green-400/30 bg-green-400/[0.06] text-[var(--pos)]",
@@ -6360,7 +6362,7 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
             </div>
           </div>
 
-          <div className="market-chart-panel rounded-lg border border-[var(--border)] bg-[var(--surface-2)]/85 p-4">
+          <div className="market-chart-panel rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/85 p-4">
             <svg viewBox={`0 0 ${chart.width} ${chart.height}`} className="h-auto w-full" role="img" aria-label="Day 3 barrier option market path">
               {chart.yTicks.map((tick) => (
                 <g key={tick}>
@@ -6416,7 +6418,7 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
 
         {finalShown && (
           <div className="grid gap-4 md:grid-cols-4">
-            <div className="rounded-lg border border-red-500/25 bg-red-500/[0.06] p-4">
+            <div className="rounded-2xl border border-red-500/25 bg-red-500/[0.06] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-[var(--neg)]">
                 Knock-Out Result
               </div>
@@ -6424,7 +6426,7 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
                 {result.knockedOut ? `Price point #${result.knockedOutIndex + 1} touched the barrier` : "Not Knocked Out"}
               </div>
             </div>
-            <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
                 Final Price
               </div>
@@ -6432,7 +6434,7 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
                 {formatPoints(result.finalPrice)}
               </div>
             </div>
-            <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-4">
+            <div className="rounded-2xl border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-[var(--notice)]">
                 Client Net P&L
               </div>
@@ -6441,7 +6443,7 @@ function Day3MarketRunPanel({ selectedProduct, selectedQuote, marketHasRun, visi
                 {clientPnl} pts
               </div>
             </div>
-            <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">Desk Settlement</div>
               <div className={cn("mt-2 text-2xl font-black", -clientPnl >= 0 ? "text-[var(--pos)]" : "text-[var(--neg)]")}>
                 {-clientPnl >= 0 ? "+" : ""}{-clientPnl} pts
@@ -6487,7 +6489,7 @@ function Day3ReportPanel({ score }) {
       <div className="space-y-5 p-6">
         <div className="grid gap-4 md:grid-cols-3">
           {rows.map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div key={label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
                 {label}
               </div>
@@ -6505,7 +6507,7 @@ function Day3ReportPanel({ score }) {
           ].map(([label, value]) => (
             <div
               key={label}
-              className="flex items-center justify-between rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4"
+              className="flex items-center justify-between rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4"
             >
               <span className="font-terminal text-xs text-[var(--muted)]">{label}</span>
               <ScoreBadge score={value} />
@@ -6513,12 +6515,12 @@ function Day3ReportPanel({ score }) {
           ))}
         </div>
 
-        <div className="rounded-md border-l-4 border-red-400 bg-red-500/[0.06] p-4 text-base leading-8 text-[var(--neg)]">
+        <div className="rounded-xl border-l-4 border-red-400 bg-red-500/[0.06] p-4 text-base leading-8 text-[var(--neg)]">
           Market review: the price dropped below {formatPoints(day3Config.market.barrier)} points along the way, triggering a knock-out.
           Although the final price returned to {formatPoints(score.finalPrice)} points, the knocked-out product had already expired early.
         </div>
 
-        <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-base leading-8 text-[var(--notice)]">
+        <div className="rounded-xl border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-base leading-8 text-[var(--notice)]">
           Martin's review: {score.martinComment}
         </div>
       </div>
@@ -6546,7 +6548,7 @@ function Day3CompletePanel() {
           {summary.map((item) => (
             <div
               key={item}
-              className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm leading-7 text-[var(--ink)]"
+              className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm leading-7 text-[var(--ink)]"
             >
               <span className="font-terminal mr-2 text-[var(--accent)]">Rule</span>
               {item}
@@ -6565,7 +6567,7 @@ function Day4CbbcIntroPanel_ARCHIVED() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Day Four Morning Meeting" accent="Bull, Bear, and the Upper Call Price" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-6">
+        <div className="rounded-2xl border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-6">
           <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[var(--notice)]">
             CBBC
           </div>
@@ -6585,7 +6587,7 @@ function Day4CbbcIntroPanel_ARCHIVED() {
             ["Bear CBBC", "Suited to a bearish view. A fall in the underlying is usually favorable; but if it first rises to or above the upper call price, it triggers an MCE."],
             ["Today's Focus", "A bear contract's danger line is on the upside. The market falling in the end isn't enough; spiking up to the call price along the way already knocks you out."],
           ].map(([title, text]) => (
-            <div key={title} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+            <div key={title} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
               <div className="font-terminal text-xs tracking-[0.18em] text-[var(--accent)]">
                 {title}
               </div>
@@ -6634,9 +6636,9 @@ function Day4CbbcClientArrivalPanel_ARCHIVED() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Client Profile" accent="CBBC Consultation Order" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.85fr_1.15fr]">
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
           <div className="mb-5 flex items-center gap-4">
-            <div className="flex h-20 w-20 items-center justify-center rounded-md border border-[#c9a44c]/30 bg-[#c9a44c]/[0.08] font-terminal text-4xl font-black text-[var(--notice)]">
+            <div className="flex h-20 w-20 items-center justify-center rounded-xl border border-[#c9a44c]/30 bg-[#c9a44c]/[0.08] font-terminal text-4xl font-black text-[var(--notice)]">
               Z
             </div>
             <div>
@@ -6648,7 +6650,7 @@ function Day4CbbcClientArrivalPanel_ARCHIVED() {
           </div>
           <div className="grid gap-3">
             {profileRows.map(([label, value]) => (
-              <div key={label} className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-3">
+              <div key={label} className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-3">
                 <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                   {label}
                 </div>
@@ -6658,13 +6660,13 @@ function Day4CbbcClientArrivalPanel_ARCHIVED() {
           </div>
         </div>
 
-        <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
+        <div className="rounded-2xl border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
           <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[var(--notice)]">
             Client Dialogue
           </div>
           <div className="space-y-4">
             {client.dialogue.map((line) => (
-              <div key={line} className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-4 text-base leading-8 text-[var(--ink)]">
+              <div key={line} className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4 text-base leading-8 text-[var(--ink)]">
                 Ms. Zhou: “{line}”
               </div>
             ))}
@@ -6680,7 +6682,7 @@ function Day4CbbcSuitabilityPanel_ARCHIVED({ selectedSuitability, suitabilityMes
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Suitability Assessment" accent="Judge the Client First, Then the Product" />
       <div className="space-y-5 p-6">
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[var(--accent)]">
             Question
           </div>
@@ -6701,7 +6703,7 @@ function Day4CbbcSuitabilityPanel_ARCHIVED({ selectedSuitability, suitabilityMes
                 type="button"
                 onClick={() => onSelectSuitability(option.id)}
                 className={cn(
-                  "rounded-lg border p-5 text-left transition duration-300",
+                  "rounded-2xl border p-5 text-left transition duration-300",
                   selected
                     ? "border-[#c9a44c]/70 bg-[#c9a44c]/[0.08] shadow-[var(--shadow)]"
                     : "border-[var(--border)] bg-[var(--surface-2)] hover:border-[#5b8cff]/45 hover:bg-[var(--surface-2)]",
@@ -6731,7 +6733,7 @@ function Day4CbbcSuitabilityPanel_ARCHIVED({ selectedSuitability, suitabilityMes
         {suitabilityMessage && (
           <div
             className={cn(
-              "rounded-md border-l-4 p-4 text-sm leading-7",
+              "rounded-xl border-l-4 p-4 text-sm leading-7",
               selectedSuitability === day4CbbcConfig_ARCHIVED.scoringRules.correctSuitability
                 ? "border-green-400 bg-green-400/[0.06] text-[var(--pos)]"
                 : "border-[#c9a44c] bg-[#c9a44c]/[0.06] text-[var(--notice)]",
@@ -6790,7 +6792,7 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
             ["Bear Contract Cost", `${market.cbbcEntryCost} pts (about ${market.cbbcLeverage}× leverage, illustrative)`],
             ["Vanilla Put Premium", `${market.vanillaPremium} pts`],
           ].map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div key={label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                 {label}
               </div>
@@ -6802,12 +6804,12 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
         <RealDataContextCard context={market.marketContext} />
 
         <div className="grid gap-4 lg:grid-cols-[0.75fr_1.25fr]">
-          <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-4">
+          <div className="rounded-2xl border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-4">
             <div className="font-terminal text-xs tracking-[0.16em] text-[var(--notice)]">
               Player's Recommendation
             </div>
             <div className="mt-2 text-xl font-black text-[var(--ink)]">{selectedProductName}</div>
-            <div className="mt-4 rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-3 text-sm leading-7 text-[var(--ink)]">
+            <div className="mt-4 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-3 text-sm leading-7 text-[var(--ink)]">
               Live HSI:
               <span className={cn("font-terminal ml-1 text-2xl font-black", mceNow ? "text-[var(--neg)]" : "text-[var(--accent)]")}>
                 {formatPoints(latestPrice)}
@@ -6815,7 +6817,7 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
             </div>
             <div
               className={cn(
-                "mt-3 rounded-md border px-3 py-2 font-terminal text-xs tracking-[0.14em]",
+                "mt-3 rounded-xl border px-3 py-2 font-terminal text-xs tracking-[0.14em]",
                 mceNow
                   ? "border-red-500/40 bg-red-500/[0.08] text-[var(--neg)]"
                   : "border-green-400/30 bg-green-400/[0.06] text-[var(--pos)]",
@@ -6825,7 +6827,7 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
             </div>
           </div>
 
-          <div className="market-chart-panel rounded-lg border border-[var(--border)] bg-[var(--surface-2)]/85 p-4">
+          <div className="market-chart-panel rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/85 p-4">
             <svg viewBox={`0 0 ${chart.width} ${chart.height}`} className="h-auto w-full" role="img" aria-label="Day 4 CBBC market path">
               {chart.yTicks.map((tick) => (
                 <g key={tick}>
@@ -6881,7 +6883,7 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
 
         {finalShown && (
           <div className="grid gap-4 md:grid-cols-3">
-            <div className="rounded-lg border border-red-500/25 bg-red-500/[0.06] p-4">
+            <div className="rounded-2xl border border-red-500/25 bg-red-500/[0.06] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-[var(--neg)]">
                 Bear CBBC Result
               </div>
@@ -6889,7 +6891,7 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
                 {result.mceTriggered ? `Price point #${result.mceIndex + 1} triggered the MCE` : "MCE Not Triggered"}
               </div>
             </div>
-            <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
                 Vanilla Put Net P&L
               </div>
@@ -6898,7 +6900,7 @@ function Day4CbbcMarketRunPanel_ARCHIVED({ selectedProduct, marketHasRun, visibl
                 {result.vanillaPnl} pts
               </div>
             </div>
-            <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-4">
+            <div className="rounded-2xl border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-[var(--notice)]">
                 Teaching Conclusion
               </div>
@@ -6937,7 +6939,7 @@ function Day4CbbcReportPanel_ARCHIVED({ score }) {
       <div className="space-y-5 p-6">
         <div className="grid gap-4 md:grid-cols-3">
           {rows.map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+            <div key={label} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
               <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">
                 {label}
               </div>
@@ -6955,7 +6957,7 @@ function Day4CbbcReportPanel_ARCHIVED({ score }) {
           ].map(([label, value]) => (
             <div
               key={label}
-              className="flex items-center justify-between rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4"
+              className="flex items-center justify-between rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4"
             >
               <span className="font-terminal text-xs text-[var(--muted)]">{label}</span>
               <ScoreBadge score={value} />
@@ -6963,12 +6965,12 @@ function Day4CbbcReportPanel_ARCHIVED({ score }) {
           ))}
         </div>
 
-        <div className="rounded-md border-l-4 border-red-400 bg-red-500/[0.06] p-4 text-base leading-8 text-[var(--neg)]">
+        <div className="rounded-xl border-l-4 border-red-400 bg-red-500/[0.06] p-4 text-base leading-8 text-[var(--neg)]">
           Path review: the HSI spiked up along the way and touched the bear contract's upper call price of {formatPoints(day4CbbcConfig_ARCHIVED.market.cbbcCallPrice)} points,
           triggering an MCE. Even though it later fell to {formatPoints(score.finalPrice)} points, the bear contract won't automatically recover.
         </div>
 
-        <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-base leading-8 text-[var(--notice)]">
+        <div className="rounded-xl border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-base leading-8 text-[var(--notice)]">
           Martin's review: {score.martinComment}
         </div>
       </div>
@@ -6997,7 +6999,7 @@ function Day4CbbcCompletePanel_ARCHIVED() {
           {summary.map((item) => (
             <div
               key={item}
-              className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm leading-7 text-[var(--ink)]"
+              className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm leading-7 text-[var(--ink)]"
             >
               <span className="font-terminal mr-2 text-[var(--accent)]">Rule</span>
               {item}
@@ -7022,7 +7024,7 @@ function Day4BriefingPanel() {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Graduation Morning Meeting" accent="Three-Client Pricing Live Round" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.95fr_1.05fr]">
-        <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-6">
+        <div className="rounded-2xl border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-6">
           <div className="font-terminal mb-3 text-xs tracking-[0.2em] text-[var(--notice)]">
             GRADUATION ROUND
           </div>
@@ -7044,12 +7046,12 @@ function Day4BriefingPanel() {
             Martin's General Principles
           </div>
           {steps.map(([title, text]) => (
-            <div key={title} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+            <div key={title} className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
               <div className="text-lg font-black text-[var(--accent)]">{title}</div>
               <div className="mt-2 text-sm leading-7 text-[var(--ink)]">{text}</div>
             </div>
           ))}
-          <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-sm leading-7 text-[var(--notice)]">
+          <div className="rounded-xl border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-sm leading-7 text-[var(--notice)]">
             Today's clients: 3, increasing in difficulty with decreasing hints. The last one won't tell you which product they want.
           </div>
         </div>
@@ -7102,9 +7104,9 @@ function Day4ClientProfilePanel({ client, index, total }) {
         <Day4ClientQueueBadge index={index} total={total} />
       </div>
       <div className="grid gap-6 p-6 lg:grid-cols-[0.85fr_1.15fr]">
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
           <div className="mb-5 flex items-center gap-4">
-            <div className="flex h-20 w-20 items-center justify-center rounded-md border border-[#c9a44c]/30 bg-[#c9a44c]/[0.08] font-terminal text-4xl font-black text-[var(--notice)]">
+            <div className="flex h-20 w-20 items-center justify-center rounded-xl border border-[#c9a44c]/30 bg-[#c9a44c]/[0.08] font-terminal text-4xl font-black text-[var(--notice)]">
               {client.avatar}
             </div>
             <div>
@@ -7116,7 +7118,7 @@ function Day4ClientProfilePanel({ client, index, total }) {
           </div>
           <div className="grid gap-3">
             {profileRows.map(([label, value]) => (
-              <div key={label} className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-3">
+              <div key={label} className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-3">
                 <div className="font-terminal text-xs tracking-[0.14em] text-[var(--muted)]">
                   {label}
                 </div>
@@ -7127,7 +7129,7 @@ function Day4ClientProfilePanel({ client, index, total }) {
         </div>
 
         <div className="space-y-4">
-          <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
+          <div className="rounded-2xl border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
             <div className="font-terminal mb-4 text-xs tracking-[0.18em] text-[var(--notice)]">
               Client Dialogue
             </div>
@@ -7135,7 +7137,7 @@ function Day4ClientProfilePanel({ client, index, total }) {
               {client.dialogue.map((line) => (
                 <div
                   key={line}
-                  className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-4 text-base leading-8 text-[var(--ink)]"
+                  className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4 text-base leading-8 text-[var(--ink)]"
                 >
                   {profile.name}: “{line}”
                 </div>
@@ -7143,7 +7145,7 @@ function Day4ClientProfilePanel({ client, index, total }) {
             </div>
           </div>
           {isJudge && (
-            <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-sm leading-7 text-[var(--notice)]">
+            <div className="rounded-xl border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-sm leading-7 text-[var(--notice)]">
               Note: he didn't say which product he wants. Next, you have to judge it yourself; sniff out from his budget and his “can accept being voided if it drops below a certain level” whether to go with a vanilla call or a barrier call.
             </div>
           )}
@@ -7165,13 +7167,13 @@ function Day4ParamCard({ client }) {
     ["N Steps", `${params.steps} steps (fixed)`],
   ];
   return (
-    <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+    <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
       <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[var(--accent)]">
         {client.profile.name}'s Trade Parameters (fill them into the calculator as shown)
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {rows.map(([label, value]) => (
-          <div key={label} className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-3">
+          <div key={label} className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-3">
             <div className="font-terminal text-[11px] tracking-[0.12em] text-[var(--muted)]">{label}</div>
             <div className="mt-1 text-lg font-black text-[var(--ink)]">{value}</div>
           </div>
@@ -7187,8 +7189,8 @@ function Day4ParamCard({ client }) {
 // Graduation data cards (no outer card shell, embedded above the calculator on the quoting page): reuse the Day2/Day3 data-desk "source it yourself" style.
 function Day4SourcingCards({ cards }) {
   return (
-    <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
-      <div className="mb-3 rounded-md border border-[#5b8cff]/20 bg-[#5b8cff]/[0.05] p-4 text-sm leading-7 text-[var(--ink)]">
+    <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
+      <div className="mb-3 rounded-xl border border-[#5b8cff]/20 bg-[#5b8cff]/[0.05] p-4 text-sm leading-7 text-[var(--ink)]">
         <span className="font-terminal text-[var(--accent)]">Task: </span>
         Mr. He didn't give you a parameter list. You've already judged the product for him; now gather the numbers you need for pricing from the material below yourself:
         <span className="font-black text-[var(--ink)]"> S₀, K, σ, T, r</span>
@@ -7198,7 +7200,7 @@ function Day4SourcingCards({ cards }) {
         {cards.map((card) => (
           <div
             key={card.id}
-            className="rounded-lg border bg-[var(--surface-2)] p-4"
+            className="rounded-2xl border bg-[var(--surface-2)] p-4"
             style={{ borderColor: `${card.accent}30` }}
           >
             <div className="mb-3 flex items-center gap-2">
@@ -7275,21 +7277,21 @@ function Day4ClientResponsePanel({ client, selectedQuote, clientResponse }) {
     <TerminalCard className="scene-enter overflow-hidden">
       <TerminalHeader label="Client Feedback" accent="Quote Receipt" />
       <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-5">
           <div className="font-terminal mb-3 text-xs tracking-[0.18em] text-[var(--accent)]">
             Quote Record
           </div>
           <div className="text-5xl font-black text-[var(--accent)]">{selectedQuote} pts</div>
-          <div className="mt-4 rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-3 text-sm leading-7 text-[var(--muted)]">
+          <div className="mt-4 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-3 text-sm leading-7 text-[var(--muted)]">
             Theoretical price anchor ≈ <span className="font-black text-[var(--ink)]">{response.theoretical} pts</span>
             , your profit {response.margin >= 0 ? "+" : ""}
             {response.margin} pts.
           </div>
         </div>
 
-        <div className="rounded-lg border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
+        <div className="rounded-2xl border border-[#c9a44c]/20 bg-[#c9a44c]/[0.05] p-5">
           <div className="mb-4 flex items-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-md border border-[#c9a44c]/30 bg-black/40 font-terminal text-3xl font-black text-[var(--notice)]">
+            <div className="flex h-16 w-16 items-center justify-center rounded-xl border border-[#c9a44c]/30 bg-black/40 font-terminal text-3xl font-black text-[var(--notice)]">
               {client.avatar}
             </div>
             <div>
@@ -7299,7 +7301,7 @@ function Day4ClientResponsePanel({ client, selectedQuote, clientResponse }) {
               <div className="mt-1 text-sm text-[var(--muted)]">{acceptedText}</div>
             </div>
           </div>
-          <div className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] p-5 text-xl font-black leading-9 text-[var(--ink)]">
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-5 text-xl font-black leading-9 text-[var(--ink)]">
             “{response.customerLine}”
           </div>
         </div>
@@ -7342,25 +7344,25 @@ function Day4ScorecardPanel({ results, clients }) {
       <TerminalHeader label="Graduation Scorecard" accent="Three-Client Pricing Review" />
       <div className="space-y-5 p-6">
         <div className="grid gap-4 md:grid-cols-3">
-          <div className="rounded-lg border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-4">
+          <div className="rounded-2xl border border-[#c9a44c]/25 bg-[#c9a44c]/[0.06] p-4">
             <div className="font-terminal text-xs tracking-[0.16em] text-[var(--notice)]">Filled</div>
             <div className="mt-2 text-3xl font-black text-[var(--ink)]">
               {dealCount} / {clients.length} trades
             </div>
           </div>
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
             <div className="font-terminal text-xs tracking-[0.16em] text-[var(--muted)]">Product Judgment</div>
             <div className="mt-2 text-3xl font-black text-[var(--ink)]">
               {correctProductCount} / {clients.length} correct
             </div>
           </div>
-          <div className="flex items-center justify-between rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-4">
+          <div className="flex items-center justify-between rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
             <span className="font-terminal text-xs text-[var(--muted)]">Overall Score</span>
             <ScoreBadge score={overall} />
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-lg border border-[var(--border)]">
+        <div className="overflow-hidden rounded-2xl border border-[var(--border)]">
           <div className="grid grid-cols-[1.1fr_1fr_0.9fr_0.7fr_0.5fr] gap-2 border-b border-[var(--border)] bg-black/40 px-4 py-3 font-terminal text-[11px] tracking-[0.12em] text-[var(--muted)]">
             <span>Client</span>
             <span>Product</span>
@@ -7407,7 +7409,7 @@ function Day4ScorecardPanel({ results, clients }) {
           })}
         </div>
 
-        <div className="rounded-md border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-base leading-8 text-[var(--notice)]">
+        <div className="rounded-xl border-l-4 border-[#c9a44c] bg-[#c9a44c]/[0.06] p-4 text-base leading-8 text-[var(--notice)]">
           Martin's overall: {martinSummary}
         </div>
       </div>
@@ -7436,7 +7438,7 @@ function Day4GraduationPanel() {
           {summary.map((item) => (
             <div
               key={item}
-              className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm leading-7 text-[var(--ink)]"
+              className="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm leading-7 text-[var(--ink)]"
             >
               <span className="font-terminal mr-2 text-[var(--accent)]">Recap</span>
               {item}
@@ -7767,7 +7769,7 @@ function ProgressDashboard({ profile, progress, onReplayDay, onClose }) {
                     type="button"
                     onClick={() => onReplayDay(day)}
                     aria-label={`Replay Day ${day}: ${topic}`}
-                    className="font-terminal w-full rounded-md border border-[var(--border)] bg-[var(--surface-2)] px-4 py-2 text-xs font-bold tracking-[0.16em] text-[var(--accent)] transition duration-300 hover:bg-[var(--accent-weak)] hover:text-[var(--accent-strong)]"
+                    className="font-terminal w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-2 text-xs font-bold tracking-[0.16em] text-[var(--accent)] transition duration-300 hover:bg-[var(--accent-weak)] hover:text-[var(--accent-strong)]"
                   >
                     {completed ? "Replay" : "Start"}
                   </button>
