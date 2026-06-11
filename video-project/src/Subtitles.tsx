@@ -90,7 +90,7 @@ export const Subtitles: React.FC<{ sentences: Sentence[] }> = ({ sentences }) =>
           textAlign: "center",
         }}
       >
-        {active.words ? (
+        {active.words && active.words.length > 0 ? (
           active.words.map((w, i) => {
             const isActive = t >= w.start && t <= w.end;
             const isPast = t > w.end;
