@@ -10,7 +10,7 @@ Start: `npm install && npm run dev` → http://127.0.0.1:5173/
 ## Architecture constraints (do not change casually)
 
 - **All logic in a single file**: `src/Day1TraderSimulator.jsx`. Do not split into multiple files.
-- **Pricing engine**: `buildVanillaBinomialToolTree` (line ~4489) / `buildBarrierBinomialToolTree` (line ~4570). CRR formula: `u=e^(σ√Δt), d=1/u, p=(e^(rΔt)-d)/(u-d)`, discounting `e^(-rΔt)`.
+- **Pricing engine**: `buildVanillaBinomialToolTree` (line ~4768) / `buildBarrierBinomialToolTree` (line ~4849). CRR formula: `u=e^(σ√Δt), d=1/u, p=(e^(rΔt)-d)/(u-d)`, discounting `e^(-rΔt)`.
 - **Binomial-tree number of steps is fixed**: vanilla N=3 (Day2), barrier N=4 (Day3/Day4). The `steps` field is locked read-only in the calculator UI.
 - **No dividend yield q**: the calculator currently uses `growth=exp(r·dt)` (without q=3.5%) as a teaching simplification, done deliberately. The data desk already notes "we are not computing q today". To add q, change it to `exp((r-q)·dt)`.
 
