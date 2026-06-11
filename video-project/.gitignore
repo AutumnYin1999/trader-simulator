@@ -1,0 +1,8 @@
+node_modules/
+.venv/
+out/
+recordings/
+voiceover/
+captions/
+public/voiceover/
+*.log

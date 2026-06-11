@@ -1,0 +1,695 @@
+[
+  {
+    "id": "C1-1",
+    "sceneType": "animation",
+    "scene": "clip1-hook",
+    "text": "October, nineteen ninety-seven.",
+    "visual": {
+      "component": "TitleCard",
+      "props": {
+        "title": "October 1997",
+        "subtitle": "Hong Kong"
+      },
+      "enter": "fade-in"
+    }
+  },
+  {
+    "id": "C1-2",
+    "sceneType": "animation",
+    "scene": "clip1-hook",
+    "text": "In four trading days, the Hang Seng Index loses twenty-three percent of its value.",
+    "visual": {
+      "component": "StatCard",
+      "props": {
+        "value": "13,601",
+        "label": "Hang Seng Index: down 23% in four trading days"
+      }
+    }
+  },
+  {
+    "id": "C1-3",
+    "sceneType": "animation",
+    "scene": "clip1-hook",
+    "text": "Overnight interest rates jump from eight percent to twenty-three. At one point, two hundred and eighty.",
+    "visual": {
+      "component": "StatCard",
+      "props": {
+        "value": "8% -> 23% -> 280%",
+        "label": "Overnight interest rate"
+      }
+    }
+  },
+  {
+    "id": "C1-4",
+    "sceneType": "animation",
+    "scene": "clip1-hook",
+    "text": "And while everyone else is panicking, somebody on that trading floor is making money. Hi. I'm Jordan Bull.",
+    "visual": {
+      "component": "TitleCard",
+      "props": {
+        "title": "Jordan Bull",
+        "subtitle": "Your broker for the next twelve minutes"
+      },
+      "enter": "pop-in"
+    }
+  },
+  {
+    "id": "C1-5",
+    "sceneType": "animation",
+    "scene": "clip1-hook",
+    "text": "I'm going to show you the only product that turns panic into a paycheck. Options.",
+    "visual": {
+      "component": "AnimatedText",
+      "props": {
+        "text": "Options."
+      },
+      "emphasis": [
+        "Options"
+      ]
+    }
+  },
+  {
+    "id": "C1-6",
+    "sceneType": "animation",
+    "scene": "clip1-hook",
+    "text": "This is the Hang Seng Index Option. Listed on the Hong Kong exchange since March, nineteen ninety-three. The flagship index derivative of Asia.",
+    "visual": {
+      "component": "TitleCard",
+      "props": {
+        "title": "HSI Options",
+        "subtitle": "Listed on HKEX since March 1993"
+      }
+    }
+  },
+  {
+    "id": "C1-7",
+    "sceneType": "animation",
+    "scene": "clip1-hook",
+    "text": "Every point of the index is worth fifty Hong Kong dollars. European exercise. Cash settled. No shares change hands, just money.",
+    "visual": {
+      "component": "ModuleOverview",
+      "props": {
+        "items": [
+          {
+            "title": "HK$50",
+            "desc": "per index point"
+          },
+          {
+            "title": "European",
+            "desc": "exercise at expiry only"
+          },
+          {
+            "title": "Cash settled",
+            "desc": "no shares change hands, just money"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "C1-8",
+    "sceneType": "browser-recording",
+    "scene": "clip1-hook",
+    "text": "But I'm not going to lecture you. I'm going to let you live it. We built a trading desk you can play.",
+    "visual": {
+      "action": "dwell",
+      "description": "Game title screen: Central Trader"
+    }
+  },
+  {
+    "id": "C1-9",
+    "sceneType": "browser-recording",
+    "scene": "clip1-hook",
+    "text": "Real accounts. Real progress tracking. Four days from rookie to closer.",
+    "visual": {
+      "action": "navigate",
+      "description": "Login, then dashboard with account and progress"
+    }
+  },
+  {
+    "id": "C1-10",
+    "sceneType": "browser-recording",
+    "scene": "clip1-hook",
+    "text": "Day one starts now. Let's sell something.",
+    "visual": {
+      "action": "dwell",
+      "description": "Dashboard with four day cards, zoom toward Day 1"
+    }
+  },
+  {
+    "id": "C2-1",
+    "sceneType": "browser-recording",
+    "scene": "clip2-ticket",
+    "text": "Meet Martin. Twenty years on the desk. His first rule: read the client before you touch the product.",
+    "visual": {
+      "action": "dwell",
+      "description": "Day 1 lesson, mentor Martin card"
+    }
+  },
+  {
+    "id": "C2-2",
+    "sceneType": "browser-recording",
+    "scene": "clip2-ticket",
+    "text": "Two basic moves. A call is the right to buy at a fixed price. A put is the right to sell.",
+    "visual": {
+      "action": "dwell",
+      "description": "Call and put lesson cards"
+    }
+  },
+  {
+    "id": "C2-3",
+    "sceneType": "browser-recording",
+    "scene": "clip2-ticket",
+    "text": "Neither right is free. You pay a premium. Think of a movie ticket. Buy it, you're in. Movie's terrible? No refunds.",
+    "visual": {
+      "action": "dwell",
+      "description": "Premium lesson, movie ticket line highlighted"
+    }
+  },
+  {
+    "id": "C2-4",
+    "sceneType": "browser-recording",
+    "scene": "clip2-ticket",
+    "text": "Here's the call's payoff. Flat, flat, flat, then up. Below the strike you lose only the ticket price. Above it, you participate.",
+    "visual": {
+      "action": "dwell",
+      "description": "Call payoff diagram, hockey stick"
+    }
+  },
+  {
+    "id": "C2-5",
+    "sceneType": "browser-recording",
+    "scene": "clip2-ticket",
+    "text": "The put is the mirror. It pays when the market falls. Insurance, basically.",
+    "visual": {
+      "action": "dwell",
+      "description": "Put payoff diagram, mirror of the call"
+    }
+  },
+  {
+    "id": "C2-6",
+    "sceneType": "browser-recording",
+    "scene": "clip2-ticket",
+    "text": "First client. Mister Wang. He's bullish on the index, but he cannot stomach a big loss.",
+    "visual": {
+      "action": "dwell",
+      "description": "Client card: Mr. Wang, bullish, low loss tolerance"
+    }
+  },
+  {
+    "id": "C2-7",
+    "sceneType": "browser-recording",
+    "scene": "clip2-ticket",
+    "text": "Four shelves. Vanilla call. Vanilla put. Buy the index outright. And a locked barrier product, we'll earn that one later.",
+    "visual": {
+      "action": "dwell",
+      "description": "Product selection desk, four cards, barrier locked"
+    }
+  },
+  {
+    "id": "C2-8",
+    "sceneType": "browser-recording",
+    "scene": "clip2-ticket",
+    "text": "Bullish view plus capped downside equals vanilla call. Click.",
+    "visual": {
+      "action": "click",
+      "description": "Select vanilla call, Selected badge appears"
+    }
+  },
+  {
+    "id": "C2-9",
+    "sceneType": "browser-recording",
+    "scene": "clip2-ticket",
+    "text": "Before he signs, disclosure. If the option expires worthless, the entire premium is gone. We say it out loud. Compliance is not decoration.",
+    "visual": {
+      "action": "click",
+      "description": "Risk disclosure checklist, tick the items"
+    }
+  },
+  {
+    "id": "C2-10",
+    "sceneType": "browser-recording",
+    "scene": "clip2-ticket",
+    "text": "Now the market runs. Twenty-one five. Twenty-two one. Twenty-two four at expiry. The call lands in the money.",
+    "visual": {
+      "action": "dwell",
+      "description": "Day 1 market run, path ticks up to 22,400"
+    }
+  },
+  {
+    "id": "C2-11",
+    "sceneType": "browser-recording",
+    "scene": "clip2-ticket",
+    "text": "But look at the net line. Payoff minus premium. Direction right is not enough, you have to out-earn the ticket price. Remember that number.",
+    "visual": {
+      "action": "dwell",
+      "description": "Report card, client P&L, net line highlighted"
+    }
+  },
+  {
+    "id": "C2-12",
+    "sceneType": "animation",
+    "scene": "clip2-ticket",
+    "text": "And in the real contract, every point is fifty Hong Kong dollars. Four hundred points of payoff is twenty thousand dollars. Per contract.",
+    "visual": {
+      "component": "StatCard",
+      "props": {
+        "value": "HK$20,000",
+        "label": "400 points of payoff x HK$50 per point, per contract"
+      }
+    }
+  },
+  {
+    "id": "C3-1",
+    "sceneType": "browser-recording",
+    "scene": "clip3-pricing",
+    "text": "Day two. Mister Wang is back, and today he wants a price. Not a feeling. A number.",
+    "visual": {
+      "action": "dwell",
+      "description": "Day 2 intro, pricing desk"
+    }
+  },
+  {
+    "id": "C3-2",
+    "sceneType": "animation",
+    "scene": "clip3-pricing",
+    "text": "Here's the secret nobody tells retail: an option price is not guessed. It is built. Branch by branch.",
+    "visual": {
+      "component": "AnimatedText",
+      "props": {
+        "text": "Built. Branch by branch."
+      },
+      "emphasis": [
+        "built"
+      ]
+    }
+  },
+  {
+    "id": "C3-3",
+    "sceneType": "browser-recording",
+    "scene": "clip3-pricing",
+    "text": "Start at today. Index at twenty-one thousand five hundred.",
+    "visual": {
+      "action": "dwell",
+      "description": "Tree lesson, today node at 21,500"
+    }
+  },
+  {
+    "id": "C3-4",
+    "sceneType": "browser-recording",
+    "scene": "clip3-pricing",
+    "text": "One step ahead, two futures. Up two point six five percent, or down two point five eight. That spread comes from volatility, sixteen percent a year.",
+    "visual": {
+      "action": "dwell",
+      "description": "Up and down nodes appear from the root"
+    }
+  },
+  {
+    "id": "C3-5",
+    "sceneType": "animation",
+    "scene": "clip3-pricing",
+    "text": "The up factor is e to the sigma root delta-t. The down factor is just one over it.",
+    "visual": {
+      "component": "TitleCard",
+      "props": {
+        "title": "u = e^(σ√Δt)",
+        "subtitle": "d = 1/u"
+      }
+    }
+  },
+  {
+    "id": "C3-6",
+    "sceneType": "animation",
+    "scene": "clip3-pricing",
+    "text": "And the chance of going up, the risk-neutral probability, is e to the r delta-t minus d, over u minus d. That's the whole machine.",
+    "visual": {
+      "component": "TitleCard",
+      "props": {
+        "title": "p = (e^(rΔt) - d) / (u - d)",
+        "subtitle": "Risk-neutral probability"
+      }
+    }
+  },
+  {
+    "id": "C3-7",
+    "sceneType": "browser-recording",
+    "scene": "clip3-pricing",
+    "text": "Three steps to expiry. Eight paths. Four final prices, from nineteen nine to twenty-three two.",
+    "visual": {
+      "action": "dwell",
+      "description": "Full three-step tree, eight paths, four final prices"
+    }
+  },
+  {
+    "id": "C3-8",
+    "sceneType": "browser-recording",
+    "scene": "clip3-pricing",
+    "text": "At expiry the payoff is simple. Final price minus strike of twenty-two thousand, or zero. Whichever is bigger.",
+    "visual": {
+      "action": "dwell",
+      "description": "Expiry payoffs highlighted on the final nodes"
+    }
+  },
+  {
+    "id": "C3-9",
+    "sceneType": "browser-recording",
+    "scene": "clip3-pricing",
+    "text": "Then we walk backwards. Each node is the discounted, probability-weighted average of its two children. Fold the future into the present.",
+    "visual": {
+      "action": "dwell",
+      "description": "Backward induction walk from leaves to root"
+    }
+  },
+  {
+    "id": "C3-10",
+    "sceneType": "browser-recording",
+    "scene": "clip3-pricing",
+    "text": "And the tree hands us the answer. One hundred eighty-six points. That is the theoretical price of this call.",
+    "visual": {
+      "action": "dwell",
+      "description": "Root node shows 186, zoom punch"
+    }
+  },
+  {
+    "id": "C3-11",
+    "sceneType": "browser-recording",
+    "scene": "clip3-pricing",
+    "text": "Now the sales part. Theory says one eighty-six. The desk needs margin. Quote between plus four and plus thirty-four over theoretical and the client fills.",
+    "visual": {
+      "action": "dwell",
+      "description": "Quote slider with fair band, plus 4 to plus 34"
+    }
+  },
+  {
+    "id": "C3-12",
+    "sceneType": "browser-recording",
+    "scene": "clip3-pricing",
+    "text": "Quote fat and he walks to the bank across the street. Quote thin and you ate the risk for free.",
+    "visual": {
+      "action": "custom",
+      "description": "Quote set too high, client pushes back"
+    }
+  },
+  {
+    "id": "C3-13",
+    "sceneType": "browser-recording",
+    "scene": "clip3-pricing",
+    "text": "Two hundred ten. Filled. That spread between one eighty-six and two ten? That's the desk's lunch.",
+    "visual": {
+      "action": "click",
+      "description": "Confirm quote at 210, fill confirmation"
+    }
+  },
+  {
+    "id": "C3-14",
+    "sceneType": "browser-recording",
+    "scene": "clip3-pricing",
+    "text": "Market drifts to twenty-two one. Small payoff, smaller than the premium. The client learns. So do you.",
+    "visual": {
+      "action": "dwell",
+      "description": "Day 2 market run to 22,140 and report"
+    }
+  },
+  {
+    "id": "C4-1",
+    "sceneType": "browser-recording",
+    "scene": "clip4-barrier",
+    "text": "Day three. Miz Chen. Sharp. She wants the same upside protection, but she calls our vanilla price expensive.",
+    "visual": {
+      "action": "dwell",
+      "description": "Day 3 client card: Ms. Chen"
+    }
+  },
+  {
+    "id": "C4-2",
+    "sceneType": "animation",
+    "scene": "clip4-barrier",
+    "text": "So we go off the shelf. Over the counter. Welcome to structured products, Hong Kong's favorite aisle.",
+    "visual": {
+      "component": "AnimatedText",
+      "props": {
+        "text": "Over the counter."
+      }
+    }
+  },
+  {
+    "id": "C4-3",
+    "sceneType": "animation",
+    "scene": "clip4-barrier",
+    "text": "This is a knock-out barrier option. Same call, same strike, one extra clause. If the index ever touches twenty-one thousand, the contract dies. Instantly.",
+    "visual": {
+      "component": "TitleCard",
+      "props": {
+        "title": "Knock-Out Barrier Option",
+        "subtitle": "Same call, same strike, one extra clause: touch 21,000 and it dies"
+      }
+    }
+  },
+  {
+    "id": "C4-4",
+    "sceneType": "animation",
+    "scene": "clip4-barrier",
+    "text": "Price the vanilla on a four-step tree: one thousand one hundred twelve points. Price the barrier: nine hundred thirty-four.",
+    "visual": {
+      "component": "ModuleOverview",
+      "props": {
+        "items": [
+          {
+            "title": "1,112",
+            "desc": "vanilla call, four-step tree"
+          },
+          {
+            "title": "934",
+            "desc": "knock-out barrier at 21,000"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "C4-5",
+    "sceneType": "animation",
+    "scene": "clip4-barrier",
+    "text": "Same view, one hundred seventy-eight points cheaper. Why? Because she sold back the crash scenarios. The paths that touch the barrier pay nothing, so she doesn't pay for them.",
+    "visual": {
+      "component": "StatCard",
+      "props": {
+        "value": "178",
+        "label": "points cheaper: the crash scenarios are sold back"
+      }
+    }
+  },
+  {
+    "id": "C4-6",
+    "sceneType": "browser-recording",
+    "scene": "clip4-barrier",
+    "text": "Our quote band scales the same way. Fair up to about one point one eight times theoretical. Reject above one point four.",
+    "visual": {
+      "action": "dwell",
+      "description": "Quote band relative: fair to about 1.18x, reject above 1.4x"
+    }
+  },
+  {
+    "id": "C4-7",
+    "sceneType": "browser-recording",
+    "scene": "clip4-barrier",
+    "text": "Now watch the market. Up to twenty-one eight. Then down. Twenty-one four. Twenty thousand nine fifty.",
+    "visual": {
+      "action": "dwell",
+      "description": "Market run starts, dips to 21,460 then 20,950"
+    }
+  },
+  {
+    "id": "C4-8",
+    "sceneType": "browser-recording",
+    "scene": "clip4-barrier",
+    "text": "Touch. Twenty-one thousand breached. Knocked out. Position terminated.",
+    "visual": {
+      "action": "dwell",
+      "description": "KNOCKED OUT banner at the 20,950 fixing"
+    }
+  },
+  {
+    "id": "C4-9",
+    "sceneType": "browser-recording",
+    "scene": "clip4-barrier",
+    "text": "And then, of course, the market rallies to twenty-two four. She watches the move she predicted happen, with no position.",
+    "visual": {
+      "action": "dwell",
+      "description": "Path recovers to 22,400, position already gone"
+    }
+  },
+  {
+    "id": "C4-10",
+    "sceneType": "animation",
+    "scene": "clip4-barrier",
+    "text": "That is the barrier trade-off in one chart. The discount is real, and so is the tripwire. A good desk sells both sentences.",
+    "visual": {
+      "component": "AnimatedText",
+      "props": {
+        "text": "The discount is real. So is the tripwire."
+      },
+      "emphasis": [
+        "tripwire"
+      ]
+    }
+  },
+  {
+    "id": "C4-11",
+    "sceneType": "animation",
+    "scene": "clip4-barrier",
+    "text": "In our model the knock-out checks at discrete fixings. In the real OTC market, the term sheet defines exactly when the barrier observes. Read it.",
+    "visual": {
+      "component": "ModuleOverview",
+      "props": {
+        "items": [
+          {
+            "title": "Our model",
+            "desc": "knock-out checks at discrete fixings"
+          },
+          {
+            "title": "Real OTC",
+            "desc": "the term sheet defines when the barrier observes"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "C5-1",
+    "sceneType": "browser-recording",
+    "scene": "clip5-graduation",
+    "text": "Day four. Martin steps back. Three clients, live quotes, no hints.",
+    "visual": {
+      "action": "dwell",
+      "description": "Day 4 briefing, Martin steps back"
+    }
+  },
+  {
+    "id": "C5-2",
+    "sceneType": "browser-recording",
+    "scene": "clip5-graduation",
+    "text": "Mister Zhang. Vanilla call, index at twenty-four thousand, strike twenty-four five, vol eighteen. The tree says two ninety-seven.",
+    "visual": {
+      "action": "dwell",
+      "description": "Client card: Mr. Zhang, vanilla, tree shows 297"
+    }
+  },
+  {
+    "id": "C5-3",
+    "sceneType": "browser-recording",
+    "scene": "clip5-graduation",
+    "text": "Quote inside the band. Filled.",
+    "visual": {
+      "action": "click",
+      "description": "Quote inside the band, fill confirmation"
+    }
+  },
+  {
+    "id": "C5-4",
+    "sceneType": "browser-recording",
+    "scene": "clip5-graduation",
+    "text": "Miz Li. Barrier at twenty-three thousand, vol twenty-eight. Nine eighty-one.",
+    "visual": {
+      "action": "dwell",
+      "description": "Client card: Ms. Li, barrier 23,000, price 981"
+    }
+  },
+  {
+    "id": "C5-5",
+    "sceneType": "browser-recording",
+    "scene": "clip5-graduation",
+    "text": "Mister He. Deeper barrier, vol thirty-two. Eleven eighty-four. Three products, three risk profiles, one machine.",
+    "visual": {
+      "action": "dwell",
+      "description": "Client card: Mr. He, deeper barrier, price 1,184"
+    }
+  },
+  {
+    "id": "C5-6",
+    "sceneType": "browser-recording",
+    "scene": "clip5-graduation",
+    "text": "The desk grades every quote. Suitability, pricing, disclosure. That's the whole job in three columns.",
+    "visual": {
+      "action": "dwell",
+      "description": "Scorecard, grade A: suitability, pricing, disclosure"
+    }
+  },
+  {
+    "id": "C5-7",
+    "sceneType": "browser-recording",
+    "scene": "clip5-graduation",
+    "text": "And everything you just watched is saved to your account. Four days, tracked.",
+    "visual": {
+      "action": "dwell",
+      "description": "Progress dashboard, cloud sync indicator"
+    }
+  },
+  {
+    "id": "C5-8",
+    "sceneType": "animation",
+    "scene": "clip5-graduation",
+    "text": "So here's my pitch. Don't just read about derivatives. Walk the desk. Price the tree. Get knocked out once, it's educational.",
+    "visual": {
+      "component": "AnimatedText",
+      "props": {
+        "text": "Walk the desk."
+      }
+    }
+  },
+  {
+    "id": "C5-9",
+    "sceneType": "animation",
+    "scene": "clip5-graduation",
+    "text": "Our booth is live right now. Scan, sign up, and make your first quote before the next lecture.",
+    "visual": {
+      "component": "TitleCard",
+      "props": {
+        "title": "Scan to trade",
+        "subtitle": "zeref007.github.io/trader-simulator"
+      }
+    }
+  },
+  {
+    "id": "C5-10",
+    "sceneType": "animation",
+    "scene": "clip5-graduation",
+    "text": "Educational simulator, not investment advice. Options involve risk, premiums can go to zero. Data: HKEX contract specifications. Built by our group, FIN 7870.",
+    "visual": {
+      "component": "ModuleOverview",
+      "props": {
+        "items": [
+          {
+            "title": "Educational simulator",
+            "desc": "not investment advice"
+          },
+          {
+            "title": "Risk",
+            "desc": "options involve risk, premiums can go to zero"
+          },
+          {
+            "title": "Data",
+            "desc": "HKEX contract specifications"
+          },
+          {
+            "title": "Credits",
+            "desc": "built by our group, FIN 7870"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "C5-11",
+    "sceneType": "animation",
+    "scene": "clip5-graduation",
+    "text": "Central Trader. See you on the desk.",
+    "visual": {
+      "component": "TitleCard",
+      "props": {
+        "title": "Central Trader",
+        "subtitle": "See you on the desk"
+      }
+    }
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "name": "narration-driven-video-project",
+  "private": true,
+  "scripts": {
+    "preview": "remotion preview src/Root.tsx",
+    "render": "remotion render src/Root.tsx NarrationDrivenVideo out/video.mp4"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "remotion": "^4.0.0",
+    "@remotion/cli": "^4.0.0",
+    "@remotion/media-utils": "^4.0.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.45.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.4.0"
+  }
+}

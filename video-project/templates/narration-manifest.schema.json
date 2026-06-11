@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NarrationManifest",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "sceneType", "scene", "text", "visual"],
+    "properties": {
+      "id":        { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$" },
+      "sceneType": { "enum": ["animation", "browser-recording", "still", "bridge"] },
+      "scene":     { "type": "string" },
+      "text":      { "type": "string", "minLength": 1 },
+      "visual":    { "type": "object" }
+    },
+    "allOf": [
+      {
+        "if": { "properties": { "sceneType": { "const": "browser-recording" } } },
+        "then": {
+          "properties": {
+            "visual": {
+              "required": ["action"],
+              "properties": {
+                "action": { "enum": ["click", "navigate", "clickTab", "scroll", "dwell", "transitionAsOpening", "custom"] },
+                "target":      { "type": "string" },
+                "scroll":      { "type": "object", "properties": { "distance": { "type": "number" }, "duration": { "type": "number" } } },
+                "description": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      {
+        "if": { "properties": { "sceneType": { "const": "animation" } } },
+        "then": {
+          "properties": {
+            "visual": {
+              "required": ["component"],
+              "properties": {
+                "component": { "type": "string" },
+                "props":     { "type": "object" },
+                "enter":     { "type": "string" },
+                "emphasis":  { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          }
+        }
+      },
+      {
+        "if": { "properties": { "sceneType": { "const": "still" } } },
+        "then": {
+          "properties": {
+            "visual": {
+              "required": ["image"],
+              "properties": {
+                "image":  { "type": "string" },
+                "motion": { "type": "string" },
+                "focus":  { "type": "object", "properties": { "x": { "type": "number" }, "y": { "type": "number" } } }
+              }
+            }
+          }
+        }
+      },
+      {
+        "if": { "properties": { "sceneType": { "const": "bridge" } } },
+        "then": {
+          "properties": {
+            "visual": {
+              "required": ["component"],
+              "properties": {
+                "component": { "const": "BridgeScene" },
+                "props":     { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}
