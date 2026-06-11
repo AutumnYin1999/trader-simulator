@@ -6,3 +6,4 @@ voiceover/
 captions/
 public/voiceover/
 *.log
+.env

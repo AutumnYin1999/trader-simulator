@@ -40,12 +40,19 @@ class EdgeAdapter:
     def __init__(self, voice: str = "en-US-AndrewMultilingualNeural"):
         self.voice = voice
 
-    def synthesize(self, text: str, voice_id: str, output_path: Path) -> tuple[Path, list[CaptionSentence]]:
+    def synthesize(self, text: str, voice_id: str, output_path: Path,
+                   rate: str | None = None, pitch: str | None = None) -> tuple[Path, list[CaptionSentence]]:
         voice = voice_id or self.voice
         output_path.parent.mkdir(parents=True, exist_ok=True)
         srt_path = output_path.with_suffix(".srt")
         cmd = ["edge-tts", "--voice", voice, "--text", text,
                "--write-media", str(output_path), "--write-subtitles", str(srt_path)]
+        # Per-scene prosody. Never pass "+0%" (edge-tts long-text truncation bug);
+        # only forward real, non-default values.
+        if rate and rate != "+0%":
+            cmd += [f"--rate={rate}"]
+        if pitch and pitch != "+0Hz":
+            cmd += [f"--pitch={pitch}"]
         subprocess.run(cmd, check=True)
         captions = self._merge_srt_to_sentences(srt_path.read_text(), text)
         return output_path, captions

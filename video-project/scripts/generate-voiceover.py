@@ -30,7 +30,14 @@ def main():
     for entry in manifest:
         audio_path = audio_dir / f"{entry['id']}.mp3"
         cap_path = cap_dir / f"{entry['id']}.json"
-        _, sentences = adapter.synthesize(entry["text"], args.voice_id, audio_path)
+        kwargs = {}
+        # Optional per-scene prosody (edge adapter only; ignored by others).
+        if args.provider == "edge":
+            if entry.get("rate"):
+                kwargs["rate"] = entry["rate"]
+            if entry.get("pitch"):
+                kwargs["pitch"] = entry["pitch"]
+        _, sentences = adapter.synthesize(entry["text"], args.voice_id, audio_path, **kwargs)
         cap_path.write_text(json.dumps([asdict(s) for s in sentences], indent=2))
         print(f"OK {entry['id']} -> {audio_path}")
 

@@ -11,7 +11,8 @@
         "subtitle": "Hong Kong"
       },
       "enter": "fade-in"
-    }
+    },
+    "rate": "-5%"
   },
   {
     "id": "C1-2",
@@ -24,7 +25,8 @@
         "value": "13,601",
         "label": "Hang Seng Index: down 23% in four trading days"
       }
-    }
+    },
+    "rate": "+3%"
   },
   {
     "id": "C1-3",
@@ -37,13 +39,14 @@
         "value": "8% -> 23% -> 280%",
         "label": "Overnight interest rate"
       }
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C1-4",
     "sceneType": "animation",
     "scene": "clip1-hook",
-    "text": "And while everyone else is panicking, somebody on that trading floor is making money. Hi. I'm Jordan Bull.",
+    "text": "And while everyone else is panicking, somebody on that trading floor is making money. Hi! I'm Jordan Bull.",
     "visual": {
       "component": "TitleCard",
       "props": {
@@ -51,13 +54,15 @@
         "subtitle": "Your broker for the next twelve minutes"
       },
       "enter": "pop-in"
-    }
+    },
+    "rate": "+11%",
+    "pitch": "+2Hz"
   },
   {
     "id": "C1-5",
     "sceneType": "animation",
     "scene": "clip1-hook",
-    "text": "I'm going to show you the only product that turns panic into a paycheck. Options.",
+    "text": "I'm going to show you the only product that turns panic... into a paycheck. Options!",
     "visual": {
       "component": "AnimatedText",
       "props": {
@@ -66,7 +71,9 @@
       "emphasis": [
         "Options"
       ]
-    }
+    },
+    "rate": "+10%",
+    "pitch": "+2Hz"
   },
   {
     "id": "C1-6",
@@ -79,7 +86,8 @@
         "title": "HSI Options",
         "subtitle": "Listed on HKEX since March 1993"
       }
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C1-7",
@@ -104,7 +112,8 @@
           }
         ]
       }
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C1-8",
@@ -121,7 +130,8 @@
         "await page.getByRole('button', { name: /Start the Simulator/i }).waitFor();",
         "await page.waitForTimeout(400);"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C1-9",
@@ -141,13 +151,14 @@
         "await page.waitForTimeout(600);",
         "await page.getByRole('menuitem', { name: 'Dashboard' }).click();"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C1-10",
     "sceneType": "browser-recording",
     "scene": "clip1-hook",
-    "text": "Day one starts now. Let's sell something.",
+    "text": "Day one starts now. Let's sell something!",
     "visual": {
       "action": "custom",
       "description": "Progress dashboard with the four day cards (all 'Not started'). Cursor settles on the Day 1 card, then clicks its Start button on 'Day one starts now', landing on the Day 1 morning meeting as the clip ends.",
@@ -157,7 +168,9 @@
         "await page.waitForTimeout(900);",
         "await page.getByRole('button', { name: /Replay Day 1/i }).click();"
       ]
-    }
+    },
+    "rate": "+12%",
+    "pitch": "+3Hz"
   },
   {
     "id": "C2-1",
@@ -175,7 +188,8 @@
         "await page.mouse.click(30, 300);",
         "await page.waitForTimeout(300);"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C2-2",
@@ -192,13 +206,14 @@
         "await page.getByRole('button', { name: /Continue: Call and Put/i }).click();",
         "await page.mouse.click(30, 300);"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C2-3",
     "sceneType": "browser-recording",
     "scene": "clip2-ticket",
-    "text": "Neither right is free. You pay a premium. Think of a movie ticket. Buy it, you're in. Movie's terrible? No refunds.",
+    "text": "Neither right is free. You pay a premium. Think of a movie ticket: buy it, you're in. Movie's terrible? No refunds!",
     "visual": {
       "action": "custom",
       "description": "Continue to the Premium lesson: 'Pay Upfront to Buy a Future Choice' with the movie-ticket sentence; late small scroll reveals the 186-point example row.",
@@ -208,7 +223,9 @@
         "await page.waitForTimeout(5200);",
         "await page.mouse.wheel(0, 320);"
       ]
-    }
+    },
+    "rate": "+9%",
+    "pitch": "+2Hz"
   },
   {
     "id": "C2-4",
@@ -233,7 +250,8 @@
         "await page.waitForTimeout(800);",
         "await page.getByRole('button', { name: /Vanilla Call Option/ }).hover();"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C2-5",
@@ -246,7 +264,8 @@
       "steps": [
         "await page.getByRole('button', { name: /Vanilla Put Option/ }).hover();"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C2-6",
@@ -260,7 +279,8 @@
         "await page.getByRole('button', { name: 'Go back', exact: true }).click();",
         "await page.mouse.click(30, 300);"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C2-7",
@@ -278,13 +298,14 @@
         "await page.waitForTimeout(4000);",
         "await page.getByRole('button', { name: /Barrier Option/ }).click();"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C2-8",
     "sceneType": "browser-recording",
     "scene": "clip2-ticket",
-    "text": "Bullish view plus capped downside equals vanilla call. Click.",
+    "text": "Bullish view, plus capped downside? That's a vanilla call. Click.",
     "visual": {
       "action": "custom",
       "description": "On 'Click.', click the Vanilla Call Option card: 'Selected' badge plus green suitability feedback appear.",
@@ -292,7 +313,9 @@
         "await page.waitForTimeout(3000);",
         "await page.getByRole('button', { name: /Vanilla Call Option/ }).click();"
       ]
-    }
+    },
+    "rate": "+10%",
+    "pitch": "+2Hz"
   },
   {
     "id": "C2-9",
@@ -312,7 +335,8 @@
         "await page.waitForTimeout(900);",
         "await page.locator('input[type=\"checkbox\"]').nth(2).click();"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C2-10",
@@ -326,7 +350,8 @@
         "await page.getByRole('button', { name: /^Confirm Disclosure$/ }).click();",
         "await page.mouse.click(30, 300);"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C2-11",
@@ -342,7 +367,8 @@
         "await page.waitForTimeout(4500);",
         "await page.mouse.wheel(0, 380);"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C2-12",
@@ -355,7 +381,8 @@
         "value": "HK$20,000",
         "label": "400 points of payoff x HK$50 per point, per contract"
       }
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C3-1",
@@ -376,13 +403,14 @@
         "await page.mouse.click(30, 300);",
         "await page.waitForTimeout(300);"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C3-2",
     "sceneType": "animation",
     "scene": "clip3-pricing",
-    "text": "Here's the secret nobody tells retail: an option price is not guessed. It is built. Branch by branch.",
+    "text": "Here's the secret nobody tells retail... an option price is not guessed. It is built! Branch, by branch.",
     "visual": {
       "component": "AnimatedText",
       "props": {
@@ -391,7 +419,9 @@
       "emphasis": [
         "built"
       ]
-    }
+    },
+    "rate": "+8%",
+    "pitch": "+1Hz"
   },
   {
     "id": "C3-3",
@@ -408,7 +438,8 @@
         "await page.getByRole('button', { name: /Continue: Binomial Tree Paths/i }).click();",
         "await page.mouse.click(30, 300);"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C3-4",
@@ -424,7 +455,8 @@
         "await page.waitForTimeout(3600);",
         "await page.getByRole('button', { name: /Step 1 Down/ }).click();"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C3-5",
@@ -437,7 +469,8 @@
         "title": "u = e^(σ√Δt)",
         "subtitle": "d = 1/u"
       }
-    }
+    },
+    "rate": "-4%"
   },
   {
     "id": "C3-6",
@@ -450,7 +483,8 @@
         "title": "p = (e^(rΔt) - d) / (u - d)",
         "subtitle": "Risk-neutral probability"
       }
-    }
+    },
+    "rate": "-4%"
   },
   {
     "id": "C3-7",
@@ -465,7 +499,8 @@
         "await page.waitForTimeout(2400);",
         "await page.getByRole('button', { name: /Step 3 Expiry/ }).click();"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C3-8",
@@ -481,7 +516,8 @@
         "await page.waitForTimeout(2600);",
         "await page.mouse.wheel(0, 650);"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C3-9",
@@ -495,13 +531,14 @@
         "duration": 1800
       },
       "description": "Slow scroll down the binomial tree visual, walking from the terminal payoff nodes back along the linked branches (backward induction)."
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C3-10",
     "sceneType": "browser-recording",
     "scene": "clip3-pricing",
-    "text": "And the tree hands us the answer. One hundred eighty-six points. That is the theoretical price of this call.",
+    "text": "And the tree hands us the answer: one hundred eighty-six points. That... is the theoretical price of this call.",
     "visual": {
       "action": "custom",
       "description": "Scroll lands on the three summary cards; cursor rests on 'Today's Price': the model gives today's theoretical price, 186 points.",
@@ -510,7 +547,8 @@
         "await page.waitForTimeout(800);",
         "await page.getByText(\"Today's Price\").hover();"
       ]
-    }
+    },
+    "rate": "-3%"
   },
   {
     "id": "C3-11",
@@ -541,13 +579,14 @@
         "await page.getByLabel(/Volatility/).fill('16');",
         "await page.getByLabel(/Annualized Maturity/).fill('0.08');"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C3-12",
     "sceneType": "browser-recording",
     "scene": "clip3-pricing",
-    "text": "Quote fat and he walks to the bank across the street. Quote thin and you ate the risk for free.",
+    "text": "Quote fat? He walks to the bank across the street. Quote thin? You just ate the risk for free.",
     "visual": {
       "action": "custom",
       "description": "Quote box theatre: type a fat 290 ('he walks'), hold, then a thin 150 ('you ate the risk for free').",
@@ -556,13 +595,15 @@
         "await page.waitForTimeout(2900);",
         "await page.getByLabel(/Your Quote/).fill('150');"
       ]
-    }
+    },
+    "rate": "+10%",
+    "pitch": "+2Hz"
   },
   {
     "id": "C3-13",
     "sceneType": "browser-recording",
     "scene": "clip3-pricing",
-    "text": "Two hundred ten. Filled. That spread between one eighty-six and two ten? That's the desk's lunch.",
+    "text": "Two hundred ten. Filled! That spread between one eighty-six and two ten? That's the desk's lunch.",
     "visual": {
       "action": "custom",
       "description": "Type 210, 'Continue to Risk Disclosure', tick the four correct items fast, 'Confirm Risk Disclosure': client response card shows quote 210 vs theoretical 186, 'Trade Accepted' for the desk's-lunch line.",
@@ -579,7 +620,9 @@
         "await page.getByRole('button', { name: /Confirm Risk Disclosure/i }).click();",
         "await page.mouse.click(30, 300);"
       ]
-    }
+    },
+    "rate": "+11%",
+    "pitch": "+2Hz"
   },
   {
     "id": "C3-14",
@@ -596,7 +639,8 @@
         "await page.getByRole('button', { name: /View Report/i }).click();",
         "await page.mouse.click(30, 300);"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C4-1",
@@ -634,19 +678,22 @@
         "await page.getByRole('button', { name: /Go to the Data Desk for Parameters/i }).click();",
         "await page.mouse.click(30, 300);"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C4-2",
     "sceneType": "animation",
     "scene": "clip4-barrier",
-    "text": "So we go off the shelf. Over the counter. Welcome to structured products, Hong Kong's favorite aisle.",
+    "text": "So we go off the shelf. Over the counter! Welcome to structured products... Hong Kong's favorite aisle.",
     "visual": {
       "component": "AnimatedText",
       "props": {
         "text": "Over the counter."
       }
-    }
+    },
+    "rate": "+10%",
+    "pitch": "+2Hz"
   },
   {
     "id": "C4-3",
@@ -659,7 +706,8 @@
         "title": "Knock-Out Barrier Option",
         "subtitle": "Same call, same strike, one extra clause: touch 21,000 and it dies"
       }
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C4-4",
@@ -680,7 +728,8 @@
           }
         ]
       }
-    }
+    },
+    "rate": "-3%"
   },
   {
     "id": "C4-5",
@@ -693,7 +742,8 @@
         "value": "178",
         "label": "points cheaper: the crash scenarios are sold back"
       }
-    }
+    },
+    "rate": "+4%"
   },
   {
     "id": "C4-6",
@@ -718,7 +768,8 @@
         "await page.getByRole('button', { name: /Confirm Risk Disclosure/i }).click();",
         "await page.mouse.click(30, 300);"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C4-7",
@@ -733,13 +784,15 @@
         "await page.getByRole('button', { name: /View Market Settlement/i }).click();",
         "await page.mouse.click(30, 300);"
       ]
-    }
+    },
+    "rate": "+7%",
+    "pitch": "+1Hz"
   },
   {
     "id": "C4-8",
     "sceneType": "browser-recording",
     "scene": "clip4-barrier",
-    "text": "Touch. Twenty-one thousand breached. Knocked out. Position terminated.",
+    "text": "Touch. Twenty-one thousand, breached. Knocked out. Position... terminated.",
     "visual": {
       "action": "custom",
       "description": "Knocked-out state holds: red status pill and 'Knock-Out Result: price point #4 touched the barrier'. Small scroll brings the settlement cards in.",
@@ -747,7 +800,9 @@
         "await page.waitForTimeout(1200);",
         "await page.mouse.wheel(0, 320);"
       ]
-    }
+    },
+    "rate": "-7%",
+    "pitch": "-2Hz"
   },
   {
     "id": "C4-9",
@@ -761,7 +816,8 @@
         "await page.waitForTimeout(800);",
         "await page.mouse.wheel(0, 140);"
       ]
-    }
+    },
+    "rate": "-2%"
   },
   {
     "id": "C4-10",
@@ -776,7 +832,8 @@
       "emphasis": [
         "tripwire"
       ]
-    }
+    },
+    "rate": "-3%"
   },
   {
     "id": "C4-11",
@@ -797,7 +854,8 @@
           }
         ]
       }
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C5-1",
@@ -822,7 +880,8 @@
         "await page.getByRole('button', { name: /Start Meeting Clients/i }).click();",
         "await page.mouse.click(30, 300);"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C5-2",
@@ -843,7 +902,8 @@
         "await page.getByLabel(/Volatility/).fill('18');",
         "await page.getByLabel(/Annualized Maturity/).fill('0.08');"
       ]
-    }
+    },
+    "rate": "+7%"
   },
   {
     "id": "C5-3",
@@ -859,7 +919,9 @@
         "await page.getByRole('button', { name: /Submit Quote/i }).click();",
         "await page.mouse.click(30, 300);"
       ]
-    }
+    },
+    "rate": "+9%",
+    "pitch": "+2Hz"
   },
   {
     "id": "C5-4",
@@ -882,7 +944,8 @@
         "await page.getByLabel(/Volatility/).fill('28');",
         "await page.getByLabel(/Annualized Maturity/).fill('0.25');"
       ]
-    }
+    },
+    "rate": "+7%"
   },
   {
     "id": "C5-5",
@@ -915,7 +978,8 @@
         "await page.getByLabel(/Volatility/).fill('32');",
         "await page.getByLabel(/Annualized Maturity/).fill('0.25');"
       ]
-    }
+    },
+    "rate": "+7%"
   },
   {
     "id": "C5-6",
@@ -934,7 +998,8 @@
         "await page.getByRole('button', { name: /View Graduation Scorecard/i }).click();",
         "await page.mouse.click(30, 300);"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C5-7",
@@ -951,19 +1016,22 @@
         "await page.waitForTimeout(700);",
         "await page.getByRole('menuitem', { name: 'Dashboard' }).click();"
       ]
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C5-8",
     "sceneType": "animation",
     "scene": "clip5-graduation",
-    "text": "So here's my pitch. Don't just read about derivatives. Walk the desk. Price the tree. Get knocked out once, it's educational.",
+    "text": "So here's my pitch. Don't just read about derivatives. Walk the desk! Price the tree! Get knocked out once... it's educational.",
     "visual": {
       "component": "AnimatedText",
       "props": {
         "text": "Walk the desk."
       }
-    }
+    },
+    "rate": "+11%",
+    "pitch": "+3Hz"
   },
   {
     "id": "C5-9",
@@ -976,7 +1044,9 @@
         "title": "Scan to trade",
         "subtitle": "zeref007.github.io/trader-simulator"
       }
-    }
+    },
+    "rate": "+9%",
+    "pitch": "+2Hz"
   },
   {
     "id": "C5-10",
@@ -1005,19 +1075,22 @@
           }
         ]
       }
-    }
+    },
+    "rate": "+5%"
   },
   {
     "id": "C5-11",
     "sceneType": "animation",
     "scene": "clip5-graduation",
-    "text": "Central Trader. See you on the desk.",
+    "text": "Central Trader. See you on the desk!",
     "visual": {
       "component": "TitleCard",
       "props": {
         "title": "Central Trader",
         "subtitle": "See you on the desk"
       }
-    }
+    },
+    "rate": "+6%",
+    "pitch": "+2Hz"
   }
 ]
