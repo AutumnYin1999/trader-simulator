@@ -1,0 +1,944 @@
+[
+  {
+    "id": "O-1",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "from": 0,
+    "durationInFrames": 140,
+    "audioSrc": "voiceover/edge/O-1.mp3",
+    "captionsSrc": "captions/edge/O-1.json"
+  },
+  {
+    "id": "O-2",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "from": 140,
+    "durationInFrames": 187,
+    "audioSrc": "voiceover/edge/O-2.mp3",
+    "captionsSrc": "captions/edge/O-2.json"
+  },
+  {
+    "id": "O-3",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "from": 327,
+    "durationInFrames": 340,
+    "audioSrc": "voiceover/edge/O-3.mp3",
+    "captionsSrc": "captions/edge/O-3.json"
+  },
+  {
+    "id": "O-4",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "from": 667,
+    "durationInFrames": 238,
+    "audioSrc": "voiceover/edge/O-4.mp3",
+    "captionsSrc": "captions/edge/O-4.json"
+  },
+  {
+    "id": "O-5",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "from": 905,
+    "durationInFrames": 318,
+    "audioSrc": "voiceover/edge/O-5.mp3",
+    "captionsSrc": "captions/edge/O-5.json"
+  },
+  {
+    "id": "O-6",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "from": 1223,
+    "durationInFrames": 219,
+    "audioSrc": "voiceover/edge/O-6.mp3",
+    "captionsSrc": "captions/edge/O-6.json"
+  },
+  {
+    "id": "T-1",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "from": 1442,
+    "durationInFrames": 155,
+    "audioSrc": "voiceover/edge/T-1.mp3",
+    "captionsSrc": "captions/edge/T-1.json"
+  },
+  {
+    "id": "C1-1",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "from": 1597,
+    "durationInFrames": 165,
+    "audioSrc": "voiceover/edge/C1-1.mp3",
+    "captionsSrc": "captions/edge/C1-1.json"
+  },
+  {
+    "id": "C1-2",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "from": 1762,
+    "durationInFrames": 219,
+    "audioSrc": "voiceover/edge/C1-2.mp3",
+    "captionsSrc": "captions/edge/C1-2.json"
+  },
+  {
+    "id": "C1-3",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "from": 1981,
+    "durationInFrames": 242,
+    "audioSrc": "voiceover/edge/C1-3.mp3",
+    "captionsSrc": "captions/edge/C1-3.json"
+  },
+  {
+    "id": "H-1",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "from": 2223,
+    "durationInFrames": 218,
+    "audioSrc": "voiceover/edge/H-1.mp3",
+    "captionsSrc": "captions/edge/H-1.json"
+  },
+  {
+    "id": "H-2",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "from": 2441,
+    "durationInFrames": 307,
+    "audioSrc": "voiceover/edge/H-2.mp3",
+    "captionsSrc": "captions/edge/H-2.json"
+  },
+  {
+    "id": "H-3",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "from": 2748,
+    "durationInFrames": 311,
+    "audioSrc": "voiceover/edge/H-3.mp3",
+    "captionsSrc": "captions/edge/H-3.json"
+  },
+  {
+    "id": "H-4",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "from": 3059,
+    "durationInFrames": 293,
+    "audioSrc": "voiceover/edge/H-4.mp3",
+    "captionsSrc": "captions/edge/H-4.json"
+  },
+  {
+    "id": "C1-4",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "from": 3352,
+    "durationInFrames": 262,
+    "audioSrc": "voiceover/edge/C1-4.mp3",
+    "captionsSrc": "captions/edge/C1-4.json"
+  },
+  {
+    "id": "C1-5",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "from": 3614,
+    "durationInFrames": 211,
+    "audioSrc": "voiceover/edge/C1-5.mp3",
+    "captionsSrc": "captions/edge/C1-5.json"
+  },
+  {
+    "id": "C1-6",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "from": 3825,
+    "durationInFrames": 336,
+    "audioSrc": "voiceover/edge/C1-6.mp3",
+    "captionsSrc": "captions/edge/C1-6.json"
+  },
+  {
+    "id": "C1-7",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "from": 4161,
+    "durationInFrames": 335,
+    "audioSrc": "voiceover/edge/C1-7.mp3",
+    "captionsSrc": "captions/edge/C1-7.json"
+  },
+  {
+    "id": "C1-8",
+    "scene": "clip1-hook",
+    "sceneType": "browser-recording",
+    "from": 4496,
+    "durationInFrames": 169,
+    "audioSrc": "voiceover/edge/C1-8.mp3",
+    "captionsSrc": "captions/edge/C1-8.json",
+    "segment": {
+      "src": "recordings/edge/clip1-hook.mp4",
+      "startFrom": 47,
+      "endAt": 193,
+      "playbackRate": 0.86503
+    }
+  },
+  {
+    "id": "C1-9",
+    "scene": "clip1-hook",
+    "sceneType": "browser-recording",
+    "from": 4665,
+    "durationInFrames": 186,
+    "audioSrc": "voiceover/edge/C1-9.mp3",
+    "captionsSrc": "captions/edge/C1-9.json",
+    "segment": {
+      "src": "recordings/edge/clip1-hook.mp4",
+      "startFrom": 194,
+      "endAt": 371,
+      "playbackRate": 0.95935
+    }
+  },
+  {
+    "id": "C1-10",
+    "scene": "clip1-hook",
+    "sceneType": "browser-recording",
+    "from": 4851,
+    "durationInFrames": 102,
+    "audioSrc": "voiceover/edge/C1-10.mp3",
+    "captionsSrc": "captions/edge/C1-10.json",
+    "segment": {
+      "src": "recordings/edge/clip1-hook.mp4",
+      "startFrom": 372,
+      "endAt": 461,
+      "playbackRate": 0.88029
+    }
+  },
+  {
+    "id": "R-1",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "from": 4953,
+    "durationInFrames": 277,
+    "audioSrc": "voiceover/edge/R-1.mp3",
+    "captionsSrc": "captions/edge/R-1.json"
+  },
+  {
+    "id": "T-2",
+    "scene": "clip2-ticket",
+    "sceneType": "animation",
+    "from": 5230,
+    "durationInFrames": 138,
+    "audioSrc": "voiceover/edge/T-2.mp3",
+    "captionsSrc": "captions/edge/T-2.json"
+  },
+  {
+    "id": "C2-1",
+    "scene": "clip2-ticket",
+    "sceneType": "browser-recording",
+    "from": 5368,
+    "durationInFrames": 209,
+    "audioSrc": "voiceover/edge/C2-1.mp3",
+    "captionsSrc": "captions/edge/C2-1.json",
+    "segment": {
+      "src": "recordings/edge/clip2-ticket.mp4",
+      "startFrom": 71,
+      "endAt": 255,
+      "playbackRate": 0.88306
+    }
+  },
+  {
+    "id": "C2-2",
+    "scene": "clip2-ticket",
+    "sceneType": "browser-recording",
+    "from": 5577,
+    "durationInFrames": 206,
+    "audioSrc": "voiceover/edge/C2-2.mp3",
+    "captionsSrc": "captions/edge/C2-2.json",
+    "segment": {
+      "src": "recordings/edge/clip2-ticket.mp4",
+      "startFrom": 256,
+      "endAt": 432,
+      "playbackRate": 0.85515
+    }
+  },
+  {
+    "id": "C2-3",
+    "scene": "clip2-ticket",
+    "sceneType": "browser-recording",
+    "from": 5783,
+    "durationInFrames": 256,
+    "audioSrc": "voiceover/edge/C2-3.mp3",
+    "captionsSrc": "captions/edge/C2-3.json",
+    "segment": {
+      "src": "recordings/edge/clip2-ticket.mp4",
+      "startFrom": 432,
+      "endAt": 658,
+      "playbackRate": 0.88336
+    }
+  },
+  {
+    "id": "C2-4",
+    "scene": "clip2-ticket",
+    "sceneType": "browser-recording",
+    "from": 6039,
+    "durationInFrames": 282,
+    "audioSrc": "voiceover/edge/C2-4.mp3",
+    "captionsSrc": "captions/edge/C2-4.json",
+    "segment": {
+      "src": "recordings/edge/clip2-ticket.mp4",
+      "startFrom": 658,
+      "endAt": 909,
+      "playbackRate": 0.89181
+    }
+  },
+  {
+    "id": "C2-5",
+    "scene": "clip2-ticket",
+    "sceneType": "browser-recording",
+    "from": 6321,
+    "durationInFrames": 72,
+    "audioSrc": "voiceover/edge/C2-5.mp3",
+    "captionsSrc": "captions/edge/C2-5.json",
+    "segment": {
+      "src": "recordings/edge/clip2-ticket.mp4",
+      "startFrom": 910,
+      "endAt": 949,
+      "playbackRate": 0.55208
+    }
+  },
+  {
+    "id": "C2-6",
+    "scene": "clip2-ticket",
+    "sceneType": "browser-recording",
+    "from": 6393,
+    "durationInFrames": 210,
+    "audioSrc": "voiceover/edge/C2-6.mp3",
+    "captionsSrc": "captions/edge/C2-6.json",
+    "segment": {
+      "src": "recordings/edge/clip2-ticket.mp4",
+      "startFrom": 949,
+      "endAt": 1129,
+      "playbackRate": 0.85714
+    }
+  },
+  {
+    "id": "C2-7",
+    "scene": "clip2-ticket",
+    "sceneType": "browser-recording",
+    "from": 6603,
+    "durationInFrames": 265,
+    "audioSrc": "voiceover/edge/C2-7.mp3",
+    "captionsSrc": "captions/edge/C2-7.json",
+    "segment": {
+      "src": "recordings/edge/clip2-ticket.mp4",
+      "startFrom": 1129,
+      "endAt": 1364,
+      "playbackRate": 0.88879
+    }
+  },
+  {
+    "id": "C2-8",
+    "scene": "clip2-ticket",
+    "sceneType": "browser-recording",
+    "from": 6868,
+    "durationInFrames": 148,
+    "audioSrc": "voiceover/edge/C2-8.mp3",
+    "captionsSrc": "captions/edge/C2-8.json",
+    "segment": {
+      "src": "recordings/edge/clip2-ticket.mp4",
+      "startFrom": 1365,
+      "endAt": 1482,
+      "playbackRate": 0.79703
+    }
+  },
+  {
+    "id": "C2-9",
+    "scene": "clip2-ticket",
+    "sceneType": "browser-recording",
+    "from": 7016,
+    "durationInFrames": 324,
+    "audioSrc": "voiceover/edge/C2-9.mp3",
+    "captionsSrc": "captions/edge/C2-9.json",
+    "segment": {
+      "src": "recordings/edge/clip2-ticket.mp4",
+      "startFrom": 1483,
+      "endAt": 1777,
+      "playbackRate": 0.90926
+    }
+  },
+  {
+    "id": "C2-10",
+    "scene": "clip2-ticket",
+    "sceneType": "browser-recording",
+    "from": 7340,
+    "durationInFrames": 260,
+    "audioSrc": "voiceover/edge/C2-10.mp3",
+    "captionsSrc": "captions/edge/C2-10.json",
+    "segment": {
+      "src": "recordings/edge/clip2-ticket.mp4",
+      "startFrom": 1778,
+      "endAt": 2007,
+      "playbackRate": 0.8835
+    }
+  },
+  {
+    "id": "C2-11",
+    "scene": "clip2-ticket",
+    "sceneType": "browser-recording",
+    "from": 7600,
+    "durationInFrames": 280,
+    "audioSrc": "voiceover/edge/C2-11.mp3",
+    "captionsSrc": "captions/edge/C2-11.json",
+    "segment": {
+      "src": "recordings/edge/clip2-ticket.mp4",
+      "startFrom": 2007,
+      "endAt": 2256,
+      "playbackRate": 0.89186
+    }
+  },
+  {
+    "id": "C2-12",
+    "scene": "clip2-ticket",
+    "sceneType": "animation",
+    "from": 7880,
+    "durationInFrames": 319,
+    "audioSrc": "voiceover/edge/C2-12.mp3",
+    "captionsSrc": "captions/edge/C2-12.json"
+  },
+  {
+    "id": "T-3",
+    "scene": "clip3-pricing",
+    "sceneType": "animation",
+    "from": 8199,
+    "durationInFrames": 146,
+    "audioSrc": "voiceover/edge/T-3.mp3",
+    "captionsSrc": "captions/edge/T-3.json"
+  },
+  {
+    "id": "C3-1",
+    "scene": "clip3-pricing",
+    "sceneType": "browser-recording",
+    "from": 8345,
+    "durationInFrames": 217,
+    "audioSrc": "voiceover/edge/C3-1.mp3",
+    "captionsSrc": "captions/edge/C3-1.json",
+    "segment": {
+      "src": "recordings/edge/clip3-pricing.mp4",
+      "startFrom": 93,
+      "endAt": 285,
+      "playbackRate": 0.8841
+    }
+  },
+  {
+    "id": "C3-2",
+    "scene": "clip3-pricing",
+    "sceneType": "animation",
+    "from": 8562,
+    "durationInFrames": 273,
+    "audioSrc": "voiceover/edge/C3-2.mp3",
+    "captionsSrc": "captions/edge/C3-2.json"
+  },
+  {
+    "id": "C3-3",
+    "scene": "clip3-pricing",
+    "sceneType": "browser-recording",
+    "from": 8835,
+    "durationInFrames": 139,
+    "audioSrc": "voiceover/edge/C3-3.mp3",
+    "captionsSrc": "captions/edge/C3-3.json",
+    "segment": {
+      "src": "recordings/edge/clip3-pricing.mp4",
+      "startFrom": 285,
+      "endAt": 394,
+      "playbackRate": 0.7841
+    }
+  },
+  {
+    "id": "C3-4",
+    "scene": "clip3-pricing",
+    "sceneType": "browser-recording",
+    "from": 8974,
+    "durationInFrames": 327,
+    "audioSrc": "voiceover/edge/C3-4.mp3",
+    "captionsSrc": "captions/edge/C3-4.json",
+    "segment": {
+      "src": "recordings/edge/clip3-pricing.mp4",
+      "startFrom": 394,
+      "endAt": 690,
+      "playbackRate": 0.90734
+    }
+  },
+  {
+    "id": "C3-5",
+    "scene": "clip3-pricing",
+    "sceneType": "animation",
+    "from": 9301,
+    "durationInFrames": 266,
+    "audioSrc": "voiceover/edge/C3-5.mp3",
+    "captionsSrc": "captions/edge/C3-5.json"
+  },
+  {
+    "id": "C3-6",
+    "scene": "clip3-pricing",
+    "sceneType": "animation",
+    "from": 9567,
+    "durationInFrames": 347,
+    "audioSrc": "voiceover/edge/C3-6.mp3",
+    "captionsSrc": "captions/edge/C3-6.json"
+  },
+  {
+    "id": "C3-7",
+    "scene": "clip3-pricing",
+    "sceneType": "browser-recording",
+    "from": 9914,
+    "durationInFrames": 224,
+    "audioSrc": "voiceover/edge/C3-7.mp3",
+    "captionsSrc": "captions/edge/C3-7.json",
+    "segment": {
+      "src": "recordings/edge/clip3-pricing.mp4",
+      "startFrom": 691,
+      "endAt": 884,
+      "playbackRate": 0.86638
+    }
+  },
+  {
+    "id": "C3-8",
+    "scene": "clip3-pricing",
+    "sceneType": "browser-recording",
+    "from": 10138,
+    "durationInFrames": 263,
+    "audioSrc": "voiceover/edge/C3-8.mp3",
+    "captionsSrc": "captions/edge/C3-8.json",
+    "segment": {
+      "src": "recordings/edge/clip3-pricing.mp4",
+      "startFrom": 885,
+      "endAt": 1117,
+      "playbackRate": 0.88551
+    }
+  },
+  {
+    "id": "C3-9",
+    "scene": "clip3-pricing",
+    "sceneType": "browser-recording",
+    "from": 10401,
+    "durationInFrames": 298,
+    "audioSrc": "voiceover/edge/C3-9.mp3",
+    "captionsSrc": "captions/edge/C3-9.json",
+    "segment": {
+      "src": "recordings/edge/clip3-pricing.mp4",
+      "startFrom": 1118,
+      "endAt": 1385,
+      "playbackRate": 0.89839
+    }
+  },
+  {
+    "id": "C3-10",
+    "scene": "clip3-pricing",
+    "sceneType": "browser-recording",
+    "from": 10699,
+    "durationInFrames": 251,
+    "audioSrc": "voiceover/edge/C3-10.mp3",
+    "captionsSrc": "captions/edge/C3-10.json",
+    "segment": {
+      "src": "recordings/edge/clip3-pricing.mp4",
+      "startFrom": 1385,
+      "endAt": 1606,
+      "playbackRate": 0.881
+    }
+  },
+  {
+    "id": "C3-11",
+    "scene": "clip3-pricing",
+    "sceneType": "browser-recording",
+    "from": 10950,
+    "durationInFrames": 347,
+    "audioSrc": "voiceover/edge/C3-11.mp3",
+    "captionsSrc": "captions/edge/C3-11.json",
+    "segment": {
+      "src": "recordings/edge/clip3-pricing.mp4",
+      "startFrom": 1607,
+      "endAt": 1923,
+      "playbackRate": 0.91452
+    }
+  },
+  {
+    "id": "C3-12",
+    "scene": "clip3-pricing",
+    "sceneType": "browser-recording",
+    "from": 11297,
+    "durationInFrames": 208,
+    "audioSrc": "voiceover/edge/C3-12.mp3",
+    "captionsSrc": "captions/edge/C3-12.json",
+    "segment": {
+      "src": "recordings/edge/clip3-pricing.mp4",
+      "startFrom": 1924,
+      "endAt": 2101,
+      "playbackRate": 0.85601
+    }
+  },
+  {
+    "id": "C3-13",
+    "scene": "clip3-pricing",
+    "sceneType": "browser-recording",
+    "from": 11505,
+    "durationInFrames": 243,
+    "audioSrc": "voiceover/edge/C3-13.mp3",
+    "captionsSrc": "captions/edge/C3-13.json",
+    "segment": {
+      "src": "recordings/edge/clip3-pricing.mp4",
+      "startFrom": 2102,
+      "endAt": 2315,
+      "playbackRate": 0.87852
+    }
+  },
+  {
+    "id": "C3-14",
+    "scene": "clip3-pricing",
+    "sceneType": "browser-recording",
+    "from": 11748,
+    "durationInFrames": 236,
+    "audioSrc": "voiceover/edge/C3-14.mp3",
+    "captionsSrc": "captions/edge/C3-14.json",
+    "segment": {
+      "src": "recordings/edge/clip3-pricing.mp4",
+      "startFrom": 2315,
+      "endAt": 2520,
+      "playbackRate": 0.86962
+    }
+  },
+  {
+    "id": "R-2",
+    "scene": "clip3-pricing",
+    "sceneType": "animation",
+    "from": 11984,
+    "durationInFrames": 291,
+    "audioSrc": "voiceover/edge/R-2.mp3",
+    "captionsSrc": "captions/edge/R-2.json"
+  },
+  {
+    "id": "T-4",
+    "scene": "clip4-barrier",
+    "sceneType": "animation",
+    "from": 12275,
+    "durationInFrames": 169,
+    "audioSrc": "voiceover/edge/T-4.mp3",
+    "captionsSrc": "captions/edge/T-4.json"
+  },
+  {
+    "id": "C4-1",
+    "scene": "clip4-barrier",
+    "sceneType": "browser-recording",
+    "from": 12444,
+    "durationInFrames": 260,
+    "audioSrc": "voiceover/edge/C4-1.mp3",
+    "captionsSrc": "captions/edge/C4-1.json",
+    "segment": {
+      "src": "recordings/edge/clip4-barrier.mp4",
+      "startFrom": 106,
+      "endAt": 341,
+      "playbackRate": 0.90554
+    }
+  },
+  {
+    "id": "C4-2",
+    "scene": "clip4-barrier",
+    "sceneType": "animation",
+    "from": 12704,
+    "durationInFrames": 236,
+    "audioSrc": "voiceover/edge/C4-2.mp3",
+    "captionsSrc": "captions/edge/C4-2.json"
+  },
+  {
+    "id": "C4-3",
+    "scene": "clip4-barrier",
+    "sceneType": "animation",
+    "from": 12940,
+    "durationInFrames": 365,
+    "audioSrc": "voiceover/edge/C4-3.mp3",
+    "captionsSrc": "captions/edge/C4-3.json"
+  },
+  {
+    "id": "C4-4",
+    "scene": "clip4-barrier",
+    "sceneType": "animation",
+    "from": 13305,
+    "durationInFrames": 298,
+    "audioSrc": "voiceover/edge/C4-4.mp3",
+    "captionsSrc": "captions/edge/C4-4.json"
+  },
+  {
+    "id": "C4-5",
+    "scene": "clip4-barrier",
+    "sceneType": "animation",
+    "from": 13603,
+    "durationInFrames": 379,
+    "audioSrc": "voiceover/edge/C4-5.mp3",
+    "captionsSrc": "captions/edge/C4-5.json"
+  },
+  {
+    "id": "C4-6",
+    "scene": "clip4-barrier",
+    "sceneType": "browser-recording",
+    "from": 13982,
+    "durationInFrames": 271,
+    "audioSrc": "voiceover/edge/C4-6.mp3",
+    "captionsSrc": "captions/edge/C4-6.json",
+    "segment": {
+      "src": "recordings/edge/clip4-barrier.mp4",
+      "startFrom": 341,
+      "endAt": 582,
+      "playbackRate": 0.89103
+    }
+  },
+  {
+    "id": "C4-7",
+    "scene": "clip4-barrier",
+    "sceneType": "browser-recording",
+    "from": 14253,
+    "durationInFrames": 226,
+    "audioSrc": "voiceover/edge/C4-7.mp3",
+    "captionsSrc": "captions/edge/C4-7.json",
+    "segment": {
+      "src": "recordings/edge/clip4-barrier.mp4",
+      "startFrom": 583,
+      "endAt": 778,
+      "playbackRate": 0.86615
+    }
+  },
+  {
+    "id": "C4-8",
+    "scene": "clip4-barrier",
+    "sceneType": "browser-recording",
+    "from": 14479,
+    "durationInFrames": 248,
+    "audioSrc": "voiceover/edge/C4-8.mp3",
+    "captionsSrc": "captions/edge/C4-8.json",
+    "segment": {
+      "src": "recordings/edge/clip4-barrier.mp4",
+      "startFrom": 779,
+      "endAt": 966,
+      "playbackRate": 0.7569
+    }
+  },
+  {
+    "id": "C4-9",
+    "scene": "clip4-barrier",
+    "sceneType": "browser-recording",
+    "from": 14727,
+    "durationInFrames": 280,
+    "audioSrc": "voiceover/edge/C4-9.mp3",
+    "captionsSrc": "captions/edge/C4-9.json",
+    "segment": {
+      "src": "recordings/edge/clip4-barrier.mp4",
+      "startFrom": 966,
+      "endAt": 1216,
+      "playbackRate": 0.894
+    }
+  },
+  {
+    "id": "C4-10",
+    "scene": "clip4-barrier",
+    "sceneType": "animation",
+    "from": 15007,
+    "durationInFrames": 324,
+    "audioSrc": "voiceover/edge/C4-10.mp3",
+    "captionsSrc": "captions/edge/C4-10.json"
+  },
+  {
+    "id": "C4-11",
+    "scene": "clip4-barrier",
+    "sceneType": "animation",
+    "from": 15331,
+    "durationInFrames": 354,
+    "audioSrc": "voiceover/edge/C4-11.mp3",
+    "captionsSrc": "captions/edge/C4-11.json"
+  },
+  {
+    "id": "R-3",
+    "scene": "clip4-barrier",
+    "sceneType": "animation",
+    "from": 15685,
+    "durationInFrames": 258,
+    "audioSrc": "voiceover/edge/R-3.mp3",
+    "captionsSrc": "captions/edge/R-3.json"
+  },
+  {
+    "id": "T-5",
+    "scene": "clip5-graduation",
+    "sceneType": "animation",
+    "from": 15943,
+    "durationInFrames": 179,
+    "audioSrc": "voiceover/edge/T-5.mp3",
+    "captionsSrc": "captions/edge/T-5.json"
+  },
+  {
+    "id": "C5-1",
+    "scene": "clip5-graduation",
+    "sceneType": "browser-recording",
+    "from": 16122,
+    "durationInFrames": 201,
+    "audioSrc": "voiceover/edge/C5-1.mp3",
+    "captionsSrc": "captions/edge/C5-1.json",
+    "segment": {
+      "src": "recordings/edge/clip5-graduation.mp4",
+      "startFrom": 85,
+      "endAt": 261,
+      "playbackRate": 0.88
+    }
+  },
+  {
+    "id": "C5-2",
+    "scene": "clip5-graduation",
+    "sceneType": "browser-recording",
+    "from": 16323,
+    "durationInFrames": 312,
+    "audioSrc": "voiceover/edge/C5-2.mp3",
+    "captionsSrc": "captions/edge/C5-2.json",
+    "segment": {
+      "src": "recordings/edge/clip5-graduation.mp4",
+      "startFrom": 261,
+      "endAt": 544,
+      "playbackRate": 0.90692
+    }
+  },
+  {
+    "id": "C5-3",
+    "scene": "clip5-graduation",
+    "sceneType": "browser-recording",
+    "from": 16635,
+    "durationInFrames": 103,
+    "audioSrc": "voiceover/edge/C5-3.mp3",
+    "captionsSrc": "captions/edge/C5-3.json",
+    "segment": {
+      "src": "recordings/edge/clip5-graduation.mp4",
+      "startFrom": 544,
+      "endAt": 616,
+      "playbackRate": 0.69786
+    }
+  },
+  {
+    "id": "C5-4",
+    "scene": "clip5-graduation",
+    "sceneType": "browser-recording",
+    "from": 16738,
+    "durationInFrames": 189,
+    "audioSrc": "voiceover/edge/C5-4.mp3",
+    "captionsSrc": "captions/edge/C5-4.json",
+    "segment": {
+      "src": "recordings/edge/clip5-graduation.mp4",
+      "startFrom": 616,
+      "endAt": 775,
+      "playbackRate": 0.84222
+    }
+  },
+  {
+    "id": "C5-5",
+    "scene": "clip5-graduation",
+    "sceneType": "browser-recording",
+    "from": 16927,
+    "durationInFrames": 274,
+    "audioSrc": "voiceover/edge/C5-5.mp3",
+    "captionsSrc": "captions/edge/C5-5.json",
+    "segment": {
+      "src": "recordings/edge/clip5-graduation.mp4",
+      "startFrom": 775,
+      "endAt": 1019,
+      "playbackRate": 0.8896
+    }
+  },
+  {
+    "id": "C5-6",
+    "scene": "clip5-graduation",
+    "sceneType": "browser-recording",
+    "from": 17201,
+    "durationInFrames": 256,
+    "audioSrc": "voiceover/edge/C5-6.mp3",
+    "captionsSrc": "captions/edge/C5-6.json",
+    "segment": {
+      "src": "recordings/edge/clip5-graduation.mp4",
+      "startFrom": 1019,
+      "endAt": 1245,
+      "playbackRate": 0.88324
+    }
+  },
+  {
+    "id": "C5-7",
+    "scene": "clip5-graduation",
+    "sceneType": "browser-recording",
+    "from": 17457,
+    "durationInFrames": 178,
+    "audioSrc": "voiceover/edge/C5-7.mp3",
+    "captionsSrc": "captions/edge/C5-7.json",
+    "segment": {
+      "src": "recordings/edge/clip5-graduation.mp4",
+      "startFrom": 1245,
+      "endAt": 1393,
+      "playbackRate": 0.83174
+    }
+  },
+  {
+    "id": "C5-8",
+    "scene": "clip5-graduation",
+    "sceneType": "animation",
+    "from": 17635,
+    "durationInFrames": 280,
+    "audioSrc": "voiceover/edge/C5-8.mp3",
+    "captionsSrc": "captions/edge/C5-8.json"
+  },
+  {
+    "id": "C5-9",
+    "scene": "clip5-graduation",
+    "sceneType": "animation",
+    "from": 17915,
+    "durationInFrames": 359,
+    "audioSrc": "voiceover/edge/C5-9.mp3",
+    "captionsSrc": "captions/edge/C5-9.json"
+  },
+  {
+    "id": "Z-1",
+    "scene": "clip5-graduation",
+    "sceneType": "animation",
+    "from": 18274,
+    "durationInFrames": 430,
+    "audioSrc": "voiceover/edge/Z-1.mp3",
+    "captionsSrc": "captions/edge/Z-1.json"
+  },
+  {
+    "id": "Z-2",
+    "scene": "clip5-graduation",
+    "sceneType": "animation",
+    "from": 18704,
+    "durationInFrames": 186,
+    "audioSrc": "voiceover/edge/Z-2.mp3",
+    "captionsSrc": "captions/edge/Z-2.json"
+  },
+  {
+    "id": "Z-3",
+    "scene": "clip5-graduation",
+    "sceneType": "animation",
+    "from": 18890,
+    "durationInFrames": 287,
+    "audioSrc": "voiceover/edge/Z-3.mp3",
+    "captionsSrc": "captions/edge/Z-3.json"
+  },
+  {
+    "id": "Z-4",
+    "scene": "clip5-graduation",
+    "sceneType": "animation",
+    "from": 19177,
+    "durationInFrames": 168,
+    "audioSrc": "voiceover/edge/Z-4.mp3",
+    "captionsSrc": "captions/edge/Z-4.json"
+  },
+  {
+    "id": "C5-10",
+    "scene": "clip5-graduation",
+    "sceneType": "animation",
+    "from": 19345,
+    "durationInFrames": 467,
+    "audioSrc": "voiceover/edge/C5-10.mp3",
+    "captionsSrc": "captions/edge/C5-10.json"
+  },
+  {
+    "id": "C5-11",
+    "scene": "clip5-graduation",
+    "sceneType": "animation",
+    "from": 19812,
+    "durationInFrames": 196,
+    "audioSrc": "voiceover/edge/C5-11.mp3",
+    "captionsSrc": "captions/edge/C5-11.json"
+  }
+]

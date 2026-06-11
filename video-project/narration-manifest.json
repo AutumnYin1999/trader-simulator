@@ -1,5 +1,139 @@
 [
   {
+    "id": "O-1",
+    "sceneType": "animation",
+    "scene": "clip1-hook",
+    "text": "Welcome to our Digital Investfair booth.",
+    "visual": {
+      "component": "TitleCard",
+      "enter": "fade-in",
+      "props": {
+        "title": "Central Trader",
+        "subtitle": "Digital Investfair"
+      },
+      "emphasis": [
+        "Central"
+      ]
+    },
+    "rate": "+4%"
+  },
+  {
+    "id": "O-2",
+    "sceneType": "animation",
+    "scene": "clip1-hook",
+    "text": "Today we are walking you through one derivatives product, end to end.",
+    "visual": {
+      "component": "TitleCard",
+      "enter": "fade-in",
+      "props": {
+        "title": "Digital Investfair",
+        "subtitle": "FIN 7870"
+      }
+    },
+    "rate": "+5%"
+  },
+  {
+    "id": "O-3",
+    "sceneType": "animation",
+    "scene": "clip1-hook",
+    "text": "Here is the plan. Five chapters. From a nineteen ninety-seven market crash, to pricing an option yourself, to advising three live clients.",
+    "visual": {
+      "component": "ModuleOverview",
+      "props": {
+        "items": [
+          {
+            "title": "1 The Crash",
+            "desc": "Hong Kong, 1997"
+          },
+          {
+            "title": "2 The Ticket",
+            "desc": "what you are buying"
+          },
+          {
+            "title": "3 The Price",
+            "desc": "built, not guessed"
+          },
+          {
+            "title": "4 The Tripwire",
+            "desc": "the barrier exotic"
+          },
+          {
+            "title": "5 Graduation",
+            "desc": "three live clients"
+          }
+        ]
+      }
+    },
+    "rate": "+6%"
+  },
+  {
+    "id": "O-4",
+    "sceneType": "animation",
+    "scene": "clip1-hook",
+    "text": "Our product: the Hang Seng Index Option. Asia's flagship equity index derivative.",
+    "visual": {
+      "component": "TitleCard",
+      "enter": "fade-in",
+      "props": {
+        "title": "Hang Seng Index Options",
+        "subtitle": "HKEX, since 1993"
+      },
+      "emphasis": [
+        "Hang",
+        "Seng"
+      ]
+    },
+    "rate": "+5%"
+  },
+  {
+    "id": "O-5",
+    "sceneType": "animation",
+    "scene": "clip1-hook",
+    "text": "One contract. Fifty Hong Kong dollars a point. Cash settled, exercised only at expiry. Keep that in your pocket, we will use it.",
+    "visual": {
+      "component": "StatCard",
+      "props": {
+        "value": "HK$50 per point",
+        "label": "European - Cash-settled"
+      }
+    },
+    "rate": "+4%"
+  },
+  {
+    "id": "O-6",
+    "sceneType": "animation",
+    "scene": "clip1-hook",
+    "text": "And we did not just make slides. We built a trading desk you can actually play. Let me introduce your guide.",
+    "visual": {
+      "component": "AnimatedText",
+      "props": {
+        "text": "We built a desk you can play."
+      },
+      "emphasis": [
+        "desk"
+      ]
+    },
+    "rate": "+8%"
+  },
+  {
+    "id": "T-1",
+    "sceneType": "animation",
+    "scene": "clip1-hook",
+    "text": "Chapter one. The crash that built this market.",
+    "visual": {
+      "component": "TitleCard",
+      "enter": "pop-in",
+      "props": {
+        "title": "Chapter 1",
+        "subtitle": "Hong Kong, 1997"
+      },
+      "emphasis": [
+        "1"
+      ]
+    },
+    "rate": "+3%"
+  },
+  {
     "id": "C1-1",
     "sceneType": "animation",
     "scene": "clip1-hook",
@@ -39,6 +173,66 @@
         "value": "8% -> 23% -> 280%",
         "label": "Overnight interest rate"
       }
+    },
+    "rate": "+5%"
+  },
+  {
+    "id": "H-1",
+    "sceneType": "animation",
+    "scene": "clip1-hook",
+    "text": "On October twenty-third alone, the Hang Seng fell more than ten percent in a day.",
+    "visual": {
+      "component": "StatCard",
+      "props": {
+        "value": "Oct 23, 1997",
+        "label": "HSI single-day drop over 10%"
+      }
+    },
+    "rate": "-3%"
+  },
+  {
+    "id": "H-2",
+    "sceneType": "animation",
+    "scene": "clip1-hook",
+    "text": "To defend the dollar peg, Hong Kong let overnight rates explode. Borrowing money for one night cost two hundred and eighty percent.",
+    "visual": {
+      "component": "AnimatedText",
+      "props": {
+        "text": "Defend the peg: rates spike to 280%."
+      },
+      "emphasis": [
+        "280%"
+      ]
+    },
+    "rate": "+2%"
+  },
+  {
+    "id": "H-3",
+    "sceneType": "animation",
+    "scene": "clip1-hook",
+    "text": "A year later the government spent one hundred and twenty billion dollars buying stocks to break the speculators. It worked, and it later booked a profit.",
+    "visual": {
+      "component": "StatCard",
+      "props": {
+        "value": "HK$120B",
+        "label": "Aug 1998 - HKMA buys the market"
+      }
+    },
+    "rate": "+2%"
+  },
+  {
+    "id": "H-4",
+    "sceneType": "animation",
+    "scene": "clip1-hook",
+    "text": "In markets like that, direction is a coin flip. But volatility, fear itself, becomes the product. That is what an option sells.",
+    "visual": {
+      "component": "AnimatedText",
+      "props": {
+        "text": "Why options? Volatility is the product."
+      },
+      "emphasis": [
+        "Volatility"
+      ]
     },
     "rate": "+5%"
   },
@@ -171,6 +365,40 @@
     },
     "rate": "+12%",
     "pitch": "+3Hz"
+  },
+  {
+    "id": "R-1",
+    "sceneType": "animation",
+    "scene": "clip1-hook",
+    "text": "So far: a call is a bullish bet where your loss is capped at the premium. Simple. Now, how much should that premium be?",
+    "visual": {
+      "component": "AnimatedText",
+      "props": {
+        "text": "Call = bullish, loss capped at premium."
+      },
+      "emphasis": [
+        "Call"
+      ]
+    },
+    "rate": "+5%"
+  },
+  {
+    "id": "T-2",
+    "sceneType": "animation",
+    "scene": "clip2-ticket",
+    "text": "Chapter two. What you are actually buying.",
+    "visual": {
+      "component": "TitleCard",
+      "enter": "pop-in",
+      "props": {
+        "title": "Chapter 2",
+        "subtitle": "The Ticket"
+      },
+      "emphasis": [
+        "2"
+      ]
+    },
+    "rate": "+3%"
   },
   {
     "id": "C2-1",
@@ -385,6 +613,24 @@
     "rate": "+5%"
   },
   {
+    "id": "T-3",
+    "sceneType": "animation",
+    "scene": "clip3-pricing",
+    "text": "Chapter three. Where the price comes from.",
+    "visual": {
+      "component": "TitleCard",
+      "enter": "pop-in",
+      "props": {
+        "title": "Chapter 3",
+        "subtitle": "The Price Is Built, Not Guessed"
+      },
+      "emphasis": [
+        "3"
+      ]
+    },
+    "rate": "+3%"
+  },
+  {
     "id": "C3-1",
     "sceneType": "browser-recording",
     "scene": "clip3-pricing",
@@ -466,7 +712,7 @@
     "visual": {
       "component": "TitleCard",
       "props": {
-        "title": "u = e^(σ√Δt)",
+        "title": "u = e^(\u03c3\u221a\u0394t)",
         "subtitle": "d = 1/u"
       }
     },
@@ -480,7 +726,7 @@
     "visual": {
       "component": "TitleCard",
       "props": {
-        "title": "p = (e^(rΔt) - d) / (u - d)",
+        "title": "p = (e^(r\u0394t) - d) / (u - d)",
         "subtitle": "Risk-neutral probability"
       }
     },
@@ -641,6 +887,40 @@
       ]
     },
     "rate": "+5%"
+  },
+  {
+    "id": "R-2",
+    "sceneType": "animation",
+    "scene": "clip3-pricing",
+    "text": "So a fair price is not a guess. You build every future, then fold them back to today. Next: making it cheaper.",
+    "visual": {
+      "component": "AnimatedText",
+      "props": {
+        "text": "Price = build the tree, fold it back."
+      },
+      "emphasis": [
+        "fold"
+      ]
+    },
+    "rate": "+5%"
+  },
+  {
+    "id": "T-4",
+    "sceneType": "animation",
+    "scene": "clip4-barrier",
+    "text": "Chapter four. The exotic that cuts your premium.",
+    "visual": {
+      "component": "TitleCard",
+      "enter": "pop-in",
+      "props": {
+        "title": "Chapter 4",
+        "subtitle": "Cheaper, With a Tripwire"
+      },
+      "emphasis": [
+        "4"
+      ]
+    },
+    "rate": "+3%"
   },
   {
     "id": "C4-1",
@@ -858,6 +1138,40 @@
     "rate": "+5%"
   },
   {
+    "id": "R-3",
+    "sceneType": "animation",
+    "scene": "clip4-barrier",
+    "text": "A barrier trades a discount for a tripwire. That is the whole exotic in one sentence. Now, graduation.",
+    "visual": {
+      "component": "AnimatedText",
+      "props": {
+        "text": "Barrier = discount plus knock-out risk."
+      },
+      "emphasis": [
+        "Barrier"
+      ]
+    },
+    "rate": "+5%"
+  },
+  {
+    "id": "T-5",
+    "sceneType": "animation",
+    "scene": "clip5-graduation",
+    "text": "Chapter five. Three clients. No hints.",
+    "visual": {
+      "component": "TitleCard",
+      "enter": "pop-in",
+      "props": {
+        "title": "Chapter 5",
+        "subtitle": "Graduation Day"
+      },
+      "emphasis": [
+        "5"
+      ]
+    },
+    "rate": "+3%"
+  },
+  {
     "id": "C5-1",
     "sceneType": "browser-recording",
     "scene": "clip5-graduation",
@@ -1047,6 +1361,86 @@
     },
     "rate": "+9%",
     "pitch": "+2Hz"
+  },
+  {
+    "id": "Z-1",
+    "sceneType": "animation",
+    "scene": "clip5-graduation",
+    "text": "Let us bring it home. Five things you now know. Calls and puts. Why you pay a premium. How a binomial tree builds the price. What a knock-out barrier really costs. And why suitability comes first.",
+    "visual": {
+      "component": "ModuleOverview",
+      "props": {
+        "items": [
+          {
+            "title": "Calls and puts",
+            "desc": "the two basic bets"
+          },
+          {
+            "title": "The premium",
+            "desc": "why you pay up front"
+          },
+          {
+            "title": "The tree",
+            "desc": "a binomial price"
+          },
+          {
+            "title": "The barrier",
+            "desc": "what a knock-out costs"
+          },
+          {
+            "title": "Suitability",
+            "desc": "the client comes first"
+          }
+        ]
+      }
+    },
+    "rate": "+3%"
+  },
+  {
+    "id": "Z-2",
+    "sceneType": "animation",
+    "scene": "clip5-graduation",
+    "text": "And you did not just hear it, you watched us price every one of these, to the point.",
+    "visual": {
+      "component": "StatCard",
+      "props": {
+        "value": "186 / 934 / 1184",
+        "label": "the prices we built, to the point"
+      }
+    },
+    "rate": "+4%"
+  },
+  {
+    "id": "Z-3",
+    "sceneType": "animation",
+    "scene": "clip5-graduation",
+    "text": "A special thank you to Professor Martin, whose teaching is the inspiration behind this entire project, mentor and all.",
+    "visual": {
+      "component": "AnimatedText",
+      "props": {
+        "text": "Thank you, Professor Martin."
+      },
+      "emphasis": [
+        "Martin"
+      ]
+    },
+    "rate": "-2%"
+  },
+  {
+    "id": "Z-4",
+    "sceneType": "animation",
+    "scene": "clip5-graduation",
+    "text": "Our booth is open right now. The whole desk runs in your browser.",
+    "visual": {
+      "component": "AnimatedText",
+      "props": {
+        "text": "Our booth is open. zeref007.github.io/trader-simulator"
+      },
+      "emphasis": [
+        "open"
+      ]
+    },
+    "rate": "+6%"
   },
   {
     "id": "C5-10",

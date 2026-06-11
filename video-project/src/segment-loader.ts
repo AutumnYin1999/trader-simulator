@@ -7,12 +7,11 @@ export type VideoSegment = {
   src: string;
 };
 
-import edgeSegments from "../../segments-edge.json";
-import elevenSegments from "../../segments-elevenlabs.json";
+import edgeSegments from "../segments-edge.json";
 
+// Only the edge provider exists in this project (no segments-elevenlabs.json).
 const REGISTRY: Record<string, VideoSegment[]> = {
   edge: edgeSegments as VideoSegment[],
-  elevenlabs: elevenSegments as VideoSegment[],
 };
 
 export function loadSegments(provider: string): VideoSegment[] {

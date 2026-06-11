@@ -2,4 +2,10 @@
 name = "narration-driven-video-project"
 version = "0.1.0"
 requires-python = ">=3.11"
-dependencies = ["edge-tts>=6.1", "elevenlabs>=1.0", "pysubs2>=1.7", "jsonschema>=4.21"]
+dependencies = [
+    "edge-tts>=6.1",
+    "elevenlabs>=1.0",
+    "pysubs2>=1.7",
+    "jsonschema>=4.21",
+    "qrcode[pil]>=8.2",
+]
