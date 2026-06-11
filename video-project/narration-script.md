@@ -29,7 +29,7 @@ Sources: HKEX HSI Options contract page (specs, March 1993 launch); 1997 crisis 
 | C2-3 | Premium lesson, movie ticket line highlighted | Neither right is free. You pay a premium. Think of a movie ticket. Buy it, you're in. Movie's terrible? No refunds. |
 | C2-4 | Payoff diagram, call hockey stick | Here's the call's payoff. Flat, flat, flat, then up. Below the strike you lose only the ticket price. Above it, you participate. |
 | C2-5 | Payoff diagram, put | The put is the mirror. It pays when the market falls. Insurance, basically. |
-| C2-6 | Client card: Mr. Wang | First client. Mister Wang. He's bullish on the index, but he cannot stomach a big loss. |
+| C2-6 | Client card: Ms. Li | First client. Miz Li. She's bullish on the index, but she cannot stomach a big loss. |
 | C2-7 | Product selection desk, 4 cards | Four shelves. Vanilla call. Vanilla put. Buy the index outright. And a locked barrier product, we'll earn that one later. |
 | C2-8 | Select vanilla call, Selected badge | Bullish view plus capped downside equals vanilla call. Click. |
 | C2-9 | Risk disclosure checklist | Before he signs, disclosure. If the option expires worthless, the entire premium is gone. We say it out loud. Compliance is not decoration. |
@@ -41,7 +41,7 @@ Sources: HKEX HSI Options contract page (specs, March 1993 launch); 1997 crisis 
 
 | id | visual | narration |
 |---|---|---|
-| C3-1 | Day 2 intro, pricing desk | Day two. Mister Wang is back, and today he wants a price. Not a feeling. A number. |
+| C3-1 | Day 2 intro, pricing desk | Day two. New client, Mister Wang. And today he wants a price. Not a feeling. A number. |
 | C3-2 | Avatar cutout | Here's the secret nobody tells retail: an option price is not guessed. It is built. Branch by branch. |
 | C3-3 | Tree lesson: Today 21,500 node | Start at today. Index at twenty-one thousand five hundred. |
 | C3-4 | Up/down nodes appear | One step ahead, two futures. Up two point six five percent, or down two point five eight. That spread comes from volatility, sixteen percent a year. |
