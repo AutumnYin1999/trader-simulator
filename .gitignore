@@ -13,3 +13,4 @@ References from another project/
 video-project/.venv/
 video-project/node_modules/
 __pycache__/
+video-project/scripts/__pycache__/

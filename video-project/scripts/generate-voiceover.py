@@ -30,6 +30,11 @@ def main():
     for entry in manifest:
         audio_path = audio_dir / f"{entry['id']}.mp3"
         cap_path = cap_dir / f"{entry['id']}.json"
+        # Resumable: skip ids already rendered (non-empty audio + captions) so a
+        # restart after a stall only does the remaining scenes.
+        if audio_path.exists() and audio_path.stat().st_size > 0 and cap_path.exists():
+            print(f"SKIP {entry['id']} (exists)")
+            continue
         kwargs = {}
         # Optional per-scene prosody (edge adapter only; ignored by others).
         if args.provider == "edge":

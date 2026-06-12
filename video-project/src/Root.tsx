@@ -13,14 +13,11 @@ import { useEffect, useState } from "react";
 import { theme } from "./theme";
 import { Subtitles, Sentence } from "./Subtitles";
 import { componentRegistry, ComponentName } from "./component-registry";
-import { JordanBull } from "./JordanBull";
-import { QrCard } from "./QrCard";
 import timeline from "./timeline.json";
 import manifest from "../narration-manifest.json";
 
-// Scenes where Jordan Bull is the featured visual (left half-frame);
-// everywhere else he appears as a bottom-right pip badge.
-const FEATURE_SCENES = new Set(["C1-4", "C1-5", "C3-2", "C4-2", "C4-10", "C5-8"]);
+// v3: no on-screen presenter. Scenes are cinematic components or game footage,
+// captions + audio only. (Jordan Bull avatar removed per the "no presenter" cut.)
 
 type TimelineItem = (typeof timeline)[number];
 type ManifestEntry = (typeof manifest)[number];
@@ -30,15 +27,9 @@ const manifestById: Record<string, ManifestEntry> = Object.fromEntries(
 );
 const TOTAL_FRAMES = timeline.reduce((a, t) => a + t.durationInFrames, 0);
 
-const seedFor = (id: string) => id.split("").reduce((a, c) => a + c.charCodeAt(0), 0) % 7;
-
-// Animation entry visual: registered component from the manifest (QR special
-// case for C5-9, which shows the scannable code + URL instead of a TitleCard).
+// Animation entry visual: registered component from the manifest.
 const AnimationVisual: React.FC<{ entry: ManifestEntry }> = ({ entry }) => {
   const visual = (entry as any).visual ?? {};
-  if (entry.id === "C5-9") {
-    return <QrCard title={visual.props?.title} subtitle={visual.props?.subtitle} />;
-  }
   const Comp = componentRegistry[visual.component as ComponentName];
   if (!Comp) throw new Error(`unregistered component for ${entry.id}: ${visual.component}`);
   return <Comp {...(visual.props ?? {})} emphasis={visual.emphasis ?? visual.props?.emphasis} />;
@@ -46,22 +37,9 @@ const AnimationVisual: React.FC<{ entry: ManifestEntry }> = ({ entry }) => {
 
 const AnimationScene: React.FC<{ item: TimelineItem; sentences: Sentence[] }> = ({ item, sentences }) => {
   const entry = manifestById[item.id];
-  const featured = FEATURE_SCENES.has(item.id);
   return (
     <AbsoluteFill style={{ background: theme.colors.bg }}>
-      {featured ? (
-        <>
-          <div style={{ position: "absolute", left: "50%", top: 0, width: "50%", height: "100%" }}>
-            <AnimationVisual entry={entry} />
-          </div>
-          <JordanBull mode="feature" sentences={sentences} seed={seedFor(item.id)} />
-        </>
-      ) : (
-        <>
-          <AnimationVisual entry={entry} />
-          <JordanBull mode="pip" sentences={sentences} seed={seedFor(item.id)} />
-        </>
-      )}
+      <AnimationVisual entry={entry} />
       <Subtitles sentences={sentences} />
       <Audio src={staticFile(item.audioSrc)} />
     </AbsoluteFill>
@@ -76,11 +54,9 @@ const BrowserScene: React.FC<{ item: TimelineItem; sentences: Sentence[] }> = ({
         muted
         src={staticFile(seg.src)}
         startFrom={seg.startFrom}
-        endAt={seg.endAt}
         playbackRate={seg.playbackRate}
         style={{ width: "100%", height: "100%", objectFit: "contain" }}
       />
-      <JordanBull mode="pip" sentences={sentences} seed={seedFor(item.id)} />
       <Subtitles sentences={sentences} />
       <Audio src={staticFile(item.audioSrc)} />
     </AbsoluteFill>

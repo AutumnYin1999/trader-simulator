@@ -15,13 +15,15 @@ const PROVIDER = "edge";
 // line) lets the cut breathe and read. Per-scene model:
 //   durationInFrames = max(ceil((narrationSec + tail) * FPS), minFrames)
 // Tuned so the full (expanded) video lands in [11:00, 12:00].
-const ANIM_PAD_SEC = 1.85; // default hold after an animation card's line
-const BROWSER_PAD_SEC = 1.1; // default beat after each demo scene
-const TITLE_TAIL_SEC = 2.2; // chapter / title cards hold 1.5-2.5s after the line
-const EXTRA_PAD = { "C1-1": 0.5, "C5-9": 4.0, "C5-10": 0.5, "C5-11": 2.0, "C4-8": 1.0 }; // QR scan, cold open, logo sting, knock-out beat
+// v3 pacing: tight. The old build held ~1.8-2.2s of dead air after every card,
+// which read as "long pauses". Cut tails hard so the cinematic cuts move.
+const ANIM_PAD_SEC = 1.0; // default hold after an animation card's line
+const BROWSER_PAD_SEC = 0.65; // default beat after each demo scene
+const TITLE_TAIL_SEC = 1.5; // title/chapter beats breathe a touch longer
+const EXTRA_PAD = { "N01": 0.8, "S04": 0.8, "N11": 0.7, "S05": 0.8, "N33": 2.5, "N35": 1.8 }; // cold-open land, title hit, volatility burn, thanks, QR scan, logo sting
 // Hard floors (total scene seconds) for beats that must linger regardless of
 // how short the narration is.
-const MIN_SCENE_SEC = { "C3-5": 4.0, "C3-6": 4.0 }; // CRR formula cards: hold >= 4s
+const MIN_SCENE_SEC = { "N11": 5.0, "N31": 5.0, "N34": 5.0, "N35": 3.5 }; // volatility burn, price row, disclaimer, logo
 
 const manifest = JSON.parse(readFileSync(join(ROOT, "narration-manifest.json"), "utf8"));
 const segments = JSON.parse(readFileSync(join(ROOT, `segments-${PROVIDER}.json`), "utf8"));
@@ -30,7 +32,8 @@ const segById = Object.fromEntries(segments.map((s) => [s.id, s]));
 // Chapter / title cards (T-* plus the opening/closing TitleCard scenes) get a
 // slightly longer, fixed tail so a single short line still breathes on screen.
 function isTitleCard(entry) {
-  return entry.sceneType === "animation" && entry.visual && entry.visual.component === "TitleCard";
+  return entry.sceneType === "animation" && entry.visual &&
+    (entry.visual.component === "CinematicTitle" || entry.visual.component === "TitleCard");
 }
 function tailFor(entry) {
   const base = entry.sceneType === "animation"
@@ -74,10 +77,13 @@ for (const entry of manifest) {
     const recDur = seg.recordingEndSec - seg.recordingStartSec;
     const playbackRate = recDur / (durationInFrames / FPS);
     rates.push({ id: entry.id, playbackRate: +playbackRate.toFixed(3) });
+    // No endAt: Remotion applies the trim in local frames WITHOUT scaling by
+    // playbackRate, so any slowed scene (rate<1) goes black for its tail. The
+    // Sequence already bounds the scene and each seg-*.mp4 carries a 0.8s
+    // cloned tail pad, so the right trim is unnecessary.
     item.segment = {
       src: seg.src.replace(/\.webm$/, ".mp4"),
       startFrom: Math.round(seg.recordingStartSec * FPS) + 1, // frame-flash +1
-      endAt: Math.ceil(seg.recordingEndSec * FPS),
       playbackRate: +playbackRate.toFixed(5),
     };
   }

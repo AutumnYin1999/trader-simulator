@@ -53,7 +53,19 @@ class EdgeAdapter:
             cmd += [f"--rate={rate}"]
         if pitch and pitch != "+0Hz":
             cmd += [f"--pitch={pitch}"]
-        subprocess.run(cmd, check=True)
+        # edge-tts occasionally hangs on a network round-trip. Bound each attempt
+        # and retry so one wedged call cannot stall the whole batch.
+        last_err: Exception | None = None
+        for _ in range(3):
+            try:
+                subprocess.run(cmd, check=True, timeout=90)
+                if output_path.exists() and output_path.stat().st_size > 0:
+                    break
+                last_err = RuntimeError(f"empty audio for {output_path.name}")
+            except (subprocess.TimeoutExpired, subprocess.CalledProcessError) as e:
+                last_err = e
+        else:
+            raise last_err or RuntimeError("edge-tts failed")
         captions = self._merge_srt_to_sentences(srt_path.read_text(), text)
         return output_path, captions
 

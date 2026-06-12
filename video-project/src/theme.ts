@@ -5,6 +5,8 @@ const AUTHOR_W = 1920;
 const AUTHOR_H = 1080;
 const SCALE = 2; // 1920x1080 -> 3840x2160
 
+// Cinematic palette (v3). Warm coral/gold accents over near-black — no blue.
+// Green = gains, red = losses for the market charts.
 export const theme = {
   fps: 30,
   width: AUTHOR_W * SCALE, // 3840
@@ -13,10 +15,16 @@ export const theme = {
   authorHeight: AUTHOR_H,
   scale: SCALE,
   colors: {
-    bg: "#0b0f1a",
-    fg: "#f5f7fb",
-    accent: "#3aa0ff",
-    muted: "#7a869a",
+    bg: "#070a12", // near-black cinematic base
+    bg2: "#0c1322", // panel / gradient stop
+    panel: "#111a2b",
+    fg: "#f7f9fc",
+    accent: "#ff6b3d", // coral (matches the game UI)
+    accent2: "#f5b942", // gold
+    up: "#34d39a", // gains / green
+    down: "#ff4d5e", // losses / red
+    muted: "#8a94a6",
+    grid: "#1b2436",
   },
   fonts: {
     body: "Inter, system-ui, sans-serif",

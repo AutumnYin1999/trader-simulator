@@ -1,0 +1,298 @@
+[
+  {
+    "id": "C1-8",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 1.544,
+    "recordingEndSec": 6.417,
+    "src": "recordings/edge/clip1-hook.webm"
+  },
+  {
+    "id": "C1-9",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 6.417,
+    "recordingEndSec": 12.365,
+    "src": "recordings/edge/clip1-hook.webm"
+  },
+  {
+    "id": "C1-10",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 12.365,
+    "recordingEndSec": 15.358,
+    "src": "recordings/edge/clip1-hook.webm"
+  },
+  {
+    "id": "C2-1",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 2.345,
+    "recordingEndSec": 8.497,
+    "src": "recordings/edge/clip2-ticket.webm"
+  },
+  {
+    "id": "C2-2",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 8.497,
+    "recordingEndSec": 14.369,
+    "src": "recordings/edge/clip2-ticket.webm"
+  },
+  {
+    "id": "C2-3",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 14.369,
+    "recordingEndSec": 21.907,
+    "src": "recordings/edge/clip2-ticket.webm"
+  },
+  {
+    "id": "C2-4",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 21.907,
+    "recordingEndSec": 30.29,
+    "src": "recordings/edge/clip2-ticket.webm"
+  },
+  {
+    "id": "C2-5",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 30.29,
+    "recordingEndSec": 31.615,
+    "src": "recordings/edge/clip2-ticket.webm"
+  },
+  {
+    "id": "C2-6",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 31.615,
+    "recordingEndSec": 37.615,
+    "src": "recordings/edge/clip2-ticket.webm"
+  },
+  {
+    "id": "C2-7",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 37.615,
+    "recordingEndSec": 45.466,
+    "src": "recordings/edge/clip2-ticket.webm"
+  },
+  {
+    "id": "C2-8",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 45.466,
+    "recordingEndSec": 49.398,
+    "src": "recordings/edge/clip2-ticket.webm"
+  },
+  {
+    "id": "C2-9",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 49.398,
+    "recordingEndSec": 59.218,
+    "src": "recordings/edge/clip2-ticket.webm"
+  },
+  {
+    "id": "C2-10",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 59.218,
+    "recordingEndSec": 66.875,
+    "src": "recordings/edge/clip2-ticket.webm"
+  },
+  {
+    "id": "C2-11",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 66.875,
+    "recordingEndSec": 75.199,
+    "src": "recordings/edge/clip2-ticket.webm"
+  },
+  {
+    "id": "C3-1",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 3.073,
+    "recordingEndSec": 9.468,
+    "src": "recordings/edge/clip3-pricing.webm"
+  },
+  {
+    "id": "C3-3",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 9.468,
+    "recordingEndSec": 13.101,
+    "src": "recordings/edge/clip3-pricing.webm"
+  },
+  {
+    "id": "C3-4",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 13.101,
+    "recordingEndSec": 22.991,
+    "src": "recordings/edge/clip3-pricing.webm"
+  },
+  {
+    "id": "C3-7",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 22.991,
+    "recordingEndSec": 29.46,
+    "src": "recordings/edge/clip3-pricing.webm"
+  },
+  {
+    "id": "C3-8",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 29.46,
+    "recordingEndSec": 37.223,
+    "src": "recordings/edge/clip3-pricing.webm"
+  },
+  {
+    "id": "C3-9",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 37.223,
+    "recordingEndSec": 46.147,
+    "src": "recordings/edge/clip3-pricing.webm"
+  },
+  {
+    "id": "C3-10",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 46.147,
+    "recordingEndSec": 53.518,
+    "src": "recordings/edge/clip3-pricing.webm"
+  },
+  {
+    "id": "C3-11",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 53.518,
+    "recordingEndSec": 64.096,
+    "src": "recordings/edge/clip3-pricing.webm"
+  },
+  {
+    "id": "C3-12",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 64.096,
+    "recordingEndSec": 70.031,
+    "src": "recordings/edge/clip3-pricing.webm"
+  },
+  {
+    "id": "C3-13",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 70.031,
+    "recordingEndSec": 77.147,
+    "src": "recordings/edge/clip3-pricing.webm"
+  },
+  {
+    "id": "C3-14",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 77.147,
+    "recordingEndSec": 83.988,
+    "src": "recordings/edge/clip3-pricing.webm"
+  },
+  {
+    "id": "C4-1",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 3.495,
+    "recordingEndSec": 11.343,
+    "src": "recordings/edge/clip4-barrier.webm"
+  },
+  {
+    "id": "C4-6",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 11.343,
+    "recordingEndSec": 19.392,
+    "src": "recordings/edge/clip4-barrier.webm"
+  },
+  {
+    "id": "C4-7",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 19.392,
+    "recordingEndSec": 25.917,
+    "src": "recordings/edge/clip4-barrier.webm"
+  },
+  {
+    "id": "C4-8",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 25.917,
+    "recordingEndSec": 32.174,
+    "src": "recordings/edge/clip4-barrier.webm"
+  },
+  {
+    "id": "C4-9",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 32.174,
+    "recordingEndSec": 40.518,
+    "src": "recordings/edge/clip4-barrier.webm"
+  },
+  {
+    "id": "C5-1",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 2.784,
+    "recordingEndSec": 8.68,
+    "src": "recordings/edge/clip5-graduation.webm"
+  },
+  {
+    "id": "C5-2",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 8.68,
+    "recordingEndSec": 18.112,
+    "src": "recordings/edge/clip5-graduation.webm"
+  },
+  {
+    "id": "C5-3",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 18.112,
+    "recordingEndSec": 20.508,
+    "src": "recordings/edge/clip5-graduation.webm"
+  },
+  {
+    "id": "C5-4",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 20.508,
+    "recordingEndSec": 25.814,
+    "src": "recordings/edge/clip5-graduation.webm"
+  },
+  {
+    "id": "C5-5",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 25.814,
+    "recordingEndSec": 33.939,
+    "src": "recordings/edge/clip5-graduation.webm"
+  },
+  {
+    "id": "C5-6",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 33.939,
+    "recordingEndSec": 41.476,
+    "src": "recordings/edge/clip5-graduation.webm"
+  },
+  {
+    "id": "C5-7",
+    "voiceoverStartSec": 0,
+    "voiceoverEndSec": 0,
+    "recordingStartSec": 41.476,
+    "recordingEndSec": 46.411,
+    "src": "recordings/edge/clip5-graduation.webm"
+  }
+]
