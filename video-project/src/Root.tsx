@@ -129,15 +129,38 @@ const VideoLoader: React.FC = () => {
   return <Video captionsMap={captionsMap} />;
 };
 
+// Caption-free single-component still surface, for exporting deck/poster assets.
+// Renders any registered component full-frame at 1920x1080 (author space).
+const StillProbe: React.FC<{ comp: string; cprops: any }> = ({ comp, cprops }) => {
+  const Comp = (componentRegistry as any)[comp];
+  if (!Comp) throw new Error(`unknown still component: ${comp}`);
+  return (
+    <AbsoluteFill style={{ background: theme.colors.bg }}>
+      <Comp {...(cprops ?? {})} />
+    </AbsoluteFill>
+  );
+};
+
 export const RemotionRoot: React.FC = () => (
-  <Composition
-    id="NarrationDrivenVideo"
-    component={VideoLoader}
-    fps={theme.fps}
-    width={theme.width}
-    height={theme.height}
-    durationInFrames={TOTAL_FRAMES}
-  />
+  <>
+    <Composition
+      id="NarrationDrivenVideo"
+      component={VideoLoader}
+      fps={theme.fps}
+      width={theme.width}
+      height={theme.height}
+      durationInFrames={TOTAL_FRAMES}
+    />
+    <Composition
+      id="Still"
+      component={StillProbe as any}
+      fps={30}
+      width={1920}
+      height={1080}
+      durationInFrames={120}
+      defaultProps={{ comp: "CinematicTitle", cprops: { title: "CENTRAL TRADER", logo: true } }}
+    />
+  </>
 );
 
 registerRoot(RemotionRoot);
