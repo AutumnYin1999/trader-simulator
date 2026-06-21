@@ -4,186 +4,186 @@
     "scene": "clip1-hook",
     "sceneType": "animation",
     "from": 0,
-    "durationInFrames": 352,
-    "audioSrc": "voiceover/edge/N01.mp3",
-    "captionsSrc": "captions/edge/N01.json"
+    "durationInFrames": 351,
+    "audioSrc": "voiceover/kokoro/N01.mp3",
+    "captionsSrc": "captions/kokoro/N01.json"
   },
   {
     "id": "N02",
     "scene": "clip1-hook",
     "sceneType": "animation",
-    "from": 352,
+    "from": 351,
     "durationInFrames": 584,
-    "audioSrc": "voiceover/edge/N02.mp3",
-    "captionsSrc": "captions/edge/N02.json"
+    "audioSrc": "voiceover/kokoro/N02.mp3",
+    "captionsSrc": "captions/kokoro/N02.json"
   },
   {
     "id": "N03",
     "scene": "clip1-hook",
     "sceneType": "animation",
-    "from": 936,
+    "from": 935,
     "durationInFrames": 250,
-    "audioSrc": "voiceover/edge/N03.mp3",
-    "captionsSrc": "captions/edge/N03.json"
+    "audioSrc": "voiceover/kokoro/N03.mp3",
+    "captionsSrc": "captions/kokoro/N03.json"
   },
   {
     "id": "S04",
     "scene": "clip1-hook",
     "sceneType": "animation",
-    "from": 1186,
+    "from": 1185,
     "durationInFrames": 381,
-    "audioSrc": "voiceover/edge/S04.mp3",
-    "captionsSrc": "captions/edge/S04.json"
+    "audioSrc": "voiceover/kokoro/S04.mp3",
+    "captionsSrc": "captions/kokoro/S04.json"
   },
   {
     "id": "S05",
     "scene": "clip1-hook",
     "sceneType": "animation",
-    "from": 1567,
-    "durationInFrames": 394,
-    "audioSrc": "voiceover/edge/S05.mp3",
-    "captionsSrc": "captions/edge/S05.json"
+    "from": 1566,
+    "durationInFrames": 393,
+    "audioSrc": "voiceover/kokoro/S05.mp3",
+    "captionsSrc": "captions/kokoro/S05.json"
   },
   {
     "id": "S06",
     "scene": "clip1-hook",
     "sceneType": "animation",
-    "from": 1961,
+    "from": 1959,
     "durationInFrames": 442,
-    "audioSrc": "voiceover/edge/S06.mp3",
-    "captionsSrc": "captions/edge/S06.json"
+    "audioSrc": "voiceover/kokoro/S06.mp3",
+    "captionsSrc": "captions/kokoro/S06.json"
   },
   {
     "id": "N06",
     "scene": "clip1-hook",
     "sceneType": "animation",
-    "from": 2403,
+    "from": 2401,
     "durationInFrames": 452,
-    "audioSrc": "voiceover/edge/N06.mp3",
-    "captionsSrc": "captions/edge/N06.json"
+    "audioSrc": "voiceover/kokoro/N06.mp3",
+    "captionsSrc": "captions/kokoro/N06.json"
   },
   {
     "id": "N07",
     "scene": "clip1-hook",
     "sceneType": "animation",
-    "from": 2855,
-    "durationInFrames": 598,
-    "audioSrc": "voiceover/edge/N07.mp3",
-    "captionsSrc": "captions/edge/N07.json"
+    "from": 2853,
+    "durationInFrames": 597,
+    "audioSrc": "voiceover/kokoro/N07.mp3",
+    "captionsSrc": "captions/kokoro/N07.json"
   },
   {
     "id": "N08",
     "scene": "clip1-hook",
     "sceneType": "animation",
-    "from": 3453,
-    "durationInFrames": 324,
-    "audioSrc": "voiceover/edge/N08.mp3",
-    "captionsSrc": "captions/edge/N08.json"
+    "from": 3450,
+    "durationInFrames": 323,
+    "audioSrc": "voiceover/kokoro/N08.mp3",
+    "captionsSrc": "captions/kokoro/N08.json"
   },
   {
     "id": "N09",
     "scene": "clip1-hook",
     "sceneType": "animation",
-    "from": 3777,
-    "durationInFrames": 347,
-    "audioSrc": "voiceover/edge/N09.mp3",
-    "captionsSrc": "captions/edge/N09.json"
+    "from": 3773,
+    "durationInFrames": 346,
+    "audioSrc": "voiceover/kokoro/N09.mp3",
+    "captionsSrc": "captions/kokoro/N09.json"
   },
   {
     "id": "N10",
     "scene": "clip1-hook",
     "sceneType": "animation",
-    "from": 4124,
+    "from": 4119,
     "durationInFrames": 653,
-    "audioSrc": "voiceover/edge/N10.mp3",
-    "captionsSrc": "captions/edge/N10.json"
+    "audioSrc": "voiceover/kokoro/N10.mp3",
+    "captionsSrc": "captions/kokoro/N10.json"
   },
   {
     "id": "N11",
     "scene": "clip1-hook",
     "sceneType": "animation",
-    "from": 4777,
-    "durationInFrames": 581,
-    "audioSrc": "voiceover/edge/N11.mp3",
-    "captionsSrc": "captions/edge/N11.json"
+    "from": 4772,
+    "durationInFrames": 580,
+    "audioSrc": "voiceover/kokoro/N11.mp3",
+    "captionsSrc": "captions/kokoro/N11.json"
   },
   {
     "id": "N12",
     "scene": "clip1-hook",
     "sceneType": "animation",
-    "from": 5358,
-    "durationInFrames": 904,
-    "audioSrc": "voiceover/edge/N12.mp3",
-    "captionsSrc": "captions/edge/N12.json"
+    "from": 5352,
+    "durationInFrames": 903,
+    "audioSrc": "voiceover/kokoro/N12.mp3",
+    "captionsSrc": "captions/kokoro/N12.json"
   },
   {
     "id": "S10",
     "scene": "clip2-ticket",
     "sceneType": "animation",
-    "from": 6262,
-    "durationInFrames": 141,
-    "audioSrc": "voiceover/edge/S10.mp3",
-    "captionsSrc": "captions/edge/S10.json"
+    "from": 6255,
+    "durationInFrames": 140,
+    "audioSrc": "voiceover/kokoro/S10.mp3",
+    "captionsSrc": "captions/kokoro/S10.json"
   },
   {
     "id": "S11",
     "scene": "clip2-ticket",
     "sceneType": "browser-recording",
-    "from": 6403,
-    "durationInFrames": 214,
-    "audioSrc": "voiceover/edge/S11.mp3",
-    "captionsSrc": "captions/edge/S11.json",
+    "from": 6395,
+    "durationInFrames": 213,
+    "audioSrc": "voiceover/kokoro/S11.mp3",
+    "captionsSrc": "captions/kokoro/S11.json",
     "segment": {
       "src": "recordings/edge/seg-S11.mp4",
       "startFrom": 1,
-      "playbackRate": 0.86243
+      "playbackRate": 0.86648
     }
   },
   {
     "id": "S12",
     "scene": "clip2-ticket",
     "sceneType": "browser-recording",
-    "from": 6617,
-    "durationInFrames": 455,
-    "audioSrc": "voiceover/edge/S12.mp3",
-    "captionsSrc": "captions/edge/S12.json",
+    "from": 6608,
+    "durationInFrames": 454,
+    "audioSrc": "voiceover/kokoro/S12.mp3",
+    "captionsSrc": "captions/kokoro/S12.json",
     "segment": {
       "src": "recordings/edge/seg-S12.mp4",
       "startFrom": 1,
-      "playbackRate": 0.88418
+      "playbackRate": 0.88612
     }
   },
   {
     "id": "N14",
     "scene": "clip2-ticket",
     "sceneType": "animation",
-    "from": 7072,
-    "durationInFrames": 760,
-    "audioSrc": "voiceover/edge/N14.mp3",
-    "captionsSrc": "captions/edge/N14.json"
+    "from": 7062,
+    "durationInFrames": 759,
+    "audioSrc": "voiceover/kokoro/N14.mp3",
+    "captionsSrc": "captions/kokoro/N14.json"
   },
   {
     "id": "S14",
     "scene": "clip2-ticket",
     "sceneType": "browser-recording",
-    "from": 7832,
-    "durationInFrames": 385,
-    "audioSrc": "voiceover/edge/S14.mp3",
-    "captionsSrc": "captions/edge/S14.json",
+    "from": 7821,
+    "durationInFrames": 384,
+    "audioSrc": "voiceover/kokoro/S14.mp3",
+    "captionsSrc": "captions/kokoro/S14.json",
     "segment": {
       "src": "recordings/edge/seg-S14.mp4",
       "startFrom": 1,
-      "playbackRate": 0.75647
+      "playbackRate": 0.75844
     }
   },
   {
     "id": "S15",
     "scene": "clip2-ticket",
     "sceneType": "browser-recording",
-    "from": 8217,
+    "from": 8205,
     "durationInFrames": 493,
-    "audioSrc": "voiceover/edge/S15.mp3",
-    "captionsSrc": "captions/edge/S15.json",
+    "audioSrc": "voiceover/kokoro/S15.mp3",
+    "captionsSrc": "captions/kokoro/S15.json",
     "segment": {
       "src": "recordings/edge/seg-S15.mp4",
       "startFrom": 1,
@@ -194,10 +194,10 @@
     "id": "S16",
     "scene": "clip2-ticket",
     "sceneType": "browser-recording",
-    "from": 8710,
+    "from": 8698,
     "durationInFrames": 545,
-    "audioSrc": "voiceover/edge/S16.mp3",
-    "captionsSrc": "captions/edge/S16.json",
+    "audioSrc": "voiceover/kokoro/S16.mp3",
+    "captionsSrc": "captions/kokoro/S16.json",
     "segment": {
       "src": "recordings/edge/seg-S16.mp4",
       "startFrom": 1,
@@ -208,10 +208,10 @@
     "id": "S17",
     "scene": "clip2-ticket",
     "sceneType": "browser-recording",
-    "from": 9255,
+    "from": 9243,
     "durationInFrames": 279,
-    "audioSrc": "voiceover/edge/S17.mp3",
-    "captionsSrc": "captions/edge/S17.json",
+    "audioSrc": "voiceover/kokoro/S17.mp3",
+    "captionsSrc": "captions/kokoro/S17.json",
     "segment": {
       "src": "recordings/edge/seg-S17.mp4",
       "startFrom": 1,
@@ -222,79 +222,79 @@
     "id": "N16",
     "scene": "clip2-ticket",
     "sceneType": "animation",
-    "from": 9534,
+    "from": 9522,
     "durationInFrames": 736,
-    "audioSrc": "voiceover/edge/N16.mp3",
-    "captionsSrc": "captions/edge/N16.json"
+    "audioSrc": "voiceover/kokoro/N16.mp3",
+    "captionsSrc": "captions/kokoro/N16.json"
   },
   {
     "id": "S20",
     "scene": "clip3-pricing",
     "sceneType": "animation",
-    "from": 10270,
-    "durationInFrames": 150,
-    "audioSrc": "voiceover/edge/S20.mp3",
-    "captionsSrc": "captions/edge/S20.json"
+    "from": 10258,
+    "durationInFrames": 149,
+    "audioSrc": "voiceover/kokoro/S20.mp3",
+    "captionsSrc": "captions/kokoro/S20.json"
   },
   {
     "id": "N18",
     "scene": "clip3-pricing",
     "sceneType": "animation",
-    "from": 10420,
-    "durationInFrames": 702,
-    "audioSrc": "voiceover/edge/N18.mp3",
-    "captionsSrc": "captions/edge/N18.json"
+    "from": 10407,
+    "durationInFrames": 701,
+    "audioSrc": "voiceover/kokoro/N18.mp3",
+    "captionsSrc": "captions/kokoro/N18.json"
   },
   {
     "id": "S21",
     "scene": "clip3-pricing",
     "sceneType": "browser-recording",
-    "from": 11122,
-    "durationInFrames": 463,
-    "audioSrc": "voiceover/edge/S21.mp3",
-    "captionsSrc": "captions/edge/S21.json",
+    "from": 11108,
+    "durationInFrames": 462,
+    "audioSrc": "voiceover/kokoro/S21.mp3",
+    "captionsSrc": "captions/kokoro/S21.json",
     "segment": {
       "src": "recordings/edge/seg-S21.mp4",
       "startFrom": 1,
-      "playbackRate": 0.87622
+      "playbackRate": 0.87812
     }
   },
   {
     "id": "S22",
     "scene": "clip3-pricing",
     "sceneType": "browser-recording",
-    "from": 11585,
-    "durationInFrames": 530,
-    "audioSrc": "voiceover/edge/S22.mp3",
-    "captionsSrc": "captions/edge/S22.json",
+    "from": 11570,
+    "durationInFrames": 529,
+    "audioSrc": "voiceover/kokoro/S22.mp3",
+    "captionsSrc": "captions/kokoro/S22.json",
     "segment": {
       "src": "recordings/edge/seg-S22.mp4",
       "startFrom": 1,
-      "playbackRate": 0.80558
+      "playbackRate": 0.80711
     }
   },
   {
     "id": "S23",
     "scene": "clip3-pricing",
     "sceneType": "browser-recording",
-    "from": 12115,
-    "durationInFrames": 500,
-    "audioSrc": "voiceover/edge/S23.mp3",
-    "captionsSrc": "captions/edge/S23.json",
+    "from": 12099,
+    "durationInFrames": 499,
+    "audioSrc": "voiceover/kokoro/S23.mp3",
+    "captionsSrc": "captions/kokoro/S23.json",
     "segment": {
       "src": "recordings/edge/seg-S23.mp4",
       "startFrom": 1,
-      "playbackRate": 0.9777
+      "playbackRate": 0.97966
     }
   },
   {
     "id": "S24",
     "scene": "clip3-pricing",
     "sceneType": "browser-recording",
-    "from": 12615,
+    "from": 12598,
     "durationInFrames": 647,
-    "audioSrc": "voiceover/edge/S24.mp3",
-    "captionsSrc": "captions/edge/S24.json",
+    "audioSrc": "voiceover/kokoro/S24.mp3",
+    "captionsSrc": "captions/kokoro/S24.json",
     "segment": {
       "src": "recordings/edge/seg-S24.mp4",
       "startFrom": 1,
@@ -305,10 +305,10 @@
     "id": "S25",
     "scene": "clip3-pricing",
     "sceneType": "browser-recording",
-    "from": 13262,
+    "from": 13245,
     "durationInFrames": 257,
-    "audioSrc": "voiceover/edge/S25.mp3",
-    "captionsSrc": "captions/edge/S25.json",
+    "audioSrc": "voiceover/kokoro/S25.mp3",
+    "captionsSrc": "captions/kokoro/S25.json",
     "segment": {
       "src": "recordings/edge/seg-S25.mp4",
       "startFrom": 1,
@@ -319,37 +319,37 @@
     "id": "N21",
     "scene": "clip3-pricing",
     "sceneType": "animation",
-    "from": 13519,
+    "from": 13502,
     "durationInFrames": 685,
-    "audioSrc": "voiceover/edge/N21.mp3",
-    "captionsSrc": "captions/edge/N21.json"
+    "audioSrc": "voiceover/kokoro/N21.mp3",
+    "captionsSrc": "captions/kokoro/N21.json"
   },
   {
     "id": "N3B",
     "scene": "clip3-pricing",
     "sceneType": "animation",
-    "from": 14204,
-    "durationInFrames": 556,
-    "audioSrc": "voiceover/edge/N3B.mp3",
-    "captionsSrc": "captions/edge/N3B.json"
+    "from": 14187,
+    "durationInFrames": 555,
+    "audioSrc": "voiceover/kokoro/N3B.mp3",
+    "captionsSrc": "captions/kokoro/N3B.json"
   },
   {
     "id": "S30",
     "scene": "clip4-barrier",
     "sceneType": "animation",
-    "from": 14760,
+    "from": 14742,
     "durationInFrames": 162,
-    "audioSrc": "voiceover/edge/S30.mp3",
-    "captionsSrc": "captions/edge/S30.json"
+    "audioSrc": "voiceover/kokoro/S30.mp3",
+    "captionsSrc": "captions/kokoro/S30.json"
   },
   {
     "id": "S31",
     "scene": "clip4-barrier",
     "sceneType": "browser-recording",
-    "from": 14922,
+    "from": 14904,
     "durationInFrames": 291,
-    "audioSrc": "voiceover/edge/S31.mp3",
-    "captionsSrc": "captions/edge/S31.json",
+    "audioSrc": "voiceover/kokoro/S31.mp3",
+    "captionsSrc": "captions/kokoro/S31.json",
     "segment": {
       "src": "recordings/edge/seg-S31.mp4",
       "startFrom": 1,
@@ -360,107 +360,107 @@
     "id": "N23",
     "scene": "clip4-barrier",
     "sceneType": "animation",
-    "from": 15213,
-    "durationInFrames": 259,
-    "audioSrc": "voiceover/edge/N23.mp3",
-    "captionsSrc": "captions/edge/N23.json"
+    "from": 15195,
+    "durationInFrames": 258,
+    "audioSrc": "voiceover/kokoro/N23.mp3",
+    "captionsSrc": "captions/kokoro/N23.json"
   },
   {
     "id": "S32",
     "scene": "clip4-barrier",
     "sceneType": "browser-recording",
-    "from": 15472,
-    "durationInFrames": 330,
-    "audioSrc": "voiceover/edge/S32.mp3",
-    "captionsSrc": "captions/edge/S32.json",
+    "from": 15453,
+    "durationInFrames": 329,
+    "audioSrc": "voiceover/kokoro/S32.mp3",
+    "captionsSrc": "captions/kokoro/S32.json",
     "segment": {
       "src": "recordings/edge/seg-S32.mp4",
       "startFrom": 1,
-      "playbackRate": 0.73173
+      "playbackRate": 0.73395
     }
   },
   {
     "id": "S33",
     "scene": "clip4-barrier",
     "sceneType": "browser-recording",
-    "from": 15802,
-    "durationInFrames": 450,
-    "audioSrc": "voiceover/edge/S33.mp3",
-    "captionsSrc": "captions/edge/S33.json",
+    "from": 15782,
+    "durationInFrames": 449,
+    "audioSrc": "voiceover/kokoro/S33.mp3",
+    "captionsSrc": "captions/kokoro/S33.json",
     "segment": {
       "src": "recordings/edge/seg-S33.mp4",
       "startFrom": 1,
-      "playbackRate": 0.85213
+      "playbackRate": 0.85403
     }
   },
   {
     "id": "S34",
     "scene": "clip4-barrier",
     "sceneType": "browser-recording",
-    "from": 16252,
-    "durationInFrames": 240,
-    "audioSrc": "voiceover/edge/S34.mp3",
-    "captionsSrc": "captions/edge/S34.json",
+    "from": 16231,
+    "durationInFrames": 239,
+    "audioSrc": "voiceover/kokoro/S34.mp3",
+    "captionsSrc": "captions/kokoro/S34.json",
     "segment": {
       "src": "recordings/edge/seg-S34.mp4",
       "startFrom": 1,
-      "playbackRate": 1.043
+      "playbackRate": 1.04736
     }
   },
   {
     "id": "N25",
     "scene": "clip4-barrier",
     "sceneType": "animation",
-    "from": 16492,
-    "durationInFrames": 761,
-    "audioSrc": "voiceover/edge/N25.mp3",
-    "captionsSrc": "captions/edge/N25.json"
+    "from": 16470,
+    "durationInFrames": 760,
+    "audioSrc": "voiceover/kokoro/N25.mp3",
+    "captionsSrc": "captions/kokoro/N25.json"
   },
   {
     "id": "S40",
     "scene": "clip5-graduation",
     "sceneType": "animation",
-    "from": 17253,
+    "from": 17230,
     "durationInFrames": 120,
-    "audioSrc": "voiceover/edge/S40.mp3",
-    "captionsSrc": "captions/edge/S40.json"
+    "audioSrc": "voiceover/kokoro/S40.mp3",
+    "captionsSrc": "captions/kokoro/S40.json"
   },
   {
     "id": "S41",
     "scene": "clip5-graduation",
     "sceneType": "browser-recording",
-    "from": 17373,
-    "durationInFrames": 242,
-    "audioSrc": "voiceover/edge/S41.mp3",
-    "captionsSrc": "captions/edge/S41.json",
+    "from": 17350,
+    "durationInFrames": 241,
+    "audioSrc": "voiceover/kokoro/S41.mp3",
+    "captionsSrc": "captions/kokoro/S41.json",
     "segment": {
       "src": "recordings/edge/seg-S41.mp4",
       "startFrom": 1,
-      "playbackRate": 0.73091
+      "playbackRate": 0.73394
     }
   },
   {
     "id": "S42",
     "scene": "clip5-graduation",
     "sceneType": "browser-recording",
-    "from": 17615,
-    "durationInFrames": 374,
-    "audioSrc": "voiceover/edge/S42.mp3",
-    "captionsSrc": "captions/edge/S42.json",
+    "from": 17591,
+    "durationInFrames": 373,
+    "audioSrc": "voiceover/kokoro/S42.mp3",
+    "captionsSrc": "captions/kokoro/S42.json",
     "segment": {
       "src": "recordings/edge/seg-S42.mp4",
       "startFrom": 1,
-      "playbackRate": 0.94877
+      "playbackRate": 0.95131
     }
   },
   {
     "id": "S43",
     "scene": "clip5-graduation",
     "sceneType": "browser-recording",
-    "from": 17989,
+    "from": 17964,
     "durationInFrames": 500,
-    "audioSrc": "voiceover/edge/S43.mp3",
-    "captionsSrc": "captions/edge/S43.json",
+    "audioSrc": "voiceover/kokoro/S43.mp3",
+    "captionsSrc": "captions/kokoro/S43.json",
     "segment": {
       "src": "recordings/edge/seg-S43.mp4",
       "startFrom": 1,
@@ -471,68 +471,68 @@
     "id": "S44",
     "scene": "clip5-graduation",
     "sceneType": "browser-recording",
-    "from": 18489,
-    "durationInFrames": 469,
-    "audioSrc": "voiceover/edge/S44.mp3",
-    "captionsSrc": "captions/edge/S44.json",
+    "from": 18464,
+    "durationInFrames": 468,
+    "audioSrc": "voiceover/kokoro/S44.mp3",
+    "captionsSrc": "captions/kokoro/S44.json",
     "segment": {
       "src": "recordings/edge/seg-S44.mp4",
       "startFrom": 1,
-      "playbackRate": 0.79778
+      "playbackRate": 0.79949
     }
   },
   {
     "id": "N29",
     "scene": "clip5-graduation",
     "sceneType": "animation",
-    "from": 18958,
-    "durationInFrames": 752,
-    "audioSrc": "voiceover/edge/N29.mp3",
-    "captionsSrc": "captions/edge/N29.json"
+    "from": 18932,
+    "durationInFrames": 751,
+    "audioSrc": "voiceover/kokoro/N29.mp3",
+    "captionsSrc": "captions/kokoro/N29.json"
   },
   {
     "id": "N30",
     "scene": "clip5-graduation",
     "sceneType": "animation",
-    "from": 19710,
+    "from": 19683,
     "durationInFrames": 418,
-    "audioSrc": "voiceover/edge/N30.mp3",
-    "captionsSrc": "captions/edge/N30.json"
+    "audioSrc": "voiceover/kokoro/N30.mp3",
+    "captionsSrc": "captions/kokoro/N30.json"
   },
   {
     "id": "N31",
     "scene": "clip5-graduation",
     "sceneType": "animation",
-    "from": 20128,
-    "durationInFrames": 209,
-    "audioSrc": "voiceover/edge/N31.mp3",
-    "captionsSrc": "captions/edge/N31.json"
+    "from": 20101,
+    "durationInFrames": 208,
+    "audioSrc": "voiceover/kokoro/N31.mp3",
+    "captionsSrc": "captions/kokoro/N31.json"
   },
   {
     "id": "N33",
     "scene": "clip5-graduation",
     "sceneType": "animation",
-    "from": 20337,
-    "durationInFrames": 368,
-    "audioSrc": "voiceover/edge/N33.mp3",
-    "captionsSrc": "captions/edge/N33.json"
+    "from": 20309,
+    "durationInFrames": 367,
+    "audioSrc": "voiceover/kokoro/N33.mp3",
+    "captionsSrc": "captions/kokoro/N33.json"
   },
   {
     "id": "N34",
     "scene": "clip5-graduation",
     "sceneType": "animation",
-    "from": 20705,
+    "from": 20676,
     "durationInFrames": 270,
-    "audioSrc": "voiceover/edge/N34.mp3",
-    "captionsSrc": "captions/edge/N34.json"
+    "audioSrc": "voiceover/kokoro/N34.mp3",
+    "captionsSrc": "captions/kokoro/N34.json"
   },
   {
     "id": "N35",
     "scene": "clip5-graduation",
     "sceneType": "animation",
-    "from": 20975,
-    "durationInFrames": 138,
-    "audioSrc": "voiceover/edge/N35.mp3",
-    "captionsSrc": "captions/edge/N35.json"
+    "from": 20946,
+    "durationInFrames": 137,
+    "audioSrc": "voiceover/kokoro/N35.mp3",
+    "captionsSrc": "captions/kokoro/N35.json"
   }
 ]

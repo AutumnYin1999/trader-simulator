@@ -9,7 +9,7 @@ import { dirname, join } from "node:path";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const FPS = 30;
-const PROVIDER = "edge";
+const PROVIDER = process.env.PROVIDER || "edge";
 
 // Pacing: narration TTS runs fast (+5%..+11%); tail dwell (silence after the
 // line) lets the cut breathe and read. Per-scene model:

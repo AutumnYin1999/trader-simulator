@@ -115,9 +115,9 @@ class ElevenLabsAdapter:
         result = client.text_to_speech.convert_with_timestamps(
             voice_id=voice, text=text, model_id="eleven_multilingual_v2"
         )
-        with open(output_path, "wb") as f:
-            for chunk in result.audio_iterator:
-                f.write(chunk)
+        # SDK >=2.x returns base64 audio + alignment (no streaming iterator).
+        import base64
+        output_path.write_bytes(base64.b64decode(result.audio_base_64))
         words = self._aggregate_chars_to_words(result.alignment, text)
         sentences = self._aggregate_words_to_sentences(words, text)
         return output_path, sentences

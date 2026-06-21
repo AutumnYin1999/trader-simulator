@@ -23,6 +23,8 @@ video-project/build/
 video-project/public/
 video-project/recordings/
 video-project/ffmpeg2pass-*
+video-project/voiceover/
+video-project/captions/
 
 # ppt-project: keep source + diagram assets, drop its local node_modules (already
 # covered by node_modules/) and the throwaway versioned/stale deck builds.

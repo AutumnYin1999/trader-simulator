@@ -194,14 +194,14 @@
     "scene": "clip1-hook",
     "sceneType": "animation",
     "rate": "+6%",
-    "text": "Watch what that paper does in a week like that. Early October, the Hang Seng is near fifteen thousand. You are nervous, but you do not sell. You buy a little insurance. A put. The right to sell at fifteen thousand, no matter what. Three weeks later the market is under eleven. Everyone holding stock just lost a third of their money. You? You sell at fifteen, four thousand points above where it is actually trading. You paid pennies. You made a fortune. That is the whole game. Let me show you the ticket.",
+    "text": "Watch what that paper does in a week like that. Early October, the Hang Seng is near fifteen thousand. You are nervous, but you do not sell. You buy a little insurance. A put. The right to sell at fifteen thousand, no matter what. Three weeks later the market is under eleven, down about four thousand points. Hold the stock, you eat that drop. Hold the put, struck at fifteen thousand, and you collect those same four thousand points, bought for pennies. You made a fortune. That is the whole game. Let me show you the ticket.",
     "visual": {
       "component": "SplitCompare",
       "props": {
         "title": "THE 1997 PUT",
         "left": {
           "label": "Held the stock",
-          "delta": "-30%",
+          "delta": "-4,000 pts",
           "tone": "down"
         },
         "right": {
@@ -345,7 +345,7 @@
     "scene": "clip3-pricing",
     "sceneType": "animation",
     "rate": "+5%",
-    "text": "Here is where most people's eyes glaze over. Do not let them. This is the part that separates people who have money from people who talk about money. A fair price is not a vibe. You build it. Start at today's price. One step. The market ticks up by some factor, or down. Each splits again, and again. Three steps out, you have mapped every path the market could take to the finish line.",
+    "text": "Here is where most people's eyes glaze over. Do not let them. This is the part that separates people who have money from people who talk about money. A fair price is not a vibe. You build it. Start at today's price. One step. The market ticks up by some factor, or down. Each splits again, and again. Here, we use just three steps so you can see every branch. A real desk uses dozens, even hundreds. The more steps, the finer the price. Same idea, more rungs on the ladder.",
     "visual": {
       "component": "BinomialTree",
       "props": {
@@ -414,12 +414,12 @@
     "scene": "clip3-pricing",
     "sceneType": "animation",
     "rate": "+5%",
-    "text": "And this is the actual business. Fair value is one eighty-six, so the desk quotes the client one ninety. That four dollar sliver, times fifty dollars a point, times a few thousand contracts, that is the yacht. You do not gamble on the market. You sell the paper for a hair more than it is worth, ten thousand times. Boring. Profitable. My favorite combination.",
+    "text": "And this is the actual business. Fair value is one eighty-six. You quoted two ten, the client signed, and that twenty-four point edge, times fifty dollars a point, times a few thousand contracts, is the yacht. You do not gamble on the market. You sell the paper for a little more than it is worth, and you do it again, and again. Boring. Profitable. My favorite combination.",
     "visual": {
       "component": "KineticNumber",
       "props": {
-        "value": "+$4",
-        "label": "edge per point  ×  HK$50  ×  thousands of contracts  =  the business",
+        "value": "+24 pts",
+        "label": "edge  ×  HK$50 per point  ×  thousands of contracts  =  the business",
         "tone": "up"
       }
     }
@@ -517,14 +517,14 @@
     "scene": "clip4-barrier",
     "sceneType": "animation",
     "rate": "+5%",
-    "text": "Two thousand eight. The Hang Seng falls from nearly thirty-two thousand to about thirteen. Nearly sixty percent. Gone. A plain put through that paid like a slot machine that owed you money. But a clever knock-in barrier, one that only wakes up after a big drop, would have been dirt cheap going in, then detonated on the way down. Right tool, right disaster, fraction of the price. Know the condition cold, and you have got an edge.",
+    "text": "Two thousand eight. The Hang Seng falls from nearly thirty-two thousand to under eleven. About two thirds of its value, gone. A plain put through that paid like a slot machine that owed you money. And the discount trick we just learned works on the way down too, just flipped. A knock-in put is the mirror of our knock-out. It stays asleep, and cheap, until the market craters through a level. Then it wakes up and pays. Same logic, opposite trigger. Right tool, right disaster, a fraction of the price.",
     "visual": {
       "component": "HistoryChart",
       "props": {
         "event": "2008",
         "phase": "crash",
         "kicker": "",
-        "tag": "about -58% · 2007 to 2009",
+        "tag": "about -66% · 2007 to 2008",
         "tone": "crash"
       }
     }
