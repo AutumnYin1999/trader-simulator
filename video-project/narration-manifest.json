@@ -1,5 +1,20 @@
 [
   {
+    "id": "N00",
+    "scene": "clip1-hook",
+    "sceneType": "animation",
+    "rate": "+0%",
+    "text": "Something just crossed my desk. One piece of paper. It turns ten dollars into ten thousand. And it pays when the market is on fire. They call it an option.",
+    "visual": {
+      "component": "KineticNumber",
+      "props": {
+        "value": "$10 → $10,000",
+        "label": "one piece of paper · they call it an option",
+        "tone": "up"
+      }
+    }
+  },
+  {
     "id": "N01",
     "scene": "clip1-hook",
     "sceneType": "animation",

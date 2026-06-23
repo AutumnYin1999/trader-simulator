@@ -23,7 +23,7 @@ export const theme = {
     accent2: "#f5b942", // gold
     up: "#34d39a", // gains / green
     down: "#ff4d5e", // losses / red
-    muted: "#8a94a6",
+    muted: "#b0bccf",
     grid: "#1b2436",
   },
   fonts: {

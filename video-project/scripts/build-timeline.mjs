@@ -20,7 +20,7 @@ const PROVIDER = process.env.PROVIDER || "edge";
 const ANIM_PAD_SEC = 1.0; // default hold after an animation card's line
 const BROWSER_PAD_SEC = 0.65; // default beat after each demo scene
 const TITLE_TAIL_SEC = 1.5; // title/chapter beats breathe a touch longer
-const EXTRA_PAD = { "N01": 0.8, "S04": 0.8, "N11": 0.7, "S05": 0.8, "N33": 2.5, "N35": 1.8 }; // cold-open land, title hit, volatility burn, thanks, QR scan, logo sting
+const EXTRA_PAD = { "N01": 0.8, "S04": 0.8, "N11": 0.7, "S05": 0.8, "N33": 1.2, "N35": 0.5 }; // cold-open land, title hit, volatility burn, thanks, QR scan, logo sting
 // Hard floors (total scene seconds) for beats that must linger regardless of
 // how short the narration is.
 const MIN_SCENE_SEC = { "N11": 5.0, "N31": 5.0, "N34": 5.0, "N35": 3.5 }; // volatility burn, price row, disclaimer, logo

@@ -85,7 +85,7 @@ export const Subtitles: React.FC<{ sentences: Sentence[] }> = ({ sentences }) =>
           color: theme.colors.fg,
           padding: "12px 24px",
           borderRadius: 8,
-          font: `28px ${theme.fonts.body}`,
+          font: `32px ${theme.fonts.body}`,
           maxWidth: 1400,
           textAlign: "center",
         }}
@@ -99,7 +99,7 @@ export const Subtitles: React.FC<{ sentences: Sentence[] }> = ({ sentences }) =>
                 key={i}
                 style={{
                   fontWeight: isActive ? 700 : 400,
-                  opacity: isPast ? 1 : isActive ? 1 : 0.55,
+                  opacity: isPast ? 0.4 : isActive ? 1 : 0.55,
                   marginRight: 8,
                 }}
               >

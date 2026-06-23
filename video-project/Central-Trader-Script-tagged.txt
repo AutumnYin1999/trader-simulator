@@ -1,0 +1,104 @@
+CENTRAL TRADER - PRICING AN OPTION  ·  ElevenLabs v3 tagged read
+-----------------------------------------------------------------
+Use with ElevenLabs v3 (audio tags only work on v3). Set Stability = "Creative"
+or "Natural" for the tags to land. Tags in [brackets] are delivery cues, not
+spoken. CAPS = emphasis, "..." = a beat/pause. One block per scene.
+=================================================================
+
+[dramatic] October, nineteen ninety-seven. Hong Kong. [slows] In four trading days, this market fell twenty-three percent. [serious] Almost a quarter of everything... gone.
+
+Now, normal people lost a fortune that week. [building] But a few people had the best week of their lives. [curious] And here is the part that is going to bug you. [whispers] Most of them did not own a single stock. No shares. No bonds. One piece of paper. [intense] And that paper got more valuable the exact second everyone else was panicking.
+
+That paper is an option. [laughs] I know. It sounds like homework. [warmly] Stay with me. [excited] This is the homework that buys the boat.
+
+For the next twelve minutes, I will show you how it actually works. [confident] Not the textbook version. The desk version. And by the end, you will price one yourself. To the dollar. [intense] Let us go to work.
+
+[warmly] But before any of it, the thank you. This whole project is inspired by the teaching of Professor Martin. The mentor. [smiling] You will even meet him inside the game in a minute. Watch for the name.
+
+[energetic] Here is the plan. Four chapters. Four days on a trading desk. Day one, the ticket. Day two, the price. Day three, the tripwire. Day four, graduation. [serious] And we start with the crash that built the market.
+
+One product the whole way through. The Hang Seng Index Option. Fifty Hong Kong dollars a point. Cash settled. You only cash in at the end. [proud] And we did not just make slides. We built a trading desk you can actually play. [excited] Come on.
+
+[serious] Quick history. And do not skip it, because it is the whole reason this game exists. Summer ninety-seven. Currencies across Asia are dropping like dominoes. Thailand, Indonesia, Korea. [mischievously] Then the speculators look at Hong Kong and think, nice currency peg you have got there. [menacing] Shame if something happened to it.
+
+[serious] October twenty-third. The Hang Seng falls about ten percent. In a single day. To defend the currency, Hong Kong cranks interest rates into orbit.
+
+[incredulous] Overnight, borrowing money cost two hundred and eighty percent. [emphatic] Two hundred and eighty. Percent. On money. Overnight. [sarcastic] Suddenly, your credit card looks reasonable.
+
+[dramatic] Then, August ninety-eight, the government does something wild. It spends a hundred and eighteen billion Hong Kong dollars buying its own stock market to crush the speculators. [building] Two weeks later the market is up eighteen percent, the speculators are routed, and years on, the government sold those shares at a profit. [knowing] The house won. The house usually does.
+
+[measured] So here is the lesson that built this market. When the world is on fire, which way it goes next is a coin flip. Up, down, nobody knows. [intense] But how violently it moves, the fear itself, that you can measure. Price. Trade. [slowly] That is what an option sells. Fear, by the pound.
+
+Watch what that paper does in a week like that. Early October, the Hang Seng is near fifteen thousand. [nervous] You are nervous, but you do not sell. You buy a little insurance. A put. The right to sell at fifteen thousand, no matter what. [serious] Three weeks later the market is under eleven, down about four thousand points. Hold the stock, you eat that drop. [excited] Hold the put, struck at fifteen thousand, and you collect those same four thousand points, bought for pennies. You made a fortune. [confident] That is the whole game. Let me show you the ticket.
+
+[announcing] Chapter one. The ticket. What you are actually buying.
+
+Day one. Morning meeting. [warmly] And look who runs it. Mentor Martin. [chuckles] Told you. He is literally in the game.
+
+[teaching] First lesson, the two tickets. A call bets the market goes up. A put bets it goes down. Either way you pay a premium up front, like a movie ticket, for a choice you may never use. [emphatic] And there is our number already. One hundred eighty-six points. Remember it.
+
+[teaching] Either way, you pay a fee up front. The premium. And that premium is the most you can ever lose. The whole downside. That is it. Loss capped. Upside not. [excited] You can lose ten bucks or make ten grand, and you knew the worst case before you started. [curious] See that shape? Flat, flat, flat... then it takes off. Fancy people call it asymmetry. [sarcastic] You will call it the day you stopped buying lottery tickets.
+
+This is the product wall. Vanilla call. Vanilla put, the mirror image, it pays when the market falls. Buying the index outright. [intriguing] And a locked case marked barrier. We crack that one in chapter three.
+
+Your first client, Ms. Li. She wants index upside without buying the whole index. So you walk the wall and match her to the vanilla call. Click. Selected. [satisfied] And the desk grades the fit, suitable. Product, matched to person. [emphatic] Hold onto that word.
+
+[serious] Before money moves, the risk talk. The premium can vanish. The maximum loss is the premium. No profit is guaranteed. Tick, tick, tick. Confirm. [building] And now the market runs. Eleven prices, one trading day, and the index climbs all the way to twenty-two thousand four hundred.
+
+[satisfied] End of day. Payoff four hundred. Premium one eighty-six. Client nets plus two fourteen. Loss capped, upside open.
+
+[excited] And calls are not just for nervous people. Twenty seventeen, the Hang Seng has its best year since the crisis. Up thirty-six percent. Buy the index, you are thrilled. [building] But buy a call, for a fraction of the cash, and that same move multiplies your money several times over. Because all you risked was the premium. [emphatic] Some names that year ran over two hundred percent. Same direction. Way more firepower.
+
+[announcing] Chapter two. The price. Built, not guessed.
+
+[serious] Here is where most people's eyes glaze over. Do not let them. This is the part that separates people who have money from people who talk about money. A fair price is not a vibe. You build it. [teaching] Start at today's price. One step. The market ticks up by some factor, or down. Each splits again, and again. Here, we use just three steps so you can see every branch. A real desk uses dozens, even hundreds. The more steps, the finer the price. Same idea, more rungs on the ladder.
+
+Watch the game build it with real numbers. Today, twenty-one thousand five hundred. One step up, twenty-two thousand sixty-nine. One step down, twenty thousand nine hundred forty-six. [confident] Those moves are not guesses. They come straight from volatility.
+
+Step two, the paths recombine. Step three, expiry. Four possible endings, from twenty-three thousand two fifty-three down to nineteen thousand eight seventy-nine. And at expiry the payoff is simple. Price minus strike, or zero. [matter-of-fact] No mystery left.
+
+[building] Now the fold. Start at the endings, walk backwards. Every node averages its two futures and discounts for time. Fold, fold, fold. [satisfied] And the tree hands you today's price. One hundred eighty-six points. Same number from the lesson, built from scratch.
+
+[playful] Time to quote. Mr. Wang wants a price. Try greedy first, two ninety. [disappointed] He walks. Try generous, one fifty. [wry] He signs instantly, which means you just ate risk for free. [confident] Now two ten. Fair value plus a healthy edge. Accepted. [emphatic] That, right there, is the entire business of a trading desk.
+
+[wry] Settlement. The market drifts to twenty-two one forty. Payoff one forty, less than the premium. Some days the house wins.
+
+[confident] And this is the actual business. Fair value is one eighty-six. You quoted two ten, the client signed, and that twenty-four point edge, times fifty dollars a point, times a few thousand contracts, is the yacht. You do not gamble on the market. You sell the paper for a little more than it is worth, and you do it again, and again. [deadpan] Boring. Profitable. [excited] My favorite combination.
+
+[teaching] And here is the intuition to keep forever. Double the volatility, and you roughly double the option price. Calm market, cheap options. Terrified market, expensive ones. [intense] When you buy an option, you are literally buying fear. The more fear in the room, the higher the bill.
+
+[announcing] Chapter three. The tripwire. Cheaper, with a catch.
+
+Day three. Ms. Chen has an objection. [conversational] That vanilla call is a bit pricey. So we open the locked case. The down-and-out call. A barrier option.
+
+[rhetorical] Why would anyone buy that? One very good reason. [confident] It is cheaper. You hand the seller an escape hatch, so they knock down the price.
+
+[clear] Same tree, one extra rule. Vanilla, eleven twelve. Down-and-out, nine thirty-four. Sixteen percent off. [snappy] Quote ten fifty. Done.
+
+[tense] Then the market does what markets do. Twenty-one five. Twenty-one eight. Twenty-one four sixty. Twenty thousand nine hundred fifty. [sharp] Red. The fourth print touches the barrier, and the contract dies on the spot. [flat] Knocked out.
+
+[somber] The cruel part. The market recovers to twenty-two four. She would have finished in the money. But the option died at the tripwire.
+
+[dramatic] Two thousand eight. The Hang Seng falls from nearly thirty-two thousand to under eleven. About two thirds of its value, gone. [excited] A plain put through that paid like a slot machine that owed you money. [intriguing] And the discount trick we just learned works on the way down too, just flipped. A knock-in put is the mirror of our knock-out. It stays asleep, and cheap, until the market craters through a level. Then it wakes up and pays. [confident] Same logic, opposite trigger. Right tool, right disaster, a fraction of the price.
+
+[announcing] Chapter four. Graduation day.
+
+Day four. Graduation. [serious] No new products. Three live clients, no hints, and your judgment on trial.
+
+[clear] Client one, Mr. Zhang. Spot twenty-four thousand, strike twenty-four five. You run the tree. Fair value, two ninety-seven. Quote three twenty. Accepted. [satisfied] Fair price, done.
+
+Client two, Ms. Li. She wants the discount, so you build the barrier at twenty-three thousand. The tree says nine eighty-one. You quote eleven hundred, explain the tripwire first, she signs. [confident] Client three, Mr. He. This time you judge the product yourself.
+
+Fair value, eleven eighty-four. You quote thirteen fifty. Submitted. [building] And the scorecard lands. Three for three filled. Three for three judgment. [proud] Overall, grade A. Four days. Four cards. All complete.
+
+[sincere] Now notice what the money actually was this whole time. Never one lucky bet. It was pricing it right, every single time. Matching the product to the person. And never, ever selling someone a tripwire they did not understand. [wry] You want the secret to getting rich in this business? Do not blow up your clients. [chuckles] Revolutionary, I know. [serious] But the traders still standing in twenty years? That is the only trick they have got.
+
+[warmly] Bring it home. Five things you own now that you did not twelve minutes ago. Calls and puts. Why you pay a premium. How a tree builds the price. What a knock-out really costs. And why suitability comes first.
+
+[confident] And you did not just hear it. You watched us price every one of these. To the dollar. Like I promised.
+
+[inviting] Our booth is open right now. The whole desk runs in your browser. Go price one yourself. Come find us. [chuckles] We are the ones who look suspiciously confident.
+
+[fast] [deadpan] Educational use only. Not investment advice. The history is real. The example trades are illustrative.
+
+[final] Central Trader.
