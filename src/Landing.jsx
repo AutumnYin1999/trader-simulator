@@ -7,8 +7,8 @@ import React from "react";
 
 const DECK_PDF = import.meta.env.BASE_URL + "Central-Trader-Deck.pdf";
 const DECK_PPTX = import.meta.env.BASE_URL + "Central-Trader-Deck.pptx";
-const FILM_YT = "https://www.youtube-nocookie.com/embed/WyejVYNB_uA";
-const FILM_WATCH = "https://youtu.be/WyejVYNB_uA";
+const FILM_YT = "https://www.youtube-nocookie.com/embed/7jtWl-XFoLU";
+const FILM_WATCH = "https://youtu.be/7jtWl-XFoLU";
 
 const FONT = "'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif";
 
