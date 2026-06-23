@@ -1,0 +1,10 @@
+CHAPTERS (paste into the YouTube description):
+
+0:00 Cold open: one piece of paper
+1:44 Hong Kong, 1997: the crash
+3:38 Day 1 - The Ticket (calls & puts)
+5:52 Day 2 - The Price (binomial tree)
+8:21 Day 3 - The Tripwire (barriers)
+9:44 Day 4 - Graduation (3 live clients)
+10:41 What the money really was
+11:27 Play it yourself
