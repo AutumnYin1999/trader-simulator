@@ -3032,13 +3032,23 @@ function AuthScreen({ authError, setAuthError, onGuest }) {
         </form>
 
         {onGuest && (
-          <button
-            type="button"
-            onClick={onGuest}
-            className="mt-4 w-full font-terminal text-xs tracking-[0.14em] text-[var(--muted)] underline-offset-4 transition hover:text-[var(--ink)] hover:underline"
-          >
-            Continue as guest →
-          </button>
+          <>
+            <div className="mt-5 flex items-center gap-3 font-terminal text-[10px] uppercase tracking-[0.24em] text-[var(--faint)]">
+              <span className="h-px flex-1 bg-[var(--border)]" />
+              or
+              <span className="h-px flex-1 bg-[var(--border)]" />
+            </div>
+            <button
+              type="button"
+              onClick={onGuest}
+              className="mt-4 w-full rounded-xl border border-[var(--accent)] bg-[rgba(255,122,77,0.12)] py-3 font-terminal text-sm font-bold tracking-[0.12em] text-[var(--accent)] shadow-[0_0_24px_rgba(255,122,77,0.25)] transition hover:bg-[var(--accent)] hover:text-[#0b1018]"
+            >
+              ▶  Continue as Guest
+            </button>
+            <p className="mt-2 text-center font-terminal text-[11px] tracking-[0.1em] text-[var(--faint)]">
+              no account needed · progress saves in this browser
+            </p>
+          </>
         )}
       </div>
 
