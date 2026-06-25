@@ -2851,7 +2851,7 @@ function StartScreen({ onStart }) {
 
 // Sign in / create account screen. Only rendered when Supabase is configured and
 // there is no active session. Themed to match StartScreen and the finance tokens.
-function AuthScreen({ authError, setAuthError }) {
+function AuthScreen({ authError, setAuthError, onGuest }) {
   const [mode, setMode] = useState("signin"); // "signin" | "signup"
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -2885,7 +2885,10 @@ function AuthScreen({ authError, setAuthError }) {
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
-          options: { data: { name } },
+          options: {
+            data: { name },
+            emailRedirectTo: `${window.location.origin}${import.meta.env.BASE_URL}`,
+          },
         });
         if (error) {
           setAuthError(error.message);
@@ -3027,6 +3030,16 @@ function AuthScreen({ authError, setAuthError }) {
                 : "Sign In"}
           </PrimaryButton>
         </form>
+
+        {onGuest && (
+          <button
+            type="button"
+            onClick={onGuest}
+            className="mt-4 w-full font-terminal text-xs tracking-[0.14em] text-[var(--muted)] underline-offset-4 transition hover:text-[var(--ink)] hover:underline"
+          >
+            Continue as guest →
+          </button>
+        )}
       </div>
 
       <div className="mt-8 font-terminal text-xs tracking-[0.14em] text-[var(--faint)]">
@@ -7951,6 +7964,9 @@ export default function Day1TraderSimulator() {
   const [session, setSession] = useState(null);
   const [authChecked, setAuthChecked] = useState(!isSupabaseConfigured);
   const [authError, setAuthError] = useState("");
+  // Guest bypass: even when Supabase is configured, let visitors skip the gate
+  // and play locally. Signing in later still works (reload shows the gate).
+  const [guestMode, setGuestMode] = useState(false);
 
   // Resolve the current session on mount and keep it in sync. Only runs when
   // Supabase is configured; otherwise the app stays in local guest mode.
@@ -9090,12 +9106,12 @@ export default function Day1TraderSimulator() {
     );
   }
 
-  if (isSupabaseConfigured && authChecked && !session) {
+  if (isSupabaseConfigured && authChecked && !session && !guestMode) {
     return (
       <main className="font-cn relative min-h-screen overflow-hidden bg-[var(--bg)] text-[var(--ink)]">
         <StyleBlock />
         <GlobalAtmosphere />
-        <AuthScreen authError={authError} setAuthError={setAuthError} />
+        <AuthScreen authError={authError} setAuthError={setAuthError} onGuest={() => setGuestMode(true)} />
       </main>
     );
   }
